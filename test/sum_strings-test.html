@@ -7,6 +7,20 @@
     <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
     <script type="text/javascript" src="../libs/qunit.js"></script>
     <script type="text/javascript">
+			function sumStrings(a,b){
+				return (+a+(+b))+'';
+			}
+		</script>
+    <script type="text/javascript">
+			module('sum strings');
+
+			test('sum',function(){
+				equal(sumStrings('1','3'),'4');		
+			});
+
+			test('return string',function(){
+				equal(typeof sumStrings('1','3'),'string');		
+			});
 
     </script>
 </head>
