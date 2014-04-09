@@ -4,16 +4,13 @@
     <meta charset="UTF-8">
     <title></title>
     <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
-    <link type="text/css" rel="stylesheet" href="../libs/qunit-composite.css"/>
-
     <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
     <script type="text/javascript" src="../libs/qunit.js"></script>
-    <script type="text/javascript" src="../libs/qunit-composite.js"></script>
     <script type="text/javascript">
-        QUnit.testSuites([
-            'keys-test.html',
-            'number-test.html'
-        ]);
+        module("object");
+        test('keys', function () {
+            deepEqual(Object.keys({Josh: 1, Steve: 2}), ['Josh', 'Steve']);
+        });
     </script>
 </head>
 <body>

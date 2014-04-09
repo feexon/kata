@@ -4,16 +4,19 @@
     <meta charset="UTF-8">
     <title></title>
     <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
-    <link type="text/css" rel="stylesheet" href="../libs/qunit-composite.css"/>
-
     <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
     <script type="text/javascript" src="../libs/qunit.js"></script>
-    <script type="text/javascript" src="../libs/qunit-composite.js"></script>
     <script type="text/javascript">
-        QUnit.testSuites([
-            'keys-test.html',
-            'number-test.html'
-        ]);
+        module("number");
+
+        test('increment +(true)', function () {
+            equal(+(1 < 2), 1);
+            equal(2+(1 < 2), 3);
+        });
+        test('+(false)', function () {
+            equal(+(1 > 2), 0);
+            equal(2+(1 > 2), 2);
+        });
     </script>
 </head>
 <body>
