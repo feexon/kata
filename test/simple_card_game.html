@@ -9,6 +9,7 @@
     <script type="text/javascript">
         function winner(deckSteve, deckJosh) {
             var steves = score(deckSteve, deckJosh), joshs = score(deckJosh, deckSteve);
+
             if (steves == joshs) {
                 return "Tie";
             }
@@ -21,13 +22,9 @@
 
         function score(whom, others) {
             var cards = "23456789TJQKA";
-            var score = 0;
-            for (var i = whom.length; --i >= 0;) {
-                if (cards.indexOf(whom[i]) - cards.indexOf(others[i]) > 0) {
-                    score++;
-                }
-            }
-            return score;
+            return whom.reduce(function (score, card, which) {
+                return cards.indexOf(card) > cards.indexOf(others[which]) ? score + 1 : score;
+            }, 0);
         }
     </script>
     <script type="text/javascript">
@@ -35,26 +32,26 @@
 
         module("one card");
         test('Steve wins', function () {
-            equal(winner(['2'], ['1']),'Steve wins 1 to 0');
+            equal(winner(['2'], ['1']), 'Steve wins 1 to 0');
         });
         test('Josh wins', function () {
-            equal(winner(['1'], ['2']),'Josh wins 1 to 0');
+            equal(winner(['1'], ['2']), 'Josh wins 1 to 0');
         });
         test('wins in order', function () {
-            equal(winner(['A'], ['K']),'Steve wins 1 to 0');
+            equal(winner(['A'], ['K']), 'Steve wins 1 to 0');
         });
         test('tie', function () {
-            equal(winner(['1'], ['1']),'Tie');
+            equal(winner(['1'], ['1']), 'Tie');
         });
 
 
         module("more cards");
         test('Steve all wins', function () {
-            equal(winner(['2', '5'], ['1', '3']),'Steve wins 2 to 0');
+            equal(winner(['2', '5'], ['1', '3']), 'Steve wins 2 to 0');
         });
 
         test('Steve wins', function () {
-            equal(winner(['2', '5', '3'], ['1', '3', '7']),'Steve wins 2 to 1');
+            equal(winner(['2', '5', '3'], ['1', '3', '7']), 'Steve wins 2 to 1');
         });
     </script>
 </head>
