@@ -16,17 +16,13 @@
             var forms = ['', 's'];
             var units = ['year', 'month', 'day', 'hour', 'minute', 'second'];
             var rates = [365 * 24 * 60 * 60, 30 * 24 * 60 * 60, 24 * 60 * 60, 60 * 60, 60, 1];
-            var parts = [];
-            for (var which = 0; which < rates.length; which++) {
-                var part = ~~(seconds / rates[which]);
-                if (!part) {
-                    continue;
-                }
-                var unit = units[which] + forms[+(part > 1)];
-                seconds -= part * rates[which];
-                parts.push([ part, unit].join(' '));
-            }
-            return parts.join(' and ');
+
+            return rates.reduce(function (parts, rate, which) {
+                var part = ~~(seconds / rate);
+                seconds -= part * rate;
+                part && parts.push([ part, units[which] + forms[+(part > 1)]].join(' '));
+                return parts;
+            }, []).join(', ').replace(/, ([^,]+)$/, ' and $1');
 
         }
 
@@ -49,9 +45,19 @@
             equal(formatDuration(2 * 60 * 60), "2 hours");
         });
 
-        test('two last units', function () {
+        test('two sequential units', function () {
             equal(formatDuration(61), "1 minute and 1 second");
         });
+
+        test('two units', function () {
+            equal(formatDuration(61), "1 minute and 1 second");
+            equal(formatDuration(30 * 24 * 60 * 60 + 1), "1 month and 1 second");
+        });
+
+        test('complex units', function () {
+            equal(formatDuration(60 * 60 + 60 + 2), "1 hour, 1 minute and 2 seconds");
+        });
+
 
     </script>
 </head>
