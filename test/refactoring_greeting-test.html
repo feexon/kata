@@ -8,13 +8,14 @@
     <script type="text/javascript" src="../libs/qunit.js"></script>
     <script type="text/javascript">
 			function greet(myName,yourName){
+				return 'Hello '+yourName+', my name is '+myName;
 			}
 		</script>
     <script type="text/javascript">
 
 			module("refacotring@greeting");
 			test("greet",function(){
-				equal(greet('Kate','Joe'),'Hello Kate, my name is Joe');	
+				equal(greet('Joe','Kate'),'Hello Kate, my name is Joe');	
 			});
     </script>
 </head>
