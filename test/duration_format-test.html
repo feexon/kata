@@ -13,8 +13,8 @@
             }
 
             var forms = ['', 's'];
-            var units = ['year', 'month', 'day', 'hour', 'minute', 'second'];
-            var rates = [365 * 24 * 60 * 60, 30 * 24 * 60 * 60, 24 * 60 * 60, 60 * 60, 60, 1];
+            var units = ['year', 'day', 'hour', 'minute', 'second'];
+            var rates = [365 * 24 * 60 * 60, 24 * 60 * 60, 60 * 60, 60, 1];
 
             return rates.reduce(function (parts, rate, which) {
                 var part = ~~(seconds / rate);
@@ -37,7 +37,6 @@
             equal(formatDuration(60), "1 minute");
             equal(formatDuration(60 * 60), "1 hour");
             equal(formatDuration(24 * 60 * 60), "1 day");
-            equal(formatDuration(30 * 24 * 60 * 60), "1 month");
             equal(formatDuration(365 * 24 * 60 * 60), "1 year");
         });
 
@@ -53,7 +52,7 @@
 
         test('two units', function () {
             equal(formatDuration(61), "1 minute and 1 second");
-            equal(formatDuration(30 * 24 * 60 * 60 + 1), "1 month and 1 second");
+            equal(formatDuration(24 * 60 * 60 +  60 ), "1 day and 1 minute");
         });
 
         test('complex units', function () {
