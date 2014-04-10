@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript">
+        function formatDuration(seconds) {
+            var forms = ['', 's'];
+            var units = ['year', 'day', 'hour', 'minute', 'second'];
+            var rate = 365 * 24 * 60 * 60;
+            var modules = [1, 365, 24, 60, 60];
+            return modules.map(function (module, which) {
+                rate = rate / module;
+                var part = ~~(seconds / rate);
+                seconds -= part * rate;
+                return part > 0 && [ part, units[which] + forms[+(part > 1)]].join(' ');
+            }).filter(Boolean).join(', ').replace(/, ([^,]+)$/, ' and $1') || 'now';
+
+        }
+    </script>
+    <script type="text/javascript">
+        module("duration format");
+
+        test('now', function () {
+            equal(formatDuration(0), 'now');
+        });
+
+        test('one singular unit', function () {
+            equal(formatDuration(1), "1 second");
+            equal(formatDuration(60), "1 minute");
+            equal(formatDuration(60 * 60), "1 hour");
+            equal(formatDuration(24 * 60 * 60), "1 day");
+            equal(formatDuration(365 * 24 * 60 * 60), "1 year");
+        });
+
+        test('one plural unit', function () {
+            equal(formatDuration(2), "2 seconds");
+            equal(formatDuration(2 * 60), "2 minutes");
+            equal(formatDuration(2 * 60 * 60), "2 hours");
+        });
+
+        test('two sequential units', function () {
+            equal(formatDuration(61), "1 minute and 1 second");
+        });
+
+        test('two units', function () {
+            equal(formatDuration(61), "1 minute and 1 second");
+            equal(formatDuration(24 * 60 * 60 + 60), "1 day and 1 minute");
+        });
+
+        test('complex units', function () {
+            equal(formatDuration(60 * 60 + 60 + 2), "1 hour, 1 minute and 2 seconds");
+        });
+
+
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
