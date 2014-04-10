@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript">
+        Object.prototype.hash = function (paths) {
+            return paths.split('.').reduce(function (context, prop) {
+                return context && context[prop];
+            }, this);
+        }
+    </script>
+    <script type="text/javascript">
+        var testee = {name: 'john', address: {country: 'china'}};
+        module('extract nested object reference');
+        test('access root property', function () {
+            equal(testee.hash('name'), 'john');
+        });
+
+        test('access unknown property', function () {
+            equal(testee.hash('unknown'), undefined);
+        });
+
+        test('access nested property', function () {
+            equal(testee.hash('address.country'), 'china');
+        });
+
+        test('access nested property with root property is undefined', function () {
+            ok(typeof testee.hash('email.address') == 'undefined');
+        });
+
+        test('access object property', function () {
+            deepEqual(testee.hash('address'), {country: 'china'});
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
