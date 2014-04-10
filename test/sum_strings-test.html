@@ -9,11 +9,12 @@
     <script type="text/javascript">
         function sumStrings(augend, addend, carry) {
             var last = +(augend[augend.length - 1] || 0) + (+(addend[addend.length - 1] || 0));
+            var optimization = typeof carry == 'boolean' ? /^[0]+/ : '';
             carry && ++last;
             if (augend.length > 1 || addend.length > 1) {
-                return [sumStrings(augend.substring(0, augend.length - 1), addend.substring(0, addend.length - 1), last >= 10), last % 10].join('');
+                return [sumStrings(augend.substring(0, augend.length - 1), addend.substring(0, addend.length - 1), last >= 10), last % 10].join('').replace(optimization, '');
             }
-            return last + '';
+            return [last].join('').replace(optimization, '');
         }
     </script>
     <script type="text/javascript">
@@ -41,7 +42,9 @@
             equal(sumStrings('712569312664357328695151392', '8100824045303269669937'), '712577413488402631964821329');
         });
 
-
+        test('drop leading zeros', function () {
+            equal(sumStrings('00103', '08567'), '8670');
+        });
 
 
     </script>
