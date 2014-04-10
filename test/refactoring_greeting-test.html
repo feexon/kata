@@ -7,19 +7,37 @@
     <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
     <script type="text/javascript" src="../libs/qunit.js"></script>
     <script type="text/javascript">
-			function greet(yourName,myName){
-				return 'Hello Kate, my name is Joe';
-			}
-		</script>
-    <script type="text/javascript">
+        function Person(name) {
+            this.name = name;
+        }
 
-			module("refacotring@greeting");
-			test("greet",function(){
-				equal(greet('Kate','Joe'),'Hello Kate, my name is Joe');	
-			});
+        Person.prototype.greet = function (someone) {
+            return 'Hello ' + someone + ', my name is '+this.name;
+        };
+
+    </script>
+    <script type="text/javascript">
+        var joe;
+
+        module("refactoring@greeting", {
+            setup: function () {
+                joe = new Person("Joe");
+            }
+        });
+
+
+        test("greet", function () {
+            equal(joe.greet("Kate"), 'Hello Kate, my name is Joe');
+            equal(joe.greet("John"), 'Hello John, my name is Joe');
+            equal(new Person('Mali').greet("Kate"), 'Hello Kate, my name is Mali');
+        });
+
+        test("Person.name", function () {
+            equal(joe.name, 'Joe');
+        });
     </script>
 </head>
 <body>
-    <div id="qunit"></div>
+<div id="qunit"></div>
 </body>
 </html>
