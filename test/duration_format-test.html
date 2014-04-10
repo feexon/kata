@@ -8,20 +8,16 @@
     <script type="text/javascript" src="../libs/qunit.js"></script>
     <script type="text/javascript">
         function formatDuration(seconds) {
-            if (seconds == 0) {
-                return "now";
-            }
-
             var forms = ['', 's'];
             var units = ['year', 'day', 'hour', 'minute', 'second'];
-            var rates = [365 * 24 * 60 * 60, 24 * 60 * 60, 60 * 60, 60, 1];
-
-            return rates.reduce(function (parts, rate, which) {
+            var rate = 365 * 24 * 60 * 60;
+            var modules = [1, 365, 24, 60, 60];
+            return modules.map(function (module, which) {
+                rate = rate / module;
                 var part = ~~(seconds / rate);
                 seconds -= part * rate;
-                part && parts.push([ part, units[which] + forms[+(part > 1)]].join(' '));
-                return parts;
-            }, []).join(', ').replace(/, ([^,]+)$/, ' and $1');
+                return part > 0 && [ part, units[which] + forms[+(part > 1)]].join(' ');
+            }).filter(Boolean).join(', ').replace(/, ([^,]+)$/, ' and $1') || 'now';
 
         }
     </script>
@@ -52,7 +48,7 @@
 
         test('two units', function () {
             equal(formatDuration(61), "1 minute and 1 second");
-            equal(formatDuration(24 * 60 * 60 +  60 ), "1 day and 1 minute");
+            equal(formatDuration(24 * 60 * 60 + 60), "1 day and 1 minute");
         });
 
         test('complex units', function () {
