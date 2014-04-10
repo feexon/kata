@@ -7,7 +7,7 @@
     <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
     <script type="text/javascript" src="../libs/qunit.js"></script>
     <script type="text/javascript">
-			function greet(myName,yourName){
+			function greet(yourName,myName){
 				return 'Hello '+yourName+', my name is '+myName;
 			}
 		</script>
@@ -15,7 +15,7 @@
 
 			module("refacotring@greeting");
 			test("greet",function(){
-				equal(greet('Joe','Kate'),'Hello Kate, my name is Joe');	
+				equal(greet('Kate','Joe'),'Hello Kate, my name is Joe');	
 			});
     </script>
 </head>
