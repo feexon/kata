@@ -7,24 +7,46 @@
     <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
     <script type="text/javascript" src="../libs/qunit.js"></script>
     <script type="text/javascript">
-			function sumStrings(a,b){
-				return (+a+(+b))+'';
-			}
-		</script>
+        function sumStrings(augend, addend, carry) {
+            var last = +(augend[augend.length - 1] || 0) + (+(addend[addend.length - 1] || 0));
+            carry && ++last;
+            if (augend.length > 1 || addend.length > 1) {
+                return [sumStrings(augend.substring(0, augend.length - 1), addend.substring(0, addend.length - 1), last >= 10), last % 10].join('');
+            }
+            return last + '';
+        }
+    </script>
     <script type="text/javascript">
-			module('sum strings');
+        module('sum strings');
 
-			test('sum',function(){
-				equal(sumStrings('1','3'),'4');		
-			});
+        test("one digit", function () {
+            equal(sumStrings('1', '2'), '3');
+        });
 
-			test('return string',function(){
-				equal(typeof sumStrings('1','3'),'string');		
-			});
+        test("sum type", function () {
+            equal(typeof sumStrings('1', '2'), 'string');
+            equal(typeof sumStrings('576', '579'), 'string');
+        });
+
+        test("two digits", function () {
+            equal(sumStrings('10', '21'), '31');
+        });
+
+        test("two digits dot and carry", function () {
+            equal(sumStrings('19', '21'), '40');
+            equal(sumStrings('19', '91'), '110');
+        });
+
+        test('large numbers', function () {
+            equal(sumStrings('712569312664357328695151392', '8100824045303269669937'), '712577413488402631964821329');
+        });
+
+
+
 
     </script>
 </head>
 <body>
-    <div id="qunit"></div>
+<div id="qunit"></div>
 </body>
 </html>
