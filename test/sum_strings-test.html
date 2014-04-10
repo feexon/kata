@@ -7,10 +7,16 @@
     <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
     <script type="text/javascript" src="../libs/qunit.js"></script>
     <script type="text/javascript">
-        function sumStrings(augend, addend, carry) {
-            var last = +(augend[augend.length - 1] || 0) + (+(addend[addend.length - 1] || 0));
-            carry && ++last;
-            return [(augend.length || addend.length) && sumStrings(augend.substring(0, augend.length - 1), addend.substring(0, addend.length - 1), last >= 10), last % 10].join('').replace(/^[0]/, '');
+        function sumStrings(a, b) {
+            a = a.split('');
+            b = b.split('');
+            var s = [], c = 0;
+            while (a.length || b.length || c) {
+                var d = ~~a.pop() + ~~b.pop() + c;
+                s.push(d % 10);
+                c = d > 9;
+            }
+            return s.reverse().join('').replace(/^0+/, '');
         }
     </script>
     <script type="text/javascript">
