@@ -9,7 +9,7 @@
     <script type="text/javascript">
         function sumStrings(augend, addend, carry) {
             var last = +(augend[augend.length - 1] || 0) + (+(addend[addend.length - 1] || 0));
-            var optimization = typeof carry == 'boolean' ? /^[0]+/ : '';
+            var optimization = typeof carry == 'boolean' ? /^[0]/ : '';
             carry && ++last;
             if (augend.length > 1 || addend.length > 1) {
                 return [sumStrings(augend.substring(0, augend.length - 1), addend.substring(0, addend.length - 1), last >= 10), last % 10].join('').replace(optimization, '');
@@ -43,7 +43,7 @@
         });
 
         test('drop leading zeros', function () {
-            equal(sumStrings('00103', '08567'), '8670');
+            equal(sumStrings('000103', '008567'), '8670');
         });
 
 
