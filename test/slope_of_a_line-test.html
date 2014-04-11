@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript">
+        function getSlope(p1, p2) {
+            var x = 0;
+            var y = 1;
+            return p1[x] == p2[x]?null:(p1[y] -p2[y])/(p1[x] -p2[x]);
+        }
+    </script>
+    <script type="text/javascript">
+        module('slope of a line');
+
+        test('vertical', function () {
+            equal(getSlope([1, 5], [1, 3]), null);
+        });
+
+        test('both same', function () {
+            equal(getSlope([1, 5], [1, 5]), null);
+        });
+
+        test('horizontal', function () {
+            equal(getSlope([5, 1], [3, 1]), 0);
+        });
+
+        test('slope', function () {
+
+            equal(getSlope([5, 5], [1, 1]), 1);
+            equal(getSlope([5, 10], [1, 2]), 2);
+        });
+
+
+
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
