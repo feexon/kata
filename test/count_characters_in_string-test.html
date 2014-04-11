@@ -8,7 +8,7 @@
     <script type="text/javascript" src="../libs/qunit.js"></script>
     <script type="text/javascript">
         function count(string) {
-            return [].reduce.call(string, function (occurrences, char) {
+            return string.split('').reduce(function (occurrences, char) {
                 occurrences[char] = ~~occurrences[char] + 1;
                 return occurrences;
             }, {});
