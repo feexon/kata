@@ -9,36 +9,79 @@
     <script type="text/javascript">
         var NSA = {
             log: function (whom) {
-                if (whom.callee) {
-                    return whom.name + ' called ' + whom.callee.name;
-                }
-                return 'No Entries';
+                var records = whom.records.map(function (record) {
+                    var action = record[2];
+                    var callee = record[1];
+                    var cellphone = record[0];
+                    return whom.name + ' ' + action + 'ed ' + callee.name + ' from ' + cellphone.owner + "'s phone(" + cellphone.number + ")";
+                });
+                return (records.length && records || ['No Entries']).join('\n');
             }
         };
         function Person(name) {
             this.name = name;
-            this.callee;
-            this.call = function (callee) {
-                this.callee = callee;
+            this.records = [];
+
+            this.call = function (cellphone, callee) {
+                this.records.push([cellphone, callee, 'call']);
+            };
+
+            this.text = function (cellphone, callee) {
+                this.records.push([cellphone, callee, 'text']);
             };
         }
+
     </script>
     <script type="text/javascript">
-        module('NSA phone tapping');
+        var dan, anthony;
+        module('NSA phone tapping', {
+            setup: function () {
+                dan = new Person('Dan');
+                anthony = new Person('Anthony');
+            }
+        });
 
         test('create Person', function () {
             equal(new Person('Joe').name, 'Joe');
         });
 
         test("NSA.log(Person) with no entries", function () {
-            equal(NSA.log(new Person('Joe')), 'No Entries');
+            equal(NSA.log(dan), 'No Entries');
         });
 
-        test("NSA.log(Person) with calls", function () {
-            var dan = new Person('Dan');
-            var anthony = new Person('Anthony');
-            dan.call(anthony);
-            equal(NSA.log(dan), 'Dan called Anthony');
+        test("NSA.log(Person) with a call", function () {
+
+            dan.call({owner: 'Dan', number: '202-555-0199'}, anthony);
+            equal(NSA.log(dan), "Dan called Anthony from Dan's phone(202-555-0199)");
+
+            anthony.call({owner: 'Anthony', number: '202-555-0149'}, dan);
+            equal(NSA.log(anthony), "Anthony called Dan from Anthony's phone(202-555-0149)");
+        });
+
+        test("NSA.log(Person) with multi calls", function () {
+
+            dan.call({owner: 'Dan', number: '202-555-0199'}, anthony);
+            dan.call({owner: 'Dan', number: '202-555-0199'}, anthony);
+            equal(NSA.log(dan), "Dan called Anthony from Dan's phone(202-555-0199)\nDan called Anthony from Dan's phone(202-555-0199)");
+
+
+        });
+
+        test("NSA.log(Person) with text", function () {
+            dan.text({owner: 'Dan', number: '202-555-0199'}, anthony);
+            equal(NSA.log(dan), "Dan texted Anthony from Dan's phone(202-555-0199)");
+        });
+
+        test("NSA.log(Person) with multi text", function () {
+            dan.text({owner: 'Dan', number: '202-555-0199'}, anthony);
+            dan.text({owner: 'Dan', number: '202-555-0199'}, anthony);
+            equal(NSA.log(dan), "Dan texted Anthony from Dan's phone(202-555-0199)\nDan texted Anthony from Dan's phone(202-555-0199)");
+        });
+
+        test("NSA.log(Person) with calling and text", function () {
+            dan.call({owner: 'Dan', number: '202-555-0199'}, anthony);
+            dan.text({owner: 'Dan', number: '202-555-0199'}, anthony);
+            equal(NSA.log(dan), "Dan called Anthony from Dan's phone(202-555-0199)\nDan texted Anthony from Dan's phone(202-555-0199)");
         });
     </script>
 </head>
