@@ -8,7 +8,11 @@
     <script type="text/javascript" src="../libs/qunit.js"></script>
     <script type="text/javascript">
         function triangular(n) {
-            return n == 1 ? 1 : triangular(n - 1) + n;
+            var ret = 0;
+            while (n) {
+                ret += n--;
+            }
+            return ret;
         }
     </script>
     <script type="text/javascript">
@@ -21,6 +25,10 @@
         test('triangular(n)', function () {
             equal(triangular(2), 3);
             equal(triangular(3), 6);
+        });
+
+        test('max', function () {
+            equal(triangular(100000), 5000050000);
         });
     </script>
 </head>
