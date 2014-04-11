@@ -9,7 +9,7 @@
     <script type="text/javascript">
         function flatten(array) {
             return  array.reduce(function (flat, item) {
-                return flat.concat(item.constructor==Array?flatten(item):item);
+                return flat.concat(item&&item.constructor==Array?flatten(item):item);
             }, []);
         }
     </script>
@@ -19,9 +19,14 @@
         test('one dimension array', function () {
             deepEqual(flatten([1, 2, 3]), [1, 2, 3]);
         });
+
         test('multi dimension array', function () {
             deepEqual(flatten([ [1] ]), [1]);
             deepEqual(flatten([[[1] ]]), [1]);
+        });
+
+        test('flatten with null objects', function () {
+            deepEqual(flatten([1,null]), [1,null]);
         });
 
     </script>
