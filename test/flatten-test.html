@@ -8,9 +8,7 @@
     <script type="text/javascript" src="../libs/qunit.js"></script>
     <script type="text/javascript">
         function flatten(array) {
-            return  array.reduce(function (flat, item) {
-                return flat.concat(item);
-            }, []);
+           return [].concat.apply([],array);
         }
     </script>
     <script type="text/javascript">
