@@ -8,15 +8,20 @@
     <script type="text/javascript" src="../libs/qunit.js"></script>
     <script type="text/javascript">
         function triangular(n) {
-            var ret = 0;
-            while (n > 0) {
-                ret += n--;
-            }
-            return ret;
+            return +(n > 0) && n * (n + 1) / 2;
         }
     </script>
     <script type="text/javascript">
         module('Triangular Treasure');
+
+
+        test('negative number', function () {
+            equal(triangular(-5), 0);
+        });
+
+        test('triangular(0)', function () {
+            equal(triangular(0), 0);
+        });
 
         test('triangular(1)', function () {
             equal(triangular(1), 1);
@@ -30,6 +35,7 @@
         test('max', function () {
             equal(triangular(100000), 5000050000);
         });
+
     </script>
 </head>
 <body>
