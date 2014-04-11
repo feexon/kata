@@ -26,8 +26,10 @@
                 this.records[0] = [cellphone, callee, 'call'];
             };
 
-            this.text = function (cellphone, callee) {
-                this.records.push([cellphone, callee, 'text']);
+            this.text = function (cellphone) {
+                for (var i = 1; i < arguments.length; i++) {
+                    this.records.push([cellphone, arguments[i], 'text']);
+                }
             };
         }
 
@@ -85,6 +87,12 @@
         test("NSA.log(Person) with multi texts", function () {
             dan.text({owner: dan, number: '202-555-0199'}, anthony);
             dan.text({owner: dan, number: '202-555-0199'}, erin);
+            equal(NSA.log(dan), "Dan texted Anthony from Dan's phone(202-555-0199)\nDan texted Erin from Dan's phone(202-555-0199)");
+
+        });
+
+        test("Person text with multi recipients", function () {
+            dan.text({owner: dan, number: '202-555-0199'}, anthony, erin);
             equal(NSA.log(dan), "Dan texted Anthony from Dan's phone(202-555-0199)\nDan texted Erin from Dan's phone(202-555-0199)");
 
         });
