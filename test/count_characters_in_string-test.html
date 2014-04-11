@@ -7,13 +7,21 @@
     <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
     <script type="text/javascript" src="../libs/qunit.js"></script>
     <script type="text/javascript">
-        function count() {
-            return {};
+        function count(string) {
+            return [].reduce.call(string, function (occurrences, char) {
+                occurrences[char] = 1;
+                return occurrences;
+            }, {});
         }
         module('count characters in string');
 
         test('empty string', function () {
             deepEqual(count(''), {});
+        });
+
+        test('one occurrence', function () {
+            deepEqual(count('a'), {a: 1});
+            deepEqual(count('abc'), {a: 1, b: 1, c: 1});
         });
     </script>
 </head>
