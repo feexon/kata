@@ -9,11 +9,11 @@
     <script type="text/javascript">
         var NSA = {
             log: function (whom) {
-                var records = whom.records.map(function (record) {
+                var records = whom.records.splice(0).map(function (record) {
                     var action = record[2];
                     var callee = record[1];
                     var cellphone = record[0];
-                    return whom.name + ' ' + action + 'ed ' + callee.name + ' from ' + cellphone.owner.name  + "'s phone(" + cellphone.number + ")";
+                    return whom.name + ' ' + action + 'ed ' + callee.name + ' from ' + cellphone.owner.name + "'s phone(" + cellphone.number + ")";
                 });
                 return (records.length && records || ['No Entries']).join('\n');
             }
@@ -23,7 +23,7 @@
             this.records = [];
 
             this.call = function (cellphone, callee) {
-                this.records.push([cellphone, callee, 'call']);
+                this.records[0] = [cellphone, callee, 'call'];
             };
 
             this.text = function (cellphone, callee) {
@@ -33,11 +33,13 @@
 
     </script>
     <script type="text/javascript">
-        var dan, anthony;
+        var dan, anthony, erin;
+
         module('NSA phone tapping', {
             setup: function () {
                 dan = new Person('Dan');
                 anthony = new Person('Anthony');
+                erin = new Person('Erin');
             }
         });
 
@@ -58,12 +60,32 @@
             equal(NSA.log(anthony), "Anthony called Dan from Anthony's phone(202-555-0149)");
         });
 
+        test("Person.records after log", function () {
+
+            dan.call({owner: dan, number: '202-555-0199'}, anthony);
+            equal(dan.records.length, 1);
+            NSA.log(dan);
+            equal(dan.records.length, 0);
+
+        });
+
+        test("NSA.log(Person) with a call using others phone", function () {
+
+            dan.call({owner: anthony, number: '202-555-0149'}, erin);
+            equal(NSA.log(dan), "Dan called Erin from Anthony's phone(202-555-0149)");
+        });
+
         test("NSA.log(Person) with multi calls", function () {
-
             dan.call({owner: dan, number: '202-555-0199'}, anthony);
-            dan.call({owner: dan, number: '202-555-0199'}, anthony);
-            equal(NSA.log(dan), "Dan called Anthony from Dan's phone(202-555-0199)\nDan called Anthony from Dan's phone(202-555-0199)");
+            dan.call({owner: dan, number: '202-555-0199'}, erin);
+            equal(NSA.log(dan), "Dan called Erin from Dan's phone(202-555-0199)");
 
+        });
+
+        test("NSA.log(Person) with multi texts", function () {
+            dan.text({owner: dan, number: '202-555-0199'}, anthony);
+            dan.text({owner: dan, number: '202-555-0199'}, erin);
+            equal(NSA.log(dan), "Dan texted Anthony from Dan's phone(202-555-0199)\nDan texted Erin from Dan's phone(202-555-0199)");
 
         });
 
@@ -72,17 +94,12 @@
             equal(NSA.log(dan), "Dan texted Anthony from Dan's phone(202-555-0199)");
         });
 
-        test("NSA.log(Person) with multi text", function () {
-            dan.text({owner: dan, number: '202-555-0199'}, anthony);
-            dan.text({owner: dan, number: '202-555-0199'}, anthony);
-            equal(NSA.log(dan), "Dan texted Anthony from Dan's phone(202-555-0199)\nDan texted Anthony from Dan's phone(202-555-0199)");
-        });
 
-        test("NSA.log(Person) with calling and text", function () {
-            dan.call({owner: dan, number: '202-555-0199'}, anthony);
-            dan.text({owner: dan, number: '202-555-0199'}, anthony);
-            equal(NSA.log(dan), "Dan called Anthony from Dan's phone(202-555-0199)\nDan texted Anthony from Dan's phone(202-555-0199)");
-        });
+        //        test("NSA.log(Person) with calling and text", function () {
+        //            dan.call({owner: dan, number: '202-555-0199'}, anthony);
+        //            dan.text({owner: dan, number: '202-555-0199'}, anthony);
+        //            equal(NSA.log(dan), "Dan called Anthony from Dan's phone(202-555-0199)\nDan texted Anthony from Dan's phone(202-555-0199)");
+        //        });
     </script>
 </head>
 <body>
