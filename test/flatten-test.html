@@ -8,9 +8,9 @@
     <script type="text/javascript" src="../libs/qunit.js"></script>
     <script type="text/javascript">
         function flatten(array) {
-            return array.map(function(item){
-                return item;
-            });
+            return  array.reduce(function (flat, item) {
+                return flat.concat(item.constructor==Array?flatten(item):item);
+            }, []);
         }
     </script>
     <script type="text/javascript">
@@ -18,6 +18,10 @@
 
         test('one dimension array', function () {
             deepEqual(flatten([1, 2, 3]), [1, 2, 3]);
+        });
+        test('multi dimension array', function () {
+            deepEqual(flatten([ [1] ]), [1]);
+            deepEqual(flatten([[[1] ]]), [1]);
         });
 
     </script>
