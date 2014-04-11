@@ -7,10 +7,22 @@
     <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
     <script type="text/javascript" src="../libs/qunit.js"></script>
     <script type="text/javascript">
+        function flatten(array) {
+            return array.map(function(item){
+                return item;
+            });
+        }
+    </script>
+    <script type="text/javascript">
+        module('flatten');
+
+        test('one dimension array', function () {
+            deepEqual(flatten([1, 2, 3]), [1, 2, 3]);
+        });
 
     </script>
 </head>
 <body>
-    <div id="qunit"></div>
+<div id="qunit"></div>
 </body>
 </html>
