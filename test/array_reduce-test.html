@@ -8,9 +8,19 @@
     <script type="text/javascript" src="../libs/qunit.js"></script>
     <script type="text/javascript">
 
+        function sum(array) {
+            return 0;
+        }
+
+        module('array reduce');
+
+        test('sum empty array', function () {
+            equal(sum([]), 0);
+        });
+
     </script>
 </head>
 <body>
-    <div id="qunit"></div>
+<div id="qunit"></div>
 </body>
 </html>
