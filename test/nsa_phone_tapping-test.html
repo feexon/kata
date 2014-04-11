@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript">
+        var NSA = {
+            log: function (whom) {
+                if (whom.callee) {
+                    return whom.name + ' called ' + whom.callee.name;
+                }
+                return 'No Entries';
+            }
+        };
+        function Person(name) {
+            this.name = name;
+            this.callee;
+            this.call = function (callee) {
+                this.callee = callee;
+            };
+        }
+    </script>
+    <script type="text/javascript">
+        module('NSA phone tapping');
+
+        test('create Person', function () {
+            equal(new Person('Joe').name, 'Joe');
+        });
+
+        test("NSA.log(Person) with no entries", function () {
+            equal(NSA.log(new Person('Joe')), 'No Entries');
+        });
+
+        test("NSA.log(Person) with calls", function () {
+            var dan = new Person('Dan');
+            var anthony = new Person('Anthony');
+            dan.call(anthony);
+            equal(NSA.log(dan), 'Dan called Anthony');
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
