@@ -29,6 +29,9 @@
             deepEqual(flatten([1,null]), [1,null]);
         });
 
+        test('mixed array',function(){
+            deepEqual(flatten([1,null,[2,[3]]]), [1,null,2,3]);
+        });
     </script>
 </head>
 <body>
