@@ -8,13 +8,9 @@
     <script type="text/javascript" src="../libs/qunit.js"></script>
     <script type="text/javascript">
         function getSlope(p1, p2) {
-            var slope = p1.map(function (value, axies) {
-                return value - p2[axies];
-            }).reverse().reduce(function (result, side) {
-                return result != null ? result / side : side;
-            });
-
-            return isFinite(slope)?slope:null;
+            var x = 0;
+            var y = 1;
+            return p1[x] == p2[x]?null:(p1[y] -p2[y])/(p1[x] -p2[x]);
         }
     </script>
     <script type="text/javascript">
