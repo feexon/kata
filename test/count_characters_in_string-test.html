@@ -9,7 +9,7 @@
     <script type="text/javascript">
         function count(string) {
             return [].reduce.call(string, function (occurrences, char) {
-                occurrences[char] = 1;
+                occurrences[char]=~~occurrences[char]+1;
                 return occurrences;
             }, {});
         }
@@ -22,6 +22,11 @@
         test('one occurrence', function () {
             deepEqual(count('a'), {a: 1});
             deepEqual(count('abc'), {a: 1, b: 1, c: 1});
+        });
+
+        test('more occurrences', function () {
+            deepEqual(count('aaa'), {a: 3});
+
         });
     </script>
 </head>
