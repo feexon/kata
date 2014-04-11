@@ -8,7 +8,7 @@
     <script type="text/javascript" src="../libs/qunit.js"></script>
     <script type="text/javascript">
         function triangular(n) {
-            return 1;
+            return n == 1 ? 1 : triangular(n - 1) + n;
         }
     </script>
     <script type="text/javascript">
@@ -16,6 +16,11 @@
 
         test('triangular(1)', function () {
             equal(triangular(1), 1);
+        });
+
+        test('triangular(n)', function () {
+            equal(triangular(2), 3);
+            equal(triangular(3), 6);
         });
     </script>
 </head>
