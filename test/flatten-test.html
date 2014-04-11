@@ -9,7 +9,7 @@
     <script type="text/javascript">
         function flatten(array) {
             return  array.reduce(function (flat, item) {
-                return flat.concat(item&&item.constructor==Array?flatten(item):item);
+                return flat.concat(item);
             }, []);
         }
     </script>
@@ -20,9 +20,11 @@
             deepEqual(flatten([1, 2, 3]), [1, 2, 3]);
         });
 
-        test('multi dimension array', function () {
-            deepEqual(flatten([ [1] ]), [1]);
-            deepEqual(flatten([[[1] ]]), [1]);
+        test('2 dimensions array', function () {
+            deepEqual(flatten([[1]]), [1]);
+        });
+        test('more than 2-dimensions array', function () {
+            deepEqual(flatten([[[1]]]), [[1]]);
         });
 
         test('flatten with null objects', function () {
@@ -30,7 +32,7 @@
         });
 
         test('mixed array',function(){
-            deepEqual(flatten([1,null,[2,[3]]]), [1,null,2,3]);
+            deepEqual(flatten([1,null,[2,3]]), [1,null,2,3]);
         });
     </script>
 </head>
