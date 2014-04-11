@@ -9,13 +9,20 @@
     <script type="text/javascript">
 
         function sum(array) {
-            return 0;
+            return array.reduce(function (sum,value) {
+                return value;
+            }, 0);
         }
 
         module('array reduce');
 
         test('sum empty array', function () {
             equal(sum([]), 0);
+        });
+
+        test('sum single item', function () {
+            equal(sum([1]), 1);
+            equal(sum([2]), 2);
         });
 
     </script>
