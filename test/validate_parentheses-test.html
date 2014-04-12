@@ -20,7 +20,7 @@
             }
             var next = parens.indexOf('(', first + 1);
 
-            if (next != -1 && next < last) {
+            if (next != -1 && next < last) {//nested parens
                 while (true) {
                     var nearest = parens.indexOf('(', next + 1);
                     if (nearest == -1 || nearest > last) {
@@ -28,10 +28,12 @@
                     }
                     next = nearest;
                 }
-                return validParentheses(parens.substring(next, last + 1)) &&
-                        validParentheses(parens.substring(first, next) + parens.substring(last + 1));
+                return validParentheses(parens.substring(next, last + 1)) &&//nested
+                        validParentheses(parens.substring(first, next) + parens.substring(last + 1));//rounding
             }
-            return validParentheses(parens.substring(first + 1, last)) && validParentheses(parens.substring(last + 1));
+            //flatten parens
+            return validParentheses(parens.substring(first + 1, last)) &&//nested
+                    validParentheses(parens.substring(last + 1));//suffix
         }
         test('simple parens', function () {
             ok(validParentheses('()'));
