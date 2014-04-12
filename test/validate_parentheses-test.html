@@ -19,7 +19,7 @@
                 return false;
             }
             var next = parens.indexOf('(', first + 1);
-            
+
             if (next != -1 && next < last) {
                 while (true) {
                     var nearest = parens.indexOf('(', next + 1);
@@ -56,6 +56,9 @@
         });
         test('deep nested parens', function () {
             ok(validParentheses('((()))'));
+        });
+        test('complex parens', function () {
+            ok(validParentheses('(())((()())())'));
         });
 
     </script>
