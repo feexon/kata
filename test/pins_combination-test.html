@@ -8,21 +8,20 @@
     <script type="text/javascript" src="../libs/qunit.js"></script>
     <script type="text/javascript">
         function pins(availables) {
-
-
-            return (function discovery(pins,solution) {
-                availables[solution.length].forEach(function (item) {
+            return (function discovery(solution,which) {
+                var concat=[].concat;
+                return concat.apply([],availables[which].map(function (item) {
                     solution.push(item);
-                    if (solution.length==availables.length) {
-                        pins.push(solution.join(''));
+                    if (which+1==availables.length) {
+                        var ret=solution.join('');
                         solution.pop();
-                        return;
+                        return ret;
                     }
-                    discovery(pins,solution);
+                    var ret=concat.apply([],discovery(solution,which+1));
                     solution.pop();
-                });
-                return pins;
-            })([],[]);
+                    return ret;
+                }));
+            })([],0);
 
         }
         function sortedPins(availables){
@@ -46,6 +45,7 @@
 
         test('typed more times', function () {
             deepEqual(sortedPins([ ['0'], ['1'],['2'] ]), ['012']);
+            deepEqual(sortedPins([ ['0'], ['1','2'],['3'] ]), ['013','023']);
         });
     </script>
 </head>
