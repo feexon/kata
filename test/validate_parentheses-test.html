@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript">
+        module('validate parentheses');
+        function validParentheses(parens) {
+            return parens.indexOf('(') != -1 && parens.indexOf(')') != -1;
+        }
+        test('simple parens', function () {
+            ok(validParentheses('()'))
+        });
+        test('missing any paren', function () {
+            ok(!validParentheses('('))
+            ok(!validParentheses(')'))
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
