@@ -11,7 +11,7 @@
         function validParentheses(parens) {
             var first = parens.indexOf('(');
             var last = parens.indexOf(')');
-            return first != -1 && last != -1&&first<last;
+            return !parens || first != -1 && last != -1 && first < last && validParentheses(parens.substring(last + 1));
         }
         test('simple parens', function () {
             ok(validParentheses('()'));
@@ -22,6 +22,13 @@
         });
         test('bad order', function () {
             ok(!validParentheses(')('));
+        });
+        test('flatten parens', function () {
+            ok(validParentheses('()()'));
+        });
+        test('flatten parens missing any paren', function () {
+            ok(!validParentheses('()('));
+            ok(!validParentheses('())'));
         });
     </script>
 </head>
