@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript">
+        function flatten(array) {
+           return [].concat.apply([],array);
+        }
+    </script>
+    <script type="text/javascript">
+        module('flatten');
+
+        test('one dimension array', function () {
+            deepEqual(flatten([1, 2, 3]), [1, 2, 3]);
+        });
+
+        test('2 dimensions array', function () {
+            deepEqual(flatten([[1]]), [1]);
+        });
+        test('more than 2-dimensions array', function () {
+            deepEqual(flatten([[[1]]]), [[1]]);
+        });
+
+        test('flatten with null objects', function () {
+            deepEqual(flatten([1,null]), [1,null]);
+        });
+
+        test('mixed array',function(){
+            deepEqual(flatten([1,null,[2,3]]), [1,null,2,3]);
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
