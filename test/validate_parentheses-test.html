@@ -9,14 +9,19 @@
     <script type="text/javascript">
         module('validate parentheses');
         function validParentheses(parens) {
-            return parens.indexOf('(') != -1 && parens.indexOf(')') != -1;
+            var first = parens.indexOf('(');
+            var last = parens.indexOf(')');
+            return first != -1 && last != -1&&first<last;
         }
         test('simple parens', function () {
-            ok(validParentheses('()'))
+            ok(validParentheses('()'));
         });
         test('missing any paren', function () {
-            ok(!validParentheses('('))
-            ok(!validParentheses(')'))
+            ok(!validParentheses('('));
+            ok(!validParentheses(')'));
+        });
+        test('bad order', function () {
+            ok(!validParentheses(')('));
         });
     </script>
 </head>
