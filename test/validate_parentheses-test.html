@@ -9,31 +9,18 @@
     <script type="text/javascript">
         module('validate parentheses');
         function validParentheses(parens) {
-            var first = parens.indexOf('(');
-            var last = parens.indexOf(')', first + 1);
-            if (first == last && first == -1) {
-                return true;
-            }
+            var count = 0;
 
-            if (first == -1 || last == -1) {
-                return false;
-            }
-            var next = parens.indexOf('(', first + 1);
-
-            if (next != -1 && next < last) {//nested parens
-                while (true) {
-                    var nearest = parens.indexOf('(', next + 1);
-                    if (nearest == -1 || nearest > last) {
-                        break;
-                    }
-                    next = nearest;
+            for (var i in parens) {
+                if (parens[i] == '(') {
+                    count++;
                 }
-                return validParentheses(parens.substring(next, last + 1)) &&//nested
-                        validParentheses(parens.substring(first, next) + parens.substring(last + 1));//rounding
+                if (parens[i] == ')' && --count < 0) {
+                    return false;
+                }
             }
-            //flatten parens
-            return validParentheses(parens.substring(first + 1, last)) &&//nested
-                    validParentheses(parens.substring(last + 1));//suffix
+
+            return count == 0;
         }
         test('simple parens', function () {
             ok(validParentheses('()'));
