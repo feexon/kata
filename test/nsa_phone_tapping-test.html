@@ -22,14 +22,18 @@
             this.name = name;
             this.records = [];
 
+            function record(action, cellphone, callee) {
+                this.records.push([cellphone, callee, action]);
+            }
+
             this.call = function (cellphone, callee) {
-                this.records[0] = [cellphone, callee, 'call'];
+                record.call(this, 'call', cellphone, callee);
             };
 
             this.text = function (cellphone) {
-                var sender=this;
-                Array.prototype.slice.call(arguments,1).forEach(function(recipient){
-                    sender.records.push([cellphone, recipient, 'text']);
+                var sender = this;
+                [].slice.call(arguments, 1).forEach(function (recipient) {
+                    record.call(sender, 'text', cellphone, recipient);
                 });
             };
         }
@@ -37,12 +41,17 @@
     </script>
     <script type="text/javascript">
         var dan, anthony, erin;
+        var dan_phone;
+
+        var anthony_phone;
 
         module('NSA phone tapping', {
             setup: function () {
                 dan = new Person('Dan');
                 anthony = new Person('Anthony');
                 erin = new Person('Erin');
+                dan_phone = {owner: dan, number: '202-555-0199'};
+                anthony_phone = {owner: anthony, number: '202-555-0149'};
             }
         });
 
@@ -56,16 +65,16 @@
 
         test("NSA.log(Person) with a call", function () {
 
-            dan.call({owner: dan, number: '202-555-0199'}, anthony);
+            dan.call(dan_phone, anthony);
             equal(NSA.log(dan), "Dan called Anthony from Dan's phone(202-555-0199)");
 
-            anthony.call({owner: anthony, number: '202-555-0149'}, dan);
+
+            anthony.call(anthony_phone, dan);
             equal(NSA.log(anthony), "Anthony called Dan from Anthony's phone(202-555-0149)");
         });
 
         test("Person.records after log", function () {
-
-            dan.call({owner: dan, number: '202-555-0199'}, anthony);
+            dan.call(dan_phone, anthony);
             equal(dan.records.length, 1);
             NSA.log(dan);
             equal(dan.records.length, 0);
@@ -73,22 +82,14 @@
         });
 
         test("NSA.log(Person) with a call using others phone", function () {
-
-            dan.call({owner: anthony, number: '202-555-0149'}, erin);
+            dan.call(anthony_phone, erin);
             equal(NSA.log(dan), "Dan called Erin from Anthony's phone(202-555-0149)");
         });
 
         test("NSA.log(Person) with multi calls", function () {
-            dan.call({owner: dan, number: '202-555-0199'}, anthony);
-            dan.call({owner: dan, number: '202-555-0199'}, erin);
-            equal(NSA.log(dan), "Dan called Erin from Dan's phone(202-555-0199)");
-
-        });
-
-        test("NSA.log(Person) with multi texts", function () {
-            dan.text({owner: dan, number: '202-555-0199'}, anthony);
-            dan.text({owner: dan, number: '202-555-0199'}, erin);
-            equal(NSA.log(dan), "Dan texted Anthony from Dan's phone(202-555-0199)\nDan texted Erin from Dan's phone(202-555-0199)");
+            dan.call(dan_phone, anthony);
+            dan.call(dan_phone, erin);
+            equal(NSA.log(dan), "Dan called Anthony from Dan's phone(202-555-0199)\nDan called Erin from Dan's phone(202-555-0199)");
 
         });
 
@@ -99,7 +100,8 @@
         });
 
         test("NSA.log(Person) with text", function () {
-            dan.text({owner: dan, number: '202-555-0199'}, anthony);
+
+            dan.text(dan_phone, anthony);
             equal(NSA.log(dan), "Dan texted Anthony from Dan's phone(202-555-0199)");
         });
 
