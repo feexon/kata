@@ -17,6 +17,10 @@
             this.pageItemCount = function (page) {
                 return Math.max(-1, Math.min(itemsPerPage, collection.length - itemsPerPage * page));
             };
+            this.pageIndex = function (item) {
+                var index = collection.indexOf(item);
+                return index < 0 && -1 || ~~(index / itemsPerPage);
+            };
         }
     </script>
     <script type="text/javascript">
@@ -36,6 +40,16 @@
             equal(helper.pageItemCount(0), 4);
             equal(helper.pageItemCount(1), 2);
             equal(helper.pageItemCount(2), -1);
+        });
+
+        test('page number of an item', function () {
+            equal(helper.pageIndex(1), 0);
+            equal(helper.pageIndex(5), 1);
+            equal(helper.pageIndex(6), 1);
+        });
+
+        test('item not in any page', function () {
+            equal(helper.pageIndex(20), -1);
         });
     </script>
 </head>
