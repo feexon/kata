@@ -18,7 +18,7 @@
                 return Math.max(-1, Math.min(itemsPerPage, collection.length - itemsPerPage * page));
             };
             this.pageIndex = function (index) {
-                return (++index== 0||index>collection.length) && -1 || ~~(index / itemsPerPage);
+                return (++index <= 0 || index > collection.length) && -1 || ~~(index / itemsPerPage);
             };
         }
     </script>
@@ -46,9 +46,10 @@
             equal(helper.pageIndex(3), 1);
         });
 
-        test('item not in any page', function () {
+        test('item index out of range', function () {
             equal(helper.pageIndex(-1), -1);
             equal(helper.pageIndex(6), -1);
+            equal(helper.pageIndex(-23), -1);
         });
     </script>
 </head>
