@@ -15,10 +15,7 @@
                     return concat.apply([], which.map(function (item) {
                         solution.push(item);
                         try {
-                            if (availables.length) {
-                                return concat.apply([], discovery(solution));
-                            }
-                            return solution.join('');
+                            return availables.length&&concat.apply([], discovery(solution))||solution.join('');
                         } finally {
                             solution.pop();
                         }
