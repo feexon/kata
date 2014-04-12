@@ -19,10 +19,17 @@
                 return false;
             }
             var next = parens.indexOf('(', first + 1);
-
+            
             if (next != -1 && next < last) {
+                while (true) {
+                    var nearest = parens.indexOf('(', next + 1);
+                    if (nearest == -1 || nearest > last) {
+                        break;
+                    }
+                    next = nearest;
+                }
                 return validParentheses(parens.substring(next, last + 1)) &&
-                        validParentheses(parens.substring(first, next) + parens.substring(last+1));
+                        validParentheses(parens.substring(first, next) + parens.substring(last + 1));
             }
             return validParentheses(parens.substring(first + 1, last)) && validParentheses(parens.substring(last + 1));
         }
@@ -46,6 +53,9 @@
         test('nested parens', function () {
             ok(!validParentheses('(()'));
             ok(validParentheses('(())'));
+        });
+        test('deep nested parens', function () {
+            ok(validParentheses('((()))'));
         });
 
     </script>
