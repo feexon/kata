@@ -14,19 +14,28 @@
             this.pageCount = function () {
                 return Math.ceil(collection.length / itemsPerPage);
             };
+            this.pageItemCount = function (page) {
+                return Math.max(-1, Math.min(itemsPerPage, collection.length - itemsPerPage * page));
+            };
         }
     </script>
     <script type="text/javascript">
+        var helper = new PaginationHelper([1, 2, 3, 4, 5, 6], 4);
         module("pagination helper");
 
-
         test('create', function () {
-            equal(new PaginationHelper([1, 2, 3, 4]).itemCount(), 4);
+            equal(helper.itemCount(), 6);
         });
 
         test('calculate max pages', function () {
             equal(new PaginationHelper([1, 2, 3, 4], 2).pageCount(), 2);
-            equal(new PaginationHelper([1, 2, 3, 4, 5], 2).pageCount(), 3);
+            equal(helper.pageCount(), 2);
+        });
+
+        test('items count in page', function () {
+            equal(helper.pageItemCount(0), 4);
+            equal(helper.pageItemCount(1), 2);
+            equal(helper.pageItemCount(2), -1);
         });
     </script>
 </head>
