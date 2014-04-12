@@ -23,14 +23,13 @@
             this.records = [];
 
             this.call = function (cellphone, callee) {
-                this.records[0] = [cellphone, callee, 'call'];
+                this.records.push([cellphone, callee, 'call']);
             };
 
             this.text = function (cellphone) {
-                var sender=this;
-                Array.prototype.slice.call(arguments,1).forEach(function(recipient){
-                    sender.records.push([cellphone, recipient, 'text']);
-                });
+                for (var i = 1; i < arguments.length; i++) {
+                    this.records.push([cellphone, arguments[i], 'text']);
+                }
             };
         }
 
@@ -81,7 +80,7 @@
         test("NSA.log(Person) with multi calls", function () {
             dan.call({owner: dan, number: '202-555-0199'}, anthony);
             dan.call({owner: dan, number: '202-555-0199'}, erin);
-            equal(NSA.log(dan), "Dan called Erin from Dan's phone(202-555-0199)");
+            equal(NSA.log(dan), "Dan called Anthony from Dan's phone(202-555-0199)\nDan called Erin from Dan's phone(202-555-0199)");
 
         });
 
