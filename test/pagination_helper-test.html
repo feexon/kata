@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript">
+        function PaginationHelper(collection, itemsPerPage) {
+            this.itemCount = function () {
+                return collection.length;
+            };
+            this.pageCount = function () {
+                return Math.ceil(collection.length / itemsPerPage);
+            };
+            this.pageItemCount = function (page) {
+                return Math.max(-1, Math.min(itemsPerPage, collection.length - itemsPerPage * page));
+            };
+            this.pageIndex = function (index) {
+                return (++index <= 0 || index > collection.length) && -1 || ~~(index / itemsPerPage);
+            };
+        }
+    </script>
+    <script type="text/javascript">
+        var helper = new PaginationHelper([1, 2, 3, 4, 5, 6], 4);
+        module("pagination helper");
+
+        test('create', function () {
+            equal(helper.itemCount(), 6);
+        });
+
+        test('calculate max pages', function () {
+            equal(new PaginationHelper([1, 2, 3, 4], 2).pageCount(), 2);
+            equal(helper.pageCount(), 2);
+        });
+
+        test('items count in page', function () {
+            equal(helper.pageItemCount(0), 4);
+            equal(helper.pageItemCount(1), 2);
+            equal(helper.pageItemCount(2), -1);
+        });
+
+        test('page number of an item', function () {
+            equal(helper.pageIndex(0), 0);
+            equal(helper.pageIndex(3), 1);
+        });
+
+        test('item index out of range', function () {
+            equal(helper.pageIndex(-1), -1);
+            equal(helper.pageIndex(6), -1);
+            equal(helper.pageIndex(-23), -1);
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
