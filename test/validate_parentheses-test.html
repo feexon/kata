@@ -10,8 +10,21 @@
         module('validate parentheses');
         function validParentheses(parens) {
             var first = parens.indexOf('(');
-            var last = parens.indexOf(')');
-            return !parens || first != -1 && last != -1 && first < last && validParentheses(parens.substring(last + 1));
+            var last = parens.indexOf(')', first + 1);
+            if (first == last && first == -1) {
+                return true;
+            }
+
+            if (first == -1 || last == -1) {
+                return false;
+            }
+            var next = parens.indexOf('(', first + 1);
+
+            if (next != -1 && next < last) {
+                return validParentheses(parens.substring(next, last + 1)) &&
+                        validParentheses(parens.substring(first, next) + parens.substring(last+1));
+            }
+            return validParentheses(parens.substring(first + 1, last)) && validParentheses(parens.substring(last + 1));
         }
         test('simple parens', function () {
             ok(validParentheses('()'));
@@ -30,6 +43,11 @@
             ok(!validParentheses('()('));
             ok(!validParentheses('())'));
         });
+        test('nested parens', function () {
+            ok(!validParentheses('(()'));
+            ok(validParentheses('(())'));
+        });
+
     </script>
 </head>
 <body>
