@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript">
+        function PaginationHelper(collection, itemsPerPage) {
+            this.itemCount = function () {
+                return collection.length;
+            };
+            this.pageCount = function () {
+                return Math.ceil(collection.length / itemsPerPage);
+            };
+        }
+    </script>
+    <script type="text/javascript">
+        module("pagination helper");
+
+
+        test('create', function () {
+            equal(new PaginationHelper([1, 2, 3, 4]).itemCount(), 4);
+        });
+
+        test('calculate max pages', function () {
+            equal(new PaginationHelper([1, 2, 3, 4], 2).pageCount(), 2);
+            equal(new PaginationHelper([1, 2, 3, 4, 5], 2).pageCount(), 3);
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
