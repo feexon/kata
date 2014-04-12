@@ -7,7 +7,14 @@
     <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
     <script type="text/javascript" src="../libs/qunit.js"></script>
     <script type="text/javascript">
+        function pins(avaiables){
+            return avaiables[0];
+        }
+        module('pins combination');
 
+        test('one pin',function(){
+            deepEqual(pins([['0']]),['0']);
+        });
     </script>
 </head>
 <body>
