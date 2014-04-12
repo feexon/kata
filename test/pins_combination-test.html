@@ -15,6 +15,10 @@
         test('one pin',function(){
             deepEqual(pins([['0']]),['0']);
         });
+
+        test('typed only once',function(){
+            deepEqual(pins([['0','8']]),['0','8']);
+        });
     </script>
 </head>
 <body>
