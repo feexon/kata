@@ -7,21 +7,35 @@
     <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
     <script type="text/javascript" src="../libs/qunit.js"></script>
     <script type="text/javascript">
-        function pins(avaiables){
-            return avaiables[0];
+        function pins(availables) {
+            return availables[0].reduce(function (ret, item) {
+                ret.push.apply(ret, availables[1]&&availables[1].map(function (current) {
+                    return  item + current;
+                })||[item]);
+                return ret;
+            }, []);
+        }
+        function sortedPins(availables){
+            return pins(availables).sort();
         }
         module('pins combination');
 
-        test('one pin',function(){
-            deepEqual(pins([['0']]),['0']);
+        test('one pin', function () {
+            deepEqual(sortedPins([ ['0'] ]), ['0']);
         });
 
-        test('typed only once',function(){
-            deepEqual(pins([['0','8']]),['0','8']);
+        test('typed only once', function () {
+            deepEqual(sortedPins([ ['0', '8'] ]), ['0', '8']);
+        });
+
+        test('typed two times', function () {
+            deepEqual(sortedPins([ ['0'], ['1'] ]), ['01']);
+            deepEqual(sortedPins([ ['0'], ['1', '2'] ]), ['01', '02']);
+            deepEqual(sortedPins([ ['0','1'], ['2'] ]), ['02', '12']);
         });
     </script>
 </head>
 <body>
-    <div id="qunit"></div>
+<div id="qunit"></div>
 </body>
 </html>
