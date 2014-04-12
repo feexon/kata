@@ -14,14 +14,14 @@
                 try {
                     return concat.apply([], which.map(function (item) {
                         solution.push(item);
-                        if (!availables.length) {
-                            var ret = solution.join('');
+                        try {
+                            if (availables.length) {
+                                return concat.apply([], discovery(solution));
+                            }
+                            return solution.join('');
+                        } finally {
                             solution.pop();
-                            return ret;
                         }
-                        var ret = concat.apply([], discovery(solution));
-                        solution.pop();
-                        return ret;
                     }));
                 } finally {
                     availables.unshift(which);
@@ -35,22 +35,43 @@
         module('pins combination');
 
         test('one pin', function () {
-            deepEqual(sortedPins([ ['0'] ]), ['0']);
+            deepEqual(sortedPins([
+                ['0']
+            ]), ['0']);
         });
 
         test('typed only once', function () {
-            deepEqual(sortedPins([ ['0', '8'] ]), ['0', '8']);
+            deepEqual(sortedPins([
+                ['0', '8']
+            ]), ['0', '8']);
         });
 
         test('typed two times', function () {
-            deepEqual(sortedPins([ ['0'], ['1'] ]), ['01']);
-            deepEqual(sortedPins([ ['0'], ['1', '2'] ]), ['01', '02']);
-            deepEqual(sortedPins([ ['0', '1'], ['2'] ]), ['02', '12']);
+            deepEqual(sortedPins([
+                ['0'],
+                ['1']
+            ]), ['01']);
+            deepEqual(sortedPins([
+                ['0'],
+                ['1', '2']
+            ]), ['01', '02']);
+            deepEqual(sortedPins([
+                ['0', '1'],
+                ['2']
+            ]), ['02', '12']);
         });
 
         test('typed more times', function () {
-            deepEqual(sortedPins([ ['0'], ['1'], ['2'] ]), ['012']);
-            deepEqual(sortedPins([ ['0'], ['1', '2'], ['3'] ]), ['013', '023']);
+            deepEqual(sortedPins([
+                ['0'],
+                ['1'],
+                ['2']
+            ]), ['012']);
+            deepEqual(sortedPins([
+                ['0'],
+                ['1', '2'],
+                ['3']
+            ]), ['013', '023']);
         });
     </script>
 </head>
