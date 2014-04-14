@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript">
+        /**
+         * This time we want to write calculations using functions and get the results. Let's have a look at some examples:
+
+         seven(times(five())); // must return 35
+         four(plus(nine())); // must return 13
+         eight(minus(three())); // must return 5
+         six(dividedBy(two())); // must return 3
+         Requirements:
+
+         There must be a function for each number from 0 ("zero") to 9 ("nine")
+         There must be a function for each of the following mathematical operations: plus, minus, times, dividedBy (divided_by in Ruby)
+         Each calculation consist of exactly one operation and two numbers
+         The most outer function represents the left operand, the most inner function represents the right operand
+         */
+        function four(expression) {
+            return 4 + expression;
+        }
+        function nine() {
+            return 9;
+        }
+        function plus(operand) {
+            return operand;
+        }
+    </script>
+    <script type="text/javascript">
+        module("calculations using functions");
+        test("plus", function () {
+            equal(four(plus(nine())), 13);
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
