@@ -140,34 +140,34 @@
         });
 
         test('progress in final rank 8', function () {
-            user.rank=8;
+            user.rank = 8;
             user.incProgress(8);
             equal(user.progress, 0);
         });
-
-        test('should raise error if rank low than -8', function () {
+        function raising(action) {
+            var error = null;
             try {
-                user.incProgress(-9);
+                action.call();
                 throw new Error('failed');
             } catch (e) {
-                notEqual(e.message, 'failed');
+                error = e;
             }
+            notEqual(error, null);
+        }
+        test('should raise error if rank low than -8', function () {
+            raising(function () {
+                user.incProgress(-9);
+            });
         });
         test('should raise error if rank low than 8', function () {
-            try {
+            raising(function () {
                 user.incProgress(9);
-                throw new Error('failed');
-            } catch (e) {
-                notEqual(e.message, 'failed');
-            }
+            });
         });
         test('should raise error if rank is 0', function () {
-            try {
+            raising(function () {
                 user.incProgress(0);
-                throw new Error('failed');
-            } catch (e) {
-                notEqual(e.message, 'failed');
-            }
+            });
         });
     </script>
 </head>
