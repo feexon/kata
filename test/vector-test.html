@@ -31,17 +31,15 @@
 
         function Vector(items) {
             this.items = items;
-            this.add = function (addend) {
+            this.add = function (addend, factor) {
+                factor = factor || 1;
                 this.items = this.items.map(function (item, index) {
-                    return item + addend.items[index];
+                    return item + factor * addend.items[index];
                 });
                 return this;
             };
             this.subtract = function (subtrahend) {
-                this.items = this.items.map(function (item, index) {
-                    return item - subtrahend.items[index];
-                });
-                return this;
+                return this.add(subtrahend, -1);
             };
             this.equals = function (that) {
                 return this.items.every(function (item, index) {
