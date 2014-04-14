@@ -24,37 +24,9 @@
         function operand(value, expression) {
             return expression ? expression.call(null, value) : value;
         }
-        function zero(expression) {
-            return operand(0, expression);
-        }
-        function one(expression) {
-            return operand(1, expression);
-        }
-        function two(expression) {
-            return operand(2, expression);
-        }
-        function three(expression) {
-            return operand(3, expression);
-        }
-        function four(expression) {
-            return operand(4, expression);
-        }
-        function five(expression) {
-            return operand(5, expression);
-        }
-        function six(expression) {
-            return operand(6, expression);
-        }
-        function seven(expression) {
-            return operand(7, expression);
-        }
-        function eight(expression) {
-            return operand(8, expression);
-        }
-        function nine(expression) {
-            return operand(9, expression);
-        }
-
+        "zero,one,two,three,four,five,six,seven,eight,nine".split(',').forEach(function (name, value) {
+            eval(name + "=function (expression) { return operand(" + value + ", expression); }");
+        });
         function plus(addend) {
             return function (augend) {
                 return augend + addend;
