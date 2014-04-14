@@ -32,6 +32,9 @@
         function Vector(items) {
             this.items = items;
             this.add = function (addend, factor) {
+                if (this.items.length != addend.items.length) {
+                    throw "Can't work on different size vector";
+                }
                 factor = factor || 1;
                 this.items = this.items.map(function (item, index) {
                     return item + factor * addend.items[index];
@@ -83,6 +86,16 @@
         });
         test('norm', function () {
             equal(a.norm(), Math.sqrt(14));
+        });
+
+        test('add different size vector will raise exception', function () {
+            var failed;
+            try {
+                a.add(c);
+            } catch (e) {
+                failed = true;
+            }
+            ok(failed);
         });
     </script>
 </head>
