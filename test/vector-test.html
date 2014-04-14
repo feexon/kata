@@ -31,7 +31,7 @@
 
         function Vector(items) {
             this.items = items;
-            this.ensureSizeEqualTo=function(target) {
+            this.ensureSizeEqualTo = function (target) {
                 if (this.items.length != target.items.length) {
                     throw "Can't work on different size vector";
                 }
@@ -40,10 +40,9 @@
             this.add = function (addend, factor) {
                 this.ensureSizeEqualTo(addend);
                 factor = factor || 1;
-                this.items = this.items.map(function (item, index) {
+                return new Vector(this.items.map(function (item, index) {
                     return item + factor * addend.items[index];
-                });
-                return this;
+                }));
             };
 
             this.subtract = function (subtrahend) {
@@ -80,6 +79,7 @@
         });
 
         test('add', function () {
+            ok(a.add(b).equals(new Vector([4, 6, 8])));
             ok(a.add(b).equals(new Vector([4, 6, 8])));
         });
 
