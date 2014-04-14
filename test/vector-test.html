@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+
+    <script type="text/javascript">
+        /**
+         * Create a Vector object that supports addition, subtraction, dot products, and norms. So, for example:
+
+         var a = new Vector([1,2,3]);
+         var b = new Vector([3,4,5]);
+         var c = new Vector([5,6,7,8]);
+         --new Vector([1,2,3]).equals(new Vector([1,2,3]))
+         --a.add(b); // should return Vector([4,6,8])
+         --a.subtract(b); // should return Vector([-2,-2,-2])
+         --a.dot(b); // should return 1*3+2*4+3*5 = 26
+         a.norm(); // should return sqrt(1^2+2^2+3^2)=sqrt(14)
+         a.add(c); // throws an error
+         If you try to add, subtract, or dot two vectors with different lengths, you must throw an error!
+
+         Also provide:
+
+         a toString function, so that using the vectors from above, a.toString() === '(1,2,3)'
+         an equals function, so that two vectors who have the same components are equal
+         The test cases will utilize the user-provided equals method.
+         */
+
+        function Vector(items) {
+            this.size = items.length;
+            this.item = function (index) {
+                return items[index];
+            };
+            this.ensureSizeEqualTo = function (target) {
+                if (this.size!= target.size) {
+                    throw "Can't work on different size vector";
+                }
+            }
+
+            this.add = function (addend, factor) {
+                this.ensureSizeEqualTo(addend);
+                factor = factor || 1;
+                return new Vector(items.map(function (item, index) {
+                    return item + factor * addend.item(index);
+                }));
+            };
+
+            this.subtract = function (subtrahend) {
+                return this.add(subtrahend, -1);
+            };
+            this.dot = function (other) {
+                this.ensureSizeEqualTo(other);
+                return items.reduce(function (ret, item, index) {
+                    return ret + item * other.item(index);
+                }, 0);
+            };
+            this.norm = function () {
+                return Math.sqrt(this.dot(this));
+            };
+            this.equals = function (that) {
+                return items.every(function (item, index) {
+                    return item == that.item(index);
+                });
+            };
+
+            this.toString = function () {
+                return ['(', items.join(','), ')'].join('');
+            };
+        }
+    </script>
+    <script type="text/javascript">
+        var a, b, c;
+        module('Vector', {
+            setup: function () {
+                a = new Vector([1, 2, 3]);
+                b = new Vector([3, 4, 5]);
+                c = new Vector([5, 6, 7, 8]);
+            }
+        });
+        test('equality', function () {
+            ok(a.equals(new Vector([1, 2, 3])));
+            ok(!a.equals(b));
+        });
+
+        test('add', function () {
+            ok(a.add(b).equals(new Vector([4, 6, 8])));
+            ok(a.add(b).equals(new Vector([4, 6, 8])));
+        });
+
+        test('subtraction', function () {
+            ok(a.subtract(b).equals(new Vector([-2, -2, -2])));
+        });
+        test('dot', function () {
+            equal(a.dot(b), 26);
+        });
+        test('norm', function () {
+            equal(a.norm(), Math.sqrt(14));
+        });
+
+        test('add different size vector will raise exception', function () {
+            var failed;
+            try {
+                a.add(c);
+            } catch (e) {
+                failed = true;
+            }
+            ok(failed);
+        });
+        test('dot different size vector will raise exception', function () {
+            var failed;
+            try {
+                a.dot(c);
+            } catch (e) {
+                failed = true;
+            }
+            ok(failed);
+        });
+
+        test('toString', function () {
+            equal(a.toString(), '(1,2,3)');
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
