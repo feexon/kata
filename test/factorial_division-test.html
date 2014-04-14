@@ -26,9 +26,9 @@
          You will only receive positive integers, and the first one will be greater than the second one
          */
 
-        function factorialDivision(n) {
+        function factorialDivision(n, m) {
             var ret = 1;
-            while (n > 1) {
+            while (n > m) {
                 ret = ret * n--;
             }
             return ret;
@@ -37,7 +37,11 @@
     <script type="text/javascript">
         module('factorial division');
         test('factorial', function () {
-            equal(factorialDivision(5), 5 * 4 * 3 * 2 * 1);
+            equal(factorialDivision(5, 1), 5 * 4 * 3 * 2 * 1);
+        });
+        test('factorial division', function () {
+            equal(factorialDivision(5, 1), 5 * 4 * 3 * 2 * 1);
+            equal(factorialDivision(5, 4), 5);
         });
     </script>
 </head>
