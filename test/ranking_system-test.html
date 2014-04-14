@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         A user starts at rank -8 and can progress all the way to 8.
+         There is no 0 (zero) rank. The next rank after -1 is 1.
+         Users will complete activities. These activities also have ranks.
+         Each time the user completes a ranked activity the users rank progress is updated based off of the activity's rank
+         The progress earned from the completed activity is relative to what the user's current rank is compared to the rank of the activity
+         A user's rank progress starts off at zero, each time the progress reaches 100 the user's rank is upgraded to the next level
+         Any remaining progress earned while in the previous rank will be applied towards the next rank's progress (we don't throw any progress away). The exception is if there is no other rank left to progress towards (Once you reach rank 8 there is no more progression).
+         A user cannot progress beyond rank 8.
+         The only acceptable range of rank values is -8,-7,-6,-5,-4,-3,-2,-1,1,2,3,4,5,6,7,8. Any other value should raise an error.
+
+         Completing an activity that is ranked the same as that of the user's will be worth 3 points
+         Completing an activity that is ranked one ranking lower than the user's will be worth 1 point
+         Any activities completed that are ranking 2 levels or more lower than the user's ranking will be ignored
+         Completing an activity ranked higher than the current user's rank will accelerate the rank progression.
+         The greater the difference between rankings the more the progression will be increased.
+         The formula is 10 * d * d where d equals the difference in ranking between the activity and the user.
+         Logic Examples:
+
+         If a user ranked -8 completes an activity ranked -7 they will receive 10 progress
+         If a user ranked -8 completes an activity ranked -6 they will receive 40 progress
+         If a user ranked -8 completes an activity ranked -5 they will receive 90 progress
+         If a user ranked -8 completes an activity ranked -4 they will receive 160 progress,
+         resulting in the user being upgraded to rank -7 and having earned 60 progress towards their next rank
+         If a user ranked -1 completes an activity ranked 1 they will receive 10 progress (remember, zero rank is ignored)
+         Code Usage Examples:
+
+         var user = new User()
+         user.rank // => -8
+         user.progress // => 0
+         user.incProgress(-7)
+         user.progress // => 10
+         user.incProgress(-5) // will add 90 progress
+         user.progress # => 0 // progress is now zero
+         user.rank # => -7 // rank was upgraded to -7
+         Note: Codewars no longer uses this algorithm for its own ranking system. It uses a pure Math based solution that gives consistent results no matter what order a set of ranked activities are completed at.
+         * @constructor
+         */
+        function User() {
+            var START_RANK = -8;
+            var FINAL_RANK = 8;
+            var UPGRADE_POINTS = 100;
+            this.rank = START_RANK;
+            this.progress = 0;
+            function earnedPoints(progress) {
+                var diff = progress - this.rank + (progress * this.rank < 0 ? -1 : 0);
+                return diff < 0 ? 1 : progress == this.rank ? 3 : 10 * Math.pow(diff, 2);
+            }
+
+            this.incProgress = function (progress) {
+                if (progress < START_RANK || progress > FINAL_RANK || !progress) {
+                    throw 'rank out of range:' + progress;
+                }
+
+                this.progress += earnedPoints.call(this, progress);
+                if (this.progress >= UPGRADE_POINTS) {
+                    this.rank = Math.min(FINAL_RANK, this.rank + ~~(this.progress / UPGRADE_POINTS) || 1);
+                }
+                this.progress %= this.rank == FINAL_RANK ? 1 : UPGRADE_POINTS;
+            }
+        }
+    </script>
+    <script type="text/javascript">
+        var user;
+
+        module("Codewars Ranking System", {
+            setup: function () {
+                user = new User();
+            }
+        });
+        test('User class', function () {
+            equal(typeof User, 'function');
+            equal(typeof new User().incProgress, 'function');
+        });
+        test('starting values', function () {
+
+            equal(user.rank, -8);
+            equal(user.progress, 0);
+        });
+
+        test('progress same level activity', function () {
+            user.incProgress(-8);
+            equal(user.progress, 3);
+            user.rank = 7;
+            user.incProgress(7);
+            equal(user.progress, 3 + 3);
+        });
+
+        test('progress high level activity', function () {
+            user.incProgress(-7);
+            equal(user.progress, 10);
+
+            user.incProgress(-6);
+            equal(user.progress, 10 + 40);
+        });
+
+        test('progress low level activity', function () {
+            user.rank = 7;
+            user.incProgress(6);
+            equal(user.progress, 1);
+        });
+
+        test('upgrade 1 rank', function () {
+            user.incProgress(-4);
+            equal(user.rank, -7);
+            equal(user.progress, 60);
+        });
+
+        test('upgrade multi ranks', function () {
+            user.incProgress(1);
+            equal(user.rank, -2);
+            equal(user.progress, 40);
+        });
+
+        test('upgrade rank -1 to 1', function () {
+            user.incProgress(2);
+            equal(user.rank, 1);
+        });
+
+        test('progress', function () {
+            user.rank = -1;
+            user.incProgress(1);
+            equal(user.progress, 10);
+        });
+
+        test('progress max rank activity', function () {
+            user.incProgress(8);
+            equal(user.rank, 8);
+            equal(user.progress, 0);
+        });
+
+        test('progress in final rank 8', function () {
+            user.rank = 8;
+            user.incProgress(8);
+            equal(user.progress, 0);
+        });
+        function raising(action) {
+            var error = null;
+            try {
+                action.call();
+                throw new Error('failed');
+            } catch (e) {
+                error = e;
+            }
+            notEqual(error, null);
+        }
+        test('should raise error if rank low than -8', function () {
+            raising(function () {
+                user.incProgress(-9);
+            });
+        });
+        test('should raise error if rank low than 8', function () {
+            raising(function () {
+                user.incProgress(9);
+            });
+        });
+        test('should raise error if rank is 0', function () {
+            raising(function () {
+                user.incProgress(0);
+            });
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
