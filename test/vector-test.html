@@ -16,8 +16,8 @@
          var c = new Vector([5,6,7,8]);
          --new Vector([1,2,3]).equals(new Vector([1,2,3]))
          --a.add(b); // should return Vector([4,6,8])
-         todo:a.subtract(b); // should return Vector([-2,-2,-2])
-         a.dot(b); // should return 1*3+2*4+3*5 = 26
+         --a.subtract(b); // should return Vector([-2,-2,-2])
+         todo:a.dot(b); // should return 1*3+2*4+3*5 = 26
          a.norm(); // should return sqrt(1^2+2^2+3^2)=sqrt(14)
          a.add(c); // throws an error
          If you try to add, subtract, or dot two vectors with different lengths, you must throw an error!
@@ -38,8 +38,14 @@
                 });
                 return this;
             };
+
             this.subtract = function (subtrahend) {
                 return this.add(subtrahend, -1);
+            };
+            this.dot = function (other) {
+                return this.items.reduce(function (ret,item,index) {
+                    return ret+item*other.items[index];
+                }, 0);
             };
             this.equals = function (that) {
                 return this.items.every(function (item, index) {
@@ -68,6 +74,9 @@
 
         test('subtraction', function () {
             ok(a.subtract(b).equals(new Vector([-2, -2, -2])));
+        });
+        test('dot', function () {
+            equal(a.dot(b), 26);
         });
     </script>
 </head>
