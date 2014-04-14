@@ -11,7 +11,7 @@
          * This time we want to write calculations using functions and get the results. Let's have a look at some examples:
 
          seven(times(five())); // must return 35
-         four(plus(nine())); // must return 13
+         ---four(plus(nine())); // must return 13
          eight(minus(three())); // must return 5
          six(dividedBy(two())); // must return 3
          Requirements:
@@ -30,12 +30,18 @@
         function plus(operand) {
             return operand;
         }
+        function minus(operand) {
+            return -operand;
+        }
     </script>
     <script type="text/javascript">
         module("calculations using functions");
         test("plus", function () {
             equal(four(plus(nine())), 13);
             equal(nine(plus(four())), 13);
+        });
+        test("minus", function () {
+            equal(nine(minus(four())), 5);
         });
     </script>
 </head>
