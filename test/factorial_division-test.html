@@ -43,6 +43,10 @@
             equal(factorialDivision(5, 1), 5 * 4 * 3 * 2 * 1);
             equal(factorialDivision(5, 4), 5);
         });
+
+        test('large numbers', function () {
+            equal(factorialDivision(9007199254740991, 9007199254740990), 9007199254740991);
+        });
     </script>
 </head>
 <body>
