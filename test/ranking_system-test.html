@@ -62,11 +62,11 @@
                     throw 'rank out of range:' + progress;
                 }
 
-                this.progress += earnedPoints.call(this,progress);
+                this.progress += earnedPoints.call(this, progress);
                 if (this.progress >= UPGRADE_POINTS) {
                     this.rank = Math.min(FINAL_RANK, this.rank + ~~(this.progress / UPGRADE_POINTS) || 1);
-                    this.progress %= this.rank == FINAL_RANK ? 1 : UPGRADE_POINTS;
                 }
+                this.progress %= this.rank == FINAL_RANK ? 1 : UPGRADE_POINTS;
             }
         }
     </script>
@@ -105,8 +105,8 @@
         });
 
         test('progress low level activity', function () {
-            user.rank = 8;
-            user.incProgress(7);
+            user.rank = 7;
+            user.incProgress(6);
             equal(user.progress, 1);
         });
 
@@ -136,6 +136,12 @@
         test('progress max rank activity', function () {
             user.incProgress(8);
             equal(user.rank, 8);
+            equal(user.progress, 0);
+        });
+
+        test('progress in final rank 8', function () {
+            user.rank=8;
+            user.incProgress(8);
             equal(user.progress, 0);
         });
 
