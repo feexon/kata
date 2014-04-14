@@ -46,6 +46,9 @@
                 return this.add(subtrahend, -1);
             };
             this.dot = function (other) {
+                if (this.items.length != other.items.length) {
+                    throw "Can't work on different size vector";
+                }
                 return this.items.reduce(function (ret, item, index) {
                     return ret + item * other.items[index];
                 }, 0);
@@ -92,6 +95,15 @@
             var failed;
             try {
                 a.add(c);
+            } catch (e) {
+                failed = true;
+            }
+            ok(failed);
+        });
+        test('dot different size vector will raise exception', function () {
+            var failed;
+            try {
+                a.dot(c);
             } catch (e) {
                 failed = true;
             }
