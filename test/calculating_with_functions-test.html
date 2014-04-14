@@ -22,10 +22,10 @@
          The most outer function represents the left operand, the most inner function represents the right operand
          */
         function four(expression) {
-            return 4 + expression;
+            return 4 + ~~expression;
         }
-        function nine() {
-            return 9;
+        function nine(expression) {
+            return 9 + ~~expression;
         }
         function plus(operand) {
             return operand;
@@ -35,6 +35,7 @@
         module("calculations using functions");
         test("plus", function () {
             equal(four(plus(nine())), 13);
+            equal(nine(plus(four())), 13);
         });
     </script>
 </head>
