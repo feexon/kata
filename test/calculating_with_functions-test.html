@@ -65,8 +65,10 @@
                 return subtrahend - subtractor;
             };
         }
-        function times(operand) {
-            return -operand;
+        function times(multiplier) {
+            return function (multiplicand) {
+                return multiplicand * multiplier;
+            };
         }
     </script>
     <script type="text/javascript">
@@ -93,6 +95,9 @@
         test('minus type', function () {
             equal(typeof minus(four()), 'function');
             equal(minus(four())(9), 5);
+        });
+        test("times", function () {
+            equal(four(times(nine())), 36);
         });
     </script>
 </head>
