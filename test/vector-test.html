@@ -30,9 +30,12 @@
          */
 
         function Vector(items) {
-            this.items = items;
+            this.size = items.length;
+            this.item = function (index) {
+                return items[index];
+            };
             this.ensureSizeEqualTo = function (target) {
-                if (this.items.length != target.items.length) {
+                if (this.size!= target.size) {
                     throw "Can't work on different size vector";
                 }
             }
@@ -40,8 +43,8 @@
             this.add = function (addend, factor) {
                 this.ensureSizeEqualTo(addend);
                 factor = factor || 1;
-                return new Vector(this.items.map(function (item, index) {
-                    return item + factor * addend.items[index];
+                return new Vector(items.map(function (item, index) {
+                    return item + factor * addend.item(index);
                 }));
             };
 
@@ -50,16 +53,16 @@
             };
             this.dot = function (other) {
                 this.ensureSizeEqualTo(other);
-                return this.items.reduce(function (ret, item, index) {
-                    return ret + item * other.items[index];
+                return items.reduce(function (ret, item, index) {
+                    return ret + item * other.item(index);
                 }, 0);
             };
             this.norm = function () {
                 return Math.sqrt(this.dot(this));
             };
             this.equals = function (that) {
-                return this.items.every(function (item, index) {
-                    return item == that.items[index];
+                return items.every(function (item, index) {
+                    return item == that.item(index);
                 });
             };
 
