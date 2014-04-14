@@ -22,7 +22,7 @@
          The most outer function represents the left operand, the most inner function represents the right operand
          */
         function operand(value, expression) {
-            return expression && expression.call(null, value) || value;
+            return expression ? expression.call(null, value) : value;
         }
         function zero(expression) {
             return operand(0, expression);
@@ -103,6 +103,11 @@
         });
         test("times", function () {
             equal(four(times(nine())), 36);
+        });
+        test("result 0", function () {
+            equal(four(times(zero())), 0);
+            equal(zero(dividedBy(five())), 0);
+            equal(five(minus(five())), 0);
         });
         test("division", function () {
             equal(six(dividedBy(two())), 3);
