@@ -48,9 +48,7 @@
                 }, 0);
             };
             this.norm = function () {
-                return Math.sqrt(this.items.reduce(function (ret, item) {
-                    return ret + item * item;
-                }, 0));
+                return Math.sqrt(this.dot(this));
             };
             this.equals = function (that) {
                 return this.items.every(function (item, index) {
