@@ -31,10 +31,14 @@
 
         function Vector(items) {
             this.items = items;
-            this.add = function (addend, factor) {
-                if (this.items.length != addend.items.length) {
+            this.ensureSizeEqualTo=function(target) {
+                if (this.items.length != target.items.length) {
                     throw "Can't work on different size vector";
                 }
+            }
+
+            this.add = function (addend, factor) {
+                this.ensureSizeEqualTo(addend);
                 factor = factor || 1;
                 this.items = this.items.map(function (item, index) {
                     return item + factor * addend.items[index];
@@ -46,9 +50,7 @@
                 return this.add(subtrahend, -1);
             };
             this.dot = function (other) {
-                if (this.items.length != other.items.length) {
-                    throw "Can't work on different size vector";
-                }
+                this.ensureSizeEqualTo(other);
                 return this.items.reduce(function (ret, item, index) {
                     return ret + item * other.items[index];
                 }, 0);
