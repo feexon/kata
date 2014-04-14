@@ -22,15 +22,22 @@
          The most outer function represents the left operand, the most inner function represents the right operand
          */
         function four(expression) {
-            return 4 + ~~expression;
+            return expression && expression(4) || 4;
         }
         function nine(expression) {
-            return 9 + ~~expression;
+            return  expression && expression(9) || 9;
         }
-        function plus(operand) {
-            return operand;
+        function plus(addend) {
+            return function (augend) {
+                return augend + addend;
+            };
         }
-        function minus(operand) {
+        function minus(subtractor) {
+            return function (subtrahend) {
+                return subtrahend - subtractor;
+            };
+        }
+        function times(operand) {
             return -operand;
         }
     </script>
@@ -42,6 +49,10 @@
         });
         test("minus", function () {
             equal(nine(minus(four())), 5);
+        });
+        test('minus type', function () {
+            equal(typeof minus(four()), 'function');
+            equal(minus(four())(9), 5);
         });
     </script>
 </head>
