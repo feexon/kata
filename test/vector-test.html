@@ -62,6 +62,10 @@
                     return item == that.items[index];
                 });
             };
+
+            this.toString = function () {
+                return ['(', items.join(','), ')'].join('');
+            };
         }
     </script>
     <script type="text/javascript">
@@ -110,6 +114,10 @@
                 failed = true;
             }
             ok(failed);
+        });
+
+        test('toString', function () {
+            equal(a.toString(), '(1,2,3)');
         });
     </script>
 </head>
