@@ -13,8 +13,9 @@
             equal(2 + (1 < 2), 3);
         });
         test('+(false)', function () {
-            equal(+(1 > 2), 0);
-            equal(2 + (1 > 2), 2);
+            equal(+(1 > 2)+'1', '01');
+            equal(2 + (1 > 2)+'1', '21');
+            equal((+[])+'1','01');
         });
 
         test('~~', function () {
