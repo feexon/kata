@@ -7,14 +7,18 @@
     <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
     <script type="text/javascript" src="../libs/qunit.js"></script>
     <script type="text/javascript">
-        function numberToPrice(number){
-            return ""+number;
+        function numberToPrice(number) {
+            var parts = ("" + number).split('.');
+            return [parts[0], parts[1].substring(0,2)].join('.');
         }
     </script>
     <script type="text/javascript">
         module('formatting');
         test('two cents', function () {
             equal(numberToPrice(1.25), '1.25');
+        });
+        test('more than cents', function () {
+            equal(numberToPrice(1.253), '1.25');
         });
     </script>
 </head>
