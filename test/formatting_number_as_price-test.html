@@ -9,7 +9,7 @@
     <script type="text/javascript">
         function numberToPrice(number) {
             var parts = ("" + number).split('.');
-            return [parts[0], parts[1] && parts[1].substring(0, 2) || '00'].join('.');
+            return [parts[0], (parts[1] && parts[1].substring(0, 2) || '00').replace(/^(\d)$/,'$10')].join('.');
         }
     </script>
     <script type="text/javascript">
@@ -22,6 +22,9 @@
         });
         test('no cents', function () {
             equal(numberToPrice(1), '1.00');
+        });
+        test('one cent', function () {
+            equal(numberToPrice(1.2), '1.20');
         });
     </script>
 </head>
