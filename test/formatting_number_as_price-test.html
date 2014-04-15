@@ -8,19 +8,19 @@
     <script type="text/javascript" src="../libs/qunit.js"></script>
     <script type="text/javascript">
         function numberToPrice(number) {
-
-            var parts = ("" + number).split('.');
-            if (isNaN(parseFloat(number)) || parts.length > 2||!/^-?[\d.]+$/.test(number)) {
+            var parts = /^(-?)([\d]+)(?:\.([\d]+))?$/.exec(number);
+            if (!parts) {
                 return 'NaN';
             }
-            var cents = parts[1];
-            var integer = parts[0];
+            var sign = parts[1];
+            var integer = parts[2];
+            var cents = parts[3];
 
             function reverse(string) {
                 return string.split('').reverse().join('');
             }
 
-            return [reverse(reverse(integer).replace(/(\d{3})/g, '$1,').replace(/,(-?)$/, '$1')), (cents && cents.substring(0, 2) || '00').replace(/^(\d)$/, '$10')].join('.');
+            return sign+[reverse(reverse(integer).replace(/(\d{3})/g, '$1,').replace(/,$/, '')), (cents && cents.substring(0, 2) || '00').replace(/^(\d)$/, '$10')].join('.');
         }
     </script>
     <script type="text/javascript">
