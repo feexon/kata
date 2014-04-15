@@ -8,25 +8,25 @@
     <script type="text/javascript" src="../libs/qunit.js"></script>
     <script type="text/javascript">
         function numberToPrice(number) {
-            var parts = /^(-?)([\d]+)(?:\.([\d]+))?$/.exec(number);
+            var parts = /^(-?[\d]+)(?:\.([\d]+))?$/.exec(number);
             if (!parts) {
                 return 'NaN';
             }
-            var sign = parts[1];
-            var integer = parts[2];
-            var cents = parts[3];
 
-            function reverse(string) {
-                return string.split('').reverse().join('');
+            var integer = parts[1];
+            var cents = (parts[2] || '') + '00';
+            var search = /(-?\d+)(\d{3})/;
+            while (search.test(integer)) {
+                integer = integer.replace(search, '$1,$2');
             }
-
-            return sign+[reverse(reverse(integer).replace(/(\d{3})/g, '$1,').replace(/,$/, '')), (cents && cents.substring(0, 2) || '00').replace(/^(\d)$/, '$10')].join('.');
+            return [integer, cents.substring(0, 2)].join('.');
         }
     </script>
     <script type="text/javascript">
         module('formatting');
         test('two cents', function () {
             equal(numberToPrice(1.25), '1.25');
+            equal(numberToPrice(1.05), '1.05');
         });
         test('more than cents', function () {
             equal(numberToPrice(1.253), '1.25');
