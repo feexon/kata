@@ -8,6 +8,9 @@
     <script type="text/javascript" src="../libs/qunit.js"></script>
     <script type="text/javascript">
         function numberToPrice(number) {
+            if (!parseFloat(number)) {
+                return 'NaN';
+            }
             var parts = ("" + number).split('.');
             var cents = parts[1];
             var integer = parts[0];
@@ -43,6 +46,10 @@
         });
         test('negative number', function () {
             equal(numberToPrice(-200000), '-200,000.00');
+        });
+        test('invalid number', function () {
+            equal(numberToPrice('invalid'), 'NaN');
+            equal(numberToPrice(''), 'NaN');
         });
     </script>
 </head>
