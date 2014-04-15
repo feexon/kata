@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript">
+        /**
+         * This time we want to write calculations using functions and get the results. Let's have a look at some examples:
+
+         seven(times(five())); // must return 35
+         ---four(plus(nine())); // must return 13
+         eight(minus(three())); // must return 5
+         six(dividedBy(two())); // must return 3
+         Requirements:
+
+         There must be a function for each number from 0 ("zero") to 9 ("nine")
+         There must be a function for each of the following mathematical operations: plus, minus, times, dividedBy (divided_by in Ruby)
+         Each calculation consist of exactly one operation and two numbers
+         The most outer function represents the left operand, the most inner function represents the right operand
+         */
+        function operand(value, expression) {
+            return expression ? expression.call(null, value) : value;
+        }
+        "zero,one,two,three,four,five,six,seven,eight,nine".split(',').forEach(function (name, value) {
+            eval(name + "=function (expression) { return operand(" + value + ", expression); }");
+        });
+        function plus(addend) {
+            return function (augend) {
+                return augend + addend;
+            };
+        }
+        function minus(subtractor) {
+            return function (subtrahend) {
+                return subtrahend - subtractor;
+            };
+        }
+        function times(multiplier) {
+            return function (multiplicand) {
+                return multiplicand * multiplier;
+            };
+        }
+        function dividedBy(divisor) {
+            return function (dividend) {
+                return dividend / divisor;
+            };
+        }
+    </script>
+    <script type="text/javascript">
+        module("calculations using functions");
+        test("digits", function () {
+            equal(zero(), 0);
+            equal(one(), 1);
+            equal(two(), 2);
+            equal(three(), 3);
+            equal(four(), 4);
+            equal(five(), 5);
+            equal(six(), 6);
+            equal(seven(), 7);
+            equal(eight(), 8);
+            equal(nine(), 9);
+        });
+        test("plus", function () {
+            equal(four(plus(nine())), 13);
+            equal(nine(plus(four())), 13);
+        });
+        test("minus", function () {
+            equal(nine(minus(four())), 5);
+        });
+        test('minus type', function () {
+            equal(typeof minus(four()), 'function');
+            equal(minus(four())(9), 5);
+        });
+        test("times", function () {
+            equal(four(times(nine())), 36);
+        });
+        test("result 0", function () {
+            equal(four(times(zero())), 0);
+            equal(zero(dividedBy(five())), 0);
+            equal(five(minus(five())), 0);
+        });
+        test("division", function () {
+            equal(six(dividedBy(two())), 3);
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
