@@ -9,7 +9,12 @@
     <script type="text/javascript">
         function numberToPrice(number) {
             var parts = ("" + number).split('.');
-            return [parts[0].replace(/(\d{3})/g, '$1,').replace(/,$/, ''), (parts[1] && parts[1].substring(0, 2) || '00').replace(/^(\d)$/, '$10')].join('.');
+            var cents = parts[1];
+            var integer = parts[0];
+            function reverse(string) {
+                return string.split('').reverse().join('');
+            }
+            return [reverse(reverse(integer).replace(/(\d{3})/g, '$1,').replace(/,$/, '')), (cents && cents.substring(0, 2) || '00').replace(/^(\d)$/, '$10')].join('.');
         }
     </script>
     <script type="text/javascript">
@@ -30,6 +35,9 @@
         test('seperate integer length is divided by 3 with commas', function () {
             equal(numberToPrice(123456), '123,456.00');
             equal(numberToPrice(123456789), '123,456,789.00');
+        });
+        test('seperate integer with commas', function () {
+            equal(numberToPrice(1234), '1,234.00');
         });
     </script>
 </head>
