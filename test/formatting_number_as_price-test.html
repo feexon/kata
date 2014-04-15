@@ -8,8 +8,9 @@
     <script type="text/javascript" src="../libs/qunit.js"></script>
     <script type="text/javascript">
         function numberToPrice(number) {
+
             var parts = ("" + number).split('.');
-            if (isNaN(parseFloat(number)) || parts.length > 2) {
+            if (isNaN(parseFloat(number)) || parts.length > 2||!/^-?[\d.]+$/.test(number)) {
                 return 'NaN';
             }
             var cents = parts[1];
@@ -51,6 +52,7 @@
             equal(numberToPrice('invalid'), 'NaN');
             equal(numberToPrice(''), 'NaN');
             equal(numberToPrice('1.2.3'), 'NaN');
+            equal(numberToPrice('5.1,'), 'NaN');
         });
         test('zero', function () {
             equal(numberToPrice(0), '0.00');
