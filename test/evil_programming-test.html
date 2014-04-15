@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript">
+        function anarchy() {
+            var one = -~'one';
+            var two = one + one;
+            var three = two + one;
+            return 'I can write numbers like, ' + [one, two, three].join(', ') + '.';
+        }
+    </script>
+    <script type="text/javascript">
+        module('Evil Programming');
+        test('result', function () {
+            equal(anarchy(), 'I can write numbers like, 1, 2, 3.');
+        });
+        test('evil', function () {
+            ok(anarchy.toString().search(/\d/) == -1, anarchy.toString());
+            ok(anarchy.toString().search(/\.length/) == -1, anarchy.toString());
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
