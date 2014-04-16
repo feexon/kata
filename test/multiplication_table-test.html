@@ -8,23 +8,25 @@
     <script type="text/javascript" src="../libs/qunit.js"></script>
     <script type="text/javascript">
         function multiplicationTable(n) {
-            var table = [];
-            for(var row=0;row<n;row++){
-                table[row]=table[row]||[];
-                for(var col=0;col<n;col++){
-                    table[row].push((row+1)*(col+1));
-                }
-            }
-            return  table;
+            return Array.apply(null, Array(n)).map(function (_, row) {
+                return Array.apply(null, Array(n)).map(function (_, col) {
+                    return (row + 1) * (col + 1);
+                });
+            });
         }
     </script>
     <script type="text/javascript">
         module('Multiplication Table');
         test('one', function () {
-            deepEqual(multiplicationTable(1), [[1]]);
+            deepEqual(multiplicationTable(1), [
+                [1]
+            ]);
         });
         test('two', function () {
-            deepEqual(multiplicationTable(2), [[1,2],[2,4]]);
+            deepEqual(multiplicationTable(2), [
+                [1, 2],
+                [2, 4]
+            ]);
         });
     </script>
 </head>
