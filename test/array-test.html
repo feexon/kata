@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript">
+        module("array");
+        test("type", function () {
+            ok(Array(5) instanceof Array);
+        });
+        test("size", function () {
+            equal(Array(5).length, 5);
+        });
+        test('map',function(){
+            deepEqual(Array.apply(null,Array(5)).map(function(_,i){return i;}),[0,1,2,3,4]);
+        })
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
