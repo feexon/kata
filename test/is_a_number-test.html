@@ -8,7 +8,7 @@
     <script type="text/javascript" src="../libs/qunit.js"></script>
     <script type="text/javascript">
         function isAN(number) {
-            return typeof number == 'number' && !isNaN(number);
+            return (number&&typeof number=='object'||typeof number == 'number') && !isNaN(number);
         }
     </script>
     <script type="text/javascript">
@@ -30,6 +30,9 @@
         test('boolean is not a number', function () {
             ok(!isAN(true));
             ok(!isAN(false));
+        });
+        test('number object', function () {
+            ok(isAN(new Number(1)));
         });
     </script>
 </head>
