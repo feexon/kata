@@ -7,10 +7,22 @@
     <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
     <script type="text/javascript" src="../libs/qunit.js"></script>
     <script type="text/javascript">
+        function isAN(number) {
+            return !isNaN(number);
+        }
+    </script>
+    <script type="text/javascript">
+        module("Number Validator");
 
+        test('number', function () {
+            ok(isAN(1));
+        });
+        test('word', function () {
+            ok(!isAN('word'));
+        });
     </script>
 </head>
 <body>
-    <div id="qunit"></div>
+<div id="qunit"></div>
 </body>
 </html>
