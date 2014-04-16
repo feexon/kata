@@ -8,7 +8,7 @@
     <script type="text/javascript" src="../libs/qunit.js"></script>
     <script type="text/javascript">
         function isAN(number) {
-            return !!(number&&number.constructor==Number&&!isNaN(number));
+            return (typeof number=='number'||number instanceof Number)&&!isNaN(number);
         }
     </script>
     <script type="text/javascript">
@@ -16,6 +16,9 @@
 
         test('number', function () {
             ok(isAN(1));
+        });
+        test('zero', function () {
+            ok(isAN(0));
         });
         test('word', function () {
             ok(!isAN('word'));
