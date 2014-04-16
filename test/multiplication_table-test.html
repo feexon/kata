@@ -9,8 +9,11 @@
     <script type="text/javascript">
         function multiplicationTable(n) {
             var table = [];
-            for(var i=0;i<n;i++){
-                table.push([n]);
+            for(var row=0;row<n;row++){
+                table[row]=table[row]||[];
+                for(var col=0;col<n;col++){
+                    table[row].push((row+1)*(col+1));
+                }
             }
             return  table;
         }
@@ -19,6 +22,9 @@
         module('Multiplication Table');
         test('one', function () {
             deepEqual(multiplicationTable(1), [[1]]);
+        });
+        test('two', function () {
+            deepEqual(multiplicationTable(2), [[1,2],[2,4]]);
         });
     </script>
 </head>
