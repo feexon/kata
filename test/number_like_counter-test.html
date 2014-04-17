@@ -8,19 +8,31 @@
     <script type="text/javascript" src="../libs/qunit.js"></script>
     <script type="text/javascript">
         function Counter() {
-           this.count=0;
-           this.incr=function(){
-               this.count++;
-           }
+            this.count = 0;
+            this.incr = function () {
+                this.count++;
+            }
+            this.valueOf = function () {
+                return this.count;
+            }
         }
     </script>
     <script type="text/javascript">
         module('Number like counter');
         test('increment', function () {
             var counter = new Counter();
-            equal(counter.count,0);
+            equal(counter.count, 0);
             counter.incr();
-            equal(counter.count,1);
+            equal(counter.count, 1);
+        });
+        test('act as a number', function () {
+            var counter = new Counter();
+            equal(counter, 0);
+            counter.incr();
+            equal(counter, 1);
+
+            equal(counter + 1, 2);
+            ok(counter < 2);
         });
     </script>
 </head>
