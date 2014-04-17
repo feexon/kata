@@ -74,6 +74,12 @@
             });
             equal(myFuncWithUndefined(),void(0));
         });
+        test("shouldn't pass any depdencies into function if such depdencies aren't specified", function () {
+            equal(container.inject(function () {
+                return arguments.length;
+            })(), 0);
+        });
+
 
 
     </script>
