@@ -36,18 +36,29 @@
          */
         function DI(dependency){
             this.inject=function(fn){
+                var beanNames=extract_names(fn);
                 return function(){
-                   return fn.call();
+                   return fn.apply(null,beanNames.map(function(name){
+                        return dependency[name];
+                   }));
                 }
             }
         }
         function extract_names(fn){
-            return fn.toString().match(/function.*?\((.*)\)/)[1].split(/,/).filter(Boolean).map(function(name){
+            return fn.toString().match(/function.*?\((.*?)\)/)[1].split(/,/).filter(Boolean).map(function(name){
                 return name.replace(/^\s+|\s+/g,'');
             });
         }
     </script>
     <script type="text/javascript">
+        var container = new DI({
+            foo: function () {
+                return 'foo';
+            },
+            bar: function () {
+                return 'bar';
+            }
+        });
         module('Dependency Injection');
         test('no parameters', function () {
            deepEqual(extract_names(function(){}),[]);
@@ -61,10 +72,16 @@
         test('extract names of parameters with function name', function () {
             deepEqual(extract_names(function bar(foo){}),['foo']);
         });
+        test('extract names of parameters with body', function () {
+            deepEqual(extract_names(function bar(foo){foo();}),['foo']);
+        });
         test('no dependencies',function(){
-            var container=new DI();
-            var fn=container.inject(function(){return 'foo'});
-            equal(fn(),'foo');
+            equal(container.inject(function(){return 'foo'})(),'foo');
+            equal(container.inject(function(){return arguments.length;})(),0);
+        });
+        test('inject dependencies',function(){
+            equal(container.inject(function(foo){return foo();})(),'foo');
+            equal(container.inject(function(foo,bar){return foo()+bar();})(),'foobar');
         });
     </script>
 </head>
