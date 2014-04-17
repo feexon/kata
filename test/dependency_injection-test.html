@@ -63,12 +63,19 @@
         module('Dependency Injection');
         test('no dependencies',function(){
             equal(container.inject(function(){return 'foo'})(),'foo');
-            equal(container.inject(function(){return arguments.length;})(),0);
         });
         test('inject dependencies',function(){
             equal(container.inject(function(foo){return foo();})(),'foo');
             equal(container.inject(function(foo,bar){return foo()+bar();})(),'foobar');
         });
+        test("shouldn't resolve unresolved parameters",function(){
+            var myFuncWithUndefined = container.inject(function (nonExistingVar) {
+              return nonExistingVar;
+            });
+            equal(myFuncWithUndefined(),void(0));
+        });
+
+
     </script>
 </head>
 <body>
