@@ -20,7 +20,9 @@
             if (!word) {
                 return true;
             }
-            return dictionary.indexOf(word)!=-1;
+            return dictionary.some(function (item) {
+                return word.search(item) != -1;
+            });
         };
     </script>
     <script type="text/javascript">
@@ -35,6 +37,9 @@
         test('one word', function () {
             ok(validWord(['code', 'wars'], 'code'));
             ok(!validWord(['code', 'wars'], 'word'));
+        });
+        test('continuous words', function () {
+            ok(validWord(['code', 'wars'], 'codewars'));
         });
     </script>
 </head>
