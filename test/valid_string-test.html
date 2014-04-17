@@ -7,10 +7,19 @@
     <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
     <script type="text/javascript" src="../libs/qunit.js"></script>
     <script type="text/javascript">
-
+        function validWord(dictionary,word){
+            return dictionary.indexOf(word)!=-1;
+        }
+    </script>
+    <script type="text/javascript">
+        module("Valid string");
+        test("word is dictionary item",function(){
+            ok(validWord(['code','wars'],'code'));
+            ok(!validWord(['code','wars'],'unknown'));
+        });
     </script>
 </head>
 <body>
-    <div id="qunit"></div>
+<div id="qunit"></div>
 </body>
 </html>
