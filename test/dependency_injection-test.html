@@ -35,6 +35,11 @@
          And don't forget about nested function. You shouldn't handle them.
          */
         function DI(dependency){
+            function extract_names(fn) {
+                return fn.toString().match(/function.*?\((.*?)\)/)[1].split(/,/).filter(Boolean).map(function (name) {
+                    return name.replace(/^\s+|\s+/g, '');
+                });
+            }
             this.inject=function(fn){
                 var beanNames=extract_names(fn);
                 return function(){
@@ -44,11 +49,7 @@
                 }
             }
         }
-        function extract_names(fn){
-            return fn.toString().match(/function.*?\((.*?)\)/)[1].split(/,/).filter(Boolean).map(function(name){
-                return name.replace(/^\s+|\s+/g,'');
-            });
-        }
+
     </script>
     <script type="text/javascript">
         var container = new DI({
@@ -60,21 +61,6 @@
             }
         });
         module('Dependency Injection');
-        test('no parameters', function () {
-           deepEqual(extract_names(function(){}),[]);
-        });
-        test('extract names of parameters', function () {
-            deepEqual(extract_names(function(foo){}),['foo']);
-            deepEqual(extract_names(function(foo,bar){}),['foo','bar']);
-            deepEqual(extract_names(function(foo, bar){}),['foo','bar']);
-            deepEqual(extract_names(function( foo ,bar){}),['foo','bar']);
-        });
-        test('extract names of parameters with function name', function () {
-            deepEqual(extract_names(function bar(foo){}),['foo']);
-        });
-        test('extract names of parameters with body', function () {
-            deepEqual(extract_names(function bar(foo){foo();}),['foo']);
-        });
         test('no dependencies',function(){
             equal(container.inject(function(){return 'foo'})(),'foo');
             equal(container.inject(function(){return arguments.length;})(),0);
