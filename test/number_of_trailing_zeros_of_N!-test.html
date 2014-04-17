@@ -8,7 +8,7 @@
     <script type="text/javascript" src="../libs/qunit.js"></script>
     <script type="text/javascript">
         function zeros(n) {
-            return n / 5 | 0;
+            return (n = (n / 5 | 0)) && n + zeros(n);
         }
         module("number of trailing zeros of N!");
         test('no trailing zeros', function () {
@@ -18,7 +18,10 @@
             equal(zeros(5), 1);
             equal(zeros(6), 1);
         });
-        
+        test('large N! trailing zeros', function () {
+            equal(zeros(30), 7);
+            equal(zeros(100), 24);
+        });
     </script>
 </head>
 <body>
