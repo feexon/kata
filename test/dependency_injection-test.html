@@ -34,6 +34,13 @@
          Your task is create DI.prototype.inject method that will return a new function with resolved dependencies.
          And don't forget about nested function. You shouldn't handle them.
          */
+        function DI(dependency){
+            this.inject=function(fn){
+                return function(){
+                   return fn.call();
+                }
+            }
+        }
         function extract_names(fn){
             return fn.toString().match(/function.*?\((.*)\)/)[1].split(/,/).filter(Boolean).map(function(name){
                 return name.replace(/^\s+|\s+/g,'');
@@ -54,7 +61,11 @@
         test('extract names of parameters with function name', function () {
             deepEqual(extract_names(function bar(foo){}),['foo']);
         });
-
+        test('no dependencies',function(){
+            var container=new DI();
+            var fn=container.inject(function(){return 'foo'});
+            equal(fn(),'foo');
+        });
     </script>
 </head>
 <body>
