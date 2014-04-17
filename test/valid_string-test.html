@@ -17,13 +17,20 @@
          * validWord(['abc','ab','cd'],'abcd') =>true
          */
         var validWord = function (dictionary, word) {
-          return dictionary.length;
+            if(!word){
+                return true;
+            }
+            return dictionary.length;
         };
     </script>
     <script type="text/javascript">
         module("Valid string");
         test('empty dictionary', function () {
             ok(!validWord([], 'anything'));
+        });
+        test('empty word', function () {
+            ok(validWord(['code','wars'], ''));
+            ok(validWord([], ''));
         });
     </script>
 </head>
