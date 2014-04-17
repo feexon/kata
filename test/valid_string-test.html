@@ -8,9 +8,9 @@
     <script type="text/javascript" src="../libs/qunit.js"></script>
     <script type="text/javascript">
         function validWord(dictionary, word) {
-            return dictionary.reduce(function(word,deletion){
+            return !dictionary.reduce(function(word,deletion){
                 return word.replace(deletion,'');
-            },word)=='';
+            },word);
         }
     </script>
     <script type="text/javascript">
@@ -22,6 +22,7 @@
 
         test("word joined items", function () {
             ok(validWord(['code', 'wars'], 'codewars'));
+            ok(validWord('code,star,wars'.split(','), 'codewars'));
         });
     </script>
 </head>
