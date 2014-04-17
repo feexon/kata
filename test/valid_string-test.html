@@ -17,10 +17,10 @@
          * validWord(['abc','ab','cd'],'abcd') =>true
          */
         var validWord = function (dictionary, word) {
-            if(!word){
+            if (!word) {
                 return true;
             }
-            return dictionary.length;
+            return dictionary.indexOf(word)!=-1;
         };
     </script>
     <script type="text/javascript">
@@ -29,8 +29,12 @@
             ok(!validWord([], 'anything'));
         });
         test('empty word', function () {
-            ok(validWord(['code','wars'], ''));
+            ok(validWord(['code', 'wars'], ''));
             ok(validWord([], ''));
+        });
+        test('one word', function () {
+            ok(validWord(['code', 'wars'], 'code'));
+            ok(!validWord(['code', 'wars'], 'word'));
         });
     </script>
 </head>
