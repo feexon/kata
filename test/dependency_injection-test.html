@@ -79,7 +79,15 @@
                 return arguments.length;
             })(), 0);
         });
-
+        test("shouldn't handle any nested functions", function () {
+            var skipInjectNestedFunctions = container.inject(function (foo, bar) {
+                function nested(foo,bar) {
+                    return foo==undefined&&bar==undefined;
+                };
+                return nested();
+            });
+            ok(skipInjectNestedFunctions());
+        });
 
 
     </script>
