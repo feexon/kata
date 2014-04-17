@@ -12,8 +12,8 @@
          * --validWord([],anything) => false
          * --validWord(any,'') => true
          * --validWord(['code','wars'],'codewars') =>true
-         * validWord(['code','wars'],'codewar') =>false
-         * validWord(['code','wars'],'codewarscode') =>true
+         * --validWord(['code','wars'],'codewar') =>false
+         * --validWord(['code','wars'],'codewarscode') =>true
          * validWord(['abc','ab','cd'],'abcd') =>true
          */
         var validWord = function (dictionary, word) {
@@ -21,7 +21,7 @@
                 return true;
             }
             return dictionary.some(function (item) {
-                return word.search(item) != -1&&validWord(dictionary,word.replace(item,''));
+                return word.search(item) != -1 && validWord(dictionary, word.replace(item, ''));
             });
         };
     </script>
@@ -43,6 +43,9 @@
         });
         test('invalid words', function () {
             ok(!validWord(['code', 'wars'], 'codewar'));
+        });
+        test('repeat words', function () {
+            ok(validWord(['code', 'wars'], 'codewarscode'));
         });
     </script>
 </head>
