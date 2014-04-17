@@ -41,9 +41,8 @@
                 });
             }
             this.inject=function(fn){
-                var beanNames=extract_names(fn);
                 return function(){
-                   return fn.apply(null,beanNames.map(function(name){
+                   return fn.apply(null,extract_names(fn).map(function(name){
                         return dependency[name];
                    }));
                 }
