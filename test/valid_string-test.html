@@ -7,43 +7,47 @@
     <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
     <script type="text/javascript" src="../libs/qunit.js"></script>
     <script type="text/javascript">
+        /**
+         * todo:
+         * --validWord([],anything) => false
+         * --validWord(any,'') => true
+         * --validWord(['code','wars'],'codewars') =>true
+         * --validWord(['code','wars'],'codewar') =>false
+         * --validWord(['code','wars'],'codewarscode') =>true
+         * validWord(['abc','ab','cd'],'abcd') =>true
+         */
         var validWord = function (dictionary, word) {
-            if (word == '') {
-                return true;
-            }
-            return dictionary.filter(function (w) {
-                return word.indexOf(w) == 0;
-            }).some(function (w) {
-                return validWord(dictionary, word.substring(w.length));
+            return !word||dictionary.some(function (item) {
+                return word.search(item) != -1 && validWord(dictionary, word.replace(item, ''));
             });
         };
     </script>
     <script type="text/javascript">
         module("Valid string");
-        test("word is dictionary item", function () {
+        test('empty dictionary', function () {
+            ok(!validWord([], 'anything'));
+        });
+        test('empty word', function () {
+            ok(validWord(['code', 'wars'], ''));
+            ok(validWord([], ''));
+        });
+        test('one word', function () {
             ok(validWord(['code', 'wars'], 'code'));
-            ok(!validWord(['code', 'wars'], 'unknown'));
+            ok(!validWord(['code', 'wars'], 'word'));
         });
-
-        test("word joined items", function () {
+        test('continuous words', function () {
             ok(validWord(['code', 'wars'], 'codewars'));
-            ok(validWord('code,star,wars'.split(','), 'codewars'));
+        });
+        test('invalid words', function () {
+            ok(!validWord(['code', 'wars'], 'codewar'));
+        });
+        test('repeat words', function () {
+            ok(validWord(['code', 'wars'], 'codewarscode'));
+        });
+        test('greedy matching', function () {
+            ok(validWord(['abc','ab','cd'],'abcd'));
         });
 
-        test("empty dictionary", function () {
-            ok(!validWord([], 'codewars'));
-        });
-
-        test("repeat words", function () {
-            ok(validWord('code,star,wars'.split(','), 'codecodewars'));
-        });
-
-        test("mssing matched", function () {
-            ok(!validWord('code,star,wars'.split(','), 'codewar'));
-        });
-        test('greedy match', function () {
-            ok(validWord('ab,a,bc'.split(','), 'abc'));
-        });
     </script>
 </head>
 <body>
