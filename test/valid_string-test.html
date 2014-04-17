@@ -9,7 +9,7 @@
     <script type="text/javascript">
         function validWord(dictionary, word) {
             return !dictionary.reduce(function(word,deletion){
-                return word.replace(deletion,'');
+                return word.replace(new RegExp(deletion,'g'),'');
             },word);
         }
     </script>
@@ -27,6 +27,10 @@
 
         test("empty dictionary", function () {
             ok(!validWord([], 'codewars'));
+        });
+
+        test("repeat words", function () {
+            ok(validWord('code,star,wars'.split(','), 'codecodewars'));
         });
     </script>
 </head>
