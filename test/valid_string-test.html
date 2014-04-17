@@ -7,15 +7,21 @@
     <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
     <script type="text/javascript" src="../libs/qunit.js"></script>
     <script type="text/javascript">
-        function validWord(dictionary,word){
-            return dictionary.indexOf(word)!=-1;
+        function validWord(dictionary, word) {
+            return dictionary.reduce(function(word,deletion){
+                return word.replace(deletion,'');
+            },word)=='';
         }
     </script>
     <script type="text/javascript">
         module("Valid string");
-        test("word is dictionary item",function(){
-            ok(validWord(['code','wars'],'code'));
-            ok(!validWord(['code','wars'],'unknown'));
+        test("word is dictionary item", function () {
+            ok(validWord(['code', 'wars'], 'code'));
+            ok(!validWord(['code', 'wars'], 'unknown'));
+        });
+
+        test("word joined items", function () {
+            ok(validWord(['code', 'wars'], 'codewars'));
         });
     </script>
 </head>
