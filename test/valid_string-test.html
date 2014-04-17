@@ -7,11 +7,16 @@
     <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
     <script type="text/javascript" src="../libs/qunit.js"></script>
     <script type="text/javascript">
-        function validWord(dictionary, word) {
-            return !dictionary.reduce(function(word,deletion){
-                return word.replace(new RegExp(deletion,'g'),'');
-            },word);
-        }
+        var validWord = function (dictionary, word) {
+            if (word == '') {
+                return true;
+            }
+            return dictionary.filter(function (w) {
+                return word.indexOf(w) == 0;
+            }).some(function (w) {
+                return validWord(dictionary, word.substring(w.length));
+            });
+        };
     </script>
     <script type="text/javascript">
         module("Valid string");
@@ -31,6 +36,13 @@
 
         test("repeat words", function () {
             ok(validWord('code,star,wars'.split(','), 'codecodewars'));
+        });
+
+        test("mssing matched", function () {
+            ok(!validWord('code,star,wars'.split(','), 'codewar'));
+        });
+        test('greedy match', function () {
+            ok(validWord('ab,a,bc'.split(','), 'abc'));
         });
     </script>
 </head>
