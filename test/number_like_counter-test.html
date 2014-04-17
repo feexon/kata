@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript">
+        function Counter() {
+           this.count=0;
+           this.incr=function(){
+               this.count++;
+           }
+        }
+    </script>
+    <script type="text/javascript">
+        module('Number like counter');
+        test('increment', function () {
+            var counter = new Counter();
+            equal(counter.count,0);
+            counter.incr();
+            equal(counter.count,1);
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
