@@ -10,6 +10,8 @@
         function zeros(n) {
             return (n = (n / 5 | 0)) && n + zeros(n);
         }
+    </script>
+    <script type="text/javascript">
         module("number of trailing zeros of N!");
         test('no trailing zeros', function () {
             equal(zeros(0), 0);
