@@ -7,10 +7,21 @@
     <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
     <script type="text/javascript" src="../libs/qunit.js"></script>
     <script type="text/javascript">
-
+        function zeros(n) {
+            return n / 5 | 0;
+        }
+        module("number of trailing zeros of N!");
+        test('no trailing zeros', function () {
+            equal(zeros(0), 0);
+        });
+        test('one trailing zero', function () {
+            equal(zeros(5), 1);
+            equal(zeros(6), 1);
+        });
+        
     </script>
 </head>
 <body>
-    <div id="qunit"></div>
+<div id="qunit"></div>
 </body>
 </html>
