@@ -24,6 +24,10 @@
             ok(validWord(['code', 'wars'], 'codewars'));
             ok(validWord('code,star,wars'.split(','), 'codewars'));
         });
+
+        test("empty dictionary", function () {
+            ok(!validWord([], 'codewars'));
+        });
     </script>
 </head>
 <body>
