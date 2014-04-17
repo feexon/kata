@@ -17,10 +17,7 @@
          * validWord(['abc','ab','cd'],'abcd') =>true
          */
         var validWord = function (dictionary, word) {
-            if (!word) {
-                return true;
-            }
-            return dictionary.some(function (item) {
+            return !word||dictionary.some(function (item) {
                 return word.search(item) != -1 && validWord(dictionary, word.replace(item, ''));
             });
         };
