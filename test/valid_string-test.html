@@ -47,6 +47,10 @@
         test('repeat words', function () {
             ok(validWord(['code', 'wars'], 'codewarscode'));
         });
+        test('greedy matching', function () {
+            ok(validWord(['abc','ab','cd'],'abcd'));
+        });
+
     </script>
 </head>
 <body>
