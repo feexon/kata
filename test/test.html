@@ -69,22 +69,25 @@
          readCommands return true if endState=q2
          */
         function Automaton() {
-            this.readCommands = function (commands) {
-                var currentState = 0;
-                commands.forEach(function (command) {
-                    if (currentState == 0 && command == 1) {
-                        currentState++;
-                    }
-                    else if (currentState == 1 && command == 0) {
-                        currentState++;
-                    } else if (currentState == 2) {
-                        currentState--;
-                    }
-                });
+            this.states = [
+                function (command) {
+                    return command;
+                },
+                function (command) {
+                    return 2 - command;
+                },
+                function (command) {
+                    return 1;
+                }
+            ];
 
-                return currentState == 1;
-            }
         }
+        Automaton.prototype.readCommands = function (commands) {
+            var context=this;
+            return commands.reduce(function (current, command) {
+                return context.states[current](command);
+            }, 0) == 1;
+        };
     </script>
     <script type="text/javascript">
         var testee = new Automaton();
@@ -102,8 +105,8 @@
             ok(testee.readCommands([0, 0, 0, 1, 1]));
         });
         test('transitions: q3 => q2', function () {
-            ok(testee.readCommands([1, 0,1]));
-            ok(testee.readCommands([1, 0,0]));
+            ok(testee.readCommands([1, 0, 1]));
+            ok(testee.readCommands([1, 0, 0]));
         });
 
     </script>
