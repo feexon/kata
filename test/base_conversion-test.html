@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         example tests:
+         should convert between numeral systems:
+         Test Failed: "15" dec -> bin - Expected: 1111, instead got: undefined
+         Test Failed: "15" dec -> oct - Expected: 17, instead got: undefined
+         Test Failed: "1010" bin -> dec - Expected: 10, instead got: undefined
+         Test Failed: "1010" bin -> hex - Expected: a, instead got: undefined
+         should convert between other bases:
+         Test Failed: "0" dec -> alpha - Expected: a, instead got: undefined
+         Test Failed: "27" dec -> alpha_lower - Expected: bb, instead got: undefined
+         Test Failed: "hello" alpha_lower -> hex - Expected: 320048, instead got: undefined
+         Test Failed: "SAME" alpha_upper -> alpha_upper - Expected: SAME, instead got: undefined
+         */
+        function convert(decimal, target) {
+            var digits=[];
+            while(true){
+                digits.push(target[decimal%2]);
+                decimal=~~(decimal/2);
+                if(decimal==0){
+                    break;
+                }
+            }
+            return digits.reverse().join('');
+
+        }
+    </script>
+    <script type="text/javascript">
+        var Alphabet = {
+            BINARY: '01',
+            OCTAL: '01234567',
+            DECIMAL: '0123456789',
+            HEXA_DECIMAL: '0123456789abcdef',
+            ALPHA_LOWER: 'abcdefghijklmnopqrstuvwxyz',
+            ALPHA_UPPER: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+            ALPHA: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
+            ALPHA_NUMERIC: '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+        };
+        module('Base Conversion');
+        test('convert decimal to binary', function () {
+            equal(convert(0, Alphabet.BINARY), '0');
+            equal(convert(1, Alphabet.BINARY), '1');
+            equal(convert(2, Alphabet.BINARY), '10');
+            equal(convert(15, Alphabet.BINARY), '1111');
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
