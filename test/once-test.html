@@ -24,21 +24,21 @@
             logs.push(msg||'foo');
             return true;
         }
+        var log;
 
         module('once', {
             setup: function () {
                 logs.splice(0);
+                log = once(info);
             }
         });
         test('call once', function () {
-            var log = once(info);
             ok(log());
             deepEqual(logs, ['foo']);
             ok(!log());
             deepEqual(logs, ['foo']);
         });
         test('pass args', function () {
-            var log = once(info);
             ok(log('bar'));
             deepEqual(logs, ['bar']);
         });
