@@ -11,24 +11,31 @@
          * You'll implement once, a function that takes another function as an argument, and returns a new version of that function that can only be called once.
          * Subsequent calls to the resulting function should have no effect (and should return undefined).
          */
-        function once(fn){
-            return function(){
-               return fn();
+        function once(fn) {
+            var executed = false;
+            return function () {
+                return !executed++ && fn();
             };
         }
     </script>
     <script type="text/javascript">
-
-        module('once');
-        var logs=[];
+        var logs = [];
         function info(msg) {
             logs.push('foo');
             return true;
         }
-        test('call', function () {
+
+        module('once', {
+            setup: function () {
+                logs.splice(0);
+            }
+        });
+        test('call once', function () {
             var log = once(info);
             ok(log());
-            deepEqual(logs,['foo']);
+            deepEqual(logs, ['foo']);
+            ok(!log());
+            deepEqual(logs, ['foo']);
         });
     </script>
 </head>
