@@ -21,7 +21,7 @@
          event.unsubscribe(<unknown>);
          event.unsubscribe(listener);remove the last subscription
          event.emit(args); will trigger listeners with args
-         handlers' invocation context is event
+         --handlers' invocation context is event
          --handlers invocation order must match the order of subscription
          subscribe, unsubscribe and emit
 
@@ -53,8 +53,9 @@
                 });
             }
             this.emit = function () {
+                var event=this;
                 this.handlers.forEach(function(handler){
-                    handler();
+                    handler.call(event);
                 });
             }
         }
@@ -97,6 +98,15 @@
             event.subscribe(prepare,after);
             event.emit();
             deepEqual(invocationStack,['prepare','after']);
+        });
+
+        test('handler context is event', function () {
+            var context;
+            event.subscribe(function(){
+                context=this;
+            });
+            event.emit();
+            equal(context,event);
         });
     </script>
 </head>
