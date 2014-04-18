@@ -55,7 +55,7 @@
             this.unsubscribe = function () {
                 var event = this;
                 [].forEach.call(arguments, function (handler) {
-                    var index = event.handlers.indexOf(handler);
+                    var index = event.handlers.lastIndexOf(handler);
                     index != -1 && event.handlers.splice(index, 1);
                 });
             }
@@ -141,6 +141,11 @@
             event.subscribe(prepare, after);
             event.unsubscribe(prepare, after);
             deepEqual(event.handlers, []);
+        });
+        test('unsubscribe last handler', function () {
+            event.subscribe(prepare, after,prepare);
+            event.unsubscribe(prepare);
+            deepEqual(event.handlers, [prepare,after]);
         });
     </script>
 </head>
