@@ -12,16 +12,17 @@
          * Subsequent calls to the resulting function should have no effect (and should return undefined).
          */
         function once(fn) {
-            var executed = false;
+            var stack=[fn];
             return function () {
-                return !executed++ && fn.apply(this,arguments);
+                var origin=stack.pop();
+                return origin&& origin.apply(this, arguments);
             };
         }
     </script>
     <script type="text/javascript">
         var logs = [];
         function info(msg) {
-            logs.push(msg||'foo');
+            logs.push(msg || 'foo');
             return true;
         }
         var log;
@@ -41,6 +42,11 @@
         test('pass args', function () {
             ok(log('bar'));
             deepEqual(logs, ['bar']);
+        });
+        test('return undefined in subsequent call', function () {
+            ok(log());
+            equal(log()+'','undefined');
+
         });
     </script>
 </head>
