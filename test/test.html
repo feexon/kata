@@ -15,8 +15,8 @@
 
          var event = new Event();
          event.subscribe(listeners);
-         event.subscribe(same listener twice);
-         event.subscribe(<others>);
+         --event.subscribe(same listener twice);
+         --event.subscribe(<others>);
          event.unsubscribe(listeners);
          event.unsubscribe(<unknown>);
          event.unsubscribe(listener);remove the last subscription
@@ -47,7 +47,7 @@
         function Event() {
             this.handlers = [];
             this.subscribe = function (handler) {
-                this.handlers.push(handler);
+                typeof handler=='function'&&this.handlers.push(handler);
             }
         }
     </script>
@@ -66,6 +66,13 @@
             event.subscribe(prepare);
             event.subscribe(after);
             deepEqual(event.handlers, [prepare, after]);
+        });
+
+        test('subscribe invalid handlers', function () {
+            var event = new Event();
+
+            event.subscribe('string');
+            deepEqual(event.handlers, []);
         });
     </script>
 </head>
