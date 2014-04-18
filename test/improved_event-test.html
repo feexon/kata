@@ -58,16 +58,16 @@
             };
             this.unsubscribe = function () {
                 each(arguments, function (handler) {
-                    var index = handlers.lastIndexOf(handler);
-                    index != -1 && handlers.splice(index, 1);
+                    var toRemoved = handlers.lastIndexOf(handler);
+                    toRemoved != -1 && handlers.splice(toRemoved, 1);
                 });
             };
 
             this.emit = function () {
-                var event = this;
-                var args = arguments;
+                var context = this;
+                var args = [].slice.call(arguments);
                 each(handlers.slice(), function (handler) {
-                    handler.apply(event, [].slice.call(args));
+                    handler.apply(context, args);
                 });
             };
         }
