@@ -71,19 +71,19 @@
         function Automaton() {
             this.states = [
                 function (command) {
-                    return command;
+                    return 0 + command;
                 },
                 function (command) {
-                    return 2 - command;
+                    return 1 + 1 - command;
                 },
                 function (command) {
-                    return 1;
+                    return 2 - 1;
                 }
             ];
 
         }
         Automaton.prototype.readCommands = function (commands) {
-            var context=this;
+            var context = this;
             return commands.reduce(function (current, command) {
                 return context.states[current](command);
             }, 0) == 1;
