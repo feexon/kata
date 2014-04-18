@@ -24,8 +24,8 @@
         function convert(decimal, target) {
             var digits=[];
             while(true){
-                digits.push(target[decimal%2]);
-                decimal=~~(decimal/2);
+                digits.push(target[decimal%target.length]);
+                decimal=~~(decimal/target.length);
                 if(decimal==0){
                     break;
                 }
@@ -51,6 +51,11 @@
             equal(convert(1, Alphabet.BINARY), '1');
             equal(convert(2, Alphabet.BINARY), '10');
             equal(convert(15, Alphabet.BINARY), '1111');
+        });
+        test('convert decimal to OCTAL', function () {
+            equal(convert(0, Alphabet.OCTAL), '0');
+            equal(convert(8, Alphabet.OCTAL), '10');
+            equal(convert(15, Alphabet.OCTAL), '17');
         });
     </script>
 </head>
