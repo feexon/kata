@@ -57,6 +57,10 @@
             equal(convert(8, Alphabet.OCTAL), '10');
             equal(convert(15, Alphabet.OCTAL), '17');
         });
+        test('convert decimal to hex', function () {
+            equal(convert(0, Alphabet.HEXA_DECIMAL), '0');
+            equal(convert(15, Alphabet.HEXA_DECIMAL), 'f');
+        });
     </script>
 </head>
 <body>
