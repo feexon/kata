@@ -45,26 +45,31 @@
          Check the test fixture for usage example
          */
         function Event() {
-            var handlers=[];
+            var handlers = [];
+
+            function each(context, callback) {
+                handlers.forEach.call(context, callback);
+            }
+
             this.subscribe = function () {
-                [].forEach.call(arguments, function (handler) {
+                each(arguments, function (handler) {
                     typeof handler == 'function' && handlers.push(handler);
                 });
-            }
+            };
             this.unsubscribe = function () {
-
-                [].forEach.call(arguments, function (handler) {
+                each(arguments, function (handler) {
                     var index = handlers.lastIndexOf(handler);
                     index != -1 && handlers.splice(index, 1);
                 });
-            }
+            };
+
             this.emit = function () {
                 var event = this;
                 var args = arguments;
-                handlers.forEach(function (handler) {
+                each(handlers, function (handler) {
                     handler.apply(event, [].slice.call(args));
                 });
-            }
+            };
         }
     </script>
 
@@ -121,22 +126,15 @@
             deepEqual(args, [1, 2, 3]);
         });
 
-        test('unsubscribe', function () {
+        test('unsubscribe handlers', function () {
             function unsubscription() {
 
             }
 
             event.subscribe(prepare, after);
-            event.unsubscribe(prepare);
-            event.unsubscribe(unsubscription);
+            event.unsubscribe(after, unsubscription);
             event.emit();
-            deepEqual(invocationStack, [after]);
-        });
-        test('unsubscribe handlers', function () {
-            event.subscribe(prepare, after);
-            event.unsubscribe(prepare, after);
-            event.emit();
-            deepEqual(invocationStack, []);
+            deepEqual(invocationStack, [prepare]);
         });
         test('unsubscribe last handler', function () {
             event.subscribe(prepare, after, prepare);
