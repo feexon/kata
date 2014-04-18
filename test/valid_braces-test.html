@@ -9,10 +9,10 @@
     <script type="text/javascript">
         function validBraces(source) {
             return !source.split('').reduce(function (count, item) {
-                if (count >= 0 && item == '(') {
+                if (count >= 0 && ( item == '(' || item == '[')) {
                     return  count + 1;
                 }
-                if (item == ')' && --count);
+                if ((item == ')' || item == ']') && --count);
                 return count;
             }, 0);
         }
@@ -27,11 +27,20 @@
             ok(validBraces('(())'));
             ok(validBraces('((()()))'));
         });
+
         test('bad order parens', function () {
             ok(!validBraces(')('));
         });
         test('parens with other things', function () {
             ok(validBraces('(abc)'));
+        });
+        test('valid brackets', function () {
+            ok(validBraces('[]'));
+            ok(!validBraces('['));
+            ok(!validBraces(']'));
+            ok(!validBraces('[]]['));
+            ok(validBraces('[[]]'));
+            ok(validBraces('[[[][]]]'));
         });
     </script>
 </head>
