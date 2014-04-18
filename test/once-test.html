@@ -14,14 +14,14 @@
         function once(fn) {
             var executed = false;
             return function () {
-                return !executed++ && fn();
+                return !executed++ && fn.apply(this,arguments);
             };
         }
     </script>
     <script type="text/javascript">
         var logs = [];
         function info(msg) {
-            logs.push('foo');
+            logs.push(msg||'foo');
             return true;
         }
 
@@ -36,6 +36,11 @@
             deepEqual(logs, ['foo']);
             ok(!log());
             deepEqual(logs, ['foo']);
+        });
+        test('pass args', function () {
+            var log = once(info);
+            ok(log('bar'));
+            deepEqual(logs, ['bar']);
         });
     </script>
 </head>
