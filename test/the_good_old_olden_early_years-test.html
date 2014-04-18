@@ -25,8 +25,13 @@
          Note/Hint:
          */
         function getGoodOldDay(input) {
-            var days = ['Sunday', 'Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-            return days[new Date(input.replace(/-(\d)-/,'-0$1-').split('-').reverse().join('-').replace(/^([^0])/,'00$1')).getDay()];
+            var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            var fields=input.split('-').map(function(field,pos){
+               return +field-(pos%2);
+            }).reverse();
+            var date = new Date(fields);
+            date.setFullYear.apply(date,fields);
+            return days[date.getDay()];
         }
     </script>
     <script type="text/javascript">
@@ -35,10 +40,13 @@
             equal(getGoodOldDay('20-11-0017'), 'Monday');
         });
         test('simple year format', function () {
-            equal(getGoodOldDay('5-7-53'), 'Sunday');
+            equal(getGoodOldDay('5-7-53'), 'Saturday');
             equal(getGoodOldDay('20-11-17'), 'Monday');
             equal(getGoodOldDay('17-1-72'), 'Sunday');
         });
+        test('padding years', function () {
+            equal(getGoodOldDay('4-6-7'), 'Monday');
+        })
     </script>
 </head>
 <body>
