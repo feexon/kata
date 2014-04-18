@@ -66,7 +66,7 @@
             this.emit = function () {
                 var event = this;
                 var args = arguments;
-                each([].concat(handlers), function (handler) {
+                each(handlers.slice(), function (handler) {
                     handler.apply(event, [].slice.call(args));
                 });
             };
