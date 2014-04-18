@@ -15,7 +15,7 @@
                     count++;
                     continue;
                 }
-                if(--count<0){
+                if (chars[i] == ')' && --count < 0) {
                     return false;
                 }
             }
@@ -31,6 +31,9 @@
         });
         test('bad order parens', function () {
             ok(!validBraces(')('));
+        });
+        test('parens with other things', function () {
+            ok(validBraces('(abc)'));
         });
     </script>
 </head>
