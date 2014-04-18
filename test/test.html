@@ -70,14 +70,17 @@
          */
         function Automaton() {
             this.readCommands = function (commands) {
-                var currentState=0;
-                if(commands[0]==1){
-                    currentState++;
-                }
-                if(commands[1]==0){
-                    currentState++;
-                }
-                return currentState==1;
+                var currentState = 0;
+                commands.forEach(function (command) {
+                    if (currentState == 0 && command == 1) {
+                        currentState++;
+                    }
+                    else if (currentState == 1 && command == 0) {
+                        currentState++;
+                    }
+                });
+
+                return currentState == 1;
             }
         }
     </script>
@@ -89,10 +92,13 @@
             ok(!testee.readCommands([0]));
         });
         test('transitions: q2 => q3', function () {
-            ok(testee.readCommands([1,1]));
-            ok(!testee.readCommands([1,0]));
+            ok(testee.readCommands([1, 1]));
+            ok(!testee.readCommands([1, 0]));
         });
-
+        test('process at stay state', function () {
+            ok(testee.readCommands([0, 1, 1]));
+            ok(testee.readCommands([0,0,0, 1, 1]));
+        });
 
 
     </script>
