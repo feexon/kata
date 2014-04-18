@@ -24,6 +24,8 @@
             ok(!validBraces('('));
             ok(!validBraces(')'));
             ok(!validBraces('())('));
+            ok(validBraces('(())'));
+            ok(validBraces('((()()))'));
         });
         test('bad order parens', function () {
             ok(!validBraces(')('));
