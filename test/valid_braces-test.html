@@ -61,6 +61,11 @@
             ok(validBraces('[{}]'));
             ok(validBraces("(){}[]"));
         });
+
+        test('no braces',function(){
+            ok(validBraces(''));
+            ok(validBraces('abc'));
+        });
     </script>
 </head>
 <body>
