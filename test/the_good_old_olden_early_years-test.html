@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript">
+        /**
+         * Write a function which returns the day of the week for a specified date.
+
+         While this sounds straight forward the years this function will be testing against are only within the range of 1-99.
+
+         Any date range past 99 or before 1 will not have unit tests against.
+
+         All dates in the unit tests used will be in the format of DD-MM-YYYY.
+
+         17th of February 5 will be passed as '17-02-0005', though '17-2-5' should work just the same.
+
+         Example:
+
+         getGoodOldDay('19-11-0017'); // Returns Sunday
+         getGoodOldDay('5-7-53'); // Returns Saturday
+         Note/Hint:
+         */
+        function getGoodOldDay(input) {
+            var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            var fields=input.split('-').map(function(field,pos){
+               return +field-(pos%2);
+            }).reverse();
+            var date = new Date(fields);
+            date.setFullYear.apply(date,fields);
+            return days[date.getDay()];
+        }
+    </script>
+    <script type="text/javascript">
+        test('weekday', function () {
+            equal(getGoodOldDay('19-11-0017'), 'Sunday');
+            equal(getGoodOldDay('20-11-0017'), 'Monday');
+        });
+        test('simple year format', function () {
+            equal(getGoodOldDay('5-7-53'), 'Saturday');
+            equal(getGoodOldDay('20-11-17'), 'Monday');
+            equal(getGoodOldDay('17-1-72'), 'Sunday');
+        });
+        test('padding years', function () {
+            equal(getGoodOldDay('4-6-7'), 'Monday');
+        })
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
