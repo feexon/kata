@@ -77,6 +77,8 @@
                     }
                     else if (currentState == 1 && command == 0) {
                         currentState++;
+                    } else if (currentState == 2) {
+                        currentState--;
                     }
                 });
 
@@ -97,9 +99,12 @@
         });
         test('process at stay state', function () {
             ok(testee.readCommands([0, 1, 1]));
-            ok(testee.readCommands([0,0,0, 1, 1]));
+            ok(testee.readCommands([0, 0, 0, 1, 1]));
         });
-
+        test('transitions: q3 => q2', function () {
+            ok(testee.readCommands([1, 0,1]));
+            ok(testee.readCommands([1, 0,0]));
+        });
 
     </script>
 </head>
