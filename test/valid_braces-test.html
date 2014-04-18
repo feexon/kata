@@ -8,18 +8,13 @@
     <script type="text/javascript" src="../libs/qunit.js"></script>
     <script type="text/javascript">
         function validBraces(source) {
-            var count = 0;
-            var chars = source.split('');
-            for (var i = 0; i < chars.length; i++) {
-                if (chars[i] == '(') {
-                    count++;
-                    continue;
+            return !source.split('').reduce(function (count, item) {
+                if (count >= 0 && item == '(') {
+                    return  count + 1;
                 }
-                if (chars[i] == ')' && --count < 0) {
-                    return false;
-                }
-            }
-            return count == 0;
+                if (item == ')' && --count);
+                return count;
+            }, 0);
         }
     </script>
     <script type="text/javascript">
@@ -28,6 +23,7 @@
             ok(validBraces('()'));
             ok(!validBraces('('));
             ok(!validBraces(')'));
+            ok(!validBraces('())('));
         });
         test('bad order parens', function () {
             ok(!validBraces(')('));
