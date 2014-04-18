@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript">
+        /**
+         * You'll implement once, a function that takes another function as an argument, and returns a new version of that function that can only be called once.
+         * Subsequent calls to the resulting function should have no effect (and should return undefined).
+         */
+        function once(fn) {
+            var called=false;
+            return function () {
+                return (!called||undefined)&&(called=!called)&& fn.apply(this, arguments);
+            };
+        }
+    </script>
+    <script type="text/javascript">
+        var logs = [];
+        function info(msg) {
+            logs.push(msg || 'foo');
+            return true;
+        }
+        var log;
+
+        module('once', {
+            setup: function () {
+                logs.splice(0);
+                log = once(info);
+            }
+        });
+        test('call once', function () {
+            ok(log());
+            deepEqual(logs, ['foo']);
+            ok(!log());
+            deepEqual(logs, ['foo']);
+        });
+        test('pass args', function () {
+            ok(log('bar'));
+            deepEqual(logs, ['bar']);
+        });
+        test('return undefined in subsequent call', function () {
+            ok(log());
+            equal(log()+'','undefined');
+
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
