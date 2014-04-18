@@ -52,11 +52,15 @@
                     typeof handler == 'function' && event.handlers.push(handler);
                 });
             }
+            this.unsubscribe= function (handler) {
+                var index = this.handlers.lastIndexOf(handler);
+                index!=-1&&this.handlers.splice(index,1);
+            }
             this.emit = function () {
-                var event=this;
-                var args=arguments;
-                this.handlers.forEach(function(handler){
-                    handler.apply(event,[].slice.call(args));
+                var event = this;
+                var args = arguments;
+                this.handlers.forEach(function (handler) {
+                    handler.apply(event, [].slice.call(args));
                 });
             }
         }
@@ -73,7 +77,7 @@
             }
         });
         function prepare() {
-           invocationStack.push('prepare');
+            invocationStack.push('prepare');
         }
         function after() {
             invocationStack.push('after');
@@ -96,27 +100,38 @@
 
 
         test('emit order', function () {
-            event.subscribe(prepare,after);
+            event.subscribe(prepare, after);
             event.emit();
-            deepEqual(invocationStack,['prepare','after']);
+            deepEqual(invocationStack, ['prepare', 'after']);
         });
 
         test('handler context is event', function () {
             var context;
-            event.subscribe(function(){
-                context=this;
+            event.subscribe(function () {
+                context = this;
             });
             event.emit();
-            equal(context,event);
+            equal(context, event);
         });
 
         test('emit will pass args on handler', function () {
             var args;
-            event.subscribe(function(){
-                args=[].slice.call(arguments);
+            event.subscribe(function () {
+                args = [].slice.call(arguments);
             });
-            event.emit(1,2,3);
-            deepEqual(args,[1,2,3]);
+            event.emit(1, 2, 3);
+            deepEqual(args, [1, 2, 3]);
+        });
+
+        test('unsubscribe', function () {
+            function unknown(){
+
+            }
+            event.subscribe(prepare);
+            event.subscribe(after);
+            event.unsubscribe(prepare);
+            event.unsubscribe(unknown);
+            deepEqual(event.handlers, [after]);
         });
     </script>
 </head>
