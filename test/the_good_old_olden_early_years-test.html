@@ -25,13 +25,18 @@
          Note/Hint:
          */
         function getGoodOldDay(date) {
-            return ['Sunday','Monday'][new Date(date.split('-').reverse().join('-')).getDay()];
+            var days = ['Sunday', 'Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+            return days[new Date(date.split('-').reverse().join('-').replace(/^([^0])/,'00$1')).getDay()];
         }
     </script>
     <script type="text/javascript">
         test('weekday', function () {
             equal(getGoodOldDay('19-11-0017'), 'Sunday');
             equal(getGoodOldDay('20-11-0017'), 'Monday');
+        });
+        test('simple year format', function () {
+            equal(getGoodOldDay('5-7-53'), 'Sunday');
+            equal(getGoodOldDay('20-11-17'), 'Monday');
         });
     </script>
 </head>
