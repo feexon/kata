@@ -17,9 +17,9 @@
          --event.subscribe(listeners);
          --event.subscribe(same listener twice);
          --event.subscribe(<others>);
-         event.unsubscribe(listeners);
-         event.unsubscribe(<unknown>);
-         event.unsubscribe(listener);remove the last subscription
+         --event.unsubscribe(listeners);
+         --event.unsubscribe(<unknown>);
+         --event.unsubscribe(listener);remove the last subscription
          --event.emit(args); will trigger listeners with args
          --handlers' invocation context is event
          --handlers invocation order must match the order of subscription
@@ -45,24 +45,23 @@
          Check the test fixture for usage example
          */
         function Event() {
-            this.handlers = [];
+            var handlers=[];
             this.subscribe = function () {
-                var event = this;
                 [].forEach.call(arguments, function (handler) {
-                    typeof handler == 'function' && event.handlers.push(handler);
+                    typeof handler == 'function' && handlers.push(handler);
                 });
             }
             this.unsubscribe = function () {
-                var event = this;
+
                 [].forEach.call(arguments, function (handler) {
-                    var index = event.handlers.lastIndexOf(handler);
-                    index != -1 && event.handlers.splice(index, 1);
+                    var index = handlers.lastIndexOf(handler);
+                    index != -1 && handlers.splice(index, 1);
                 });
             }
             this.emit = function () {
                 var event = this;
                 var args = arguments;
-                this.handlers.forEach(function (handler) {
+                handlers.forEach(function (handler) {
                     handler.apply(event, [].slice.call(args));
                 });
             }
@@ -80,32 +79,28 @@
             }
         });
         function prepare() {
-            invocationStack.push('prepare');
+            invocationStack.push(arguments.callee);
         }
         function after() {
-            invocationStack.push('after');
+            invocationStack.push(arguments.callee);
         }
         test('subscribe', function () {
             event.subscribe(prepare);
-            event.subscribe(after);
-            deepEqual(event.handlers, [prepare, after]);
+            event.emit();
+            deepEqual(invocationStack, [prepare]);
         });
 
         test('subscribe invalid handlers', function () {
             event.subscribe('string');
-            deepEqual(event.handlers, []);
-        });
-
-        test('subscribe handlers', function () {
-            event.subscribe(prepare, 'string', after);
-            deepEqual(event.handlers, [prepare, after]);
+            event.emit();
+            deepEqual(invocationStack, []);
         });
 
 
         test('emit order', function () {
-            event.subscribe(prepare, after);
+            event.subscribe(prepare, 'string', after);
             event.emit();
-            deepEqual(invocationStack, ['prepare', 'after']);
+            deepEqual(invocationStack, [prepare, after]);
         });
 
         test('handler context is event', function () {
@@ -127,25 +122,30 @@
         });
 
         test('unsubscribe', function () {
-            function unknown() {
+            function unsubscription() {
 
             }
 
-            event.subscribe(prepare);
-            event.subscribe(after);
+            event.subscribe(prepare, after);
             event.unsubscribe(prepare);
-            event.unsubscribe(unknown);
-            deepEqual(event.handlers, [after]);
+            event.unsubscribe(unsubscription);
+            event.emit();
+            deepEqual(invocationStack, [after]);
         });
         test('unsubscribe handlers', function () {
             event.subscribe(prepare, after);
             event.unsubscribe(prepare, after);
-            deepEqual(event.handlers, []);
+            event.emit();
+            deepEqual(invocationStack, []);
         });
         test('unsubscribe last handler', function () {
-            event.subscribe(prepare, after,prepare);
+            event.subscribe(prepare, after, prepare);
             event.unsubscribe(prepare);
-            deepEqual(event.handlers, [prepare,after]);
+            event.emit();
+            deepEqual(invocationStack, [prepare, after]);
+        });
+        test('public keys', function () {
+            deepEqual(Object.keys(event).sort(), ['emit', 'subscribe', 'unsubscribe']);
         });
     </script>
 </head>
