@@ -70,7 +70,14 @@
          */
         function Automaton() {
             this.readCommands = function (commands) {
-                return commands[0]==1;
+                var currentState=0;
+                if(commands[0]==1){
+                    currentState++;
+                }
+                if(commands[1]==0){
+                    currentState++;
+                }
+                return currentState==1;
             }
         }
     </script>
@@ -80,6 +87,10 @@
         test('transitions: q1 => q2', function () {
             ok(testee.readCommands([1]));
             ok(!testee.readCommands([0]));
+        });
+        test('transitions: q2 => q3', function () {
+            ok(testee.readCommands([1,1]));
+            ok(!testee.readCommands([1,0]));
         });
 
 
