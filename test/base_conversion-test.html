@@ -20,26 +20,41 @@
          Test Failed: "27" dec -> alpha_lower - Expected: bb, instead got: undefined
          Test Failed: "hello" alpha_lower -> hex - Expected: 320048, instead got: undefined
          Test Failed: "SAME" alpha_upper -> alpha_upper - Expected: SAME, instead got: undefined
+
+         Test Failed: "CodeWars" alpha -> bin - Expected: 110100110111011111011110001100111111110000110, instead got: 11111011110001100111111110000110
+         Test Failed: "CodeWars" alpha -> oct - Expected: 646737361477606, instead got: 00006
+         Test Failed: "CodeWars" alpha -> dec - Expected: 29063972814726, instead got: 06
+         Test Failed: "CodeWars" alpha -> hex - Expected: 1a6efbc67f86, instead got: 006
+         Test Failed: "CodeWars" alpha -> alpha_lower - Expected: fjepvaubis, instead got: dtclppis
+         Test Failed: "CodeWars" alpha -> alpha_upper - Expected: FJEPVAUBIS, instead got: DTCLPPIS
+         Test Failed: "CodeWars" alpha -> alpha_numeric - Expected: 8fGCU1me, instead got: G7bOke
+         Test Failed: "3473515777067175" oct -> oct - Expected: 3473515777067175, instead got: 115777067175
+         Test Failed: "72968706393680" dec -> dec - Expected: 72968706393680, instead got: 0
+         Test Failed: "7322d38ec5d7" hex -> hex - Expected: 7322d38ec5d7, instead got: 2d38ec5d7
+         Test Failed: "oojgwbbf" allow -> allow - Expected: oojgwbbf, instead got: qwpkdff
+         Test Passed: Value == CXADRLHW
+         Test Failed: "UzExIkXX" alpha -> alpha - Expected: UzExIkXX, instead got: hlHHvX
+
+         Test Failed: "PbqrJnef" alpha_lower -> rot13 custom alphabet - Expected: CodeWars, instead got: s
+         Test Failed: "chAllEnge" alpha_lower -> rot13 custom alphabet - Expected: puNyyRatr, instead got: qtdQgRr
          */
         function parse(source, target) {
             return source.split('').reduce(function (ret, value) {
-                return ret * target.length + (target.search(value));
+                return ret * target.length + target.search(value);
             }, 0);
 
         }
+
         function format(decimal, target) {
-            var digits = [];
-            while (true) {
-                digits.push(target[decimal % target.length]);
-                decimal = ~~(decimal / target.length);
-                if (decimal == 0) {
-                    break;
-                }
-            }
-            return digits.reverse().join('');
+            var result = [];
+            do {
+                result.push(target[decimal % target.length]);
+            } while (decimal = Math.floor(decimal / target.length));
+
+            return result.reverse().join('');
         }
-        function convert(input,source,target){
-            return format(parse(input,source),target);
+        function convert(input, source, target) {
+            return format(parse(input, source), target);
         }
     </script>
     <script type="text/javascript">
@@ -74,16 +89,18 @@
             equal(parse('ff', Alphabet.HEXA_DECIMAL), 255);
         });
         test('parse alpha', function () {
-            equal(parse('hello', Alphabet.ALPHA_LOWER),3276872);
+            equal(parse('hello', Alphabet.ALPHA_LOWER), 3276872);
         });
 
-        test('convert',function(){
-           equal(convert('15',Alphabet.DECIMAL,Alphabet.BINARY),'1111');
-           equal(convert('1010',Alphabet.BINARY,Alphabet.DECIMAL),'10');
-           equal(convert('SAME',Alphabet.ALPHA_UPPER,Alphabet.ALPHA_UPPER),'SAME');
-           equal(convert('hello',Alphabet.ALPHA_LOWER,Alphabet.HEXA_DECIMAL),'320048');
+        test('convert', function () {
+            equal(convert('15', Alphabet.DECIMAL, Alphabet.BINARY), '1111');
+            equal(convert('1010', Alphabet.BINARY, Alphabet.DECIMAL), '10');
+            equal(convert('SAME', Alphabet.ALPHA_UPPER, Alphabet.ALPHA_UPPER), 'SAME');
+            equal(convert('hello', Alphabet.ALPHA_LOWER, Alphabet.HEXA_DECIMAL), '320048');
         });
-
+        test("fix bug => ~~ can't used in large number", function () {
+            equal(convert('CodeWars', Alphabet.ALPHA, Alphabet.BINARY), '110100110111011111011110001100111111110000110');
+        });
     </script>
 </head>
 <body>
