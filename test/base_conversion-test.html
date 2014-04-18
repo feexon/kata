@@ -22,7 +22,6 @@
          Test Failed: "SAME" alpha_upper -> alpha_upper - Expected: SAME, instead got: undefined
          */
         function parse(source, target) {
-
             return source.split('').reduce(function (ret, value) {
                 return ret * target.length + (target.search(value));
             }, 0);
@@ -38,7 +37,9 @@
                 }
             }
             return digits.reverse().join('');
-
+        }
+        function convert(input,source,target){
+            return format(parse(input,source),target);
         }
     </script>
     <script type="text/javascript">
@@ -71,8 +72,18 @@
             equal(parse('10', Alphabet.BINARY), 2);
             equal(parse('f', Alphabet.HEXA_DECIMAL), 15);
             equal(parse('ff', Alphabet.HEXA_DECIMAL), 255);
-
         });
+        test('parse alpha', function () {
+            equal(parse('hello', Alphabet.ALPHA_LOWER),3276872);
+        });
+
+        test('convert',function(){
+           equal(convert('15',Alphabet.DECIMAL,Alphabet.BINARY),'1111');
+           equal(convert('1010',Alphabet.BINARY,Alphabet.DECIMAL),'10');
+           equal(convert('SAME',Alphabet.ALPHA_UPPER,Alphabet.ALPHA_UPPER),'SAME');
+           equal(convert('hello',Alphabet.ALPHA_LOWER,Alphabet.HEXA_DECIMAL),'320048');
+        });
+
     </script>
 </head>
 <body>
