@@ -47,13 +47,18 @@
         function Event() {
             this.handlers = [];
             this.subscribe = function (handler) {
-                typeof handler=='function'&&this.handlers.push(handler);
+                typeof handler == 'function' && this.handlers.push(handler);
             }
         }
     </script>
 
     <script type="text/javascript">
-        module("Event");
+        var event;
+        module("Event", {
+            setup: function () {
+                event = new Event();
+            }
+        });
         function prepare() {
 
         }
@@ -61,16 +66,12 @@
 
         }
         test('subscribe', function () {
-            var event = new Event();
-
             event.subscribe(prepare);
             event.subscribe(after);
             deepEqual(event.handlers, [prepare, after]);
         });
 
         test('subscribe invalid handlers', function () {
-            var event = new Event();
-
             event.subscribe('string');
             deepEqual(event.handlers, []);
         });
