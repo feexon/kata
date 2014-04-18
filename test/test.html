@@ -23,7 +23,7 @@
          --event.emit(args); will trigger listeners with args
          --handlers' invocation context is event
          --handlers invocation order must match the order of subscription
-         subscribe, unsubscribe and emit
+         --subscribe, unsubscribe and emit
 
          which comply to the following:
 
@@ -66,7 +66,7 @@
             this.emit = function () {
                 var event = this;
                 var args = arguments;
-                each(handlers, function (handler) {
+                each([].concat(handlers), function (handler) {
                     handler.apply(event, [].slice.call(args));
                 });
             };
@@ -145,6 +145,24 @@
         test('public keys', function () {
             deepEqual(Object.keys(event).sort(), ['emit', 'subscribe', 'unsubscribe']);
         });
+        test('subscribe/unsubscribe in handlers', function () {
+            var logged=false;
+            function log(){
+                logged=true;
+            }
+            event.subscribe(function () {
+                this.unsubscribe(prepare, after);
+                this.subscribe(prepare);
+            }, prepare, after);
+
+            event.emit();
+            deepEqual(invocationStack, [prepare, after]);
+            ok(!logged);
+
+            event.emit();
+            ok(!logged);
+        });
+
     </script>
 </head>
 <body>
