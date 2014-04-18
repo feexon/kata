@@ -102,12 +102,6 @@
         });
 
 
-        test('emit order', function () {
-            event.subscribe(prepare, 'string', after);
-            event.emit();
-            deepEqual(invocationStack, [prepare, after]);
-        });
-
         test('handler context is event', function () {
             var context;
             event.subscribe(function () {
@@ -115,6 +109,12 @@
             });
             event.emit();
             equal(context, event);
+        });
+
+        test('emit order', function () {
+            event.subscribe(prepare, 'string', after);
+            event.emit();
+            deepEqual(invocationStack, [prepare, after]);
         });
 
         test('emit will pass args on handler', function () {
