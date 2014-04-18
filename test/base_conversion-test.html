@@ -61,6 +61,10 @@
             equal(convert(0, Alphabet.HEXA_DECIMAL), '0');
             equal(convert(15, Alphabet.HEXA_DECIMAL), 'f');
         });
+        test('convert decimal to alpha', function () {
+            equal(convert(0, Alphabet.ALPHA), 'a');
+            equal(convert(27, Alphabet.ALPHA_LOWER), 'bb');
+        });
     </script>
 </head>
 <body>
