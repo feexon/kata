@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript">
+        function validBraces(braces){
+            var r = /\(\)|\{\}|\[\]|\w+/;
+            while(braces.length && r.test(braces)) {
+                braces = braces.replace(r,'');
+            }
+            return braces.length === 0;
+        }
+    </script>
+    <script type="text/javascript">
+        module('Valid Braces');
+        test('valid parens', function () {
+            ok(validBraces('()'));
+            ok(!validBraces('('));
+            ok(!validBraces(')'));
+            ok(!validBraces('())('));
+            ok(validBraces('(())'));
+            ok(validBraces('((()()))'));
+        });
+
+        test('bad order parens', function () {
+            ok(!validBraces(')('));
+        });
+        test('parens with other things', function () {
+            ok(validBraces('(abc)'));
+        });
+        test('valid brackets', function () {
+            ok(validBraces('[]'));
+            ok(!validBraces('['));
+            ok(!validBraces(']'));
+            ok(!validBraces('[]]['));
+            ok(validBraces('[[]]'));
+            ok(validBraces('[[[][]]]'));
+        });
+        test('valid mixed braces', function () {
+            ok(!validBraces('[)'));
+            ok(validBraces('[{}]'));
+            ok(validBraces("(){}[]"));
+        });
+
+        test('no braces',function(){
+            ok(validBraces(''));
+            ok(validBraces('abc'));
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
