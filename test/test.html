@@ -52,9 +52,12 @@
                     typeof handler == 'function' && event.handlers.push(handler);
                 });
             }
-            this.unsubscribe= function (handler) {
-                var index = this.handlers.lastIndexOf(handler);
-                index!=-1&&this.handlers.splice(index,1);
+            this.unsubscribe = function () {
+                var event = this;
+                [].forEach.call(arguments, function (handler) {
+                    var index = event.handlers.indexOf(handler);
+                    index != -1 && event.handlers.splice(index, 1);
+                });
             }
             this.emit = function () {
                 var event = this;
@@ -124,14 +127,20 @@
         });
 
         test('unsubscribe', function () {
-            function unknown(){
+            function unknown() {
 
             }
+
             event.subscribe(prepare);
             event.subscribe(after);
             event.unsubscribe(prepare);
             event.unsubscribe(unknown);
             deepEqual(event.handlers, [after]);
+        });
+        test('unsubscribe handlers', function () {
+            event.subscribe(prepare, after);
+            event.unsubscribe(prepare, after);
+            deepEqual(event.handlers, []);
         });
     </script>
 </head>
