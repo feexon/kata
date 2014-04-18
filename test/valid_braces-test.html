@@ -7,28 +7,12 @@
     <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
     <script type="text/javascript" src="../libs/qunit.js"></script>
     <script type="text/javascript">
-        function validBraces(source) {
-            var braces = {'(': ')', '[': ']', '{': '}'};
-            var stack = [];
-            return !source.split('').reduce(function (count, item) {
-                if (count < 0) {
-                    return count;
-                }
-                if (braces[item]) {
-                    stack.push(item);
-                    return  count + 1;
-                }
-                var start = stack.pop();
-                if (/[)}\]]/.test(item)) {
-                    if (braces[start] != item) {
-                        return -1;
-                    }
-                    --count;
-                } else {
-                    stack.push(start);
-                }
-                return count;
-            }, 0);
+        function validBraces(braces){
+            var r = /\(\)|\{\}|\[\]|\w+/;
+            while(braces.length && r.test(braces)) {
+                braces = braces.replace(r,'');
+            }
+            return braces.length === 0;
         }
     </script>
     <script type="text/javascript">
