@@ -22,7 +22,7 @@
          event.unsubscribe(listener);remove the last subscription
          event.emit(args); will trigger listeners with args
          handlers' invocation context is event
-         handlers invocation order must match the order of subscription
+         --handlers invocation order must match the order of subscription
          subscribe, unsubscribe and emit
 
          which comply to the following:
@@ -47,9 +47,14 @@
         function Event() {
             this.handlers = [];
             this.subscribe = function () {
-                var event=this;
-                [].forEach.call(arguments,function(handler){
+                var event = this;
+                [].forEach.call(arguments, function (handler) {
                     typeof handler == 'function' && event.handlers.push(handler);
+                });
+            }
+            this.emit = function () {
+                this.handlers.forEach(function(handler){
+                    handler();
                 });
             }
         }
@@ -57,16 +62,19 @@
 
     <script type="text/javascript">
         var event;
+        var invocationStack;
+
         module("Event", {
             setup: function () {
                 event = new Event();
+                invocationStack = [];
             }
         });
         function prepare() {
-
+           invocationStack.push('prepare');
         }
         function after() {
-
+            invocationStack.push('after');
         }
         test('subscribe', function () {
             event.subscribe(prepare);
@@ -80,8 +88,15 @@
         });
 
         test('subscribe handlers', function () {
-            event.subscribe(prepare,'string',after);
-            deepEqual(event.handlers, [prepare,after]);
+            event.subscribe(prepare, 'string', after);
+            deepEqual(event.handlers, [prepare, after]);
+        });
+
+
+        test('emit order', function () {
+            event.subscribe(prepare,after);
+            event.emit();
+            deepEqual(invocationStack,['prepare','after']);
         });
     </script>
 </head>
