@@ -12,10 +12,9 @@
          * Subsequent calls to the resulting function should have no effect (and should return undefined).
          */
         function once(fn) {
-            var stack=[fn];
+            var called=false;
             return function () {
-                var origin=stack.pop();
-                return origin&& origin.apply(this, arguments);
+                return (!called||undefined)&&(called=!called)&& fn.apply(this, arguments);
             };
         }
     </script>
