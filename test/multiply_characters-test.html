@@ -17,7 +17,9 @@
          spam(14);//huehuehuehuehuehuehuehuehuehuehuehuehuehue
          */
         function spam(times) {
-            return times?'hue':'';
+            return times ? Array.apply(null,Array(times)).map(function(){
+                return 'hue';
+            }).join('') : '';
         }
     </script>
     <script type="text/javascript">
@@ -27,6 +29,10 @@
         });
         test('never', function () {
             strictEqual(spam(0), '');
+        });
+        test('many', function () {
+            strictEqual(spam(6), 'huehuehuehuehuehue');
+            strictEqual(spam(14), 'huehuehuehuehuehuehuehuehuehuehuehuehuehue');
         });
     </script>
 </head>
