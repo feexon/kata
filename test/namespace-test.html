@@ -16,25 +16,39 @@
 
          var phrase = myObject.sayHello(); // phrase should be 'Hello!'
          The interesting part is that MyClass should only be accessible via the namespace and should not define any extra global variables. Code should not redefine an existing namespace, but should also function if the namespace is not previously defined.
+
          */
-        var MyNamespace={
-            MyClass:function(content){
-                this.sayHello=function(){
+
+        function define(namespace) {
+            MyNamespace = namespace || {};
+
+            MyNamespace.MyClass = function (content) {
+                this.sayHello = function () {
                     return content;
                 }
-            }
-        };
+            };
+        }
+
+
     </script>
     <script type="text/javascript">
         module('namespace');
+
         test('class inside a namespace', function () {
-            equal(typeof MyNamespace.MyClass,'function');
-        });
-        test('sayHello', function () {
-            var myObject = new MyNamespace.MyClass('Hello!');
-            equal(myObject.sayHello(),'Hello!');
+            define();
+            equal(typeof MyNamespace.MyClass, 'function');
         });
 
+        test('sayHello', function () {
+            define();
+            var myObject = new MyNamespace.MyClass('Hello!');
+            equal(myObject.sayHello(), 'Hello!');
+        });
+
+        test('should not redefine an existing namespace', function () {
+            define({version: '1.0'});
+            equal(MyNamespace.version, '1.0');
+        });
     </script>
 </head>
 <body>
