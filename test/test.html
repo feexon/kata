@@ -13,12 +13,12 @@
                 var start = parts[0].search(/\./);
                 var decimal = parts[0].split('');
                 var exp = +parts[1];
-                var dir = exp < 0 ? -1 : 1;
                 start = start < 0 ? decimal.length : start;
                 if (exp + start < 0) {
                     decimal = Array(Math.abs(exp + start)).concat(decimal);
                     start += Math.abs(exp + start);
                 }
+                var dir = exp < 0 ? -1 : 1;
                 for (var i = exp * dir; --i >= 0;) {
                     var tmp = decimal[start] || '.';
                     decimal[start] = decimal[start + dir] || '0';
@@ -36,7 +36,7 @@
             equal(toDecimal('5'), '5');
             equal(toDecimal('0.01'), '0.01');
         });
-        test('exponent equal decimal part length', function () {
+        test('exponent less than decimal part length', function () {
             equal(toDecimal('1.234e+2'), '123.4');
             equal(toDecimal('1.2345e+3'), '1234.5');
             equal(toDecimal('123.4e-2'), '1.234');
@@ -50,7 +50,10 @@
             equal(toDecimal('1e+2'), '100');
             equal(toDecimal('1e-2'), '0.01');
         });
-
+        test('exponent more than decimal part length', function () {
+            equal(toDecimal('1.234e+4'), '12340');
+            equal(toDecimal('123.4e-4'), '0.01234');
+        });
     </script>
 </head>
 <body>
