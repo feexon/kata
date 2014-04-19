@@ -14,8 +14,15 @@
         test("size", function () {
             equal(Array(5).length, 5);
         });
-        test('map',function(){
-            deepEqual(Array.apply(null,Array(5)).map(function(_,i){return i;}),[0,1,2,3,4]);
+        test('map', function () {
+            var collector = function (_, i) {
+                return i;
+            };
+            deepEqual(Array(2).map(collector), [undefined, undefined]);
+            deepEqual(Array.apply(null, Array(5)).map(collector), [0, 1, 2, 3, 4]);
+        });
+        test('concat', function () {
+            deepEqual(Array(2).concat([1, 2]), [undefined, undefined, 1, 2]);
         })
     </script>
 </head>
