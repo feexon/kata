@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript">
+        /**
+         * Here we have a function that help us spam our hearty laughter. But is not working! I need you to find out why...
+
+         Expected results:
+
+         spam(1);//hue
+         spam(6);//huehuehuehuehuehue
+         spam(14);//huehuehuehuehuehuehuehuehuehuehuehuehuehue
+         */
+        function spam(times) {
+            return 'hue';
+        }
+    </script>
+    <script type="text/javascript">
+        module("Multiply Characters");
+        test('once', function () {
+            equal(spam(1), 'hue');
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
