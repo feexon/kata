@@ -29,6 +29,9 @@
             }
             return source;
         }
+        Number.prototype.toDecimal=function(){
+            return toDecimal(this.toString());
+        }
     </script>
     <script type="text/javascript">
         module("toDecimal");
