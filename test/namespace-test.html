@@ -18,8 +18,10 @@
          The interesting part is that MyClass should only be accessible via the namespace and should not define any extra global variables. Code should not redefine an existing namespace, but should also function if the namespace is not previously defined.
          */
         var MyNamespace={
-            MyClass:function(){
-
+            MyClass:function(content){
+                this.sayHello=function(){
+                    return content;
+                }
             }
         };
     </script>
@@ -27,6 +29,10 @@
         module('namespace');
         test('class inside a namespace', function () {
             equal(typeof MyNamespace.MyClass,'function');
+        });
+        test('sayHello', function () {
+            var myObject = new MyNamespace.MyClass('Hello!');
+            equal(myObject.sayHello(),'Hello!');
         });
 
     </script>
