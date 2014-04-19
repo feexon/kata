@@ -20,7 +20,7 @@
                     decimal[start + dir] = tmp;
                     start += dir;
                 }
-                return decimal.join('');
+                return decimal.join('').replace(/\.$/,'').replace(/^\./,'0.');
             }
             return source;
         }
@@ -35,6 +35,10 @@
             equal(toDecimal('1.234e+2'), '123.4');
             equal(toDecimal('1.2345e+3'), '1234.5');
             equal(toDecimal('123.4e-2'), '1.234');
+        });
+        test('exponent equal decimal part length', function () {
+            equal(toDecimal('1.23e+2'), '123');
+            equal(toDecimal('12.3e-2'), '0.123');
         });
 
     </script>
