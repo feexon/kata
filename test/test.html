@@ -7,10 +7,19 @@
     <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
     <script type="text/javascript" src="../libs/qunit.js"></script>
     <script type="text/javascript">
-
+        function toDecimal(source){
+            return source;
+        }
+    </script>
+    <script type="text/javascript">
+        module("toDecimal");
+        test('no exponent',function(){
+           equal(toDecimal('5'),'5');
+           equal(toDecimal('0.01'),'0.01');
+        });
     </script>
 </head>
 <body>
-    <div id="qunit"></div>
+<div id="qunit"></div>
 </body>
 </html>
