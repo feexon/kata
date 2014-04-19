@@ -22,19 +22,35 @@
          isSantaClausable(santa); // must return TRUE
          isSantaClausable(notSanta); // must return FALSE
          */
-        function isSantaClausable(object){
-            return object['distributeGifts'];
+        function isSantaClausable(object) {
+            return object['distributeGifts']&&object['sayHoHoHo']&&object['goDownTheChimney'];
         }
     </script>
     <script type="text/javascript">
-         var notSanta = {
-             sayHoHoHo: function() { console.log('Oink Oink!') }
-             // no distributeGifts() and no goDownTheChimney()
-         };
-         module('Santa Clausable Interface');
-         test('Not implement all methods',function(){
+        var notSanta = {
+            sayHoHoHo: function () {
+                console.log('Oink Oink!')
+            }
+            // no distributeGifts() and no goDownTheChimney()
+        };
+        var santa = {
+            sayHoHoHo: function () {
+                console.log('Ho Ho Ho!')
+            },
+            distributeGifts: function () {
+                console.log('Gifts for all!');
+            },
+            goDownTheChimney: function () {
+                console.log('*whoosh*');
+            }
+        };
+        module('Santa Clausable Interface');
+        test('Not implement all methods', function () {
             ok(!isSantaClausable(notSanta));
-         });
+        });
+        test('Good object', function () {
+            ok(isSantaClausable(santa));
+        });
 
     </script>
 </head>
