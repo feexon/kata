@@ -32,7 +32,12 @@
         test('instances are the same', function () {
             strictEqual(new Singleton(), new Singleton());
         });
-
+        test('share state', function () {
+            var obj1 = new Singleton();
+            var obj2 = new Singleton();
+            obj1.test = 'foo';
+            equal(obj2.test, 'foo');
+        });
     </script>
 </head>
 <body>
