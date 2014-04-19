@@ -7,7 +7,15 @@
     <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
     <script type="text/javascript" src="../libs/qunit.js"></script>
     <script type="text/javascript">
-
+        function pluck(obj,name){
+            return obj[name];
+        }
+    </script>
+    <script type="text/javascript">
+         module("Pluck");
+         test('pluck from object',function(){
+             equal(pluck({foo:'bar'},'foo'),'bar');
+         });
     </script>
 </head>
 <body>
