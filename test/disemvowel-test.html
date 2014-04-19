@@ -7,7 +7,15 @@
     <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
     <script type="text/javascript" src="../libs/qunit.js"></script>
     <script type="text/javascript">
-
+        function disemvowel(string){
+            return string;
+        }
+    </script>
+    <script type="text/javascript">
+       module('Disemvowel Trolls');
+       test('Consonant only',function(){
+          equal(disemvowel('why'),'why');
+       });
     </script>
 </head>
 <body>
