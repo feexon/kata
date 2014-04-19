@@ -10,6 +10,9 @@
         function Animal(name,type){
           this.name=name;
           this.type=type;
+          this.toString=function(){
+            return [name,type].join(' is a ');
+          };
         }
     </script>
     <script type="text/javascript">
@@ -21,6 +24,10 @@
             var dog=new Animal('Max', 'dog');
             equal(dog.name,'Max');
             equal(dog.type,'dog');
+        });
+        test('toString',function(){
+            var dog=new Animal('Max', 'dog');
+            equal(dog.toString(),'Max is a dog');
         });
     </script>
 </head>
