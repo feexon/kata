@@ -23,7 +23,9 @@
          isSantaClausable(notSanta); // must return FALSE
          */
         function isSantaClausable(object) {
-            return object['distributeGifts']&&object['sayHoHoHo']&&object['goDownTheChimney'];
+            return ['distributeGifts','sayHoHoHo','goDownTheChimney'].every(function(method){
+                return object[method];
+            });
         }
     </script>
     <script type="text/javascript">
