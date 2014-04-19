@@ -11,7 +11,19 @@
             return 'bottle' + (bottles == 1 ? '' : 's');
         }
         function bottles(bottles) {
-            return [bottles,plural(bottles),'of','beer'].join(' ');
+            return [bottles, plural(bottles), 'of', 'beer'].join(' ');
+        }
+        function sing() {
+            var ending = [
+                bottles('No more') + ' on the wall, '+bottles('no more') +'.',
+                'Go to the store and buy some more, '+bottles(99)+' on the wall.'
+            ];
+            return Array.apply(null, Array(99)).reduce(function (song, _, howMany) {
+                return song.concat(
+                        'Take one down and pass it around, ' + bottles(howMany || 'no more') + ' on the wall.',
+                        bottles(howMany + 1) + ' on the wall, ' + bottles(howMany + 1) + '.'
+                );
+            }, []).reverse().concat(ending);
         }
     </script>
     <script type="text/javascript">
@@ -27,6 +39,16 @@
         });
         test('bottles', function () {
             equal(bottles('99'), '99 bottles of beer');
+        });
+        test('sing', function () {
+            var song = sing();
+            equal(song.length, 200);
+            equal(song[0], '99 bottles of beer on the wall, 99 bottles of beer.');
+            equal(song[1], 'Take one down and pass it around, 98 bottles of beer on the wall.');
+            equal(song[196], '1 bottle of beer on the wall, 1 bottle of beer.');
+            equal(song[197], 'Take one down and pass it around, no more bottles of beer on the wall.');
+            equal(song[198], 'No more bottles of beer on the wall, no more bottles of beer.');
+            equal(song[199], 'Go to the store and buy some more, 99 bottles of beer on the wall.');
         });
     </script>
 </head>
