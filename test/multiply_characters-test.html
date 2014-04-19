@@ -17,13 +17,16 @@
          spam(14);//huehuehuehuehuehuehuehuehuehuehuehuehuehue
          */
         function spam(times) {
-            return 'hue';
+            return times?'hue':'';
         }
     </script>
     <script type="text/javascript">
         module("Multiply Characters");
         test('once', function () {
             equal(spam(1), 'hue');
+        });
+        test('never', function () {
+            strictEqual(spam(0), '');
         });
     </script>
 </head>
