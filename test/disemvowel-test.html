@@ -8,7 +8,7 @@
     <script type="text/javascript" src="../libs/qunit.js"></script>
     <script type="text/javascript">
         function disemvowel(string){
-            return string.replace(/i/ig,'');
+            return string.replace(/[aeiou]/ig,'');
         }
     </script>
     <script type="text/javascript">
@@ -23,6 +23,9 @@
        test('drop all upper case vowels',function(){
           equal(disemvowel('THIS'),'THS');
           equal(disemvowel('THIS IS'),'THS S');
+       });
+       test('drop mixed vowels',function(){
+           equal(disemvowel('This website is for losers LOL!'),'Ths wbst s fr lsrs LL!');
        });
     </script>
 </head>
