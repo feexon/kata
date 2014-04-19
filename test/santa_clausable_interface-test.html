@@ -23,8 +23,8 @@
          isSantaClausable(notSanta); // must return FALSE
          */
         function isSantaClausable(object) {
-            return ['distributeGifts','sayHoHoHo','goDownTheChimney'].every(function(method){
-                return object[method];
+            return ['distributeGifts', 'sayHoHoHo', 'goDownTheChimney'].every(function (method) {
+                return typeof object[method]=='function';
             });
         }
     </script>
@@ -52,6 +52,13 @@
         });
         test('Good object', function () {
             ok(isSantaClausable(santa));
+        });
+        test('Boolean properties instead of function', function () {
+            ok(!isSantaClausable({
+                sayHoHoHo: true,
+                distributeGifts: true,
+                goDownTheChimney: true
+            }));
         });
 
     </script>
