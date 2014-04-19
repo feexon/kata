@@ -7,26 +7,34 @@
     <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
     <script type="text/javascript" src="../libs/qunit.js"></script>
     <script type="text/javascript">
-        function Animal(name,type){
-          this.name=name;
-          this.type=type;
-          this.toString=function(){
-            return [name,type].join(' is a ');
-          };
+        function Animal(name, type) {
+            this.name = name;
+            this.type = type;
+            this.toString = function () {
+                return [this.name, this.type].join(' is a ');
+            };
         }
     </script>
     <script type="text/javascript">
-        var dog=new Animal('Max', 'dog');
-        module("Javascript class like objects");
-        test('class definition',function(){
-            equal(typeof Animal,'function');
+        module("Javascript class like objects",{
+            setup:function(){
+                dog = new Animal('Max', 'dog');
+            }
         });
-        test('creation',function(){
-            equal(dog.name,'Max');
-            equal(dog.type,'dog');
+        test('class definition', function () {
+            equal(typeof Animal, 'function');
         });
-        test('toString',function(){
-            equal(dog.toString(),'Max is a dog');
+        test('creation', function () {
+            equal(dog.name, 'Max');
+            equal(dog.type, 'dog');
+        });
+        test('toString', function () {
+            equal(dog.toString(), 'Max is a dog');
+        });
+        test('fix bug => toString using local variables', function () {
+            dog.name = "Jet";
+            dog.type = "bird";
+            equal(dog.toString(), 'Jet is a bird');
         });
     </script>
 </head>
