@@ -17,7 +17,7 @@
          Let's assume that all numbers in the input will be integer values.
          */
         function sumDigits(n) {
-            return n;
+            return Math.abs(n);
         }
     </script>
     <script type="text/javascript">
@@ -25,6 +25,9 @@
         test('single digit', function () {
             strictEqual(sumDigits(0), 0);
             strictEqual(sumDigits(1), 1);
+        });
+        test('negative number', function () {
+            strictEqual(sumDigits(-1), 1);
         });
     </script>
 </head>
