@@ -28,14 +28,17 @@
          addToAverage(0.5, 2, 1) == 0.666... (2 / 3)
          There are also plenty of examples in the example tests.
          */
-        function addToAverage(current,points,add){
-           return current;
+        function addToAverage(current, points, add) {
+            return (current * points + add) / (points+add);
         }
     </script>
     <script type="text/javascript">
         module('Differential Averaging');
         test('without added rate', function () {
-              strictEqual(addToAverage(0.5, 2),0.5);
+            strictEqual(addToAverage(0.5, 2, 0), 0.5);
+        });
+        test('recalculate rate', function () {
+            strictEqual(addToAverage(0.5, 2, 1), 2 / 3);
         });
     </script>
 </head>
