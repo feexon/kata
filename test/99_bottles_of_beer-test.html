@@ -8,13 +8,16 @@
     <script type="text/javascript" src="../libs/qunit.js"></script>
     <script type="text/javascript">
         function plural(bottles) {
-            return 'bottles';
+            return 'bottle' + (bottles == 1 ? '' : 's');
         }
     </script>
     <script type="text/javascript">
         module('99 bottles of beer');
         test('plural', function () {
             equal(plural(99), 'bottles');
+        });
+        test('singular', function () {
+            equal(plural(1), 'bottle');
         });
     </script>
 </head>
