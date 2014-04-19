@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript">
+        /**
+         * Define a class named MyClass inside a namespace MyNamespace. The class constructor should accept a single string argument. It should also have a function named sayHello that returns the string passed into the constructor.
+
+         Example:
+
+         var myObject = new MyNamespace.MyClass('Hello!');
+
+         var phrase = myObject.sayHello(); // phrase should be 'Hello!'
+         The interesting part is that MyClass should only be accessible via the namespace and should not define any extra global variables. Code should not redefine an existing namespace, but should also function if the namespace is not previously defined.
+         */
+        var MyNamespace={
+            MyClass:function(){
+
+            }
+        };
+    </script>
+    <script type="text/javascript">
+        module('namespace');
+        test('class inside a namespace', function () {
+            equal(typeof MyNamespace.MyClass,'function');
+        });
+
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
