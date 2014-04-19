@@ -20,8 +20,8 @@
             ];
             return Array.apply(null, Array(99)).reduce(function (song, _, howMany) {
                 return song.concat(
-                        'Take one down and pass it around, ' + bottles(howMany || 'no more') + ' on the wall.',
-                        bottles(howMany + 1) + ' on the wall, ' + bottles(howMany + 1) + '.'
+                        'Take one down and pass it around, ' + bottles(howMany++ || 'no more') + ' on the wall.',
+                        bottles(howMany) + ' on the wall, ' + bottles(howMany) + '.'
                 );
             }, []).reverse().concat(ending);
         }
