@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript">
+        /**
+         * var santa = {
+             sayHoHoHo: function() { console.log('Ho Ho Ho!') },
+             distributeGifts: function() { console.log('Gifts for all!'); },
+             goDownTheChimney: function() { console.log('*whoosh*'); }
+         };
+
+         var notSanta = {
+             sayHoHoHo: function() { console.log('Oink Oink!') }
+             // no distributeGifts() and no goDownTheChimney()
+         };
+
+         isSantaClausable(santa); // must return TRUE
+         isSantaClausable(notSanta); // must return FALSE
+         */
+        function isSantaClausable(object) {
+            return ['distributeGifts', 'sayHoHoHo', 'goDownTheChimney'].every(function (method) {
+                return typeof object[method]=='function';
+            });
+        }
+    </script>
+    <script type="text/javascript">
+        var notSanta = {
+            sayHoHoHo: function () {
+                console.log('Oink Oink!')
+            }
+            // no distributeGifts() and no goDownTheChimney()
+        };
+        var santa = {
+            sayHoHoHo: function () {
+                console.log('Ho Ho Ho!')
+            },
+            distributeGifts: function () {
+                console.log('Gifts for all!');
+            },
+            goDownTheChimney: function () {
+                console.log('*whoosh*');
+            }
+        };
+        module('Santa Clausable Interface');
+        test('Not implement all methods', function () {
+            ok(!isSantaClausable(notSanta));
+        });
+        test('Good object', function () {
+            ok(isSantaClausable(santa));
+        });
+        test('Boolean properties instead of function', function () {
+            ok(!isSantaClausable({
+                sayHoHoHo: true,
+                distributeGifts: true,
+                goDownTheChimney: true
+            }));
+        });
+
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
