@@ -8,13 +8,21 @@
     <script type="text/javascript" src="../libs/qunit.js"></script>
     <script type="text/javascript">
         function disemvowel(string){
-            return string;
+            return string.replace(/i/ig,'');
         }
     </script>
     <script type="text/javascript">
        module('Disemvowel Trolls');
        test('Consonant only',function(){
           equal(disemvowel('why'),'why');
+       });
+       test('drop all vowels',function(){
+          equal(disemvowel('this'),'ths');
+          equal(disemvowel('this is'),'ths s');
+       });
+       test('drop all upper case vowels',function(){
+          equal(disemvowel('THIS'),'THS');
+          equal(disemvowel('THIS IS'),'THS S');
        });
     </script>
 </head>
