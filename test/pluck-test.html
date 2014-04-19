@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript">
+        function pluck(array, name) {
+            return array.map(function (obj) {
+                return obj[name];
+            });
+        }
+    </script>
+    <script type="text/javascript">
+        module("Pluck");
+        test('pluck', function () {
+            deepEqual(pluck([ {foo: 'bar1'}, {foo: 'bar2'} ], 'foo'), ['bar1', 'bar2']);
+        });
+        test('missing property', function () {
+            strictEqual(pluck([{}], 'foo')[0], undefined);
+            deepEqual(pluck([ {foo: 'bar'}, {} ], 'foo'), ['bar', undefined]);
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
