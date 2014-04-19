@@ -7,14 +7,20 @@
     <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
     <script type="text/javascript" src="../libs/qunit.js"></script>
     <script type="text/javascript">
-        function Animal(){
-
+        function Animal(name,type){
+          this.name=name;
+          this.type=type;
         }
     </script>
     <script type="text/javascript">
         module("Javascript class like objects");
         test('class definition',function(){
             equal(typeof Animal,'function');
+        });
+        test('creation',function(){
+            var dog=new Animal('Max', 'dog');
+            equal(dog.name,'Max');
+            equal(dog.type,'dog');
         });
     </script>
 </head>
