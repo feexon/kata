@@ -7,16 +7,36 @@
     <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
     <script type="text/javascript" src="../libs/qunit.js"></script>
     <script type="text/javascript">
-        function toDecimal(source){
+        function toDecimal(source) {
+            var parts = source.split('e');
+            if (parts.length == 2) {
+                var start = parts[0].search(/\./);
+                var decimal = parts[0].split('');
+                var exp = +parts[1];
+                var dir = exp < 0 ? -1 : 1;
+                for (var i = exp * dir; --i >= 0;) {
+                    var tmp = decimal[start];
+                    decimal[start] = decimal[start + dir];
+                    decimal[start + dir] = tmp;
+                    start += dir;
+                }
+                return decimal.join('');
+            }
             return source;
         }
     </script>
     <script type="text/javascript">
         module("toDecimal");
-        test('no exponent',function(){
-           equal(toDecimal('5'),'5');
-           equal(toDecimal('0.01'),'0.01');
+        test('no exponent', function () {
+            equal(toDecimal('5'), '5');
+            equal(toDecimal('0.01'), '0.01');
         });
+        test('exponent equal decimal part length', function () {
+            equal(toDecimal('1.234e+2'), '123.4');
+            equal(toDecimal('1.2345e+3'), '1234.5');
+            equal(toDecimal('123.4e-2'), '1.234');
+        });
+
     </script>
 </head>
 <body>
