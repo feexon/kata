@@ -16,17 +16,16 @@
         }
     </script>
     <script type="text/javascript">
+        var dog=new Animal('Max', 'dog');
         module("Javascript class like objects");
         test('class definition',function(){
             equal(typeof Animal,'function');
         });
         test('creation',function(){
-            var dog=new Animal('Max', 'dog');
             equal(dog.name,'Max');
             equal(dog.type,'dog');
         });
         test('toString',function(){
-            var dog=new Animal('Max', 'dog');
             equal(dog.toString(),'Max is a dog');
         });
     </script>
