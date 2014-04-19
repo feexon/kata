@@ -14,13 +14,18 @@
                 var decimal = parts[0].split('');
                 var exp = +parts[1];
                 var dir = exp < 0 ? -1 : 1;
+                start = start < 0 ? decimal.length : start;
+                if (exp + start < 0) {
+                    decimal = Array(Math.abs(exp + start)).concat(decimal);
+                    start += Math.abs(exp + start);
+                }
                 for (var i = exp * dir; --i >= 0;) {
-                    var tmp = decimal[start];
-                    decimal[start] = decimal[start + dir];
+                    var tmp = decimal[start] || '.';
+                    decimal[start] = decimal[start + dir] || '0';
                     decimal[start + dir] = tmp;
                     start += dir;
                 }
-                return decimal.join('').replace(/\.$/,'').replace(/^\./,'0.');
+                return decimal.join('').replace(/\.$/, '').replace(/^\./, '0.');
             }
             return source;
         }
@@ -39,6 +44,11 @@
         test('exponent equal decimal part length', function () {
             equal(toDecimal('1.23e+2'), '123');
             equal(toDecimal('12.3e-2'), '0.123');
+        });
+
+        test('no decimal part', function () {
+            equal(toDecimal('1e+2'), '100');
+            equal(toDecimal('1e-2'), '0.01');
         });
 
     </script>
