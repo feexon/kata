@@ -18,6 +18,10 @@
         test('pluck', function () {
             deepEqual(pluck([ {foo: 'bar1'}, {foo: 'bar2'} ], 'foo'), ['bar1', 'bar2']);
         });
+        test('missing property', function () {
+            strictEqual(pluck([{}], 'foo')[0], undefined);
+            deepEqual(pluck([ {foo: 'bar'}, {} ], 'foo'), ['bar', undefined]);
+        });
     </script>
 </head>
 <body>
