@@ -17,7 +17,9 @@
          Let's assume that all numbers in the input will be integer values.
          */
         function sumDigits(n) {
-            return Math.abs(n);
+            return Math.abs(n).toString().split('').reduce(function(sum,digit){
+                return sum+(+digit);
+            },0);
         }
     </script>
     <script type="text/javascript">
@@ -28,6 +30,11 @@
         });
         test('negative number', function () {
             strictEqual(sumDigits(-1), 1);
+        });
+        test('more than one digits', function () {
+            strictEqual(sumDigits(10), 1+0);
+            strictEqual(sumDigits(99), 9+9);
+            strictEqual(sumDigits(-32), 3+2);
         });
     </script>
 </head>
