@@ -7,10 +7,18 @@
     <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
     <script type="text/javascript" src="../libs/qunit.js"></script>
     <script type="text/javascript">
+        function Animal(){
 
+        }
+    </script>
+    <script type="text/javascript">
+        module("Javascript class like objects");
+        test('class definition',function(){
+            equal(typeof Animal,'function');
+        });
     </script>
 </head>
 <body>
-    <div id="qunit"></div>
+<div id="qunit"></div>
 </body>
 </html>
