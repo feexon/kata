@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript">
+        function toDecimal(source) {
+            var parts = source.split('e');
+            if (parts.length == 2) {
+                var start = parts[0].search(/\./);
+                var decimal = parts[0].split('');
+                var exp = +parts[1];
+                start = start < 0 ? decimal.length : start;
+                if (exp + start < 0) {
+                    decimal = Array(Math.abs(exp + start)).concat(decimal);
+                    start += Math.abs(exp + start);
+                }
+                var dir = exp < 0 ? -1 : 1;
+                for (var i = exp * dir; --i >= 0;) {
+                    var tmp = decimal[start] || '.';
+                    decimal[start] = decimal[start + dir] || '0';
+                    decimal[start + dir] = tmp;
+                    start += dir;
+                }
+                return decimal.join('').replace(/\.$/, '').replace(/^\./, '0.');
+            }
+            return source;
+        }
+        Number.prototype.toDecimal=function(){
+            return toDecimal(this.toString());
+        }
+    </script>
+    <script type="text/javascript">
+        module("toDecimal");
+        test('no exponent', function () {
+            equal(toDecimal('5'), '5');
+            equal(toDecimal('0.01'), '0.01');
+        });
+        test('exponent less than decimal part length', function () {
+            equal(toDecimal('1.234e+2'), '123.4');
+            equal(toDecimal('1.2345e+3'), '1234.5');
+            equal(toDecimal('123.4e-2'), '1.234');
+        });
+        test('exponent equal decimal part length', function () {
+            equal(toDecimal('1.23e+2'), '123');
+            equal(toDecimal('12.3e-2'), '0.123');
+        });
+
+        test('no decimal part', function () {
+            equal(toDecimal('1e+2'), '100');
+            equal(toDecimal('1e-2'), '0.01');
+        });
+        test('exponent more than decimal part length', function () {
+            equal(toDecimal('1.234e+4'), '12340');
+            equal(toDecimal('123.4e-4'), '0.01234');
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
