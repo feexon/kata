@@ -10,6 +10,9 @@
         function plural(bottles) {
             return 'bottle' + (bottles == 1 ? '' : 's');
         }
+        function bottles(bottles) {
+            return [bottles,plural(bottles),'of','beer'].join(' ');
+        }
     </script>
     <script type="text/javascript">
         module('99 bottles of beer');
@@ -21,6 +24,9 @@
         });
         test('plural with literal', function () {
             equal(plural('No more'), 'bottles');
+        });
+        test('bottles', function () {
+            equal(bottles('99'), '99 bottles of beer');
         });
     </script>
 </head>
