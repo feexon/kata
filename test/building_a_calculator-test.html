@@ -18,7 +18,7 @@
                 return multiplicand * multipier;
             }
             this.divide = function (dividend, divisor) {
-                return dividend / divisor;
+                return !!divisor&&dividend / divisor;
             }
         }
     </script>
@@ -39,6 +39,10 @@
         test('divide', function () {
             var calculator = new Calculator();
             strictEqual(calculator.divide(8, 2), 4);
+        });
+        test('divide by zero', function () {
+            var calculator = new Calculator();
+            strictEqual(calculator.divide(8, 0), false);
         });
     </script>
 </head>
