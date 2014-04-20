@@ -7,38 +7,38 @@
     <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
     <script type="text/javascript" src="../libs/qunit.js"></script>
     <script type="text/javascript">
-        function Calculator() {
-            this.add = function (augend, addend) {
+        var Calculator = {
+            add: function (augend, addend) {
                 return augend + addend;
-            }
-            this.subtract = function (minuend, subtrahend) {
+            },
+            subtract: function (minuend, subtrahend) {
                 return minuend - subtrahend;
-            }
-            this.multiply = function (multiplicand, multipier) {
+            },
+            multiply: function (multiplicand, multipier) {
                 return multiplicand * multipier;
-            }
-            this.divide = function (dividend, divisor) {
+            },
+            divide: function (dividend, divisor) {
                 return !!divisor && dividend / divisor;
             }
-        }
+        };
     </script>
     <script type="text/javascript">
-        var calculator = new Calculator();
+
         module('Building a Calculator');
         test('add', function () {
-            strictEqual(calculator.add(1, 2), 3);
+            strictEqual(Calculator.add(1, 2), 3);
         });
         test('subtract', function () {
-            strictEqual(calculator.subtract(3, 1), 2);
+            strictEqual(Calculator.subtract(3, 1), 2);
         });
         test('multiply', function () {
-            strictEqual(calculator.multiply(3, 2), 6);
+            strictEqual(Calculator.multiply(3, 2), 6);
         });
         test('divide', function () {
-            strictEqual(calculator.divide(8, 2), 4);
+            strictEqual(Calculator.divide(8, 2), 4);
         });
         test('divide by zero', function () {
-            strictEqual(calculator.divide(8, 0), false);
+            strictEqual(Calculator.divide(8, 0), false);
         });
     </script>
 </head>
