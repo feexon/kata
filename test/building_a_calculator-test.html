@@ -18,30 +18,26 @@
                 return multiplicand * multipier;
             }
             this.divide = function (dividend, divisor) {
-                return !!divisor&&dividend / divisor;
+                return !!divisor && dividend / divisor;
             }
         }
     </script>
     <script type="text/javascript">
+        var calculator = new Calculator();
         module('Building a Calculator');
         test('add', function () {
-            var calculator = new Calculator();
             strictEqual(calculator.add(1, 2), 3);
         });
         test('subtract', function () {
-            var calculator = new Calculator();
             strictEqual(calculator.subtract(3, 1), 2);
         });
         test('multiply', function () {
-            var calculator = new Calculator();
             strictEqual(calculator.multiply(3, 2), 6);
         });
         test('divide', function () {
-            var calculator = new Calculator();
             strictEqual(calculator.divide(8, 2), 4);
         });
         test('divide by zero', function () {
-            var calculator = new Calculator();
             strictEqual(calculator.divide(8, 0), false);
         });
     </script>
