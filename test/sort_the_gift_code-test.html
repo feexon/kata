@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function sortGiftCode(code) {
+            return code.split('').sort().join('');
+        }
+    </script>
+    <script type="text/javascript">
+        module("Sort the gift code");
+        test('one code', function () {
+            equal(sortGiftCode('a'), 'a');
+            equal(sortGiftCode('b'), 'b');
+        });
+        test('reversive ordered code', function () {
+            equal(sortGiftCode('ba'), 'ab');
+        });
+        test('sorting the code', function () {
+            equal(sortGiftCode('abcdef'), 'abcdef');
+            equal(sortGiftCode('pqksuvy'), 'kpqsuvy');
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
