@@ -10,9 +10,15 @@
         /**
          *
          */
+        String.prototype.repeat = function (times) {
+            return this;
+        };
     </script>
     <script type="text/javascript">
-
+        module('Donot repeat yourself');
+        test('once', function () {
+            equal('a'.repeat(1), 'a');
+        });
     </script>
 </head>
 <body>
