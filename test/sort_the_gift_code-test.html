@@ -11,7 +11,7 @@
          *
          */
         function sortGiftCode(code) {
-            return code.split('').reverse().join('');
+            return code.split('').sort().join('');
         }
     </script>
     <script type="text/javascript">
@@ -22,6 +22,10 @@
         });
         test('reversive ordered code', function () {
             equal(sortGiftCode('ba'), 'ab');
+        });
+        test('sorting the code', function () {
+            equal(sortGiftCode('abcdef'), 'abcdef');
+            equal(sortGiftCode('pqksuvy'), 'kpqsuvy');
         });
     </script>
 </head>
