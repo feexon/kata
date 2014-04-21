@@ -11,7 +11,7 @@
          *
          */
         var isAnagram = function (test, original) {
-            return test.split('').sort().join('') == original.split('').sort().join('');
+            return test.split('').sort().join('').toLowerCase() == original.split('').sort().join('').toLowerCase();
         }
     </script>
     <script type="text/javascript">
@@ -24,6 +24,10 @@
         });
         test('arbitrary', function () {
             ok(isAnagram('foefet', 'toffee'));
+        });
+        test('case insensitive', function () {
+            ok(isAnagram('HOW', 'how'));
+            ok(isAnagram('how', 'HOW'));
         });
     </script>
 </head>
