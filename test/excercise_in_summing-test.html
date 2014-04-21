@@ -29,15 +29,16 @@
                 return sum + value;
             }, 0);
         }
-        function minimumSum(values, n) {
-            return sum(values.sort(function (n1, n2) {
+        function sort(values) {
+            return values.sort(function (n1, n2) {
                 return n1 - n2;
-            }), n);
+            });
+        }
+        function minimumSum(values, n) {
+            return sum(sort(values), n);
         }
         function maximumSum(values, n) {
-            return sum(values.sort(function (n1, n2) {
-                return n1 - n2;
-            }).reverse(), n);
+            return sum(sort(values).reverse(), n);
         }
     </script>
     <script type="text/javascript">
