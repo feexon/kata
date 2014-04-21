@@ -10,9 +10,17 @@
         /**
          *
          */
+        function reject(values, iterator) {
+            return [];
+        }
     </script>
     <script type="text/javascript">
-
+        module('reject');
+        test('reject all', function () {
+            deepEqual(reject([1, 2, 3], function () {
+                return true;
+            }), []);
+        });
     </script>
 </head>
 <body>
