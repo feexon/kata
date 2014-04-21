@@ -12,7 +12,7 @@
          */
         var isAnagram = function (test, original) {
             function ordered(word){
-                return word.split('').sort().join('').toLowerCase();
+                return word.toLowerCase().split('').sort().join('');
             }
             return ordered(test) == ordered(original);
         }
@@ -31,6 +31,7 @@
         test('case insensitive', function () {
             ok(isAnagram('HOW', 'how'));
             ok(isAnagram('how', 'HOW'));
+            ok(isAnagram('Buckethead', 'DeathCubeK'));
         });
     </script>
 </head>
