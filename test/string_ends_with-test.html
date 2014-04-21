@@ -11,7 +11,7 @@
          *
          */
         function solution(string, ending) {
-            return string.indexOf(ending) + ending.length == string.length;
+            return string.length >= ending.length && string.indexOf(ending) + ending.length == string.length;
         }
     </script>
     <script type="text/javascript">
@@ -27,6 +27,9 @@
         });
         test('ends with ending string', function () {
             ok(solution('javascript', 'script'));
+        });
+        test('ending longer than string', function () {
+            ok(!solution('abc', 'abcd'));
         });
     </script>
 </head>
