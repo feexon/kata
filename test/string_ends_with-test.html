@@ -11,7 +11,7 @@
          *
          */
         function solution(string, ending) {
-            return string.length >= ending.length && string.lastIndexOf(ending) + ending.length == string.length;
+            return string.substring(string.length-ending.length)==ending;
         }
     </script>
     <script type="text/javascript">
