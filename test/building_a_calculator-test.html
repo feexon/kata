@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript">
+        var Calculator = {
+            add: function (augend, addend) {
+                return augend + addend;
+            },
+            subtract: function (minuend, subtrahend) {
+                return minuend - subtrahend;
+            },
+            multiply: function (multiplicand, multipier) {
+                return multiplicand * multipier;
+            },
+            divide: function (dividend, divisor) {
+                return !!divisor && dividend / divisor;
+            }
+        };
+    </script>
+    <script type="text/javascript">
+
+        module('Building a Calculator');
+        test('add', function () {
+            strictEqual(Calculator.add(1, 2), 3);
+        });
+        test('subtract', function () {
+            strictEqual(Calculator.subtract(3, 1), 2);
+        });
+        test('multiply', function () {
+            strictEqual(Calculator.multiply(3, 2), 6);
+        });
+        test('divide', function () {
+            strictEqual(Calculator.divide(8, 2), 4);
+        });
+        test('divide by zero', function () {
+            strictEqual(Calculator.divide(8, 0), false);
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
