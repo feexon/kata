@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        String.prototype.repeat = function (times) {
+            return Array(times+1).join(this);
+        };
+    </script>
+    <script type="text/javascript">
+        module('Donot repeat yourself');
+        test('once', function () {
+            equal('a'.repeat(1), 'a');
+        });
+        test('repeat more times', function () {
+            equal('a'.repeat(3), 'aaa');
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
