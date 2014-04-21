@@ -31,6 +31,12 @@
          cookingTime(10); // must return 10
          */
         function cookingTime(n){
+          if(n==0){
+              return 0;
+          }
+          if(n<=8){
+              return 5;
+          }
           return n;
         }
     </script>
@@ -38,6 +44,10 @@
         module('Boiled Eggs');
         test('no eggs to boiled', function () {
             strictEqual(cookingTime(0), 0);
+        });
+        test('boiled a pot of eggs', function () {
+            strictEqual(cookingTime(5), 5);
+            strictEqual(cookingTime(8), 5);
         });
     </script>
 </head>
