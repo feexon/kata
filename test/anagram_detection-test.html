@@ -11,9 +11,10 @@
          *
          */
         var isAnagram = function (test, original) {
-            function ordered(word){
+            function ordered(word) {
                 return word.toLowerCase().split('').sort().join('');
             }
+
             return ordered(test) == ordered(original);
         }
     </script>
@@ -32,6 +33,9 @@
             ok(isAnagram('HOW', 'how'));
             ok(isAnagram('how', 'HOW'));
             ok(isAnagram('Buckethead', 'DeathCubeK'));
+        });
+        test('not matched', function () {
+            ok(!isAnagram('now', 'how'));
         });
     </script>
 </head>
