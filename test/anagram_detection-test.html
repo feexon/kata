@@ -37,6 +37,9 @@
         test('not matched', function () {
             ok(!isAnagram('now', 'how'));
         });
+        test('missing character', function () {
+            ok(!isAnagram('ow', 'how'));
+        });
     </script>
 </head>
 <body>
