@@ -11,7 +11,7 @@
          *
          */
         function reject(values, iterator) {
-            return [];
+            return !iterator() ? values : [];
         }
     </script>
     <script type="text/javascript">
@@ -20,6 +20,11 @@
             deepEqual(reject([1, 2, 3], function () {
                 return true;
             }), []);
+        });
+        test('apply all', function () {
+            deepEqual(reject([1, 2, 3], function () {
+                return false;
+            }), [1, 2, 3]);
         });
     </script>
 </head>
