@@ -50,6 +50,11 @@
             equal(minimumSum([], 1), 0);
             equal(maximumSum([], 1), 0);
         });
+
+        test('sum size is 0', function () {
+            equal(minimumSum([1, 2, 3, 4, 5], 0), 0);
+            equal(maximumSum([5, 4, 3, 2, 1], 0), 0);
+        });
     </script>
 </head>
 <body>
