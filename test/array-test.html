@@ -24,6 +24,11 @@
         test('concat', function () {
             deepEqual(Array(2).concat([1, 2]), [undefined, undefined, 1, 2]);
         })
+
+        test('slice', function () {
+            deepEqual([1, 2, 3, 4, 5].slice(0, 2), [1, 2]);
+            deepEqual([1, 2, 3, 4, 5].slice(-2), [4, 5]);
+        });
     </script>
 </head>
 <body>
