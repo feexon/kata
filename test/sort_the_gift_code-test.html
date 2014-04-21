@@ -11,7 +11,7 @@
          *
          */
         function sortGiftCode(code) {
-            return code;
+            return code.split('').reverse().join('');
         }
     </script>
     <script type="text/javascript">
@@ -19,6 +19,9 @@
         test('one code', function () {
             equal(sortGiftCode('a'), 'a');
             equal(sortGiftCode('b'), 'b');
+        });
+        test('reversive ordered code', function () {
+            equal(sortGiftCode('ba'), 'ab');
         });
     </script>
 </head>
