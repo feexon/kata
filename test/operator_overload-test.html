@@ -11,19 +11,13 @@
          *
          */
         function Foo(val) {
-            this.val = val;
-            this.valueOf = function () {
-                return val;
-            };
+            return new Number(val);
         }
     </script>
     <script type="text/javascript">
         module("Operator overload");
         test('sum', function () {
             equal(new Foo(2) + new Foo(3), 5);
-        });
-        test('creation', function () {
-            equal(new Foo(2).val, 2);
         });
     </script>
 </head>
