@@ -10,9 +10,15 @@
         /**
          *
          */
+        var isAnagram = function (test, original) {
+            return test == original;
+        }
     </script>
     <script type="text/javascript">
-
+        module("Anagram Detection");
+        test('test equal to original', function () {
+            ok(isAnagram('toffee', 'toffee'));
+        });
     </script>
 </head>
 <body>
