@@ -11,9 +11,17 @@
         /**
          *
          */
+        function Foo(val) {
+            this.valueOf = function () {
+                return val;
+            };
+        }
     </script>
     <script type="text/javascript">
-
+        module("Operator overload");
+        test('sum', function () {
+            equal(new Foo(2) + new Foo(3), 5);
+        });
     </script>
 </head>
 <body>
