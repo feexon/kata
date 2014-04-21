@@ -11,7 +11,7 @@
          *
          */
         function solution(string, ending) {
-            return string.indexOf(ending) >= 0;
+            return string.indexOf(ending) + ending.length == string.length;
         }
     </script>
     <script type="text/javascript">
@@ -21,6 +21,9 @@
         });
         test('ending not found', function () {
             ok(!solution('javascript', 'j2ee'));
+        });
+        test('not ending', function () {
+            ok(!solution('javascript', 'java'));
         });
     </script>
 </head>
