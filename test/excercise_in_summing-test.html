@@ -30,10 +30,10 @@
             }, 0);
         }
         function minimumSum(values, n) {
-            return sum(values, n);
+            return sum(values.sort(), n);
         }
         function maximumSum(values, n) {
-            return sum(values, n);
+            return sum(values.sort().reverse(), n);
         }
     </script>
     <script type="text/javascript">
@@ -57,8 +57,13 @@
             equal(maximumSum([5, 4, 3, 2, 1], 0), 0);
         });
 
-        test('sum size large than array size',function(){
+        test('sum size large than array size', function () {
             equal(minimumSum([1, 2, 3, 4, 5], 100), 15);
+        });
+
+        test('sum in reversed order', function () {
+            equal(minimumSum([5, 4, 3, 2, 1], 3), 6);
+            equal(maximumSum([1, 2, 3, 4, 5], 3), 12);
         });
     </script>
 </head>
