@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        var isAnagram = function (test, original) {
+            function ordered(word) {
+                return word.toLowerCase().split('').sort().join('');
+            }
+
+            return ordered(test) == ordered(original);
+        }
+    </script>
+    <script type="text/javascript">
+        module("Anagram Detection");
+        test('test equal to original', function () {
+            ok(isAnagram('how', 'how'));
+        });
+        test('original letter were ordered', function () {
+            ok(isAnagram('woh', 'how'));
+        });
+        test('arbitrary', function () {
+            ok(isAnagram('foefet', 'toffee'));
+        });
+        test('case insensitive', function () {
+            ok(isAnagram('HOW', 'how'));
+            ok(isAnagram('how', 'HOW'));
+            ok(isAnagram('Buckethead', 'DeathCubeK'));
+        });
+        test('not matched', function () {
+            ok(!isAnagram('now', 'how'));
+        });
+        test('missing character', function () {
+            ok(!isAnagram('ow', 'how'));
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
