@@ -11,7 +11,10 @@
          *
          */
         var isAnagram = function (test, original) {
-            return test.split('').sort().join('').toLowerCase() == original.split('').sort().join('').toLowerCase();
+            function ordered(word){
+                return word.split('').sort().join('').toLowerCase();
+            }
+            return ordered(test) == ordered(original);
         }
     </script>
     <script type="text/javascript">
