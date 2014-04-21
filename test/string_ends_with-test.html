@@ -11,7 +11,7 @@
          *
          */
         function solution(string, ending) {
-            return string.length >= ending.length && string.indexOf(ending) + ending.length == string.length;
+            return string.length >= ending.length && string.lastIndexOf(ending) + ending.length == string.length;
         }
     </script>
     <script type="text/javascript">
@@ -30,6 +30,9 @@
         });
         test('ending longer than string', function () {
             ok(!solution('abc', 'abcd'));
+        });
+        test('ending occur more than 1 times', function () {
+            ok(solution('abcabc', 'bc'));
         });
     </script>
 </head>
