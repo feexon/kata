@@ -24,22 +24,19 @@
          if n is 0, both functions should also return 0
          if n is larger than values.length, simply include values.length integers to the sum
          */
-        function sum(values, n) {
-            return values.slice(0, n).reduce(function (sum, value) {
-                return sum + value;
-            }, 0);
+        function sum(dir) {
+            return function (values, n) {
+                var comparator = function (n1, n2) {
+                    return dir * (n1 - n2);
+                };
+                return values.sort(comparator).slice(0, n).reduce(function (sum, value) {
+                    return sum + value;
+                }, 0);
+            };
         }
-        function sort(values) {
-            return values.sort(function (n1, n2) {
-                return n1 - n2;
-            });
-        }
-        function minimumSum(values, n) {
-            return sum(sort(values), n);
-        }
-        function maximumSum(values, n) {
-            return sum(sort(values).reverse(), n);
-        }
+        var minimumSum = sum(1);
+        var maximumSum = sum(-1);
+
     </script>
     <script type="text/javascript">
         module('Excercise in Summing');
