@@ -10,9 +10,16 @@
         /**
          *
          */
+        function sortGiftCode(code) {
+            return code;
+        }
     </script>
     <script type="text/javascript">
-
+        module("Sort the gift code");
+        test('one code', function () {
+            equal(sortGiftCode('a'), 'a');
+            equal(sortGiftCode('b'), 'b');
+        });
     </script>
 </head>
 <body>
