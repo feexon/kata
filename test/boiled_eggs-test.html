@@ -31,16 +31,7 @@
          cookingTime(10); // must return 10
          */
         function cookingTime(n) {
-            if (n == 0 * 8) {
-                return 0 * 5;
-            }
-            if (n <= 1 * 8) {
-                return 1 * 5;
-            }
-            if (n <= 2 * 8) {
-                return 2 * 5;
-            }
-            return n;
+            return ((n + 8 - 1) / 8 | 0) * 5;
         }
     </script>
     <script type="text/javascript">
@@ -55,6 +46,7 @@
         test('boiled pots of eggs', function () {
             strictEqual(cookingTime(10), 10);
             strictEqual(cookingTime(16), 10);
+            strictEqual(cookingTime(21), 15);
         });
     </script>
 </head>
