@@ -13,11 +13,38 @@
         function lastName(name) {
             return /(\w+)$/.exec(name)[1];
         }
+        function sortReindeer(reindeerNames) {
+            return reindeerNames.sort(function (candidate, next) {
+                return lastName(candidate) < lastName(next) ? -1 : 1;
+            });
+        }
     </script>
     <script type="text/javascript">
         module('sort reindeer');
         test('last name', function () {
             equal(lastName('Dasher Tonoyan'), 'Tonoyan');
+        });
+        test('sort', function () {
+            var reindeer = sortReindeer([
+                "Dasher Tonoyan",
+                "Dancer Moore",
+                "Prancer Chua",
+                "Vixen Hall",
+                "Comet Karavani",
+                "Cupid Foroutan",
+                "Donder Jonker",
+                "Blitzen Claus"
+            ]);
+            deepEqual(reindeer, [
+                "Prancer Chua",
+                "Blitzen Claus",
+                "Cupid Foroutan",
+                "Vixen Hall",
+                "Donder Jonker",
+                "Comet Karavani",
+                "Dancer Moore",
+                "Dasher Tonoyan",
+            ]);
         });
     </script>
 </head>
