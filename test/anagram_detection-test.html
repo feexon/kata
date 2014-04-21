@@ -11,7 +11,7 @@
          *
          */
         var isAnagram = function (test, original) {
-            return test.split('').sort().join('') == original;
+            return test.split('').sort().join('') == original.split('').sort().join('');
         }
     </script>
     <script type="text/javascript">
@@ -21,6 +21,9 @@
         });
         test('original letter were ordered', function () {
             ok(isAnagram('woh', 'how'));
+        });
+        test('arbitrary', function () {
+            ok(isAnagram('foefet', 'toffee'));
         });
     </script>
 </head>
