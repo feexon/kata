@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript">
+        /**
+         * Write a function timeForMilkAndCookies (time_for_milk_and_cookies in Ruby) that accepts a Date object,
+         * and returns true if it's Christmas Eve (December 24th), false otherwise.
+         * Keep in mind Javascript's Date month is 0 based, while Ruby's Date month isn't.
+
+         Examples
+
+         Javascript/CoffeeScript:
+
+         timeForMilkAndCookies( new Date( 2013, 11, 24 ) ) // December 24, 2013 => returns true
+         timeForMilkAndCookies( new Date( 2013, 0, 23 ) ) // January 23, 2013 => returns false
+         timeForMilkAndCookies( new Date( 3000, 11, 24 ) ) //  December 24, 3000 => returns true
+         */
+        function timeForMilkAndCookies(date) {
+            return date.getMonth() + 1 == 12 && date.getDate() == 24;
+        }
+    </script>
+    <script type="text/javascript">
+        module('Milk and Cookies for Santa');
+        test('Christmas Eve', function () {
+            strictEqual(timeForMilkAndCookies(new Date(2013, 11, 24)), true);
+        });
+        test('Month/Day wrong', function () {
+            strictEqual(timeForMilkAndCookies(new Date(2013, 10, 24)), false);
+            strictEqual(timeForMilkAndCookies(new Date(2013, 11, 23)), false);
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
