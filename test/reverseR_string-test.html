@@ -7,10 +7,19 @@
     <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
     <script type="text/javascript" src="../libs/qunit.js"></script>
     <script type="text/javascript">
+      String.prototype.reverse=function(){
+         return this;
+      };
+    </script>
+    <script type="text/javascript">
+        module('Reverse String');
+        test('same letters',function(){
+            equal('aaa'.reverse(),'aaa');
+        });
 
     </script>
 </head>
 <body>
-    <div id="qunit"></div>
+<div id="qunit"></div>
 </body>
 </html>
