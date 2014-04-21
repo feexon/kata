@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function solution(string, ending) {
+            return string.substring(string.length-ending.length)==ending;
+        }
+    </script>
+    <script type="text/javascript">
+        module("String ends with");
+        test('same', function () {
+            ok(solution('javascript', 'javascript'));
+        });
+        test('ending not found', function () {
+            ok(!solution('javascript', 'j2ee'));
+        });
+        test('not ending', function () {
+            ok(!solution('javascript', 'java'));
+        });
+        test('ends with ending string', function () {
+            ok(solution('javascript', 'script'));
+        });
+        test('ending longer than string', function () {
+            ok(!solution('abc', 'abcd'));
+        });
+        test('ending occur more than 1 times', function () {
+            ok(solution('abcabc', 'bc'));
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
