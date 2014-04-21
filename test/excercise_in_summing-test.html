@@ -24,15 +24,16 @@
          if n is 0, both functions should also return 0
          if n is larger than values.length, simply include values.length integers to the sum
          */
-        function minimumSum(values, n) {
+        function sum(values, n) {
             return values.slice(0, n).reduce(function (sum, value) {
                 return sum + value;
             }, 0);
         }
+        function minimumSum(values, n) {
+            return sum(values, n);
+        }
         function maximumSum(values, n) {
-            return values.slice(0, n).reduce(function (sum, value) {
-                return sum + value;
-            }, 0);
+            return sum(values, n);
         }
     </script>
     <script type="text/javascript">
