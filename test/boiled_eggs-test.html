@@ -31,7 +31,7 @@
          cookingTime(10); // must return 10
          */
         function cookingTime(n) {
-            return ((n + 8 - 1) / 8 | 0) * 5;
+            return 5 * Math.ceil(n / 8);
         }
     </script>
     <script type="text/javascript">
