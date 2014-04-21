@@ -11,13 +11,19 @@
          *
          */
         String.prototype.repeat = function (times) {
-            return this;
+            var thing = this;
+            return Array.apply(null, Array(times)).map(function () {
+                return thing;
+            }).join('');
         };
     </script>
     <script type="text/javascript">
         module('Donot repeat yourself');
         test('once', function () {
             equal('a'.repeat(1), 'a');
+        });
+        test('repeat more times', function () {
+            equal('a'.repeat(3), 'aaa');
         });
     </script>
 </head>
