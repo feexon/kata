@@ -21,7 +21,7 @@
          timeForMilkAndCookies( new Date( 3000, 11, 24 ) ) //  December 24, 3000 => returns true
          */
         function timeForMilkAndCookies(date) {
-            return date.getMonth() + 1 == 12 && date.getDate() == 24;
+            return '12/24' == [date.getMonth() + 1, date.getDate()].join('/');
         }
     </script>
     <script type="text/javascript">
