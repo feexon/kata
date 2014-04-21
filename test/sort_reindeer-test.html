@@ -10,9 +10,15 @@
         /**
          *
          */
+        function lastName(name) {
+            return /(\w+)$/.exec(name)[1];
+        }
     </script>
     <script type="text/javascript">
-
+        module('sort reindeer');
+        test('last name', function () {
+            equal(lastName('Dasher Tonoyan'), 'Tonoyan');
+        });
     </script>
 </head>
 <body>
