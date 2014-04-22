@@ -1,172 +1,208 @@
 <!DOCTYPE html>
 <html>
 <head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
-    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
-    <script type="text/javascript" src="../libs/qunit.js"></script>
-    <script type="text/javascript">
-        /**
-         *
-         */
+<meta charset="UTF-8">
+<title></title>
+<link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+<script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+<script type="text/javascript" src="../libs/qunit.js"></script>
+<script type="text/javascript">
+    /**
+     *
+     */
 
-        (function ($) {
-            function Rotary(config) {
-                var defaults = {
-                    random: function () {
-                        return Math.ceil(Math.random() * 2);
-                    }
-                };
-                config = $.extend(defaults, config);
-                var degrees = 360 / config.pieces;
-                var last = null;
-
-                this.rotation = 0;
-                function rotateTo(to) {
-                    var target = $(config.target);
-                    target.each(function () {
-                        $.style(this, 'webkit-transform', 'rotate(' + to + 'deg)');
-                        $.style(this, 'transform', 'rotate(' + to + 'deg)');
-                    });
-                    target.animate({duration: config.duration}, function () {
-                        target.trigger('draw');
-                    });
+    (function ($) {
+        function Rotary(config) {
+            var defaults = {
+                random: function () {
+                    return Math.ceil(Math.random() * 2);
                 }
+            };
+            config = $.extend(defaults, config);
+            var degrees = 360 / config.pieces;
+            var last = null;
 
-                this.draw = function (which) {
-                    var from = this.rotation;
-                    var diff = which - last;
-                    last = which;
-                    var to = Math.floor((diff < 0 ? 1 : 0) + from / 360) * 360 + which * degrees + degrees / 2;
-                    this.rotation = 360 * config.random() + to;
-                    rotateTo(to);
-                };
-                this.reset = function () {
-                    last = null;
-                };
-            }
+            this.rotation = 0;
+            var thread = null;
+            var ticket = 0;
 
-            $.fn.rotary = function (config) {
-                var key = 'rotary';
-                if (!this.data(key)) {
-                    if (config.pieces === undefined) {
-                        throw 'pieces was required!';
-                    }
-                    if (config.pieces <= 0) {
-                        throw 'pieces must in (0,]!';
-                    }
-                    this.data(key, new Rotary($.extend(config, {target: this})));
-                }
-                return this.data(key);
-            }
-        })(jQuery);
-
-    </script>
-    <script type="text/javascript">
-        $(function () {
-            var target = $("#rotary");
-            var config = {duration: 100, pieces: 6, random: function () {
-                return 0;
-            }};
-            var rotary;
-            module("Rotary", {
-                setup: function () {
-                    target.removeData('rotary');
-                    rotary = target.rotary(config);
-                }
-            });
-            test('draw', function () {
-                equal(rotary.rotation, 0);
-                rotary.draw(0);
-                equal(rotary.rotation, 30);
-                rotary.draw(1);
-                equal(rotary.rotation, 90);
-            });
-            test('accumulate rotation', function () {
-                rotary.draw(1);
-                rotary.draw(0);
-                equal(rotary.rotation, 1 * 360 + 30);
-                rotary.draw(1);
-                rotary.draw(0);
-                equal(rotary.rotation, 2 * 360 + 30);
-            });
-
-            test('reset', function () {
-                rotary.draw(1);
-                rotary.reset();
-                rotary.draw(0);
-                equal(rotary.rotation, 30);
-            });
-            function get(id) {
-                return document.getElementById(id);
-            }
-
-            test('rotate target after draw', function () {
-                rotary.draw(0);
-                var el = get('rotary');
-
-                ok(el.getAttribute('style').indexOf('transform: rotate(30deg)') != -1);
-                rotary.draw(2);
-                ok(el.getAttribute('style').indexOf('transform: rotate(30deg)') == -1);
-                ok(el.getAttribute('style').indexOf('transform: rotate(150deg)') != -1);
-            });
-            test('rotation accumulate random cycles', function () {
-                var next = 0;
-                target.removeData('rotary');
-                rotary = target.rotary($.extend(config, {random: function () {
-                    return [1, 2][next++];
-                }}));
-                rotary.draw(0);
-                equal(rotary.rotation, 1 * 360 + 30);
-                rotary.draw(1);
-                equal(rotary.rotation, 2 * 360 + 390 + 60);
-            });
-
-            test('visibility of Rotary', function () {
-                strictEqual(typeof Rotary, 'undefined');
-            });
-
-            test('cache rotary instance', function () {
-                strictEqual(target.rotary(config), target.rotary(config));
-            });
-
-            test('should raise error missing pieces', function () {
-                target.removeData('rotary');
-                throws(function () {
-                    target.rotary({});
-                }, 'pieces was required!', 'missing pieces');
-            });
-            test('should raise error pieces <= 0', function () {
-
-                throws(function () {
-                    target.removeData('rotary');
-                    target.rotary({pieces: 0});
-                }, 'pieces must in (0,]!', '==0');
-                throws(function () {
-                    target.removeData('rotary');
-                    target.rotary({pieces: -1});
-                }, 'pieces must in (0,]!', '<0');
-            });
-            asyncTest('should trigger draw event after draw', function () {
-                expect(1);
-                var timeout = setTimeout(function () {
-                    timeout = undefined;
-                    ok(false, 'not trigger draw event');
-                    start();
-                }, 500);
-                target.one('draw', function () {
-                    if (!timeout) {
-                        return;
-                    }
-                    clearTimeout(timeout);
-                    ok(true);
-                    start();
+            function rotateTo(to) {
+                var token = ++ticket;
+                var target = $(config.target);
+                target.each(function () {
+                    $.style(this, 'webkit-transform', 'rotate(' + to + 'deg)');
+                    $.style(this, 'transform', 'rotate(' + to + 'deg)');
                 });
-                rotary.draw(0);
-            });
+                clearTimeout(thread);
+                thread = setTimeout(function () {
+                    token == ticket && target.trigger('draw');
+                }, config.duration);
+
+            }
+
+            this.draw = function (which) {
+                var from = this.rotation;
+                var diff = which - last;
+                last = which;
+                var to = 360 * config.random() + Math.floor((diff < 0 ? 1 : 0) + from / 360) * 360 + which * degrees + degrees / 2;
+                this.rotation = to;
+                rotateTo(to);
+
+            };
+            this.reset = function () {
+                last = null;
+            };
+        }
+
+        $.fn.rotary = function (config) {
+            var key = 'rotary';
+            if (!this.data(key)) {
+                if (config.pieces === undefined) {
+                    throw 'pieces was required!';
+                }
+                if (config.pieces <= 0) {
+                    throw 'pieces must in (0,]!';
+                }
+                this.data(key, new Rotary($.extend(config, {target: this})));
+            }
+            return this.data(key);
+        }
+    })(jQuery);
+
+</script>
+<script type="text/javascript">
+    $(function () {
+        var target = $("#rotary");
+        var config = {duration: 100, pieces: 6, random: function () {
+            return 0;
+        }};
+        var rotary;
+        module("Rotary", {
+            setup: function () {
+                target.removeData('rotary').unbind('draw');
+                rotary = target.rotary(config);
+            }
         });
-    </script>
+        test('draw', function () {
+            equal(rotary.rotation, 0);
+            rotary.draw(0);
+            equal(rotary.rotation, 30);
+            rotary.draw(1);
+            equal(rotary.rotation, 90);
+        });
+        test('accumulate rotation', function () {
+            rotary.draw(1);
+            rotary.draw(0);
+            equal(rotary.rotation, 1 * 360 + 30);
+            rotary.draw(1);
+            rotary.draw(0);
+            equal(rotary.rotation, 2 * 360 + 30);
+        });
+
+        test('reset', function () {
+            rotary.draw(1);
+            rotary.reset();
+            rotary.draw(0);
+            equal(rotary.rotation, 30);
+        });
+        function get(id) {
+            return document.getElementById(id);
+        }
+
+        test('rotate target after draw', function () {
+            rotary.draw(0);
+            var el = get('rotary');
+
+            ok(el.getAttribute('style').indexOf('transform: rotate(30deg)') != -1);
+            rotary.draw(2);
+            ok(el.getAttribute('style').indexOf('transform: rotate(30deg)') == -1);
+            ok(el.getAttribute('style').indexOf('transform: rotate(150deg)') != -1);
+        });
+        test('rotation accumulate random cycles', function () {
+            var next = 0;
+            target.removeData('rotary');
+            rotary = target.rotary($.extend(config, {random: function () {
+                return [1, 2][next++];
+            }}));
+            rotary.draw(0);
+            equal(rotary.rotation, 1 * 360 + 30);
+            rotary.draw(1);
+            equal(rotary.rotation, 2 * 360 + 390 + 60);
+        });
+
+        test('visibility of Rotary', function () {
+            strictEqual(typeof Rotary, 'undefined');
+        });
+
+        test('cache rotary instance', function () {
+            strictEqual(target.rotary(config), target.rotary(config));
+        });
+
+        test('should raise error missing pieces', function () {
+            target.removeData('rotary');
+            throws(function () {
+                target.rotary({});
+            }, 'pieces was required!', 'missing pieces');
+        });
+        test('should raise error pieces <= 0', function () {
+
+            throws(function () {
+                target.removeData('rotary');
+                target.rotary({pieces: 0});
+            }, 'pieces must in (0,]!', '==0');
+            throws(function () {
+                target.removeData('rotary');
+                target.rotary({pieces: -1});
+            }, 'pieces must in (0,]!', '<0');
+        });
+        module("Trigger Event", {
+            setup: function () {
+                target.removeData('rotary').unbind('draw');
+                rotary = target.rotary(config);
+            }
+        });
+        asyncTest('should trigger draw event after draw', function () {
+            expect(1);
+            var timeout = setTimeout(function () {
+                if (!timeout) {
+                    return;
+                }
+                timeout = undefined;
+                ok(false, 'not trigger draw event');
+                start();
+            }, 1000);
+            target.on('draw', function () {
+                if (!timeout) {
+                    return;
+                }
+                clearTimeout(timeout);
+                timeout = undefined;
+                ok(true);
+                start();
+            });
+            rotary.draw(0);
+        });
+        asyncTest('trigger draw event once in last in sequence draw', function () {
+            expect(1);
+            var timeout = setTimeout(function () {
+                if (!timeout) {
+                    return;
+                }
+                timeout = undefined;
+                ok(false, 'not trigger draw event');
+                start();
+            }, 1000);
+            target.on('draw', function (event) {
+                clearTimeout(timeout);
+                timeout = undefined;
+                ok(true);
+                start();
+            });
+            rotary.draw(0);
+            rotary.draw(1);
+        });
+    });
+</script>
 </head>
 <body>
 <div id="qunit"></div>
