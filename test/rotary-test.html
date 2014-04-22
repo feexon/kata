@@ -17,11 +17,7 @@
             this.draw = function (which) {
                 var diff = which - last;
                 last = which;
-                if (diff < 0) {
-                    this.rotation = Math.ceil(this.rotation / 360) * 360 + which * degrees + degrees / 2;
-                    return;
-                }
-                this.rotation = Math.floor(this.rotation / 360) * 360 + which * degrees + degrees / 2;
+                this.rotation = Math.floor((diff < 0 ? 1 : 0) + this.rotation / 360) * 360 + which * degrees + degrees / 2;
             }
             this.reset = function () {
                 last = null;
