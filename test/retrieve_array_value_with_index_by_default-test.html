@@ -11,7 +11,7 @@
          *
          */
         function solution(array, index, defaultValue) {
-            return  (index < 0 ? array[array.length + index] : array[index]) || defaultValue;
+            return  array[(index < 0 ? array.length : 0) + index] || defaultValue;
         }
     </script>
     <script type="text/javascript">
