@@ -12,13 +12,23 @@
      */
 
     (function ($) {
+        var defaults = {
+            duration:2000,
+            pieces:undefined,
+            random: function () {
+                return Math.ceil(Math.random() * 2);
+            }
+        };
         function Rotary(config) {
-            var defaults = {
-                random: function () {
-                    return Math.ceil(Math.random() * 2);
-                }
-            };
             config = $.extend(defaults, config);
+            var el = $(config.target);
+            el.each(function () {
+                var supports = ['', '-o-', '-webkit-', '-moz-'];
+                var target=this;
+                supports.forEach(function (browser) {
+                    $.style(target, browser + 'transition', config.duration / 1000 + 's ease');
+                });
+            });
             var degrees = 360 / config.pieces;
             var last = null;
 
@@ -28,14 +38,13 @@
 
             function rotateTo(to) {
                 var token = ++ticket;
-                var target = $(config.target);
-                target.each(function () {
+                el.each(function () {
                     $.style(this, 'webkit-transform', 'rotate(' + to + 'deg)');
                     $.style(this, 'transform', 'rotate(' + to + 'deg)');
                 });
                 clearTimeout(thread);
                 thread = setTimeout(function () {
-                    token == ticket && target.trigger('draw', last);
+                    token == ticket && el.trigger('draw', last);
                 }, config.duration);
 
             }
@@ -205,6 +214,10 @@
                 start();
             });
 
+        });
+
+        test('init transition by duration', function () {
+            equal($.style(target.get(0), 'transition'), '0.1s ease');
         });
     });
 </script>
