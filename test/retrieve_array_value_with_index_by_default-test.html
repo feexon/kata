@@ -10,8 +10,8 @@
         /**
          *
          */
-        function solution(array, index) {
-            return  index < 0 ? array[array.length + index] : array[index];
+        function solution(array, index, defaultValue) {
+            return  (index < 0 ? array[array.length + index] : array[index]) || defaultValue;
         }
     </script>
     <script type="text/javascript">
@@ -21,6 +21,10 @@
         });
         test('retrieve value from right', function () {
             equal(solution(['a', 'b', 'c'], -1, 'd'), 'c');
+        });
+        test('out of bounds', function () {
+            equal(solution(['a', 'b', 'c'], 3, 'd'), 'd');
+            equal(solution(['a', 'b', 'c'], -4, 'd'), 'd');
         });
     </script>
 </head>
