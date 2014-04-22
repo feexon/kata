@@ -38,14 +38,14 @@
             var thread = null;
             var ticket = 0;
 
-            function rotateTo(to) {
+            function rotateTo(to, reset) {
                 var token = ++ticket;
                 el.each(function () {
                     $.style(this, 'webkit-transform', 'rotate(' + to + 'deg)');
                     $.style(this, 'transform', 'rotate(' + to + 'deg)');
                 });
                 clearTimeout(thread);
-                thread = setTimeout(function () {
+                thread = !reset && setTimeout(function () {
                     token == ticket && el.trigger('draw', last);
                 }, config.duration);
 
@@ -62,7 +62,7 @@
             this.reset = function () {
                 last = null;
                 this.rotation = 0;
-                rotateTo(0);
+                rotateTo(0, true);
             };
         }
 
@@ -217,6 +217,31 @@
             rotary.reset();
             var el = get('rotary');
             equal($.style(el, 'transform'), 'rotate(0deg)');
+        });
+        asyncTest('reset will not trigger draw event', function (assert) {
+            expect(1);
+            var which;
+            target.on('draw', function (event, data) {
+                which = [data].join('');
+            });
+
+            rotary.draw(1);
+            rotary.reset();
+            
+            assert.timeout(1000, function (timeout) {
+                if (timeout) {
+                    ok(true, 'timeout');
+                    start();
+                    return;
+                }
+                if (which === undefined) {
+                    return;
+                }
+                ok(false, 'triggered');
+                start();
+                return true;
+            });
+
         });
     });
 </script>
