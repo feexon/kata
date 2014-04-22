@@ -11,27 +11,12 @@
         /**
          *
          */
-        function triangular(size) {
-            return size * (size + 1) / 2;
-        }
         function tetrahedron(size) {
-            var result = 0;
-            while (size) {
-                result += triangular(size--);
-            }
-            return result;
+            return ((size + 0) * (size + 1) * (size + 2)) / 6;
         }
     </script>
     <script type="text/javascript">
         module('A tetrahedron of cannonballs');
-        test('triangular number', function () {
-            equal(triangular(1), 1);
-            equal(triangular(2), 3);
-            equal(triangular(3), 6);
-        });
-        test('triangular(0)', function () {
-            equal(triangular(0), 0);
-        });
 
         test('cannonball number', function () {
             equal(tetrahedron(1), 1);
