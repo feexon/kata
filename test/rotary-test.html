@@ -10,13 +10,13 @@
         /**
          *
          */
-        function Rotary(peices, target) {
+        function Rotary(peices, target, random) {
             var degrees = 360 / peices;
             var last = null;
             this.rotation = 0;
             function rotateTo(to) {
                 var el = document.getElementById(target);
-                var style = (el.getAttribute('style') || '').replace(/(?:-webkit-)?transform\s*:\s*[^;]+(?:;|$)/g, '').replace(/;\s*$/,'');
+                var style = (el.getAttribute('style') || '').replace(/(?:-webkit-)?transform\s*:\s*[^;]+(?:;|$)/g, '').replace(/;\s*$/, '');
                 el.setAttribute('style', [style , 'transform:rotate(' + to + 'deg);-webkit-transform:rotate(' + to + 'deg);'].join(';'));
             }
 
@@ -25,7 +25,7 @@
                 var diff = which - last;
                 last = which;
                 var to = Math.floor((diff < 0 ? 1 : 0) + from / 360) * 360 + which * degrees + degrees / 2;
-                this.rotation = to;
+                this.rotation = 360 * random() + to;
                 rotateTo(to);
             };
             this.reset = function () {
@@ -38,7 +38,9 @@
             var rotary;
             module("Rotary", {
                 setup: function () {
-                    rotary = new Rotary(6, 'rotary');
+                    rotary = new Rotary(6, 'rotary', function () {
+                        return 0;
+                    });
                 }
             });
             test('draw', function () {
@@ -74,6 +76,16 @@
                 rotary.draw(2);
                 ok(el.getAttribute('style').indexOf('transform:rotate(30deg)') == -1);
                 ok(el.getAttribute('style').indexOf('transform:rotate(150deg)') != -1);
+            });
+            test('rotation accumulate random cycles', function () {
+                var next = 0;
+                rotary = new Rotary(6, 'rotary', function () {
+                    return [1, 2][next++];
+                });
+                rotary.draw(0);
+                equal(rotary.rotation, 1 * 360 +30);
+                rotary.draw(1);
+                equal(rotary.rotation, 2 * 360 + 390 + 60);
             });
         });
     </script>
