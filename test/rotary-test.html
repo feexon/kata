@@ -10,53 +10,77 @@
         /**
          *
          */
-        function Rotary(peices) {
+        function Rotary(peices, target) {
             var degrees = 360 / peices;
             var last = null;
             this.rotation = 0;
+            function rotateTo(to) {
+                var el = document.getElementById(target);
+                var style = (el.getAttribute('style') || '').replace(/(?:-webkit-)?transform\s*:\s*[^;]+(?:;|$)/g, '').replace(/;\s*$/,'');
+                el.setAttribute('style', [style , 'transform:rotate(' + to + 'deg);-webkit-transform:rotate(' + to + 'deg);'].join(';'));
+            }
+
             this.draw = function (which) {
+                var from = this.rotation;
                 var diff = which - last;
                 last = which;
-                this.rotation = Math.floor((diff < 0 ? 1 : 0) + this.rotation / 360) * 360 + which * degrees + degrees / 2;
-            }
+                var to = Math.floor((diff < 0 ? 1 : 0) + from / 360) * 360 + which * degrees + degrees / 2;
+                this.rotation = to;
+                rotateTo(to);
+            };
             this.reset = function () {
                 last = null;
-            }
+            };
         }
     </script>
     <script type="text/javascript">
-        var rotary;
-        module("Rotary", {
-            setup: function () {
-                rotary = new Rotary(6);
+        $(function () {
+            var rotary;
+            module("Rotary", {
+                setup: function () {
+                    rotary = new Rotary(6, 'rotary');
+                }
+            });
+            test('draw', function () {
+                equal(rotary.rotation, 0);
+                rotary.draw(0);
+                equal(rotary.rotation, 30);
+                rotary.draw(1);
+                equal(rotary.rotation, 90);
+            });
+            test('accumulate rotation', function () {
+                rotary.draw(1);
+                rotary.draw(0);
+                equal(rotary.rotation, 1 * 360 + 30);
+                rotary.draw(1);
+                rotary.draw(0);
+                equal(rotary.rotation, 2 * 360 + 30);
+            });
+
+            test('reset', function () {
+                rotary.draw(1);
+                rotary.reset();
+                rotary.draw(0);
+                equal(rotary.rotation, 30);
+            });
+            function get(id) {
+                return document.getElementById(id);
             }
-        });
-        test('draw', function () {
-            equal(rotary.rotation, 0);
-            rotary.draw(0);
-            equal(rotary.rotation, 30);
-            rotary.draw(1);
-            equal(rotary.rotation, 90);
-        });
-        test('accumulate rotation', function () {
-            rotary.draw(1);
-            rotary.draw(0);
-            equal(rotary.rotation, 1 * 360 + 30);
-            rotary.draw(1);
-            rotary.draw(0);
-            equal(rotary.rotation, 2 * 360 + 30);
-        });
 
-        test('reset', function () {
-            rotary.draw(1);
-            rotary.reset();
-            rotary.draw(0);
-            equal(rotary.rotation, 30);
-
+            test('rotate target after draw', function () {
+                rotary.draw(0);
+                var el = get('rotary');
+                ok(el.getAttribute('style').indexOf('transform:rotate(30deg)') != -1);
+                rotary.draw(2);
+                ok(el.getAttribute('style').indexOf('transform:rotate(30deg)') == -1);
+                ok(el.getAttribute('style').indexOf('transform:rotate(150deg)') != -1);
+            });
         });
     </script>
 </head>
 <body>
 <div id="qunit"></div>
+<div id="rotary"
+     style="width:30px;height:30px;background: #f00;position: absolute;left:50%;top:30px;z-index: 1000;"></div>
 </body>
 </html>
