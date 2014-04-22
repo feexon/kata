@@ -111,11 +111,9 @@
         test('rotate target after draw', function () {
             rotary.draw(0);
             var el = get('rotary');
-
-            ok(el.getAttribute('style').indexOf('transform: rotate(30deg)') != -1);
+            equal($.style(el, 'transform'), 'rotate(30deg)');
             rotary.draw(2);
-            ok(el.getAttribute('style').indexOf('transform: rotate(30deg)') == -1);
-            ok(el.getAttribute('style').indexOf('transform: rotate(150deg)') != -1);
+            equal($.style(el, 'transform'), 'rotate(150deg)');
         });
         test('rotation accumulate random cycles', function () {
             var next = 0;
@@ -184,7 +182,7 @@
                     setTimeout(arguments.callee, period);
                     return;
                 }
-                callback.apply(this,arguments);
+                callback.apply(this, arguments);
             }, period);
         }
 
