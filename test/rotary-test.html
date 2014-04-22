@@ -46,8 +46,11 @@
             $.fn.rotary = function (config) {
                 var key = 'rotary';
                 if (!this.data(key)) {
-                    if (!config.pieces) {
+                    if (config.pieces === undefined) {
                         throw 'pieces was required!';
+                    }
+                    if (config.pieces <= 0) {
+                        throw 'pieces must in (0,]!';
                     }
                     this.data(key, new Rotary($.extend(config, {target: this})));
                 }
@@ -128,7 +131,18 @@
                 target.removeData('rotary');
                 throws(function () {
                     target.rotary({});
-                }, 'pieces was required!');
+                }, 'pieces was required!', 'missing pieces');
+            });
+            test('should raise error pieces <= 0', function () {
+
+                throws(function () {
+                    target.removeData('rotary');
+                    target.rotary({pieces: 0});
+                }, 'pieces must in (0,]!', '==0');
+                throws(function () {
+                    target.removeData('rotary');
+                    target.rotary({pieces: -1});
+                }, 'pieces must in (0,]!', '<0');
             });
         });
     </script>
