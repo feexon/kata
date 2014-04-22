@@ -11,12 +11,12 @@
          *
          */
         var count = 6;
-        var radian = Math.PI / 180 * 360 / count;
+        var angle =  360 / count;
         var last = null;
         function rotateTo(which) {
             var diff = which - (last === null ? which : last);
             last = which;
-            return (diff < 0 ? 1 : 0) * radian * (count - (which - diff + 0.5)) + radian * (diff > 0 ? diff : which) + radian / 2 * (diff > 0 ? 0 : 1);
+            return (diff < 0 ? 1 : 0) * angle * (count - (which - diff + 0.5)) + angle * (diff > 0 ? diff : which) + angle / 2 * (diff > 0 ? 0 : 1);
         }
     </script>
     <script type="text/javascript">
@@ -27,24 +27,24 @@
         });
         test('rotateTo(n)', function () {
             for (var i = 0; i < count; i++) {
-                ok(Math.abs(rotateTo(i) - (radian * i + radian / 2)) < 0.1);
+                ok(Math.abs(rotateTo(i) - (angle * i + angle / 2)) < 0.1);
                 last = null;
             }
         });
 
         test('re rotateTo if last less than which', function () {
             rotateTo(0);
-            ok(Math.abs(rotateTo(2) - 2 * radian) < 0.1);
+            ok(Math.abs(rotateTo(2) - 2 * angle) < 0.1);
             last = null;
             rotateTo(1);
-            ok(Math.abs(rotateTo(2) - radian) < 0.1);
+            ok(Math.abs(rotateTo(2) - angle) < 0.1);
         });
         test('re rotateTo if last larger than which', function () {
             rotateTo(2);
-            ok(Math.abs(rotateTo(0) - Math.PI / 180 * (360 - 150 + 30)) < 0.1);
+            ok(Math.abs(rotateTo(0) - (360 - 150 + 30)) < 0.1);
             last = null;
             rotateTo(2);
-            ok(Math.abs(rotateTo(1) - Math.PI / 180 * (360 - 150 + 90)) < 0.1);
+            ok(Math.abs(rotateTo(1) - (360 - 150 + 90)) < 0.1);
         });
 
 
