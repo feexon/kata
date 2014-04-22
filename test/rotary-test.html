@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function Rotary(peices) {
+            var degrees = 360 / peices;
+            this.rotation = 0;
+            this.draw = function (which) {
+                this.rotation = which * degrees + degrees/ 2;
+            }
+        }
+    </script>
+    <script type="text/javascript">
+        module("Rotary");
+        test('draw', function () {
+            var rotary = new Rotary(6);
+            equal(rotary.rotation, 0);
+            rotary.draw(0);
+            equal(rotary.rotation, 30);
+            rotary.draw(1);
+            equal(rotary.rotation, 90);
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
