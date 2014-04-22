@@ -12,10 +12,7 @@
          *
          */
         function triangular(n) {
-            if (n >1) {
-                return n + triangular(n - 1);
-            }
-            return 1 + 0;
+            return n > 1 ? n + triangular(n - 1) : 1;
         }
     </script>
     <script type="text/javascript">
