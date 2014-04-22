@@ -20,17 +20,19 @@
                 return Math.ceil(Math.random() * 2);
             }
         };
+        var supports = ['', '-o-', '-webkit-', '-moz-'];
 
         function Rotary(config) {
             config = $.extend(defaults, config);
             var el = $(config.target);
-            el.each(function () {
-                var supports = ['', '-o-', '-webkit-', '-moz-'];
-                var target = this;
+
+            function css(name, value) {
                 supports.forEach(function (browser) {
-                    $.style(target, browser + 'transition', config.duration / 1000 + 's ease');
+                    el.css(browser + name, value);
                 });
-            });
+            }
+
+            css('transition', config.duration / 1000 + 's ease');
             var degrees = 360 / config.pieces;
             var last = null;
 
@@ -40,10 +42,8 @@
 
             function rotateTo(to, reset) {
                 var token = ++ticket;
-                el.each(function () {
-                    $.style(this, 'webkit-transform', 'rotate(' + to + 'deg)');
-                    $.style(this, 'transform', 'rotate(' + to + 'deg)');
-                });
+                css('transform', 'rotate(' + to + 'deg)');
+
                 clearTimeout(thread);
                 thread = !reset && setTimeout(function () {
                     token == ticket && el.trigger('draw', last);
@@ -93,7 +93,7 @@
         module("Rotary", {
             setup: function () {
                 target.removeData('rotary').unbind('draw');
-                which=undefined;
+                which = undefined;
                 target.on('draw', function (event, data) {
                     which = [data].join('');
                 });
