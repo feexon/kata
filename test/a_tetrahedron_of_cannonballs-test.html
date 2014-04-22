@@ -11,9 +11,20 @@
         /**
          *
          */
+        function triangular(n) {
+            if (n >1) {
+                return n + triangular(n - 1);
+            }
+            return 1 + 0;
+        }
     </script>
     <script type="text/javascript">
-
+        module('A tetrahedron of cannonballs');
+        test('triangular number', function () {
+            equal(triangular(1), 1);
+            equal(triangular(2), 3);
+            equal(triangular(3), 6);
+        });
     </script>
 </head>
 <body>
