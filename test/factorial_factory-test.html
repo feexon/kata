@@ -11,7 +11,7 @@
          *
          */
         function factorial(n) {
-            return n > 0 && n * factorial(n - 1) || (n < 0 ? null : 1);
+            return n < 0 ? null : n && n * factorial(n - 1) || 1;
         }
     </script>
     <script type="text/javascript">
