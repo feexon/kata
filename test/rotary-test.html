@@ -11,40 +11,42 @@
          *
          */
 
-        function Rotary(config) {
-            var defaults = {
-                random: function () {
-                    return Math.ceil(Math.random() * 2);
-                }
-            };
-            config = $.extend(defaults, config);
-            var degrees = 360 / config.peices;
-            var last = null;
+        (function ($) {
+            function Rotary(config) {
+                var defaults = {
+                    random: function () {
+                        return Math.ceil(Math.random() * 2);
+                    }
+                };
+                config = $.extend(defaults, config);
+                var degrees = 360 / config.peices;
+                var last = null;
 
-            this.rotation = 0;
-            function rotateTo(to) {
-                $(config.target).each(function () {
-                    $.style(this, 'webkit-transform', 'rotate(' + to + 'deg)');
-                    $.style(this, 'transform', 'rotate(' + to + 'deg)');
-                });
+                this.rotation = 0;
+                function rotateTo(to) {
+                    $(config.target).each(function () {
+                        $.style(this, 'webkit-transform', 'rotate(' + to + 'deg)');
+                        $.style(this, 'transform', 'rotate(' + to + 'deg)');
+                    });
+                }
+
+                this.draw = function (which) {
+                    var from = this.rotation;
+                    var diff = which - last;
+                    last = which;
+                    var to = Math.floor((diff < 0 ? 1 : 0) + from / 360) * 360 + which * degrees + degrees / 2;
+                    this.rotation = 360 * config.random() + to;
+                    rotateTo(to);
+                };
+                this.reset = function () {
+                    last = null;
+                };
             }
 
-            this.draw = function (which) {
-                var from = this.rotation;
-                var diff = which - last;
-                last = which;
-                var to = Math.floor((diff < 0 ? 1 : 0) + from / 360) * 360 + which * degrees + degrees / 2;
-                this.rotation = 360 * config.random() + to;
-                rotateTo(to);
-            };
-            this.reset = function () {
-                last = null;
-            };
-        }
-
-        $.fn.rotary = function (config) {
-            return new Rotary($.extend(config, {target: this}));
-        }
+            $.fn.rotary = function (config) {
+                return new Rotary($.extend(config, {target: this}));
+            }
+        })(jQuery);
 
     </script>
     <script type="text/javascript">
@@ -105,6 +107,9 @@
                 equal(rotary.rotation, 2 * 360 + 390 + 60);
             });
 
+            test('visibility of Rotary', function () {
+                strictEqual(typeof Rotary, 'undefined');
+            });
 
         });
     </script>
