@@ -10,15 +10,19 @@
         /**
          *
          */
-        function Rotary(peices, target, random) {
-            var degrees = 360 / peices;
-            var last = null;
-            random=random||function(){
-                return Math.ceil(Math.random()*2);
+        function Rotary(config) {
+            var defaults = {
+                random: function () {
+                    return Math.ceil(Math.random() * 2);
+                }
             };
+            config = $.extend(defaults, config);
+            var degrees = 360 / config.peices;
+            var last = null;
+
             this.rotation = 0;
             function rotateTo(to) {
-                var el = document.getElementById(target);
+                var el = document.getElementById(config.target);
                 var style = (el.getAttribute('style') || '').replace(/(?:-webkit-)?transform\s*:\s*[^;]+(?:;|$)/g, '').replace(/;\s*$/, '');
                 el.setAttribute('style', [style , 'transform:rotate(' + to + 'deg);-webkit-transform:rotate(' + to + 'deg);'].join(';'));
             }
@@ -28,7 +32,7 @@
                 var diff = which - last;
                 last = which;
                 var to = Math.floor((diff < 0 ? 1 : 0) + from / 360) * 360 + which * degrees + degrees / 2;
-                this.rotation = 360 * random() + to;
+                this.rotation = 360 * config.random() + to;
                 rotateTo(to);
             };
             this.reset = function () {
@@ -38,12 +42,13 @@
     </script>
     <script type="text/javascript">
         $(function () {
+            var config = {peices: 6, target: 'rotary', random: function () {
+                return 0;
+            }};
             var rotary;
             module("Rotary", {
                 setup: function () {
-                    rotary = new Rotary(6, 'rotary', function () {
-                        return 0;
-                    });
+                    rotary = new Rotary(config);
                 }
             });
             test('draw', function () {
@@ -82,11 +87,11 @@
             });
             test('rotation accumulate random cycles', function () {
                 var next = 0;
-                rotary = new Rotary(6, 'rotary', function () {
+                rotary = new Rotary($.extend(config, {random: function () {
                     return [1, 2][next++];
-                });
+                }}));
                 rotary.draw(0);
-                equal(rotary.rotation, 1 * 360 +30);
+                equal(rotary.rotation, 1 * 360 + 30);
                 rotary.draw(1);
                 equal(rotary.rotation, 2 * 360 + 390 + 60);
             });
