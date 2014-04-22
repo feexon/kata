@@ -6,6 +6,7 @@
 <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
 <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
 <script type="text/javascript" src="../libs/qunit.js"></script>
+<script type="text/javascript" src="../libs/qunit-extras.js"></script>
 <script type="text/javascript">
     /**
      *
@@ -13,18 +14,19 @@
 
     (function ($) {
         var defaults = {
-            duration:2000,
-            pieces:undefined,
+            duration: 2000,
+            pieces: undefined,
             random: function () {
                 return Math.ceil(Math.random() * 2);
             }
         };
+
         function Rotary(config) {
             config = $.extend(defaults, config);
             var el = $(config.target);
             el.each(function () {
                 var supports = ['', '-o-', '-webkit-', '-moz-'];
-                var target=this;
+                var target = this;
                 supports.forEach(function (browser) {
                     $.style(target, browser + 'transition', config.duration / 1000 + 's ease');
                 });
@@ -36,14 +38,14 @@
             var thread = null;
             var ticket = 0;
 
-            function rotateTo(to) {
+            function rotateTo(to, reset) {
                 var token = ++ticket;
                 el.each(function () {
                     $.style(this, 'webkit-transform', 'rotate(' + to + 'deg)');
                     $.style(this, 'transform', 'rotate(' + to + 'deg)');
                 });
                 clearTimeout(thread);
-                thread = setTimeout(function () {
+                thread = !reset && setTimeout(function () {
                     token == ticket && el.trigger('draw', last);
                 }, config.duration);
 
@@ -59,6 +61,8 @@
             };
             this.reset = function () {
                 last = null;
+                this.rotation = 0;
+                rotateTo(0, true);
             };
         }
 
@@ -85,9 +89,14 @@
             return 0;
         }};
         var rotary;
+        var which;
         module("Rotary", {
             setup: function () {
                 target.removeData('rotary').unbind('draw');
+                which=undefined;
+                target.on('draw', function (event, data) {
+                    which = [data].join('');
+                });
                 rotary = target.rotary(config);
             }
         });
@@ -110,6 +119,7 @@
         test('reset', function () {
             rotary.draw(1);
             rotary.reset();
+            equal(rotary.rotation, 0);
             rotary.draw(0);
             equal(rotary.rotation, 30);
         });
@@ -162,62 +172,69 @@
             }, 'pieces must in (0,]!', '<0');
         });
 
-        asyncTest('should trigger draw event after draw', function () {
+        asyncTest('should trigger draw event after draw', function (assert) {
             expect(1);
-            var which;
 
-            function probe() {
-                return which;
-            }
-
-            target.on('draw', function (event, data) {
-                which = data;
-            });
             rotary.draw(3);
-            timeout(1000, probe, function () {
-                equal(which, 3);
-                start();
-            });
-        });
-        function timeout(timeout, probe, callback) {
-            var tries = 20;
-            var period = timeout / tries;
 
-            setTimeout(function () {
-                if (!probe()) {
-                    if (--tries <= 0) {
-                        throw 'timeout';
-                    }
-                    setTimeout(arguments.callee, period);
+            assert.timeout(1000, function () {
+                if (which === undefined) {
                     return;
                 }
-                callback.apply(this, arguments);
-            }, period);
-        }
-
-        asyncTest('trigger draw event once in last in sequence draw', function () {
-            expect(1);
-            var which;
-
-            function probe() {
-                return which;
-            }
-
-            target.on('draw', function (event, data) {
-                which = data;
+                equal(which, 3);
+                start();
+                return true;
             });
+        });
+
+
+        asyncTest('trigger draw event once in last in sequence draw', function (assert) {
+            expect(1);
+
             rotary.draw(1);
             rotary.draw(5);
-            var tries = 10;
-            timeout(1000, probe, function () {
+
+            assert.timeout(1000, function () {
+                if (which === undefined) {
+                    return;
+                }
                 equal(which, 5);
                 start();
+                return true;
             });
 
         });
 
         test('init transition by duration', function () {
             equal($.style(target.get(0), 'transition'), '0.1s ease');
+        });
+
+        test('reset transform to 0deg', function () {
+            rotary.draw(0);
+            rotary.reset();
+            var el = get('rotary');
+            equal($.style(el, 'transform'), 'rotate(0deg)');
+        });
+        asyncTest('reset will not trigger draw event', function (assert) {
+            expect(1);
+
+            rotary.draw(1);
+            rotary.reset();
+
+            assert.timeout(1000, function (timeout) {
+                if (timeout) {
+                    ok(true, 'timeout');
+                    start();
+                    return;
+                }
+                if (which === undefined) {
+                    return;
+                }
+                ok(false, 'triggered');
+                start();
+                return true;
+            });
+
         });
     });
 </script>
