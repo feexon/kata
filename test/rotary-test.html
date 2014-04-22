@@ -10,6 +10,7 @@
         /**
          *
          */
+
         function Rotary(config) {
             var defaults = {
                 random: function () {
@@ -22,9 +23,10 @@
 
             this.rotation = 0;
             function rotateTo(to) {
-                var el = document.getElementById(config.target);
-                var style = (el.getAttribute('style') || '').replace(/(?:-webkit-)?transform\s*:\s*[^;]+(?:;|$)/g, '').replace(/;\s*$/, '');
-                el.setAttribute('style', [style , 'transform:rotate(' + to + 'deg);-webkit-transform:rotate(' + to + 'deg);'].join(';'));
+                $(config.target).each(function () {
+                    $.style(this, 'webkit-transform', 'rotate(' + to + 'deg)');
+                    $.style(this, 'transform', 'rotate(' + to + 'deg)');
+                });
             }
 
             this.draw = function (which) {
@@ -39,16 +41,22 @@
                 last = null;
             };
         }
+
+        $.fn.rotary = function (config) {
+            return new Rotary($.extend(config, {target: this}));
+        }
+
     </script>
     <script type="text/javascript">
         $(function () {
-            var config = {peices: 6, target: 'rotary', random: function () {
+            var target = $("#rotary");
+            var config = {peices: 6, random: function () {
                 return 0;
             }};
             var rotary;
             module("Rotary", {
                 setup: function () {
-                    rotary = new Rotary(config);
+                    rotary = target.rotary(config);
                 }
             });
             test('draw', function () {
@@ -80,14 +88,15 @@
             test('rotate target after draw', function () {
                 rotary.draw(0);
                 var el = get('rotary');
-                ok(el.getAttribute('style').indexOf('transform:rotate(30deg)') != -1);
+
+                ok(el.getAttribute('style').indexOf('transform: rotate(30deg)') != -1);
                 rotary.draw(2);
-                ok(el.getAttribute('style').indexOf('transform:rotate(30deg)') == -1);
-                ok(el.getAttribute('style').indexOf('transform:rotate(150deg)') != -1);
+                ok(el.getAttribute('style').indexOf('transform: rotate(30deg)') == -1);
+                ok(el.getAttribute('style').indexOf('transform: rotate(150deg)') != -1);
             });
             test('rotation accumulate random cycles', function () {
                 var next = 0;
-                rotary = new Rotary($.extend(config, {random: function () {
+                rotary = target.rotary($.extend(config, {random: function () {
                     return [1, 2][next++];
                 }}));
                 rotary.draw(0);
@@ -95,6 +104,8 @@
                 rotary.draw(1);
                 equal(rotary.rotation, 2 * 360 + 390 + 60);
             });
+
+
         });
     </script>
 </head>
