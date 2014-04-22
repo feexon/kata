@@ -6,6 +6,7 @@
 <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
 <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
 <script type="text/javascript" src="../libs/qunit.js"></script>
+<script type="text/javascript" src="../libs/qunit-extras.js"></script>
 <script type="text/javascript">
     /**
      *
@@ -165,56 +166,43 @@
             }, 'pieces must in (0,]!', '<0');
         });
 
-        asyncTest('should trigger draw event after draw', function () {
+        asyncTest('should trigger draw event after draw', function (assert) {
             expect(1);
             var which;
-
-            function probe() {
-                return which;
-            }
-
             target.on('draw', function (event, data) {
                 which = data;
             });
-            rotary.draw(3);
-            timeout(1000, probe, function () {
-                equal(which, 3);
-                start();
-            });
-        });
-        function timeout(timeout, probe, callback) {
-            var tries = 20;
-            var period = timeout / tries;
 
-            setTimeout(function () {
-                if (!probe()) {
-                    if (--tries <= 0) {
-                        throw 'timeout';
-                    }
-                    setTimeout(arguments.callee, period);
+            rotary.draw(3);
+
+            assert.timeout(1000, function () {
+                if (which === undefined) {
                     return;
                 }
-                callback.apply(this, arguments);
-            }, period);
-        }
+                equal(which, 3);
+                start();
+                return true;
+            });
+        });
 
-        asyncTest('trigger draw event once in last in sequence draw', function () {
+
+        asyncTest('trigger draw event once in last in sequence draw', function (assert) {
             expect(1);
             var which;
-
-            function probe() {
-                return which;
-            }
-
             target.on('draw', function (event, data) {
                 which = data;
             });
+
             rotary.draw(1);
             rotary.draw(5);
-            var tries = 10;
-            timeout(1000, probe, function () {
+
+            assert.timeout(1000, function () {
+                if (which === undefined) {
+                    return;
+                }
                 equal(which, 5);
                 start();
+                return true;
             });
 
         });
