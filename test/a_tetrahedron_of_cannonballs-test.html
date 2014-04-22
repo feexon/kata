@@ -15,9 +15,11 @@
             return size * (size + 1) / 2;
         }
         function tetrahedron(size) {
-            return Array.apply(null, Array(size + 1)).reduce(function (ret, _, size) {
-                return ret + triangular(size);
-            }, 0);
+            var result = 0;
+            while (size) {
+                result += triangular(size--);
+            }
+            return result;
         }
     </script>
     <script type="text/javascript">
@@ -39,6 +41,7 @@
 
         test('max cannonball number', function () {
             equal(tetrahedron(100000), 166671666700000);
+            equal(tetrahedron(797651), 84584176417339020);
         });
     </script>
 </head>
