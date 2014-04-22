@@ -12,6 +12,9 @@
          *
          */
         function solution(string, limit) {
+            if (limit < string.length) {
+                return string.substring(0, limit) + "...";
+            }
             return string;
         }
     </script>
@@ -22,6 +25,9 @@
         });
         test('limit more string length', function () {
             equal(solution('Test', 8), 'Test');
+        });
+        test('limit less string length', function () {
+            equal(solution('Test', 2), 'Te...');
         });
     </script>
 </head>
