@@ -11,13 +11,16 @@
          *
          */
         function solution(array, index) {
-            return  array[index];
+            return  index < 0 ? array[array.length + index] : array[index];
         }
     </script>
     <script type="text/javascript">
         module('Retrieve array value with index by default');
         test('retrieve value', function () {
             equal(solution(['a', 'b', 'c'], 0, 'd'), 'a');
+        });
+        test('retrieve value from right', function () {
+            equal(solution(['a', 'b', 'c'], -1, 'd'), 'c');
         });
     </script>
 </head>
