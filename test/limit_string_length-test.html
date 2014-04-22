@@ -12,10 +12,7 @@
          *
          */
         function solution(string, limit) {
-            if (limit < string.length) {
-                return string.substring(0, limit) + "...";
-            }
-            return string;
+            return limit < string.length ? string.substring(0, limit) + "..." : string;
         }
     </script>
     <script type="text/javascript">
