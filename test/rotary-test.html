@@ -25,9 +25,13 @@
         }
     </script>
     <script type="text/javascript">
-        module("Rotary");
+        var rotary;
+        module("Rotary", {
+            setup: function () {
+                rotary = new Rotary(6);
+            }
+        });
         test('draw', function () {
-            var rotary = new Rotary(6);
             equal(rotary.rotation, 0);
             rotary.draw(0);
             equal(rotary.rotation, 30);
@@ -35,7 +39,6 @@
             equal(rotary.rotation, 90);
         });
         test('accumulate rotation', function () {
-            var rotary = new Rotary(6);
             rotary.draw(1);
             rotary.draw(0);
             equal(rotary.rotation, 1 * 360 + 30);
@@ -45,7 +48,6 @@
         });
 
         test('reset', function () {
-            var rotary = new Rotary(6);
             rotary.draw(1);
             rotary.reset();
             rotary.draw(0);
