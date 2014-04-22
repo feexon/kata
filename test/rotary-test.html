@@ -89,9 +89,14 @@
             return 0;
         }};
         var rotary;
+        var which;
         module("Rotary", {
             setup: function () {
                 target.removeData('rotary').unbind('draw');
+                which=undefined;
+                target.on('draw', function (event, data) {
+                    which = [data].join('');
+                });
                 rotary = target.rotary(config);
             }
         });
@@ -169,10 +174,6 @@
 
         asyncTest('should trigger draw event after draw', function (assert) {
             expect(1);
-            var which;
-            target.on('draw', function (event, data) {
-                which = data;
-            });
 
             rotary.draw(3);
 
@@ -189,10 +190,6 @@
 
         asyncTest('trigger draw event once in last in sequence draw', function (assert) {
             expect(1);
-            var which;
-            target.on('draw', function (event, data) {
-                which = data;
-            });
 
             rotary.draw(1);
             rotary.draw(5);
@@ -220,14 +217,10 @@
         });
         asyncTest('reset will not trigger draw event', function (assert) {
             expect(1);
-            var which;
-            target.on('draw', function (event, data) {
-                which = [data].join('');
-            });
 
             rotary.draw(1);
             rotary.reset();
-            
+
             assert.timeout(1000, function (timeout) {
                 if (timeout) {
                     ok(true, 'timeout');
