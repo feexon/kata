@@ -24,9 +24,13 @@
 
                 this.rotation = 0;
                 function rotateTo(to) {
-                    $(config.target).each(function () {
+                    var target = $(config.target);
+                    target.each(function () {
                         $.style(this, 'webkit-transform', 'rotate(' + to + 'deg)');
                         $.style(this, 'transform', 'rotate(' + to + 'deg)');
+                    });
+                    target.animate({duration: config.duration}, function () {
+                        target.trigger('draw');
                     });
                 }
 
@@ -62,7 +66,7 @@
     <script type="text/javascript">
         $(function () {
             var target = $("#rotary");
-            var config = {pieces: 6, random: function () {
+            var config = {duration: 100, pieces: 6, random: function () {
                 return 0;
             }};
             var rotary;
@@ -143,6 +147,23 @@
                     target.removeData('rotary');
                     target.rotary({pieces: -1});
                 }, 'pieces must in (0,]!', '<0');
+            });
+            asyncTest('should trigger draw event after draw', function () {
+                expect(1);
+                var timeout = setTimeout(function () {
+                    timeout = undefined;
+                    ok(false, 'not trigger draw event');
+                    start();
+                }, 500);
+                target.one('draw', function () {
+                    if (!timeout) {
+                        return;
+                    }
+                    clearTimeout(timeout);
+                    ok(true);
+                    start();
+                });
+                rotary.draw(0);
             });
         });
     </script>
