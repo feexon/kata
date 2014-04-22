@@ -10,9 +10,15 @@
         /**
          *
          */
+        function solution(array, index) {
+            return  array[index];
+        }
     </script>
     <script type="text/javascript">
-
+        module('Retrieve array value with index by default');
+        test('retrieve value', function () {
+            equal(solution(['a', 'b', 'c'], 0, 'd'), 'a');
+        });
     </script>
 </head>
 <body>
