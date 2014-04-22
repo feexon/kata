@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function solution(string, limit) {
+            return limit < string.length ? string.substring(0, limit) + "..." : string;
+        }
+    </script>
+    <script type="text/javascript">
+        module("Limit String Length");
+        test('limit equal string length', function () {
+            equal(solution('Test', 4), 'Test');
+        });
+        test('limit more string length', function () {
+            equal(solution('Test', 8), 'Test');
+        });
+        test('limit less string length', function () {
+            equal(solution('Test', 2), 'Te...');
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
