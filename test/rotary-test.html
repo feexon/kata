@@ -46,6 +46,9 @@
             $.fn.rotary = function (config) {
                 var key = 'rotary';
                 if (!this.data(key)) {
+                    if (!config.pieces) {
+                        throw 'pieces was required!';
+                    }
                     this.data(key, new Rotary($.extend(config, {target: this})));
                 }
                 return this.data(key);
@@ -121,6 +124,12 @@
                 strictEqual(target.rotary(config), target.rotary(config));
             });
 
+            test('should raise error missing pieces', function () {
+                target.removeData('rotary');
+                throws(function () {
+                    target.rotary({});
+                }, 'pieces was required!');
+            });
         });
     </script>
 </head>
