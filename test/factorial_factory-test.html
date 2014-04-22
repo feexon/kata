@@ -11,7 +11,7 @@
          *
          */
         function factorial(n) {
-            return n&&n*factorial(n-1) || 1;
+            return n > 0 && n * factorial(n - 1) || (n < 0 ? null : 1);
         }
     </script>
     <script type="text/javascript">
@@ -23,6 +23,9 @@
             equal(factorial(1), 1);
             equal(factorial(2), 2);
             equal(factorial(3), 1 * 2 * 3);
+        });
+        test('factorial with negative number', function () {
+            strictEqual(factorial(-1), null);
         });
     </script>
 </head>
