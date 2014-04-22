@@ -10,9 +10,20 @@
         /**
          *
          */
+        function factorial(n) {
+            return n&&n*factorial(n-1) || 1;
+        }
     </script>
     <script type="text/javascript">
-
+        module('Factorial Factory');
+        test('factorial(0)', function () {
+            equal(factorial(0), 1);
+        });
+        test('factorial', function () {
+            equal(factorial(1), 1);
+            equal(factorial(2), 2);
+            equal(factorial(3), 1 * 2 * 3);
+        });
     </script>
 </head>
 <body>
