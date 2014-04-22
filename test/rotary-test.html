@@ -13,18 +13,19 @@
 
     (function ($) {
         var defaults = {
-            duration:2000,
-            pieces:undefined,
+            duration: 2000,
+            pieces: undefined,
             random: function () {
                 return Math.ceil(Math.random() * 2);
             }
         };
+
         function Rotary(config) {
             config = $.extend(defaults, config);
             var el = $(config.target);
             el.each(function () {
                 var supports = ['', '-o-', '-webkit-', '-moz-'];
-                var target=this;
+                var target = this;
                 supports.forEach(function (browser) {
                     $.style(target, browser + 'transition', config.duration / 1000 + 's ease');
                 });
@@ -59,6 +60,7 @@
             };
             this.reset = function () {
                 last = null;
+                this.rotation = 0;
             };
         }
 
@@ -110,6 +112,7 @@
         test('reset', function () {
             rotary.draw(1);
             rotary.reset();
+            equal(rotary.rotation, 0);
             rotary.draw(0);
             equal(rotary.rotation, 30);
         });
