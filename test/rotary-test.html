@@ -19,7 +19,7 @@
                     }
                 };
                 config = $.extend(defaults, config);
-                var degrees = 360 / config.peices;
+                var degrees = 360 / config.pieces;
                 var last = null;
 
                 this.rotation = 0;
@@ -56,7 +56,7 @@
     <script type="text/javascript">
         $(function () {
             var target = $("#rotary");
-            var config = {peices: 6, random: function () {
+            var config = {pieces: 6, random: function () {
                 return 0;
             }};
             var rotary;
