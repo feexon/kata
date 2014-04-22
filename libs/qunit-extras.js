@@ -10,7 +10,8 @@ $.extend(QUnit.assert, {
         setTimeout(function () {
             if (!callback.call(self)) {
                 if (--tries <= 0) {
-                    throw 'timeout';
+                    callback.call(self, 'timeout');
+                    return;
                 }
                 setTimeout(arguments.callee, period);
                 return;
