@@ -44,7 +44,11 @@
             }
 
             $.fn.rotary = function (config) {
-                return new Rotary($.extend(config, {target: this}));
+                var key = 'rotary';
+                if (!this.data(key)) {
+                    this.data(key, new Rotary($.extend(config, {target: this})));
+                }
+                return this.data(key);
             }
         })(jQuery);
 
@@ -58,6 +62,7 @@
             var rotary;
             module("Rotary", {
                 setup: function () {
+                    target.removeData('rotary');
                     rotary = target.rotary(config);
                 }
             });
@@ -98,6 +103,7 @@
             });
             test('rotation accumulate random cycles', function () {
                 var next = 0;
+                target.removeData('rotary');
                 rotary = target.rotary($.extend(config, {random: function () {
                     return [1, 2][next++];
                 }}));
@@ -109,6 +115,10 @@
 
             test('visibility of Rotary', function () {
                 strictEqual(typeof Rotary, 'undefined');
+            });
+
+            test('cache rotary instance', function () {
+                strictEqual(target.rotary(config), target.rotary(config));
             });
 
         });
