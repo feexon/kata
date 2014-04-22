@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function solution(array, index, defaultValue) {
+            var value = array[(index < 0 ? array.length : 0) + index];
+            return  value === undefined ? defaultValue : value;
+        }
+    </script>
+    <script type="text/javascript">
+        module('Retrieve array value with index by default');
+        test('retrieve value', function () {
+            equal(solution(['a', 'b', 'c'], 0, 'd'), 'a');
+        });
+        test('retrieve value from right', function () {
+            equal(solution(['a', 'b', 'c'], -1, 'd'), 'c');
+        });
+        test('out of bounds', function () {
+            equal(solution(['a', 'b', 'c'], 3, 'd'), 'd');
+            equal(solution(['a', 'b', 'c'], -4, 'd'), 'd');
+        });
+        test('retrieve empty string', function () {
+            equal(solution(['', 'b', 'c'], 0, 'd'), '');
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
