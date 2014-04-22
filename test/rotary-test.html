@@ -35,7 +35,7 @@
                 });
                 clearTimeout(thread);
                 thread = setTimeout(function () {
-                    token == ticket && target.trigger('draw');
+                    token == ticket && target.trigger('draw', last);
                 }, config.duration);
 
             }
@@ -47,7 +47,6 @@
                 var to = 360 * config.random() + Math.floor((diff < 0 ? 1 : 0) + from / 360) * 360 + which * degrees + degrees / 2;
                 this.rotation = to;
                 rotateTo(to);
-
             };
             this.reset = function () {
                 last = null;
@@ -155,51 +154,59 @@
                 target.rotary({pieces: -1});
             }, 'pieces must in (0,]!', '<0');
         });
-        module("Trigger Event", {
-            setup: function () {
-                target.removeData('rotary').unbind('draw');
-                rotary = target.rotary(config);
-            }
-        });
+
         asyncTest('should trigger draw event after draw', function () {
             expect(1);
-            var timeout = setTimeout(function () {
-                if (!timeout) {
-                    return;
-                }
-                timeout = undefined;
-                ok(false, 'not trigger draw event');
-                start();
-            }, 1000);
-            target.on('draw', function () {
-                if (!timeout) {
-                    return;
-                }
-                clearTimeout(timeout);
-                timeout = undefined;
-                ok(true);
+            var which;
+
+            function probe() {
+                return which;
+            }
+
+            target.on('draw', function (event, data) {
+                which = data;
+            });
+            rotary.draw(3);
+            timeout(1000, probe, function () {
+                equal(which, 3);
                 start();
             });
-            rotary.draw(0);
         });
+        function timeout(timeout, probe, callback) {
+            var tries = 20;
+            var period = timeout / tries;
+
+            setTimeout(function () {
+                if (!probe()) {
+                    if (--tries <= 0) {
+                        throw 'timeout';
+                    }
+                    setTimeout(arguments.callee, period);
+                    return;
+                }
+                callback.apply(this,arguments);
+            }, period);
+        }
+
         asyncTest('trigger draw event once in last in sequence draw', function () {
             expect(1);
-            var timeout = setTimeout(function () {
-                if (!timeout) {
-                    return;
-                }
-                timeout = undefined;
-                ok(false, 'not trigger draw event');
-                start();
-            }, 1000);
-            target.on('draw', function (event) {
-                clearTimeout(timeout);
-                timeout = undefined;
-                ok(true);
+            var which;
+
+            function probe() {
+                return which;
+            }
+
+            target.on('draw', function (event, data) {
+                which = data;
+            });
+            rotary.draw(1);
+            rotary.draw(5);
+            var tries = 10;
+            timeout(1000, probe, function () {
+                equal(which, 5);
                 start();
             });
-            rotary.draw(0);
-            rotary.draw(1);
+
         });
     });
 </script>
