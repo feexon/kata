@@ -62,6 +62,7 @@
             this.reset = function () {
                 last = null;
                 this.rotation = 0;
+                rotateTo(0);
             };
         }
 
@@ -209,6 +210,13 @@
 
         test('init transition by duration', function () {
             equal($.style(target.get(0), 'transition'), '0.1s ease');
+        });
+
+        test('reset transform to 0deg', function () {
+            rotary.draw(0);
+            rotary.reset();
+            var el = get('rotary');
+            equal($.style(el, 'transform'), 'rotate(0deg)');
         });
     });
 </script>
