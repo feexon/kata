@@ -12,9 +12,19 @@
          */
         function Rotary(peices) {
             var degrees = 360 / peices;
+            var last = null;
             this.rotation = 0;
             this.draw = function (which) {
-                this.rotation = which * degrees + degrees/ 2;
+                var diff = which - last;
+                last = which;
+                if (diff < 0) {
+                    this.rotation = Math.ceil(this.rotation / 360) * 360 + which * degrees + degrees / 2;
+                    return;
+                }
+                this.rotation = Math.floor(this.rotation / 360) * 360 + which * degrees + degrees / 2;
+            }
+            this.reset = function () {
+                last = null;
             }
         }
     </script>
@@ -27,6 +37,24 @@
             equal(rotary.rotation, 30);
             rotary.draw(1);
             equal(rotary.rotation, 90);
+        });
+        test('accumulate rotation', function () {
+            var rotary = new Rotary(6);
+            rotary.draw(1);
+            rotary.draw(0);
+            equal(rotary.rotation, 1 * 360 + 30);
+            rotary.draw(1);
+            rotary.draw(0);
+            equal(rotary.rotation, 2 * 360 + 30);
+        });
+
+        test('reset', function () {
+            var rotary = new Rotary(6);
+            rotary.draw(1);
+            rotary.reset();
+            rotary.draw(0);
+            equal(rotary.rotation, 30);
+
         });
     </script>
 </head>
