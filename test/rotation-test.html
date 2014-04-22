@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        var count = 6;
+        var radian = Math.PI / 180 * 360 / 6;
+        var last = null;
+        function rotateTo(which) {
+            var diff = which - (last === null ? which : last);
+            last = which;
+            return radian * (!diff ? which : diff) + radian / 2 * (!diff ? 1 : 0);
+        }
+    </script>
+    <script type="text/javascript">
+        module('rotation', {
+            setup: function () {
+                last = null;
+            }
+        });
+        test('rotateTo(0)', function () {
+            ok(Math.abs(rotateTo(0) - radian / 2) < 0.1);
+        });
+        test('rotateTo(n)', function () {
+            ok(Math.abs(rotateTo(1) - (radian + radian / 2)) < 0.1);
+        });
+        test('re rotateTo if last less than which', function () {
+            rotateTo(0);
+            ok(Math.abs(rotateTo(2) - 2 * radian) < 0.1);
+            last = null;
+            rotateTo(1);
+            ok(Math.abs(rotateTo(2) - radian) < 0.1);
+        });
+
+
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
