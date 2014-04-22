@@ -13,6 +13,9 @@
         function Rotary(peices, target, random) {
             var degrees = 360 / peices;
             var last = null;
+            random=random||function(){
+                return Math.ceil(Math.random()*2);
+            };
             this.rotation = 0;
             function rotateTo(to) {
                 var el = document.getElementById(target);
