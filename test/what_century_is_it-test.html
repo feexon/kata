@@ -15,18 +15,18 @@
 
          Examples:
          --Input: 1999 Output: 20th
-         Input: 1124 Output: 12th
+         --Input: 1124 Output: 12th
          --Input: 2000 Output: 20th
 
-         Input: 2011 Output: 21st
-         Input: 2154 Output: 22nd
-         Input: 2259 Output: 23rd
+         --Input: 2011 Output: 21st
+         --Input: 2154 Output: 22nd
+         --Input: 2259 Output: 23rd
 
          */
         function whatCentury(a) {
             var century = Math.ceil(+a / 100);
             var nths = ['th', 'st', 'nd', 'rd'];
-            return century +( nths[century % 10] || nths[0]);
+            return century + ((century / 10 | 0) != 1 && nths[century % 10] || nths[0]);
         }
     </script>
     <script type="text/javascript">
@@ -40,6 +40,11 @@
             equal(whatCentury('2154'), '22nd');
             equal(whatCentury('2259'), '23rd');
             equal(whatCentury('1900'), '19th');
+        });
+        test('nths of century 1x', function () {
+            equal(whatCentury('1024'), '11th');
+            equal(whatCentury('1124'), '12th');
+            equal(whatCentury('1224'), '13th');
         });
     </script>
 </head>
