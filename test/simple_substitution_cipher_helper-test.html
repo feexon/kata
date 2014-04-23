@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function SubstitutionCipher(from, to) {
+            this.encode = function (str) {
+                return str.split('').map(function (letter) {
+                    return to[from.indexOf(letter)];
+                }).join('');
+            }
+        }
+    </script>
+    <script type="text/javascript">
+        var abc1 = "abcdefghijklmnopqrstuvwxyz";
+        var abc2 = "etaoinshrdlucmfwypvbgkjqxz";
+        module('Simple Substitution Cipher Helper');
+        test('encode', function () {
+            var cipher = new SubstitutionCipher(abc1, abc2);
+            equal(cipher.encode('a'), 'e');
+            equal(cipher.encode('abc'), 'eta');
+        });
+
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
