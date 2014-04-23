@@ -53,9 +53,9 @@
 
             this.draw = function (which) {
                 var from = this.rotation;
-                var diff = which - last;
+                var diff = last === null ? 1 : which - last;
                 last = which;
-                var to = 360 * config.random() + Math.floor((diff < 0 ? 1 : 0) + from / 360) * 360 + which * degrees + degrees / 2;
+                var to = 360 * config.random() + Math.floor((diff <= 0 ? 1 : 0) + from / 360) * 360 + which * degrees + degrees / 2;
                 this.rotation = to;
                 rotateTo(to);
             };
@@ -106,6 +106,11 @@
             equal(rotary.rotation, 30);
             rotary.draw(1);
             equal(rotary.rotation, 90);
+        });
+        test('redraw', function () {
+            rotary.draw(0);
+            rotary.draw(0);
+            equal(rotary.rotation, 360 + 30);
         });
         test('accumulate rotation', function () {
             rotary.draw(1);
