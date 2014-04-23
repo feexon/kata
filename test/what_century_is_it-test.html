@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *  Return the inputted numerical year in century format. For example 2014, would return 21st.
+
+         The input will always be a 4 digit string. So there is no need for year string validation
+
+         Examples:
+         --Input: 1999 Output: 20th
+         --Input: 1124 Output: 12th
+         --Input: 2000 Output: 20th
+
+         --Input: 2011 Output: 21st
+         --Input: 2154 Output: 22nd
+         --Input: 2259 Output: 23rd
+
+         */
+        function whatCentury(a) {
+            var century = Math.ceil(+a / 100);
+            var nths = ['th', 'st', 'nd', 'rd'];
+            return century + ((century / 10 | 0) != 1 && nths[century % 10] || nths[0]);
+        }
+    </script>
+    <script type="text/javascript">
+        module("What century is it?");
+        test('century', function () {
+            equal(whatCentury('2000'), '20th');
+            equal(whatCentury('1999'), '20th');
+        });
+        test('nths', function () {
+            equal(whatCentury('2011'), '21st');
+            equal(whatCentury('2154'), '22nd');
+            equal(whatCentury('2259'), '23rd');
+            equal(whatCentury('1900'), '19th');
+        });
+        test('nths of century 1x', function () {
+            equal(whatCentury('1024'), '11th');
+            equal(whatCentury('1124'), '12th');
+            equal(whatCentury('1224'), '13th');
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
