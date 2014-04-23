@@ -19,8 +19,7 @@
             random: function () {
                 return Math.ceil(Math.random() * 2);
             }
-        };
-        var supports = ['', '-o-', '-webkit-', '-moz-'];
+        }, supports = ['', '-o-', '-webkit-', '-moz-'];
 
         function Rotary(config) {
             config = $.extend(defaults, config);
@@ -32,13 +31,8 @@
                 });
             }
 
-            css('transition', config.duration / 1000 + 's ease');
-            var degrees = 360 / config.pieces;
-            var last = null;
 
-            this.rotation = 0;
-            var thread = null;
-            var ticket = 0;
+            var thread, last, ticket = 0, degrees = 360 / config.pieces, self = this;
 
             function rotateTo(to, reset) {
                 var token = ++ticket;
@@ -51,33 +45,37 @@
 
             }
 
-            this.draw = function (which) {
-                var from = this.rotation;
+
+            self.draw = function (which) {
+                var from = self.rotation;
                 var diff = last === null ? 1 : which - last;
                 last = which;
                 var to = 360 * config.random() + Math.floor((diff <= 0 ? 1 : 0) + from / 360) * 360 + which * degrees + degrees / 2;
-                this.rotation = to;
+                self.rotation = to;
                 rotateTo(to);
             };
-            this.reset = function () {
+            self.reset = function () {
                 last = null;
-                this.rotation = 0;
+                self.rotation = 0;
                 rotateTo(0, true);
+                css('transition', config.duration / 1000 + 's ease');
             };
+            self.reset();
         }
 
         $.fn.rotary = function (config) {
             var key = 'rotary';
-            if (!this.data(key)) {
+            var self = this;
+            if (!self.data(key)) {
                 if (config.pieces === undefined) {
                     throw 'pieces was required!';
                 }
                 if (config.pieces <= 0) {
                     throw 'pieces must in (0,]!';
                 }
-                this.data(key, new Rotary($.extend(config, {target: this})));
+                self.data(key, new Rotary($.extend(config, {target: self})));
             }
-            return this.data(key);
+            return self.data(key);
         }
     })(jQuery);
 
