@@ -12,20 +12,15 @@
          *
          */
         function SubstitutionCipher(from, to) {
-            function transform(str, source, target) {
-                return str.split('').map(function (letter) {
-                    return target[source.indexOf(letter)];
-                }).join('');
+            function transformer(source, target) {
+                return function (str) {
+                    return str.split('').map(function (letter) {
+                        return target[source.indexOf(letter)];
+                    }).join('');
+                }
             }
-
-            this.encode = function (str) {
-                return transform(str, from, to);
-            };
-
-            this.decode = function (str) {
-                return transform(str, to, from);
-            };
-
+            this.encode = transformer(from, to);
+            this.decode = transformer(to, from);
         }
     </script>
     <script type="text/javascript">
