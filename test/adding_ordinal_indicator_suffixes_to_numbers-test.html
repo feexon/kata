@@ -11,9 +11,20 @@
         /**
          *
          */
+        function numberToOrdinal(n) {
+            var nths = ['', 'st', 'nd', 'rd'];
+
+            return n + (nths[n] || 'th');
+        }
     </script>
     <script type="text/javascript">
-
+        module('Adding ordinal indicator suffixes to numbers');
+        test('digit', function () {
+            equal(numberToOrdinal(1), '1st');
+            equal(numberToOrdinal(2), '2nd');
+            equal(numberToOrdinal(3), '3rd');
+            equal(numberToOrdinal(4), '4th');
+        });
     </script>
 </head>
 <body>
