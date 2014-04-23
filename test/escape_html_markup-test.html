@@ -11,14 +11,18 @@
         /**
          *
          */
-        function escapeHTML(html){
-            return html;
+        function escapeHTML(html) {
+            return html.replace(/</g,'&lt;');
         }
     </script>
     <script type="text/javascript">
         module('Escape html markup');
         test('plain text only', function () {
-           equal(escapeHTML('content'),'content');
+            equal(escapeHTML('content'), 'content');
+        });
+        test('replace all < with &lt;', function () {
+            equal(escapeHTML('1<2'), '1&lt;2');
+            equal(escapeHTML('1<<2'), '1&lt;&lt;2');
         });
     </script>
 </head>
