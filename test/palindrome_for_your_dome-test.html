@@ -11,8 +11,17 @@
         /**
          *
          */
+        function palindrome(string){
+            return string==string.split('').reverse().join('');
+        }
     </script>
     <script type="text/javascript">
+        module('Palindrome for your Dome');
+        test('Palindrome', function () {
+            ok(palindrome('NaN'));
+            ok(!palindrome('man'));
+        });
+
 
     </script>
 </head>
