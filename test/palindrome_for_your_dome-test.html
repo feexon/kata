@@ -12,13 +12,9 @@
          *
          */
         function palindrome(string) {
-            var sanitized=string.toLowerCase().replace(/[^a-z]/g,'').split('');
-            while (sanitized.length>1) {
-                if (sanitized.pop() != sanitized.shift()) {
-                    return false;
-                }
-            }
-            return true;
+            return string.toLowerCase().replace(/[^a-z]/g, '').split('').every(function (letter, pos, sanitized) {
+                return letter === sanitized[sanitized.length - pos - 1];
+            });
         }
     </script>
     <script type="text/javascript">
