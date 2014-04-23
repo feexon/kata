@@ -12,7 +12,7 @@
          *
          */
         function palindrome(string){
-            return string==string.split('').reverse().join('');
+            return string.toLowerCase()==string.toLowerCase().split('').reverse().join('');
         }
     </script>
     <script type="text/javascript">
@@ -20,6 +20,9 @@
         test('Palindrome', function () {
             ok(palindrome('NaN'));
             ok(!palindrome('man'));
+        });
+        test('case insensitive', function () {
+            ok(palindrome('Nan'));
         });
 
 
