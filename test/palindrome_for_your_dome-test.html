@@ -11,8 +11,9 @@
         /**
          *
          */
-        function palindrome(string){
-            return string.toLowerCase()==string.toLowerCase().split('').reverse().join('');
+        function palindrome(string) {
+            var thin=string.replace(/[^a-zA-Z]/g,'');
+            return thin.toLowerCase() == thin.toLowerCase().split('').reverse().join('');
         }
     </script>
     <script type="text/javascript">
@@ -23,6 +24,11 @@
         });
         test('case insensitive', function () {
             ok(palindrome('Nan'));
+        });
+
+        test('disregards non alphanumeric characters.', function () {
+            ok(palindrome('Amore, Roma'));
+            ok(!palindrome("Abba Zabba, you're my only friend"));
         });
 
 
