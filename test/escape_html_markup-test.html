@@ -12,7 +12,14 @@
          *
          */
         function escapeHTML(html) {
-            return html.replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/,'&quot;');
+            var entities = {
+                '<': 'lt',
+                '>': 'gt',
+                '"': 'quot'
+            };
+            return html.split('').map(function(item){
+                return entities[item]?'&'+entities[item]+';':item;
+            }).join('');
         }
     </script>
     <script type="text/javascript">
@@ -31,8 +38,8 @@
         test('escape tag', function () {
             equal(escapeHTML('<p>Lorem ipsum dolor sit amet.</p>'), '&lt;p&gt;Lorem ipsum dolor sit amet.&lt;/p&gt;');
         });
-        test('escape double quot',function(){
-           equal(escapeHTML('"'),"&quot;");
+        test('escape double quot', function () {
+            equal(escapeHTML('"'), "&quot;");
         });
 
     </script>
