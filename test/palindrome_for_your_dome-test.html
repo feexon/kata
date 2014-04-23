@@ -12,15 +12,24 @@
          *
          */
         function palindrome(string) {
-            var thin=string.replace(/[^a-zA-Z]/g,'');
-            return thin.toLowerCase() == thin.toLowerCase().split('').reverse().join('');
+            var thin=string.toLowerCase().replace(/[^a-z]/g,'');
+            for (var i = Math.floor(thin.length / 2); --i >= 0;) {
+                if (thin[i] != thin[thin.length - 1 - i]) {
+                    return false;
+                }
+            }
+            return true;
         }
     </script>
     <script type="text/javascript">
         module('Palindrome for your Dome');
         test('Palindrome', function () {
-            ok(palindrome('NaN'));
-            ok(!palindrome('man'));
+            ok(palindrome('A'));
+            ok(palindrome('AA'));
+            ok(!palindrome('AB'));
+            ok(palindrome('AAAA'));
+            ok(!palindrome('AABA'));
+
         });
         test('case insensitive', function () {
             ok(palindrome('Nan'));
