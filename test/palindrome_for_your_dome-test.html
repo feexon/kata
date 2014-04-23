@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function palindrome(string) {
+            return string.toLowerCase().replace(/[^a-z]/g, '').split('').every(function (letter, pos, sanitized) {
+                return letter === sanitized[sanitized.length - pos - 1];
+            });
+        }
+    </script>
+    <script type="text/javascript">
+        module('Palindrome for your Dome');
+        test('Palindrome', function () {
+            ok(palindrome('A'));
+            ok(palindrome('AA'));
+            ok(!palindrome('AB'));
+            ok(palindrome('AAAA'));
+            ok(!palindrome('AABA'));
+
+        });
+        test('case insensitive', function () {
+            ok(palindrome('Nan'));
+        });
+
+        test('disregards non alphanumeric characters.', function () {
+            ok(palindrome('Amore, Roma'));
+            ok(!palindrome("Abba Zabba, you're my only friend"));
+        });
+
+
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
