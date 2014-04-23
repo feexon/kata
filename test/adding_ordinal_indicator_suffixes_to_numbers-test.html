@@ -14,7 +14,7 @@
         function numberToOrdinal(n) {
             var nths = ['', 'st', 'nd', 'rd'];
 
-            return n + (Math.floor(n / 10) != 1 && nths[n % 10] || 'th');
+            return n + (Math.floor(n % 100 / 10) != 1 && nths[n % 10] || 'th');
         }
     </script>
     <script type="text/javascript">
@@ -35,6 +35,10 @@
             equal(numberToOrdinal(11), '11th');
             equal(numberToOrdinal(12), '12th');
             equal(numberToOrdinal(13), '13th');
+        });
+        test('teen of long number', function () {
+            equal(numberToOrdinal(1111), '1111th');
+            equal(numberToOrdinal(5555512), '5555512th');
         });
     </script>
 </head>
