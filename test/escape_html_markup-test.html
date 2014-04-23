@@ -12,7 +12,7 @@
          *
          */
         function escapeHTML(html) {
-            return html.replace(/</g,'&lt;');
+            return html.replace(/</g,'&lt;').replace(/>/g,'&gt;');
         }
     </script>
     <script type="text/javascript">
@@ -23,6 +23,10 @@
         test('replace all < with &lt;', function () {
             equal(escapeHTML('1<2'), '1&lt;2');
             equal(escapeHTML('1<<2'), '1&lt;&lt;2');
+        });
+        test('replace all > with &gt;', function () {
+            equal(escapeHTML('1>2'), '1&gt;2');
+            equal(escapeHTML('1>>2'), '1&gt;&gt;2');
         });
     </script>
 </head>
