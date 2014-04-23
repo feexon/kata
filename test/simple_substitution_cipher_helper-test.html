@@ -12,16 +12,18 @@
          *
          */
         function SubstitutionCipher(from, to) {
-            this.encode = function (str) {
+            function transform(str, source, target) {
                 return str.split('').map(function (letter) {
-                    return to[from.indexOf(letter)];
+                    return target[source.indexOf(letter)];
                 }).join('');
+            }
+
+            this.encode = function (str) {
+                return transform(str, from, to);
             };
 
             this.decode = function (str) {
-                return str.split('').map(function (letter) {
-                    return from[to.indexOf(letter)];
-                }).join('');
+                return transform(str, to, from);
             };
 
         }
@@ -29,14 +31,13 @@
     <script type="text/javascript">
         var abc1 = "abcdefghijklmnopqrstuvwxyz";
         var abc2 = "etaoinshrdlucmfwypvbgkjqxz";
+        var cipher = new SubstitutionCipher(abc1, abc2);
         module('Simple Substitution Cipher Helper');
         test('encode', function () {
-            var cipher = new SubstitutionCipher(abc1, abc2);
             equal(cipher.encode('a'), 'e');
             equal(cipher.encode('abc'), 'eta');
         });
         test('decode', function () {
-            var cipher = new SubstitutionCipher(abc1, abc2);
             equal(cipher.decode('e'), 'a');
             equal(cipher.decode('eta'), 'abc');
         });
