@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function escapeHTML(html) {
+            var entities = {
+                '<': 'lt',
+                '>': 'gt',
+                '"': 'quot'
+            };
+            return html.split('').map(function(item){
+                return entities[item]?'&'+entities[item]+';':item;
+            }).join('');
+        }
+    </script>
+    <script type="text/javascript">
+        module('Escape html markup');
+        test('plain text only', function () {
+            equal(escapeHTML('content'), 'content');
+        });
+        test('replace all < with &lt;', function () {
+            equal(escapeHTML('1<2'), '1&lt;2');
+            equal(escapeHTML('1<<2'), '1&lt;&lt;2');
+        });
+        test('replace all > with &gt;', function () {
+            equal(escapeHTML('1>2'), '1&gt;2');
+            equal(escapeHTML('1>>2'), '1&gt;&gt;2');
+        });
+        test('escape tag', function () {
+            equal(escapeHTML('<p>Lorem ipsum dolor sit amet.</p>'), '&lt;p&gt;Lorem ipsum dolor sit amet.&lt;/p&gt;');
+        });
+        test('escape double quot', function () {
+            equal(escapeHTML('"'), "&quot;");
+        });
+
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
