@@ -16,7 +16,14 @@
                 return str.split('').map(function (letter) {
                     return to[from.indexOf(letter)];
                 }).join('');
-            }
+            };
+
+            this.decode = function (str) {
+                return str.split('').map(function (letter) {
+                    return from[to.indexOf(letter)];
+                }).join('');
+            };
+
         }
     </script>
     <script type="text/javascript">
@@ -27,6 +34,11 @@
             var cipher = new SubstitutionCipher(abc1, abc2);
             equal(cipher.encode('a'), 'e');
             equal(cipher.encode('abc'), 'eta');
+        });
+        test('decode', function () {
+            var cipher = new SubstitutionCipher(abc1, abc2);
+            equal(cipher.decode('e'), 'a');
+            equal(cipher.decode('eta'), 'abc');
         });
 
     </script>
