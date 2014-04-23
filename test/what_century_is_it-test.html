@@ -24,7 +24,9 @@
 
          */
         function whatCentury(a) {
-            return Math.ceil(+a/100)+'th';
+            var century = Math.ceil(+a / 100);
+            var nths = ['th', 'st', 'nd', 'rd'];
+            return century +( nths[century % 10] || nths[0]);
         }
     </script>
     <script type="text/javascript">
@@ -32,6 +34,12 @@
         test('century', function () {
             equal(whatCentury('2000'), '20th');
             equal(whatCentury('1999'), '20th');
+        });
+        test('nths', function () {
+            equal(whatCentury('2011'), '21st');
+            equal(whatCentury('2154'), '22nd');
+            equal(whatCentury('2259'), '23rd');
+            equal(whatCentury('1900'), '19th');
         });
     </script>
 </head>
