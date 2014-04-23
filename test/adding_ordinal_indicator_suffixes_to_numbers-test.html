@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function numberToOrdinal(n) {
+            var nths = ['', 'st', 'nd', 'rd'];
+            return !n ? '0' : (n + (Math.floor(n % 100 / 10) != 1 && nths[n % 10] || 'th'));
+        }
+    </script>
+    <script type="text/javascript">
+        module('Adding ordinal indicator suffixes to numbers');
+        test('digit', function () {
+            equal(numberToOrdinal(1), '1st');
+            equal(numberToOrdinal(2), '2nd');
+            equal(numberToOrdinal(3), '3rd');
+            equal(numberToOrdinal(4), '4th');
+        });
+        test('larger than 10', function () {
+            equal(numberToOrdinal(90), '90th');
+            equal(numberToOrdinal(91), '91st');
+            equal(numberToOrdinal(92), '92nd');
+            equal(numberToOrdinal(93), '93rd');
+        });
+        test('teen', function () {
+            equal(numberToOrdinal(11), '11th');
+            equal(numberToOrdinal(12), '12th');
+            equal(numberToOrdinal(13), '13th');
+        });
+        test('teen of long number', function () {
+            equal(numberToOrdinal(1111), '1111th');
+            equal(numberToOrdinal(5555512), '5555512th');
+        });
+        test('zero', function () {
+            strictEqual(numberToOrdinal(0), '0');
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
