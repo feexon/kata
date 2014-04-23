@@ -28,6 +28,9 @@
             equal(escapeHTML('1>2'), '1&gt;2');
             equal(escapeHTML('1>>2'), '1&gt;&gt;2');
         });
+        test('escape tag', function () {
+            equal(escapeHTML('<p>Lorem ipsum dolor sit amet.</p>'), '&lt;p&gt;Lorem ipsum dolor sit amet.&lt;/p&gt;');
+        });
     </script>
 </head>
 <body>
