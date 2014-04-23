@@ -11,9 +11,15 @@
         /**
          *
          */
+        function escapeHTML(html){
+            return html;
+        }
     </script>
     <script type="text/javascript">
-
+        module('Escape html markup');
+        test('plain text only', function () {
+           equal(escapeHTML('content'),'content');
+        });
     </script>
 </head>
 <body>
