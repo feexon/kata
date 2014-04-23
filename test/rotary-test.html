@@ -87,14 +87,10 @@
             return 0;
         }};
         var rotary;
-        var which;
+
         module("Rotary", {
             setup: function () {
                 target.removeData('rotary').unbind('draw');
-                which = undefined;
-                target.on('draw', function (event, data) {
-                    which = [data].join('');
-                });
                 rotary = target.rotary(config);
             }
         });
@@ -177,11 +173,16 @@
 
         asyncTest('should trigger draw event after draw', function (assert) {
             expect(1);
+            var which;
 
             rotary.draw(3);
 
             assert.timeout(1000, function () {
                 if (which === undefined) {
+                    target.on('draw', function (event, data) {
+                        which = [data].join('');
+                    });
+
                     return;
                 }
                 equal(which, 3);
@@ -193,12 +194,17 @@
 
         asyncTest('trigger draw event once in last in sequence draw', function (assert) {
             expect(1);
+            var which;
+
 
             rotary.draw(1);
             rotary.draw(5);
 
             assert.timeout(1000, function () {
                 if (which === undefined) {
+                    target.on('draw', function (event, data) {
+                        which = [data].join('');
+                    });
                     return;
                 }
                 equal(which, 5);
@@ -220,6 +226,7 @@
         });
         asyncTest('reset will not trigger draw event', function (assert) {
             expect(1);
+            var which;
 
             rotary.draw(1);
             rotary.reset();
@@ -231,6 +238,10 @@
                     return;
                 }
                 if (which === undefined) {
+                    target.on('draw', function (event, data) {
+                        which = [data].join('');
+                    });
+
                     return;
                 }
                 ok(false, 'triggered');
