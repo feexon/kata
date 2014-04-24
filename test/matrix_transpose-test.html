@@ -21,12 +21,11 @@
             if(!matrix.length||!matrix[0].length){
                 return [[]];
             }
-            return matrix[0].reduce(function (ret, _, index) {
-                ret.push(matrix.map(function (item) {
-                    return item[index];
-                }));
-                return ret;
-            }, []);
+            return matrix[0].map(function (_, col) {
+                return matrix.map(function (item) {
+                    return item[col];
+                });
+            });
         }
     </script>
     <script type="text/javascript">
