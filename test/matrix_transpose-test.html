@@ -9,11 +9,26 @@
     <script type="text/javascript" src="../libs/qunit-extras.js"></script>
     <script type="text/javascript">
         /**
-         *
+         | 1 2 3 |
+         | 4 5 6 |
+         is
+
+         | 1 4 |
+         | 2 5 |
+         | 3 6 |
          */
+        function transpose(matrix){
+            return matrix[0].map(function(item){
+                return [item];
+            });
+        }
     </script>
     <script type="text/javascript">
-
+        module('Matrix Transpose');
+        test('1 row',function(){
+            deepEqual(transpose([[3]]),[[3]]);
+            deepEqual(transpose([[3,4]]),[[3],[4]]);
+        });
     </script>
 </head>
 <body>
