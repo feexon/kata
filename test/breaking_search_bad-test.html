@@ -11,15 +11,26 @@
         /**
          *
          */
-        function search(item){
+        function search(item) {
+            if (titles.length) {
+                return titles.filter(function (candidate) {
+                    return candidate.search(item)!=-1;
+                });
+            }
             return [];
         }
     </script>
     <script type="text/javascript">
         module('Breaking search bad');
-        test('empty title',function(){
-            title=[];
-            deepEqual(search('anything'),[]);
+        test('empty title', function () {
+            titles = [];
+            deepEqual(search('anything'), []);
+        });
+
+        test('search', function () {
+            titles = ['codewars', 'iteye'];
+            deepEqual(search('codewars'), ['codewars']);
+            deepEqual(search('it'), ['iteye']);
         });
     </script>
 </head>
