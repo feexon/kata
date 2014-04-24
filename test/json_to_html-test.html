@@ -28,9 +28,8 @@
                 var attrs = Object.keys(json.attributes || {}).map(function (name) {
                     return [' ' + name, '"' + json.attributes[name] + '"'].join('=');
                 });
-                return '<' + json.tag + attrs.join('') + '>' +
-                        (typeof json.content == 'string' ? json.content : jsonToHtml(json.content || []) ) +
-                        '</' + json.tag + '>';
+                var content = typeof json.content == 'string' ? json.content : jsonToHtml(json.content || []) ;
+                return json.tag?'<' + json.tag + attrs.join('') + '>' + content + '</' + json.tag + '>' : content;
             }).join('');
         }
     </script>
@@ -75,6 +74,9 @@
                 }
             ];
             equal(jsonToHtml(json), '<div id="myID"><p class="myClass">Text content</p></div>');
+        });
+        test('empty tag name',function(){
+           equal(jsonToHtml([{tag:'',content:'text'}]),'text');
         });
     </script>
 </head>
