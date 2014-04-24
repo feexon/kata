@@ -18,7 +18,7 @@
             }
         }
         function HumanSkin(model) {
-            Cylon.call(this, model);
+            this.__proto__ = new Cylon(model);
             this.infiltrate = function () {
                 return "Infiltrate the colonies";
             };
@@ -36,6 +36,9 @@
             equal(cylon.model, 'raider');
             equal(cylon.attack(), 'Destroy all humans!');
             equal(cylon.infiltrate(), "Infiltrate the colonies");
+        });
+        test('Let HumanSkin extends Cylon explicitly', function () {
+            ok(new HumanSkin('raider') instanceof Cylon);
         });
     </script>
 </head>
