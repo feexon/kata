@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function Cylon(model) {
+            this.model = model;
+            this.attack = function () {
+                return "Destroy all humans!";
+            }
+        }
+        function HumanSkin(model) {
+            Cylon.call(this, model);
+            this.infiltrate = function () {
+                return "Infiltrate the colonies";
+            };
+        }
+        HumanSkin.prototype = new Cylon;
+    </script>
+    <script type="text/javascript">
+        module('Cylon Evolution');
+        test('creation', function () {
+            var cylon = new Cylon('raider');
+            equal(cylon.model, 'raider');
+            equal(cylon.attack(), 'Destroy all humans!');
+        });
+        test('HumanSkin creation', function () {
+            var cylon = new HumanSkin('raider');
+            equal(cylon.model, 'raider');
+            equal(cylon.attack(), 'Destroy all humans!');
+            equal(cylon.infiltrate(), "Infiltrate the colonies");
+        });
+        test('Let HumanSkin extends Cylon explicitly', function () {
+            ok(new HumanSkin('raider') instanceof Cylon);
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
