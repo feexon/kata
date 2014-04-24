@@ -13,6 +13,9 @@
          * equal(insert_at_indexes('I like codewars! It makes me happy.', " really", [1, 28]), 'I really like codewars! It makes me really happy.');
          */
         function insert_at_indexes(phrase, word, indexes) {
+            if(indexes.length){
+                phrase=phrase.slice(0,indexes[0])+word+phrase.slice(indexes[0]);
+            }
             return phrase;
         }
 
@@ -22,6 +25,11 @@
         module("Insert multiple strings into another string");
         test('insert with empty indexes', function () {
             equal(insert_at_indexes('I like codewars! It makes me happy.', " really", []), 'I like codewars! It makes me happy.');
+        });
+        test('insert once', function () {
+            equal(insert_at_indexes('I like codewars! It makes me happy.', "Hoo!", [0]), 'Hoo!I like codewars! It makes me happy.');
+            equal(insert_at_indexes('I like codewars! It makes me happy.', "Hoo!", [35]), 'I like codewars! It makes me happy.Hoo!');
+            equal(insert_at_indexes('I like codewars! It makes me happy.', " really", [1]), 'I really like codewars! It makes me happy.');
         });
 
 
