@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         var json = [{
+             'tag' : 'div',
+             'attributes' : {'id' : 'myID'},
+             'content' : 'Text content'
+           },
+         {
+           'tag' : 'p',
+           'attributes' : {'class' : 'myClass'},
+           'content' : 'Text content'
+       }];
+         Must be equal to:
+
+         '<div id="myID">Text content</div><p class="myClass">Text content</p>';
+         */
+        function jsonToHtml(array) {
+            return array.map(function (json) {
+                json.attributes= Object.keys(json.attributes || {}).map(function (name) {
+                    return [' ' + name, '"' + json.attributes[name] + '"'].join('=');
+                }).join('');
+                json.content = typeof json.content == 'object' ? jsonToHtml(json.content || []) : json.content||'' ;
+                var template = '<{tag}{attributes}>{content}</{tag}>';
+                return !json.tag ? json.content : template.replace(/\{(\w+)\}/g, function (_, name) {
+                    return json[name];
+                });
+            }).join('');
+        }
+    </script>
+    <script type="text/javascript">
+        module('json to html');
+        test('empty tag', function () {
+            equal(jsonToHtml([{tag: 'div'}]), '<div></div>');
+        });
+        test('tag with content', function () {
+            equal(jsonToHtml([{tag: 'div', content: 'abc'}]), '<div>abc</div>');
+        });
+        test('tag with attributes', function () {
+            equal(jsonToHtml([{tag: 'div', 'attributes': {'id': 'myID'}}]), '<div id="myID"></div>');
+        });
+        test('mutli tags', function () {
+            var json = [
+                {
+                    'tag': 'div',
+                    'attributes': {'id': 'myID'},
+                    'content': 'Text content'
+                },
+                {
+                    'tag': 'p',
+                    'attributes': {'class': 'myClass'},
+                    'content': 'Text content'
+                }
+            ];
+            equal(jsonToHtml(json), '<div id="myID">Text content</div><p class="myClass">Text content</p>');
+        });
+        test('tag contains other tags', function () {
+            var json = [
+                {
+                    'tag': 'div',
+                    'attributes': {'id': 'myID'},
+                    'content': [
+                        {
+                            'tag': 'p',
+                            'attributes': {'class': 'myClass'},
+                            'content': 'Text content'
+                        }
+                    ]
+                }
+            ];
+            equal(jsonToHtml(json), '<div id="myID"><p class="myClass">Text content</p></div>');
+        });
+        test('empty tag name',function(){
+           equal(jsonToHtml([{tag:'',content:'text'}]),'text');
+        });
+        test('mixed tags', function () {
+            var json = [
+                {
+                    'tag': 'div',
+                    'attributes': {'id': 'MyID1'},
+                    'content': [
+                        {
+                            'tag': 'span',
+                            'attributes': {'id': 'spanID', 'class': 'myClassName'},
+                            'content': [
+                                {
+                                    'tag': 'a',
+                                    'attributes': {'href': 'http://www.foo.com', 'class': 'standard-link'},
+                                    'content': 'This is a text in a link!!'
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    'tag': 'div',
+                    'attributes': {'id': 'MyID2'},
+                    'content': [
+                        {
+                            'tag': 'strong',
+                            'attributes': {'style': 'color: #FFFFFF'},
+                            'content': [
+                                {
+                                    'tag': '',
+                                    'content': 'This is a text in a strong tag!!'
+                                },
+                                {
+                                    'tag': 'a',
+                                    'attributes': {'href': 'http://www.foo.com', 'class': 'standard-link'},
+                                    'content': 'This is a text in a link!!'
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ];
+            equal(jsonToHtml(json), '<div id="MyID1"><span id="spanID" class="myClassName"><a href="http://www.foo.com" class="standard-link">This is a text in a link!!</a></span></div><div id="MyID2"><strong style="color: #FFFFFF">This is a text in a strong tag!!<a href="http://www.foo.com" class="standard-link">This is a text in a link!!</a></strong></div>');
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
