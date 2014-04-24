@@ -34,6 +34,10 @@
             deepEqual(split('codewars', ['codewars'.length]), ['codewars', '']);
             deepEqual(split('codewars', [0, 'codewars'.length]), ['', 'codewars', '']);
         });
+        test('split', function () {
+            deepEqual(split('I like codewars! It makes me happy.', [1, 28]), ['I', ' like codewars! It makes me',' happy.']);
+
+        });
 
     </script>
 </head>
