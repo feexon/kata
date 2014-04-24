@@ -15,12 +15,9 @@
             return ['I', ' like codewars! It makes me', ' happy.'].join(' really');
         }
         function split(string, indexes) {
-            if (indexes.length) {
-                return indexes.map(function(index,pos){
-                    return string.substring(indexes[pos-1],index);
-                }).concat(string.substring(indexes[indexes.length-1]));
-            }
-            return [string];
+            return indexes.map(function (index, pos) {
+                return string.substring(indexes[pos - 1], index);
+            }).concat(string.substring(indexes[indexes.length - 1]));
         }
     </script>
 
@@ -35,7 +32,7 @@
         test('split justify', function () {
             deepEqual(split('codewars', [0]), ['', 'codewars']);
             deepEqual(split('codewars', ['codewars'.length]), ['codewars', '']);
-            deepEqual(split('codewars', [0, 'codewars'.length]), ['','codewars', '']);
+            deepEqual(split('codewars', [0, 'codewars'.length]), ['', 'codewars', '']);
         });
 
     </script>
