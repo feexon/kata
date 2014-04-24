@@ -11,9 +11,18 @@
         /**
          *
          */
+        Function.prototype.call = function (context) {
+            return this.apply(context, Array.prototype.slice.apply(arguments, [1]));
+        }
     </script>
     <script type="text/javascript">
-
+        module("Write javascript's \"call\" function using apply");
+        test('call', function () {
+            var callback = function (a, b) {
+                return a + b;
+            };
+            equal(callback.call(null, 1, 2), 3);
+        });
     </script>
 </head>
 <body>
