@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         var json = [{
+             'tag' : 'div',
+             'attributes' : {'id' : 'myID'},
+             'content' : 'Text content'
+           },
+         {
+           'tag' : 'p',
+           'attributes' : {'class' : 'myClass'},
+           'content' : 'Text content'
+       }];
+         Must be equal to:
+
+         '<div id="myID">Text content</div><p class="myClass">Text content</p>';
+         */
+        function jsonToHtml(json) {
+           return '<'+json.tag+'></'+json.tag+'>';
+        }
+    </script>
+    <script type="text/javascript">
+        module('json to html');
+        test('empty tag', function () {
+            equal(jsonToHtml({tag: 'div'}), '<div></div>');
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
