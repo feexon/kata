@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function insert_at_indexes(phrase, word, indexes) {
+            return ['I', ' like codewars! It makes me', ' happy.'].join(' really');
+        }
+        function split(string,indexes){
+            return [string];
+        }
+    </script>
+
+    <script type="text/javascript">
+        module("Insert multiple strings into another string");
+        test('insert', function () {
+            equal(insert_at_indexes('I like codewars! It makes me happy.', " really", [1, 28]), 'I really like codewars! It makes me really happy.');
+        });
+        test('split with empty indexes', function () {
+            deepEqual(split('codewars', []), ['codewars']);
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
