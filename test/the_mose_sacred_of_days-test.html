@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function blackFriday(year) {
+            return 'Black Friday was on Nov ' + dayOfBlackFriday(new Date(year, 10, 1).getDay()) + ' in ' + year + '!';
+        }
+        function dayOfBlackFriday(firstDay) {
+            return (5 - firstDay + 1) + 3 * 7 + (firstDay >= 5) * 7;
+        }
+    </script>
+    <script type="text/javascript">
+        module("The most sacred of days");
+        test('dayOfBlackFriday', function () {
+            equal(dayOfBlackFriday(5), 29);
+            equal(dayOfBlackFriday(4), 23);
+            equal(dayOfBlackFriday(2), 25);
+            equal(dayOfBlackFriday(6), 28);
+        });
+        test('black friday', function () {
+            equal(blackFriday(2013), 'Black Friday was on Nov 29 in 2013!');
+            equal(blackFriday(2012), 'Black Friday was on Nov 23 in 2012!');
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
