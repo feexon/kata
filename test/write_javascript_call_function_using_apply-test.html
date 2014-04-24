@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        Function.prototype.call = function (context) {
+            return this.apply(context, Array.prototype.slice.apply(arguments, [1]));
+        }
+    </script>
+    <script type="text/javascript">
+        module("Write javascript's \"call\" function using apply");
+        test('call', function () {
+            var callback = function (a, b) {
+                return a + b;
+            };
+            equal(callback.call(null, 1, 2), 3);
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
