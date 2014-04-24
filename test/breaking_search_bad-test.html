@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        var TITLES = ['Rocky 1', 'Rocky 2', 'My Little Poney'];
+        function search(item) {
+            return TITLES.filter(function (title) {
+                return title.toLowerCase().search(item.toLowerCase()) != -1;
+            });
+        }
+    </script>
+    <script type="text/javascript">
+        module('Breaking search bad');
+        test('empty title', function () {
+            TITLES = [];
+            deepEqual(search('anything'), []);
+        });
+
+        test('search', function () {
+            TITLES = ['codewars', 'iteye'];
+            deepEqual(search('codewars'), ['codewars']);
+            deepEqual(search('it'), ['iteye']);
+        });
+        test('case insensitive', function () {
+            TITLES = ['codewars', 'ITEYE'];
+            deepEqual(search('CODEWARS'), ['codewars']);
+            deepEqual(search('it'), ['ITEYE']);
+        });
+
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
