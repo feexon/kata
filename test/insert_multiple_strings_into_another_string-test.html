@@ -12,7 +12,7 @@
          *
          */
         function insert_at_indexes(phrase, word, indexes) {
-            return ['I', ' like codewars! It makes me', ' happy.'].join(' really');
+            return split(phrase, indexes).join(word);
         }
         function split(string, indexes) {
             return indexes.map(function (index, pos) {
@@ -25,6 +25,7 @@
         module("Insert multiple strings into another string");
         test('insert', function () {
             equal(insert_at_indexes('I like codewars! It makes me happy.', " really", [1, 28]), 'I really like codewars! It makes me really happy.');
+            equal(insert_at_indexes("I really like codewars! It makes me really happy.", "'d", [1, 26]), "I'd really like codewars! It'd makes me really happy.");
         });
         test('split with empty indexes', function () {
             deepEqual(split('codewars', []), ['codewars']);
@@ -35,8 +36,7 @@
             deepEqual(split('codewars', [0, 'codewars'.length]), ['', 'codewars', '']);
         });
         test('split', function () {
-            deepEqual(split('I like codewars! It makes me happy.', [1, 28]), ['I', ' like codewars! It makes me',' happy.']);
-
+            deepEqual(split('I like codewars! It makes me happy.', [1, 28]), ['I', ' like codewars! It makes me', ' happy.']);
         });
 
     </script>
