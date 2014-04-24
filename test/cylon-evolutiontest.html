@@ -11,9 +11,20 @@
         /**
          *
          */
+        function Cylon(model) {
+            this.model = model;
+            this.attack = function () {
+                return "Destory all humans!";
+            }
+        }
     </script>
     <script type="text/javascript">
-
+        module('Cylon Evolution');
+        test('creation', function () {
+            var cylon = new Cylon('raider');
+            equal(cylon.model, 'raider');
+            equal(cylon.attack(), 'Destory all humans!');
+        });
     </script>
 </head>
 <body>
