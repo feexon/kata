@@ -29,7 +29,7 @@
                     return [' ' + name, '"' + json.attributes[name] + '"'].join('=');
                 });
                 return '<' + json.tag + attrs.join('') + '>' +
-                        (json.content || '') +
+                        (typeof json.content == 'string' ? json.content : jsonToHtml(json.content || []) ) +
                         '</' + json.tag + '>';
             }).join('');
         }
@@ -37,19 +37,13 @@
     <script type="text/javascript">
         module('json to html');
         test('empty tag', function () {
-            equal(jsonToHtml([
-                {tag: 'div'}
-            ]), '<div></div>');
+            equal(jsonToHtml([{tag: 'div'}]), '<div></div>');
         });
         test('tag with content', function () {
-            equal(jsonToHtml([
-                {tag: 'div', content: 'abc'}
-            ]), '<div>abc</div>');
+            equal(jsonToHtml([{tag: 'div', content: 'abc'}]), '<div>abc</div>');
         });
         test('tag with attributes', function () {
-            equal(jsonToHtml([
-                {tag: 'div', 'attributes': {'id': 'myID'}}
-            ]), '<div id="myID"></div>');
+            equal(jsonToHtml([{tag: 'div', 'attributes': {'id': 'myID'}}]), '<div id="myID"></div>');
         });
         test('mutli tags', function () {
             var json = [
@@ -65,6 +59,22 @@
                 }
             ];
             equal(jsonToHtml(json), '<div id="myID">Text content</div><p class="myClass">Text content</p>');
+        });
+        test('tag contains other tags', function () {
+            var json = [
+                {
+                    'tag': 'div',
+                    'attributes': {'id': 'myID'},
+                    'content': [
+                        {
+                            'tag': 'p',
+                            'attributes': {'class': 'myClass'},
+                            'content': 'Text content'
+                        }
+                    ]
+                }
+            ];
+            equal(jsonToHtml(json), '<div id="myID"><p class="myClass">Text content</p></div>');
         });
     </script>
 </head>
