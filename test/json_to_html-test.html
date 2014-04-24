@@ -78,6 +78,49 @@
         test('empty tag name',function(){
            equal(jsonToHtml([{tag:'',content:'text'}]),'text');
         });
+        test('mixed tags', function () {
+            var json = [
+                {
+                    'tag': 'div',
+                    'attributes': {'id': 'MyID1'},
+                    'content': [
+                        {
+                            'tag': 'span',
+                            'attributes': {'id': 'spanID', 'class': 'myClassName'},
+                            'content': [
+                                {
+                                    'tag': 'a',
+                                    'attributes': {'href': 'http://www.foo.com', 'class': 'standard-link'},
+                                    'content': 'This is a text in a link!!'
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    'tag': 'div',
+                    'attributes': {'id': 'MyID2'},
+                    'content': [
+                        {
+                            'tag': 'strong',
+                            'attributes': {'style': 'color: #FFFFFF'},
+                            'content': [
+                                {
+                                    'tag': '',
+                                    'content': 'This is a text in a strong tag!!'
+                                },
+                                {
+                                    'tag': 'a',
+                                    'attributes': {'href': 'http://www.foo.com', 'class': 'standard-link'},
+                                    'content': 'This is a text in a link!!'
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ];
+            equal(jsonToHtml(json), '<div id="MyID1"><span id="spanID" class="myClassName"><a href="http://www.foo.com" class="standard-link">This is a text in a link!!</a></span></div><div id="MyID2"><strong style="color: #FFFFFF">This is a text in a strong tag!!<a href="http://www.foo.com" class="standard-link">This is a text in a link!!</a></strong></div>');
+        });
     </script>
 </head>
 <body>
