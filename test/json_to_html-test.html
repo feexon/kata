@@ -24,7 +24,10 @@
          '<div id="myID">Text content</div><p class="myClass">Text content</p>';
          */
         function jsonToHtml(json) {
-            return '<' + json.tag + '>'+(json.content||'')+'</' + json.tag + '>';
+            var attrs = Object.keys(json.attributes || {}).map(function (name) {
+                return [' ' + name, '"' + json.attributes[name] + '"'].join('=');
+            });
+            return '<' + json.tag + attrs.join('') + '>' + (json.content || '') + '</' + json.tag + '>';
         }
     </script>
     <script type="text/javascript">
@@ -33,7 +36,10 @@
             equal(jsonToHtml({tag: 'div'}), '<div></div>');
         });
         test('tag with content', function () {
-            equal(jsonToHtml({tag: 'div',content:'abc'}), '<div>abc</div>');
+            equal(jsonToHtml({tag: 'div', content: 'abc'}), '<div>abc</div>');
+        });
+        test('tag with attributes', function () {
+            equal(jsonToHtml({tag: 'div', 'attributes': {'id': 'myID'}}), '<div id="myID"></div>');
         });
     </script>
 </head>
