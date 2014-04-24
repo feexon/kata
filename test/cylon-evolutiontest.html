@@ -17,6 +17,15 @@
                 return "Destory all humans!";
             }
         }
+        function HumanSkin(model) {
+            this.model = model;
+            this.attack = function () {
+                return "Destory all humans!";
+            };
+            this.infiltrate = function () {
+                return "Infiltrate the colonies";
+            };
+        }
     </script>
     <script type="text/javascript">
         module('Cylon Evolution');
@@ -24,6 +33,12 @@
             var cylon = new Cylon('raider');
             equal(cylon.model, 'raider');
             equal(cylon.attack(), 'Destory all humans!');
+        });
+        test('HumanSkin creation', function () {
+            var cylon = new HumanSkin('raider');
+            equal(cylon.model, 'raider');
+            equal(cylon.attack(), 'Destory all humans!');
+            equal(cylon.infiltrate(), "Infiltrate the colonies");
         });
     </script>
 </head>
