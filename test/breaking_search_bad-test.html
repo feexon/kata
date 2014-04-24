@@ -11,9 +11,16 @@
         /**
          *
          */
+        function search(item){
+            return [];
+        }
     </script>
     <script type="text/javascript">
-
+        module('Breaking search bad');
+        test('empty title',function(){
+            title=[];
+            deepEqual(search('anything'),[]);
+        });
     </script>
 </head>
 <body>
