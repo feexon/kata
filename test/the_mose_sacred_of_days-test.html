@@ -11,9 +11,19 @@
         /**
          *
          */
+        function dayOfBlackFriday(firstDay) {
+
+            return (5 - firstDay + 1) + (3+(firstDay>=5)) * 7;
+        }
     </script>
     <script type="text/javascript">
-
+        module("The most sacred of days");
+        test('dayOfBlackFriday', function () {
+            equal(dayOfBlackFriday(5), 29);
+            equal(dayOfBlackFriday(4), 23);
+            equal(dayOfBlackFriday(2), 25);
+            equal(dayOfBlackFriday(6), 28);
+        })
     </script>
 </head>
 <body>
