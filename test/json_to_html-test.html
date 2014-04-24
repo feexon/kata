@@ -24,13 +24,16 @@
          '<div id="myID">Text content</div><p class="myClass">Text content</p>';
          */
         function jsonToHtml(json) {
-           return '<'+json.tag+'></'+json.tag+'>';
+            return '<' + json.tag + '>'+(json.content||'')+'</' + json.tag + '>';
         }
     </script>
     <script type="text/javascript">
         module('json to html');
         test('empty tag', function () {
             equal(jsonToHtml({tag: 'div'}), '<div></div>');
+        });
+        test('tag with content', function () {
+            equal(jsonToHtml({tag: 'div',content:'abc'}), '<div>abc</div>');
         });
     </script>
 </head>
