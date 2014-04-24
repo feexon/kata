@@ -14,7 +14,7 @@
         function Cylon(model) {
             this.model = model;
             this.attack = function () {
-                return "Destory all humans!";
+                return "Destroy all humans!";
             }
         }
         function HumanSkin(model) {
@@ -29,12 +29,12 @@
         test('creation', function () {
             var cylon = new Cylon('raider');
             equal(cylon.model, 'raider');
-            equal(cylon.attack(), 'Destory all humans!');
+            equal(cylon.attack(), 'Destroy all humans!');
         });
         test('HumanSkin creation', function () {
             var cylon = new HumanSkin('raider');
             equal(cylon.model, 'raider');
-            equal(cylon.attack(), 'Destory all humans!');
+            equal(cylon.attack(), 'Destroy all humans!');
             equal(cylon.infiltrate(), "Infiltrate the colonies");
         });
     </script>
