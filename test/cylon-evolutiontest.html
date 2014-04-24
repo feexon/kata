@@ -18,11 +18,12 @@
             }
         }
         function HumanSkin(model) {
-            this.__proto__ = new Cylon(model);
+            Cylon.call(this, model);
             this.infiltrate = function () {
                 return "Infiltrate the colonies";
             };
         }
+        HumanSkin.prototype = new Cylon;
     </script>
     <script type="text/javascript">
         module('Cylon Evolution');
