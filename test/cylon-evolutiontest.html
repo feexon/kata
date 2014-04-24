@@ -18,10 +18,7 @@
             }
         }
         function HumanSkin(model) {
-            this.model = model;
-            this.attack = function () {
-                return "Destory all humans!";
-            };
+            Cylon.call(this, model);
             this.infiltrate = function () {
                 return "Infiltrate the colonies";
             };
