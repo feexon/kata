@@ -23,23 +23,48 @@
 
          '<div id="myID">Text content</div><p class="myClass">Text content</p>';
          */
-        function jsonToHtml(json) {
-            var attrs = Object.keys(json.attributes || {}).map(function (name) {
-                return [' ' + name, '"' + json.attributes[name] + '"'].join('=');
-            });
-            return '<' + json.tag + attrs.join('') + '>' + (json.content || '') + '</' + json.tag + '>';
+        function jsonToHtml(array) {
+            return array.map(function (json) {
+                var attrs = Object.keys(json.attributes || {}).map(function (name) {
+                    return [' ' + name, '"' + json.attributes[name] + '"'].join('=');
+                });
+                return '<' + json.tag + attrs.join('') + '>' +
+                        (json.content || '') +
+                        '</' + json.tag + '>';
+            }).join('');
         }
     </script>
     <script type="text/javascript">
         module('json to html');
         test('empty tag', function () {
-            equal(jsonToHtml({tag: 'div'}), '<div></div>');
+            equal(jsonToHtml([
+                {tag: 'div'}
+            ]), '<div></div>');
         });
         test('tag with content', function () {
-            equal(jsonToHtml({tag: 'div', content: 'abc'}), '<div>abc</div>');
+            equal(jsonToHtml([
+                {tag: 'div', content: 'abc'}
+            ]), '<div>abc</div>');
         });
         test('tag with attributes', function () {
-            equal(jsonToHtml({tag: 'div', 'attributes': {'id': 'myID'}}), '<div id="myID"></div>');
+            equal(jsonToHtml([
+                {tag: 'div', 'attributes': {'id': 'myID'}}
+            ]), '<div id="myID"></div>');
+        });
+        test('mutli tags', function () {
+            var json = [
+                {
+                    'tag': 'div',
+                    'attributes': {'id': 'myID'},
+                    'content': 'Text content'
+                },
+                {
+                    'tag': 'p',
+                    'attributes': {'class': 'myClass'},
+                    'content': 'Text content'
+                }
+            ];
+            equal(jsonToHtml(json), '<div id="myID">Text content</div><p class="myClass">Text content</p>');
         });
     </script>
 </head>
