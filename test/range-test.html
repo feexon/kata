@@ -12,9 +12,12 @@
          *
          */
         function range(start, stop, step) {
-            stop = start;
-            return Array.apply(null,Array(stop)).map(function(_,index){
-                return index;
+            if (stop == undefined) {
+                stop = start;
+                start = 0;
+            }
+            return Array.apply(null, Array(stop - start)).map(function (_, index) {
+                return index + start;
             });
 
         }
@@ -23,6 +26,9 @@
         module("Range");
         test('stop only', function () {
             deepEqual(range(3), [0, 1, 2]);
+        });
+        test('[start,stop)', function () {
+            deepEqual(range(1, 3), [1, 2]);
         });
     </script>
 </head>
