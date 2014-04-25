@@ -12,13 +12,16 @@
          *
          */
         function makeSentence(parts) {
-            return parts + '.';
+            return parts.join('').replace(/([^.])$/,'$1.');
         }
     </script>
     <script type="text/javascript">
         module('Simple Sentences');
         test('join . at the end', function () {
             equal(makeSentence(['Hi']), 'Hi.');
+        });
+        test("ends with .", function () {
+            equal(makeSentence(['Hi.']), 'Hi.');
         });
     </script>
 </head>
