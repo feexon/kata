@@ -12,7 +12,7 @@
          *
          */
         function makeSentence(parts) {
-            return parts.join(' ').replace(/(\w+)\s([,.])/g, '$1$2').replace(/([^.])(?:\s*[.])*$/, '$1.');
+            return parts.concat(".").join(" ").replace(/[\.\s]*([\.,])/g, "$1");
         }
     </script>
     <script type="text/javascript">
