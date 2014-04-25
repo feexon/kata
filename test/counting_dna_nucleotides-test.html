@@ -15,23 +15,26 @@
          */
         function getCountedNucleotides(code) {
             return code.split('').reduce(function (counter,code) {
-                counter[code] = ~~counter[code]+1;
+                counter[code]+=1;
                 return counter;
-            },{});
+            },{A:0,C:0,G:0,T:0});
         }
     </script>
     <script type="text/javascript">
         module('Counting DNA Nucleotides');
         test('once', function () {
-            deepEqual(getCountedNucleotides('A'), {A: 1});
+            deepEqual(getCountedNucleotides('A'), {A: 1, C: 0, G: 0, T: 0});
             deepEqual(getCountedNucleotides('ACGT'), {A: 1, C: 1, G: 1, T: 1});
         });
         test('increment count', function () {
-            deepEqual(getCountedNucleotides('AA'), {A: 2});
+            deepEqual(getCountedNucleotides('AA'), {A: 2, C: 0, G: 0, T: 0});
         });
         test('complex example', function () {
             var code= 'TCCAGAAAGGTAAGCCTCGCGTTGCGAAAATGTCAAGTTACCACATCCACACCACCTCGAGCAGCTTCTATAGCTAGCCAGCACAGAGACTCGCAGTCCCTCTACAAGCTTCCAATTGGAAGAGAGCTCGGGCCAAGCGTTTGTCGCCCCCCTCCCATTGAGATAAACCCGCATTCATTCAGGTACGAACGGATGCAGCTTGATTCTCCCCATGTAGTTAACTCGCTACATCCTATCAGCCTGAGGGTCCAAGTTGCTAGACCTACATTCACTCCTGCGCTCCTCATAAGCGACCTATCGACTAGTCTTGGCTTACACCTCAGAAGTGCGCTATTGGGCGGGTATTCAGTGGTTGCACGGCGCTTATGTGGGACGCGGTGTCTTAGAGGACAGAAGATGTACAGTCAATGGAGGGATCCTCCCGAGTCGCCATCTACCCATGCGTCTGAGATATGAAAGCAGCTACCAGCCTTTCAGCCACTCTGAAAGATTTCCGTCCTCTATCAAACGACCTGCCCCAGGCTTACTGTTACTAGTTCTTTGCAAATTAACTGTACTCATTTGGGAGAGTTCGCATGCGCCTCTCCATCATACTAGCGCAAAACCTGACATTCAAACGATTCCGCACCCAAAGCCGCGAATGTGTCCCCTTACATTTCGGAGAAAACCGGCTCGACTTGGCACCAAGAACTTTTATACGCTGGGTTGTGCCATGTCTTTATGTTTATCCTTTGGGCGGCAGGAGCGTCCTCACTGTTGCTCTGAAACAGTACATGCACATGTCTAGACGAACCTGAAGAACCCCTGAACACGCCATGCACCGCGCGTAAAGCCAGTTTCGACTGGTATATATAATGATGTTGTGAAACAAATCGGGAAGGCGCAGAAAAGAATGTGGTTGGACGAAGTCCATAACTGAAGGTTAGCGA';
             deepEqual(getCountedNucleotides(code), {A: 238, C: 254, G: 212, T: 225});
+        });
+        test('empty',function(){
+            deepEqual(getCountedNucleotides(''), {A: 0, C: 0, G: 0, T: 0});
         });
     </script>
 </head>
