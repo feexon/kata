@@ -12,7 +12,7 @@
          *
          */
         function makeSentence(parts) {
-            return parts.join(' ').replace(/(\w+)\s,/g, '$1,').replace(/([^.])$/, '$1.');
+            return parts.join(' ').replace(/(\w+)\s([,.])/g, '$1$2').replace(/([^.])$/, '$1.');
         }
     </script>
     <script type="text/javascript">
@@ -29,6 +29,9 @@
         test("make space for words", function () {
             equal(makeSentence(['Hi', ',', 'Mr', 'Smith']), 'Hi, Mr Smith.');
             equal(makeSentence(['one', ',', 'two', ',', 'three']), 'one, two, three.');
+        });
+        test("word on the left of period", function () {
+            equal(makeSentence(['Hi', '.']), 'Hi.');
         });
     </script>
 </head>
