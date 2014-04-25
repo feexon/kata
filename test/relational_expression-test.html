@@ -18,6 +18,10 @@
                 result=candidate<value;
                 return this;
             };
+            this.greaterThan = function (value) {
+                result=candidate>value;
+                return this;
+            };
             this.passed = function () {
                 return result;
             };
@@ -28,6 +32,10 @@
         test('lessThan', function () {
             ok(new Relational(1).lessThan(2).passed());
             ok(!new Relational(1).lessThan(0).passed());
+        });
+        test('greaterThan', function () {
+            ok(new Relational(1).greaterThan(0).passed());
+            ok(!new Relational(1).greaterThan(2).passed());
         });
     </script>
 </head>
