@@ -22,6 +22,10 @@
                 result=candidate>value;
                 return this;
             };
+            this.equals = function (value) {
+                result=candidate==value;
+                return this;
+            };
             this.passed = function () {
                 return result;
             };
@@ -36,6 +40,10 @@
         test('greaterThan', function () {
             ok(new Relational(1).greaterThan(0).passed());
             ok(!new Relational(1).greaterThan(2).passed());
+        });
+        test('equals', function () {
+            ok(new Relational(1).equals(1).passed());
+            ok(!new Relational(1).equals(2).passed());
         });
     </script>
 </head>
