@@ -11,9 +11,15 @@
         /**
          *
          */
+        function makeSentence(parts) {
+            return parts + '.';
+        }
     </script>
     <script type="text/javascript">
-
+        module('Simple Sentences');
+        test('join . at the end', function () {
+            equal(makeSentence(['Hi']), 'Hi.');
+        });
     </script>
 </head>
 <body>
