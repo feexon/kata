@@ -12,7 +12,7 @@
          *
          */
         function makeSentence(parts) {
-            return parts.join('').replace(/([^.])$/,'$1.');
+            return parts.join(' ').replace(/(\w+)\s,/g, '$1,').replace(/([^.])$/, '$1.');
         }
     </script>
     <script type="text/javascript">
@@ -24,7 +24,11 @@
             equal(makeSentence(['Hi.']), 'Hi.');
         });
         test("word on the left of comma", function () {
-            equal(makeSentence(['Hi',',']), 'Hi,.');
+            equal(makeSentence(['Hi', ',']), 'Hi,.');
+        });
+        test("make space for words", function () {
+            equal(makeSentence(['Hi', ',', 'Mr', 'Smith']), 'Hi, Mr Smith.');
+            equal(makeSentence(['one', ',', 'two', ',', 'three']), 'one, two, three.');
         });
     </script>
 </head>
