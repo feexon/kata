@@ -14,52 +14,31 @@
         function Relational(value) {
             var result = true;
             var candidate = value;
+            var context = this;
 
-            function lessThan(value) {
-                return candidate < value;
-            }
-
-            function greaterThan(value) {
-                return candidate > value;
-            }
-
-            function equalTo(value) {
-                return candidate == value;
-            }
-
-            function notEqualTo(value) {
-                return !equalTo(value);
-            }
-
-            var self = this;
-
-            function compute(value) {
-                var relations = [].slice.call(arguments, 1);
-                result = relations.some(function (relation) {
-                    return result && relation(value);
-                });
+            function test(value, satisfied) {
+                result = result && satisfied;
                 candidate = value;
-                return self;
+                return context;
             }
 
             this.lessThan = function (value) {
-                return compute(value, lessThan);
+                return test(value, candidate < value);
             };
-
             this.greaterThan = function (value) {
-                return compute(value, greaterThan);
+                return test(value, candidate > value);
             };
             this.equals = function (value) {
-                return compute(value, equalTo);
+                return test(value, candidate == value);
             };
             this.lessThanOrEqualTo = function (value) {
-                return compute(value, lessThan, equalTo);
+                return test(value, candidate <= value);
             };
             this.greaterThanOrEqualTo = function (value) {
-                return compute(value, greaterThan, equalTo);
+                return test(value, candidate >= value);
             };
             this.notEquals = function (value) {
-                return compute(value, notEqualTo);
+                return test(value, candidate != value);
             };
             this.passed = function () {
                 return result;
