@@ -14,7 +14,7 @@
         function range(start, stop, step) {
             step = isNaN(step) ? 1 : step;
             if (stop == undefined) {
-                stop = start;
+                stop = start||0;
                 start = 0;
             }
             return Array.apply(null, Array(Math.ceil((stop - start) / (step || 1)))).map(function (_, index) {
@@ -44,6 +44,9 @@
         });
         test('step 0', function () {
             deepEqual(range(1, 4, 0), [1, 1, 1]);
+        });
+        test('without any argument',function(){
+            deepEqual(range(), []);
         });
     </script>
 </head>
