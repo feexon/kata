@@ -12,31 +12,37 @@
          *
          */
         function Relational(value) {
-            var result;
+            var result = true;
             var candidate = value;
 
             this.lessThan = function (value) {
-                result = candidate < value;
+                result = result && candidate < value;
+                candidate = value;
                 return this;
             };
             this.greaterThan = function (value) {
-                result = candidate > value;
+                result = result && candidate > value;
+                candidate = value;
                 return this;
             };
             this.equals = function (value) {
-                result = candidate == value;
+                result = result && candidate == value;
+                candidate = value;
                 return this;
             };
             this.lessThanOrEqualTo = function (value) {
-                result = candidate <= value;
+                result = result && (candidate < value || candidate == value);
+                candidate = value;
                 return this;
             };
             this.greaterThanOrEqualTo = function (value) {
-                result = candidate >= value;
+                result = result && (candidate > value || candidate == value);
+                candidate = value;
                 return this;
             };
             this.notEquals = function (value) {
-                result = candidate != value;
+                result = result && candidate != value;
+                candidate = value;
                 return this;
             };
             this.passed = function () {
@@ -71,6 +77,10 @@
         test('notEquals', function () {
             ok(new Relational(1).notEquals(2).passed());
             ok(!new Relational(1).notEquals(1).passed());
+        });
+        test('chain', function () {
+            ok(new Relational(1).lessThan(2).equals(2).passed());
+            ok(!new Relational(3).lessThan(2).equals(2).passed());
         });
     </script>
 </head>
