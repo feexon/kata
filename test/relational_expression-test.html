@@ -31,6 +31,10 @@
                 result = candidate <= value;
                 return this;
             };
+            this.greaterThanOrEqualTo = function (value) {
+                result = candidate >= value;
+                return this;
+            };
             this.passed = function () {
                 return result;
             };
@@ -55,7 +59,11 @@
             ok(new Relational(1).lessThanOrEqualTo(1).passed());
             ok(!new Relational(1).lessThanOrEqualTo(0).passed());
         });
-        
+        test('greaterThanOrEqualTo', function () {
+            ok(new Relational(3).greaterThanOrEqualTo(2).passed());
+            ok(new Relational(1).greaterThanOrEqualTo(1).passed());
+            ok(!new Relational(1).greaterThanOrEqualTo(2).passed());
+        });
     </script>
 </head>
 <body>
