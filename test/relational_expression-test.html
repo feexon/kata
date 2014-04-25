@@ -13,17 +13,22 @@
          */
         function Relational(value) {
             var result;
-            var candidate=value;
+            var candidate = value;
+
             this.lessThan = function (value) {
-                result=candidate<value;
+                result = candidate < value;
                 return this;
             };
             this.greaterThan = function (value) {
-                result=candidate>value;
+                result = candidate > value;
                 return this;
             };
             this.equals = function (value) {
-                result=candidate==value;
+                result = candidate == value;
+                return this;
+            };
+            this.lessThanOrEqualTo = function (value) {
+                result = candidate <= value;
                 return this;
             };
             this.passed = function () {
@@ -45,6 +50,12 @@
             ok(new Relational(1).equals(1).passed());
             ok(!new Relational(1).equals(2).passed());
         });
+        test('lessThanOrEqualTo', function () {
+            ok(new Relational(1).lessThanOrEqualTo(2).passed());
+            ok(new Relational(1).lessThanOrEqualTo(1).passed());
+            ok(!new Relational(1).lessThanOrEqualTo(0).passed());
+        });
+        
     </script>
 </head>
 <body>
