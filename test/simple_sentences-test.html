@@ -23,6 +23,9 @@
         test("ends with .", function () {
             equal(makeSentence(['Hi.']), 'Hi.');
         });
+        test('concat words',function(){
+           equal(makeSentence(["Mr","Bob"]),'Mr Bob.');
+        });
         test("word on the left of comma", function () {
             equal(makeSentence(['Hi', ',']), 'Hi,.');
         });
