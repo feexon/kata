@@ -15,33 +15,48 @@
             var result = true;
             var candidate = value;
 
+            function lessThan(value) {
+                return candidate < value;
+            }
+
+            function greatThan(value) {
+                return candidate > value;
+            }
+
+            function equalTo(value) {
+                return candidate == value;
+            }
+
             this.lessThan = function (value) {
-                result = result && candidate < value;
+                result = result && lessThan(value);
                 candidate = value;
                 return this;
             };
+
             this.greaterThan = function (value) {
-                result = result && candidate > value;
+                result = result && greatThan(value);
                 candidate = value;
                 return this;
             };
+
+
             this.equals = function (value) {
-                result = result && candidate == value;
+                result = result && equalTo(value);
                 candidate = value;
                 return this;
             };
             this.lessThanOrEqualTo = function (value) {
-                result = result && (candidate < value || candidate == value);
+                result = result && (lessThan(value) || equalTo(value));
                 candidate = value;
                 return this;
             };
             this.greaterThanOrEqualTo = function (value) {
-                result = result && (candidate > value || candidate == value);
+                result = result && (greatThan(value) || equalTo(value));
                 candidate = value;
                 return this;
             };
             this.notEquals = function (value) {
-                result = result && candidate != value;
+                result = result && !equalTo(value);
                 candidate = value;
                 return this;
             };
