@@ -11,18 +11,28 @@
         /**
 
          */
-        function curry(fn/*,args*/){
-           return fn;
+        function curry(fn,arg/*,args*/) {
+
+            return function(){
+                if(arg){
+                    return fn.apply(this,[arg].concat([].slice.call(arguments)));
+                }
+                return fn.apply(this,arguments);
+            };
         }
     </script>
     <script type="text/javascript">
         module('A taste of curry');
-        function add(a,b){
-            return a+b;
+        function add(a, b) {
+            return a + b;
         }
-        test('no args',function(){
-            var plus=curry(add);
-            equal(plus(1,2),3);
+        test('no args', function () {
+            var plus = curry(add);
+            equal(plus(1, 2), 3);
+        });
+        test('carry one arg', function () {
+            var concat = curry(add, '1');
+            equal(concat('2'), '12');
         });
     </script>
 </head>
