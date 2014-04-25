@@ -17,7 +17,7 @@
                 stop = start||0;
                 start = 0;
             }
-            return Array.apply(null, Array(Math.ceil((stop - start) / (step || 1)))).map(function (_, index) {
+            return Array.apply(null, Array(Math.max(0,Math.ceil((stop - start) / (step || 1))))).map(function (_, index) {
                 return start + index * step;
             });
 
@@ -47,6 +47,9 @@
         });
         test('without any argument',function(){
             deepEqual(range(), []);
+        });
+        test('start>stop',function(){
+            deepEqual(range(10,0), []);
         });
     </script>
 </head>
