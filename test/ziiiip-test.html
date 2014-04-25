@@ -12,7 +12,7 @@
          *
          */
         function zipObject(keys, values) {
-            return  keys.reduce(function (obj, item, which) {
+            return  !keys ? {} : keys.reduce(function (obj, item, which) {
                 switch (item.constructor) {
                     case Array:
                         obj[item[0]] = item[1];
@@ -37,6 +37,9 @@
                 ['freq', 30],
                 ['barney', 40]
             ]), {freq: 30, barney: 40});
+        });
+        test('no keys', function () {
+            deepEqual(zipObject(), {});
         });
     </script>
 </head>
