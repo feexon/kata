@@ -21,25 +21,17 @@
                 candidate = value;
                 return context;
             }
-
-            this.lessThan = function (value) {
-                return test(value, candidate < value);
+            var comparator = function (op) {
+                return function (value) {
+                    return eval('test(value, candidate ' + op + ' value)');
+                };
             };
-            this.greaterThan = function (value) {
-                return test(value, candidate > value);
-            };
-            this.equals = function (value) {
-                return test(value, candidate == value);
-            };
-            this.lessThanOrEqualTo = function (value) {
-                return test(value, candidate <= value);
-            };
-            this.greaterThanOrEqualTo = function (value) {
-                return test(value, candidate >= value);
-            };
-            this.notEquals = function (value) {
-                return test(value, candidate != value);
-            };
+            this.lessThan = comparator('<');
+            this.greaterThan = comparator('>');
+            this.equals = comparator('==');
+            this.lessThanOrEqualTo = comparator('<=');
+            this.greaterThanOrEqualTo = comparator('>=');
+            this.notEquals = comparator('!=');
             this.passed = function () {
                 return result;
             };
