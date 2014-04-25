@@ -13,10 +13,12 @@
          */
         function zipObject(keys, values) {
             return  keys.reduce(function (obj, item, which) {
-                if (item.constructor == Array) {
-                    obj[item[0]] = item[1];
-                } else {
-                    obj[item] = values && values[which];
+                switch (item.constructor) {
+                    case Array:
+                        obj[item[0]] = item[1];
+                        break;
+                    default:
+                        obj[item] = values && values[which];
                 }
                 return obj;
             }, {});
