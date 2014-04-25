@@ -9,11 +9,21 @@
     <script type="text/javascript" src="../libs/qunit-extras.js"></script>
     <script type="text/javascript">
         /**
-         *
+
          */
+        function curry(fn/*,args*/){
+           return fn;
+        }
     </script>
     <script type="text/javascript">
-
+        module('A taste of curry');
+        function add(a,b){
+            return a+b;
+        }
+        test('no args',function(){
+            var plus=curry(add);
+            equal(plus(1,2),3);
+        });
     </script>
 </head>
 <body>
