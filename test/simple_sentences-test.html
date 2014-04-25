@@ -12,7 +12,7 @@
          *
          */
         function makeSentence(parts) {
-            return parts.join(' ').replace(/(\w+)\s([,.])/g, '$1$2').replace(/([^.])$/, '$1.');
+            return parts.join(' ').replace(/(\w+)\s([,.])/g, '$1$2').replace(/([^.])[.]*$/, '$1.');
         }
     </script>
     <script type="text/javascript">
@@ -32,6 +32,9 @@
         });
         test("word on the left of period", function () {
             equal(makeSentence(['Hi', '.']), 'Hi.');
+        });
+        test("fix multiple . at the end", function () {
+            equal(makeSentence(['Hi', '...']), 'Hi.');
         });
     </script>
 </head>
