@@ -16,7 +16,7 @@
         function getCountedNucleotides(code) {
             var counter = {};
             code.split('').forEach(function (code) {
-                counter[code] = 1;
+                counter[code] = ~~counter[code]+1;
             });
             return counter;
         }
@@ -26,6 +26,9 @@
         test('once', function () {
             deepEqual(getCountedNucleotides('A'), {A: 1});
             deepEqual(getCountedNucleotides('ACGT'), {A: 1, C: 1, G: 1, T: 1});
+        });
+        test('increment count', function () {
+            deepEqual(getCountedNucleotides('AA'), {A: 2});
         });
     </script>
 </head>
