@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function makeSentence(parts) {
+            return parts.concat(".").join(" ").replace(/[\.\s]*([\.,])/g, "$1");
+        }
+    </script>
+    <script type="text/javascript">
+        module('Simple Sentences');
+        test('join . at the end', function () {
+            equal(makeSentence(['Hi']), 'Hi.');
+        });
+        test("ends with .", function () {
+            equal(makeSentence(['Hi.']), 'Hi.');
+        });
+        test('concat words',function(){
+           equal(makeSentence(["Mr","Bob"]),'Mr Bob.');
+        });
+        test("word on the left of comma", function () {
+            equal(makeSentence(['Hi', ',']), 'Hi,.');
+        });
+        test("make space for words", function () {
+            equal(makeSentence(['Hi', ',', 'Mr', 'Smith']), 'Hi, Mr Smith.');
+            equal(makeSentence(['one', ',', 'two', ',', 'three']), 'one, two, three.');
+        });
+        test("word on the left of period", function () {
+            equal(makeSentence(['Hi', '.']), 'Hi.');
+        });
+        test("fix multiple . at the end", function () {
+            equal(makeSentence(['Hi', '...']), 'Hi.');
+            equal(makeSentence(['Hi', '.', '.', '.']), 'Hi.');
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
