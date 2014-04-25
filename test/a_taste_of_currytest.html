@@ -11,13 +11,10 @@
         /**
 
          */
-        function curry(fn,arg/*,args*/) {
-
+        function curry(fn/*,args*/) {
+            var args=[].slice.call(arguments,1);
             return function(){
-                if(arg){
-                    return fn.apply(this,[arg].concat([].slice.call(arguments)));
-                }
-                return fn.apply(this,arguments);
+                return fn.apply(this,args.concat([].slice.call(arguments)));
             };
         }
     </script>
@@ -33,6 +30,10 @@
         test('carry one arg', function () {
             var concat = curry(add, '1');
             equal(concat('2'), '12');
+        });
+        test('carry multi args', function () {
+            var join = curry(add, '1','2');
+            equal(join(), '12');
         });
     </script>
 </head>
