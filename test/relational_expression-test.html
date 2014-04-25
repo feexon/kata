@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function Relational(value) {
+            var result = true;
+            var candidate = value;
+            var context = this;
+
+            function test(value, satisfied) {
+                result = result && satisfied;
+                candidate = value;
+                return context;
+            }
+            var comparator = function (op) {
+                return function (value) {
+                    return eval('test(value, candidate ' + op + ' value)');
+                };
+            };
+            this.lessThan = comparator('<');
+            this.greaterThan = comparator('>');
+            this.equals = comparator('==');
+            this.lessThanOrEqualTo = comparator('<=');
+            this.greaterThanOrEqualTo = comparator('>=');
+            this.notEquals = comparator('!=');
+            this.passed = function () {
+                return result;
+            };
+        }
+    </script>
+    <script type="text/javascript">
+        module('Relational Expression');
+        test('lessThan', function () {
+            ok(new Relational(1).lessThan(2).passed());
+            ok(!new Relational(1).lessThan(0).passed());
+        });
+        test('greaterThan', function () {
+            ok(new Relational(1).greaterThan(0).passed());
+            ok(!new Relational(1).greaterThan(2).passed());
+        });
+        test('equals', function () {
+            ok(new Relational(1).equals(1).passed());
+            ok(!new Relational(1).equals(2).passed());
+        });
+        test('lessThanOrEqualTo', function () {
+            ok(new Relational(1).lessThanOrEqualTo(2).passed());
+            ok(new Relational(1).lessThanOrEqualTo(1).passed());
+            ok(!new Relational(1).lessThanOrEqualTo(0).passed());
+        });
+        test('greaterThanOrEqualTo', function () {
+            ok(new Relational(3).greaterThanOrEqualTo(2).passed());
+            ok(new Relational(1).greaterThanOrEqualTo(1).passed());
+            ok(!new Relational(1).greaterThanOrEqualTo(2).passed());
+        });
+        test('notEquals', function () {
+            ok(new Relational(1).notEquals(2).passed());
+            ok(!new Relational(1).notEquals(1).passed());
+        });
+        test('chain', function () {
+            ok(new Relational(1).lessThan(2).equals(2).passed());
+            ok(!new Relational(3).lessThan(2).equals(2).passed());
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
