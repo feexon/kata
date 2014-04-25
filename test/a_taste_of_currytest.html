@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+
+         */
+        function curry(fn/*,args*/) {
+            var slicer = [].slice;
+            var args=slicer.call(arguments,1);
+            return function(){
+                return fn.apply(this,args.concat(slicer.call(arguments)));
+            };
+        }
+    </script>
+    <script type="text/javascript">
+        module('A taste of curry');
+        function add(a, b) {
+            return a + b;
+        }
+        test('no args', function () {
+            var plus = curry(add);
+            equal(plus(1, 2), 3);
+        });
+        test('carry one arg', function () {
+            var concat = curry(add, '1');
+            equal(concat('2'), '12');
+        });
+        test('carry multi args', function () {
+            var join = curry(add, '1','2');
+            equal(join(), '12');
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
