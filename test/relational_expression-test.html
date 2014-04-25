@@ -11,9 +11,24 @@
         /**
          *
          */
+        function Relational(value) {
+            var result;
+            var candidate=value;
+            this.lessThan = function (value) {
+                result=candidate<value;
+                return this;
+            };
+            this.passed = function () {
+                return result;
+            };
+        }
     </script>
     <script type="text/javascript">
-
+        module('Relational Expression');
+        test('lessThan', function () {
+            ok(new Relational(1).lessThan(2).passed());
+            ok(!new Relational(1).lessThan(0).passed());
+        });
     </script>
 </head>
 <body>
