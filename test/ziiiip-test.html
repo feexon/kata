@@ -12,8 +12,12 @@
          *
          */
         function zipObject(keys, values) {
-            return  keys.reduce(function (obj, key,which) {
-                obj[key] = values&&values[which];
+            return  keys.reduce(function (obj, item, which) {
+                if (item.constructor == Array) {
+                    obj[item[0]] = item[1];
+                } else {
+                    obj[item] = values && values[which];
+                }
                 return obj;
             }, {});
         }
@@ -25,6 +29,12 @@
         });
         test('keys values', function () {
             deepEqual(zipObject(['freq', 'barney'], [30, 40]), {freq: 30, barney: 40});
+        });
+        test('[[key,value]]', function () {
+            deepEqual(zipObject([
+                ['freq', 30],
+                ['barney', 40]
+            ]), {freq: 30, barney: 40});
         });
     </script>
 </head>
