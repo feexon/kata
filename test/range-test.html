@@ -13,11 +13,10 @@
          */
         function range(start, stop, step) {
             stop = start;
-            var ret=[];
-            for(var i=0;i<stop;i++){
-                ret[i]=i;
-            }
-            return ret;
+            return Array.apply(null,Array(stop)).map(function(_,index){
+                return index;
+            });
+
         }
     </script>
     <script type="text/javascript">
