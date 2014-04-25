@@ -12,9 +12,9 @@
          *
          */
         function zipObject(keys, values) {
-            return  keys.reduce(function (obj, key) {
-                    obj[key]=undefined;
-                    return obj;
+            return  keys.reduce(function (obj, key,which) {
+                obj[key] = values&&values[which];
+                return obj;
             }, {});
         }
     </script>
@@ -22,6 +22,9 @@
         module("Ziiiip!");
         test('no values', function () {
             deepEqual(zipObject(['freq', 'barney']), {freq: undefined, barney: undefined});
+        });
+        test('keys values', function () {
+            deepEqual(zipObject(['freq', 'barney'], [30, 40]), {freq: 30, barney: 40});
         });
     </script>
 </head>
