@@ -14,11 +14,10 @@
          getCountedNucleotides(genCode); // return {A: 238, C: 254, G: 212, T: 225}
          */
         function getCountedNucleotides(code) {
-            var counter = {};
-            code.split('').forEach(function (code) {
+            return code.split('').reduce(function (counter,code) {
                 counter[code] = ~~counter[code]+1;
-            });
-            return counter;
+                return counter;
+            },{});
         }
     </script>
     <script type="text/javascript">
