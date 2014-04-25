@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         * var genCode = 'TCCAGAAAGGTAAGCCTCGCGTTGCGAAAATGTCAAGTTACCACATCCACACCACCTCGAGCAGCTTCTATAGCTAGCCAGCACAGAGACTCGCAGTCCCTCTACAAGCTTCCAATTGGAAGAGAGCTCGGGCCAAGCGTTTGTCGCCCCCCTCCCATTGAGATAAACCCGCATTCATTCAGGTACGAACGGATGCAGCTTGATTCTCCCCATGTAGTTAACTCGCTACATCCTATCAGCCTGAGGGTCCAAGTTGCTAGACCTACATTCACTCCTGCGCTCCTCATAAGCGACCTATCGACTAGTCTTGGCTTACACCTCAGAAGTGCGCTATTGGGCGGGTATTCAGTGGTTGCACGGCGCTTATGTGGGACGCGGTGTCTTAGAGGACAGAAGATGTACAGTCAATGGAGGGATCCTCCCGAGTCGCCATCTACCCATGCGTCTGAGATATGAAAGCAGCTACCAGCCTTTCAGCCACTCTGAAAGATTTCCGTCCTCTATCAAACGACCTGCCCCAGGCTTACTGTTACTAGTTCTTTGCAAATTAACTGTACTCATTTGGGAGAGTTCGCATGCGCCTCTCCATCATACTAGCGCAAAACCTGACATTCAAACGATTCCGCACCCAAAGCCGCGAATGTGTCCCCTTACATTTCGGAGAAAACCGGCTCGACTTGGCACCAAGAACTTTTATACGCTGGGTTGTGCCATGTCTTTATGTTTATCCTTTGGGCGGCAGGAGCGTCCTCACTGTTGCTCTGAAACAGTACATGCACATGTCTAGACGAACCTGAAGAACCCCTGAACACGCCATGCACCGCGCGTAAAGCCAGTTTCGACTGGTATATATAATGATGTTGTGAAACAAATCGGGAAGGCGCAGAAAAGAATGTGGTTGGACGAAGTCCATAACTGAAGGTTAGCGA';
+
+         getCountedNucleotides(genCode); // return {A: 238, C: 254, G: 212, T: 225}
+         */
+        function getCountedNucleotides(code) {
+            var counter = {};
+            code.split('').forEach(function (code) {
+                counter[code] = 1;
+            });
+            return counter;
+        }
+    </script>
+    <script type="text/javascript">
+        module('Counting DNA Nucleotides');
+        test('once', function () {
+            deepEqual(getCountedNucleotides('A'), {A: 1});
+            deepEqual(getCountedNucleotides('ACGT'), {A: 1, C: 1, G: 1, T: 1});
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
