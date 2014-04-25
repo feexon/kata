@@ -11,9 +11,18 @@
         /**
          *
          */
+        function zipObject(keys, values) {
+            return  keys.reduce(function (obj, key) {
+                    obj[key]=undefined;
+                    return obj;
+            }, {});
+        }
     </script>
     <script type="text/javascript">
-
+        module("Ziiiip!");
+        test('no values', function () {
+            deepEqual(zipObject(['freq', 'barney']), {freq: undefined, barney: undefined});
+        });
     </script>
 </head>
 <body>
