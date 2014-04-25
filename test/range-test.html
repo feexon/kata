@@ -11,9 +11,20 @@
         /**
          *
          */
+        function range(start, stop, step) {
+            stop = start;
+            var ret=[];
+            for(var i=0;i<stop;i++){
+                ret[i]=i;
+            }
+            return ret;
+        }
     </script>
     <script type="text/javascript">
-
+        module("Range");
+        test('stop only', function () {
+            deepEqual(range(3), [0, 1, 2]);
+        });
     </script>
 </head>
 <body>
