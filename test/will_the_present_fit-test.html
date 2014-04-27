@@ -12,9 +12,12 @@
          *
          */
         function willFit(present, box) {
-            var ordered = box.slice().sort().reverse();
-            return present.slice().sort().reverse().every(function (present, which) {
-                return present < ordered[which];
+            var comparator = function (a, b) {
+                return b - a;
+            };
+            var ordered = box.slice().sort(comparator);
+            return present.slice().sort(comparator).every(function (item, which) {
+                return item < ordered[which];
             });
         }
     </script>
@@ -38,6 +41,9 @@
         test('box more than present', function () {
             ok(willFit([1, 3], [5, 2, 9]));
             ok(!willFit([1, 3], [1, 1, 9]));
+        });
+        test('complex', function () {
+            ok(willFit([16, 10, 7], [32, 13, 10]));
         });
     </script>
 </head>
