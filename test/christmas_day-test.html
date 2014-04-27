@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function findOutChristmasWeekday(date) {
+            return ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][new Date(date).getDay()];
+        }
+    </script>
+    <script type="text/javascript">
+        module('Christmas Day');
+        test('Traditional date format', function () {
+            equal(findOutChristmasWeekday('2013 12 25'), 'Wednesday');
+            equal(findOutChristmasWeekday('12 25 2013'), 'Wednesday');
+            equal(findOutChristmasWeekday('25 December 2013'), 'Wednesday');
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
