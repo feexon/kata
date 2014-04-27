@@ -12,13 +12,16 @@
          *
          */
         function toWeirdCase(string){
-            return string.toUpperCase();
+            return string[0].toUpperCase()+string.substring(1);
         }
     </script>
     <script type="text/javascript">
         module("Weird case");
         test('one letter', function () {
             equal(toWeirdCase('a'), "A");
+        });
+        test('simple case', function () {
+            equal(toWeirdCase('ha'), "Ha");
         });
     </script>
 </head>
