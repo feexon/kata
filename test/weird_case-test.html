@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function toWeirdCase(string) {
+            return string.split(' ').map(function (word) {
+                return word.replace(/(\w)(\w?)/g, function (_, even, odd) {
+                    return even.toUpperCase() + odd.toLowerCase();
+                });
+            }).join(' ');
+        }
+    </script>
+    <script type="text/javascript">
+        module("Weird case");
+        test('one letter', function () {
+            equal(toWeirdCase('a'), "A");
+        });
+        test('simple case', function () {
+            equal(toWeirdCase('ha'), "Ha");
+        });
+        test('even toUpperCase', function () {
+            equal(toWeirdCase('hahaha'), "HaHaHa");
+        });
+        test('odd toLowerCase', function () {
+            equal(toWeirdCase('HAHAHA'), "HaHaHa");
+        });
+        test('split words with whitespace', function () {
+            equal(toWeirdCase('hey hi'), "HeY Hi");
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
