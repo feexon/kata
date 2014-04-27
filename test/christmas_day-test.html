@@ -11,9 +11,17 @@
         /**
          *
          */
+        function findOutChristmasWeekday(date) {
+            return ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][new Date(date).getDay()];
+        }
     </script>
     <script type="text/javascript">
-
+        module('Christmas Day');
+        test('Traditional date format', function () {
+            equal(findOutChristmasWeekday('2013 12 25'), 'Wednesday');
+            equal(findOutChristmasWeekday('12 25 2013'), 'Wednesday');
+            equal(findOutChristmasWeekday('25 December 2013'), 'Wednesday');
+        });
     </script>
 </head>
 <body>
