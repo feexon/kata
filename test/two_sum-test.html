@@ -11,9 +11,15 @@
         /**
          *
          */
+        function twoSum(numbers, target) {
+            return [0, numbers.indexOf(target - numbers[0], 1)];
+        }
     </script>
     <script type="text/javascript">
-
+        module('Two Sum');
+        test('sum with the first number', function () {
+            deepEqual(twoSum([3, 4], 7), [0, 1]);
+        });
     </script>
 </head>
 <body>
