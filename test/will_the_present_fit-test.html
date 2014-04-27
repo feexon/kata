@@ -12,7 +12,7 @@
          *
          */
         function willFit(present, box) {
-            return present.slice() < box.slice();
+            return present.slice().sort().reverse() < box.slice().sort().reverse();
         }
     </script>
     <script type="text/javascript">
@@ -26,6 +26,11 @@
             ok(willFit([3, 1], [5, 2]));
             ok(!willFit([3, 2], [2, 1]), 'too small');
             ok(!willFit([3, 2], [3, 2]), 'same');
+        });
+        test('fit in random order', function () {
+            ok(willFit([1, 3], [5, 2]));
+            ok(!willFit([2, 3], [2, 1]), 'too small');
+            ok(!willFit([2, 3], [3, 2]), 'same');
         });
     </script>
 </head>
