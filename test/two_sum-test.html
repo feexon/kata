@@ -12,13 +12,22 @@
          *
          */
         function twoSum(numbers, target) {
-            return [0, numbers.indexOf(target - numbers[0], 1)];
+            for (var which = 0; which < numbers.length; which++) {
+                var addend = numbers.indexOf(target - numbers[which], 1);
+                if (addend == -1) {
+                    continue;
+                }
+                return [which, addend];
+            }
         }
     </script>
     <script type="text/javascript">
         module('Two Sum');
         test('sum with the first number', function () {
             deepEqual(twoSum([3, 4], 7), [0, 1]);
+        });
+        test('sum next', function () {
+            deepEqual(twoSum([0, 3, 4], 7), [1, 2]);
         });
     </script>
 </head>
