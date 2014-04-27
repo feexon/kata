@@ -11,9 +11,15 @@
         /**
          *
          */
+        function toWeirdCase(string){
+            return string.toUpperCase();
+        }
     </script>
     <script type="text/javascript">
-
+        module("Weird case");
+        test('one letter', function () {
+            equal(toWeirdCase('a'), "A");
+        });
     </script>
 </head>
 <body>
