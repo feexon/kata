@@ -12,7 +12,7 @@
          *
          */
         function willFit(present, box) {
-            return present < box;
+            return present.slice() < box.slice();
         }
     </script>
     <script type="text/javascript">
@@ -21,6 +21,11 @@
             ok(willFit([1], [2]));
             ok(!willFit([2], [1]), 'too small');
             ok(!willFit([2], [2]), 'same');
+        });
+        test('present and box are ordered desc', function () {
+            ok(willFit([3, 1], [5, 2]));
+            ok(!willFit([3, 2], [2, 1]), 'too small');
+            ok(!willFit([3, 2], [3, 2]), 'same');
         });
     </script>
 </head>
