@@ -11,9 +11,17 @@
         /**
          *
          */
+        function willFit(present, box) {
+            return present < box;
+        }
     </script>
     <script type="text/javascript">
-
+        module('Will the present fit?');
+        test('one present and one box', function () {
+            ok(willFit([1], [2]));
+            ok(!willFit([2], [1]), 'too small');
+            ok(!willFit([2], [2]), 'same');
+        });
     </script>
 </head>
 <body>
