@@ -12,13 +12,16 @@
          *
          */
         function replaceAll(input, find, replace) {
-            return input.replace(find, replace);
+            return input.replace(new RegExp(find,'g'), replace);
         }
     </script>
     <script type="text/javascript">
         module("Replace All");
         test('replace word', function () {
             equal(replaceAll('an dog', 'an', 'a'), 'a dog');
+        });
+        test('replace all occurrences', function () {
+            equal(replaceAll('an dog, an pig', 'an', 'a'), 'a dog, a pig');
         });
     </script>
 </head>
