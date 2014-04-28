@@ -64,7 +64,12 @@
             equal(gamble(['Shin'], 1, 0), 0);
         });
 
-
+        test('complex', function () {
+            equal(gamble(['Hei', 'Shin'], 10, 20), 19);
+            equal(gamble(['Hei', 'Hei'], 10, 20), 25);
+            equal(gamble(['Nun', 'Nun', 'Shin', 'Gimel', 'Shin'], 10, 20), 29);
+            equal(gamble(['Shin', 'Shin', 'Hei'], 10, 20), 19);
+        });
     </script>
 </head>
 <body>
