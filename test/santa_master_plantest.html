@@ -11,9 +11,15 @@
         /**
          *
          */
+        function getAttendees(peopleInvited,responses){
+            return peopleInvited;
+        }
     </script>
     <script type="text/javascript">
-
+        module("Santa's master plan");
+        test('accepted', function () {
+            deepEqual(getAttendees( ['Easter Bunny'],[{name: 'Easter Bunny', response: 'accepted'}]),['Easter Bunny']);
+        });
     </script>
 </head>
 <body>
