@@ -12,7 +12,13 @@
          *
          */
         function christmasTree(height) {
-            return height ? '*' : '';
+            var tree = [];
+            for (var i = 0; i < height; i++) {
+                var stars = 2 * i + 1;
+                var space = Array((2 * height - 1 - stars) / 2 + 1).join(' ');
+                tree.push([ space , Array(stars + 1).join('*') , space ].join(''));
+            }
+            return tree.join('\n');
         }
     </script>
     <script type="text/javascript">
@@ -22,6 +28,10 @@
         });
         test('1 height', function () {
             strictEqual(christmasTree(1), '*');
+        });
+        test('christmas tree', function () {
+            strictEqual(christmasTree(2), ' * \n***');
+            strictEqual(christmasTree(3), '  *  \n *** \n*****');
         });
     </script>
 </head>
