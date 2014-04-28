@@ -11,9 +11,15 @@
         /**
          *
          */
+        function replaceAll(input, find, replace) {
+            return input.replace(find, replace);
+        }
     </script>
     <script type="text/javascript">
-
+        module("Replace All");
+        test('replace word', function () {
+            equal(replaceAll('an dog', 'an', 'a'), 'a dog');
+        });
     </script>
 </head>
 <body>
