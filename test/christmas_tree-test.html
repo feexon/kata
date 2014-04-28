@@ -11,9 +11,15 @@
         /**
          *
          */
+        function christmasTree(height) {
+            return '';
+        }
     </script>
     <script type="text/javascript">
-
+        module("Christmas Tree");
+        test('no height', function () {
+            strictEqual(christmasTree(0), '');
+        });
     </script>
 </head>
 <body>
