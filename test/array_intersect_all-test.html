@@ -17,6 +17,7 @@
                     return [];
                 }
             }
+            return arguments[0];
         }
     </script>
     <script type="text/javascript">
@@ -24,6 +25,9 @@
         test('interest with empty array', function () {
             deepEqual(intersect([], [1, 2, 3]), []);
             deepEqual(intersect([1, 2, 3], []), []);
+        });
+        test('interest with the same array', function () {
+            deepEqual(intersect([1, 2], [1, 2]), [1, 2]);
         });
     </script>
 </head>
