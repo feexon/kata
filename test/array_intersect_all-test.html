@@ -14,13 +14,9 @@
         function intersect() {
             var first = arguments[0];
             var last = arguments[1];
-            var result = [];
-            for (var i = first.length; --i >= 0;) {
-                if (last.indexOf(first[i]) != -1) {
-                    result.push(first[i]);
-                }
-            }
-            return result;
+            return first.filter(function (item) {
+                return last.indexOf(item) != -1;
+            });
         }
     </script>
     <script type="text/javascript">
