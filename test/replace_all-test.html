@@ -39,6 +39,9 @@
         test('replace has find string included', function () {
             equal(replaceAll('as', 's', 'ss'), 'ass');
         });
+        test('replace with empty string', function () {
+            equal(replaceAll('string', 'trin', ''), 'sg');
+        });
     </script>
 </head>
 <body>
