@@ -12,10 +12,7 @@
          *
          */
         function ho(chain) {
-            if (chain) {
-                return [ "Ho", chain].join(' ');
-            }
-            return [ "Ho", "!"].join('');
+            return [ "Ho",  chain ? ' ' + chain : '!'].join('');
         }
     </script>
     <script type="text/javascript">
@@ -25,6 +22,9 @@
         });
         test('pass ho as parameter', function () {
             equal(ho(ho()), 'Ho Ho!');
+        });
+        test('complex', function () {
+            equal(ho(ho(ho())), 'Ho Ho Ho!');
         });
     </script>
 </head>
