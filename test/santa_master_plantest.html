@@ -11,22 +11,33 @@
         /**
          *
          */
-        function getAttendees(peopleInvited,responses){
-            return peopleInvited.filter(function(){
-                return !responses[0]||responses[0].response=='accepted';
+        function getAttendees(peopleInvited, responses) {
+            return peopleInvited.filter(function (name) {
+                return responses.some(function (inviter) {
+                    if (inviter.name == name) {
+                        return  inviter.response == 'accepted';
+                    }
+                })||responses.every(function(inviter){
+                    return inviter.name!=name;
+                });
             });
         }
     </script>
     <script type="text/javascript">
+        var responses = [
+            {name: 'Easter Bunny', response: 'declined'},
+            {name: 'Jack Frost', response: 'declined'},
+            {name: 'Tooth Fairy', response: 'accepted'}
+        ];
         module("Santa's master plan");
         test('accepted', function () {
-            deepEqual(getAttendees( ['Easter Bunny'],[{name: 'Easter Bunny', response: 'accepted'}]),['Easter Bunny']);
+            deepEqual(getAttendees(['Tooth Fairy'], responses), ['Tooth Fairy']);
         });
         test('declined', function () {
-            deepEqual(getAttendees( ['Easter Bunny'],[{name: 'Easter Bunny', response: 'declined'}]),[]);
+            deepEqual(getAttendees(['Easter Bunny'], responses), []);
         });
         test('not response', function () {
-            deepEqual(getAttendees( ['Easter Bunny'],[]),['Easter Bunny']);
+            deepEqual(getAttendees(['Easter Bunny'], []), ['Easter Bunny']);
         });
     </script>
 </head>
