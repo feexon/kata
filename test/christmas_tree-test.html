@@ -12,13 +12,16 @@
          *
          */
         function christmasTree(height) {
-            return '';
+            return height ? '*' : '';
         }
     </script>
     <script type="text/javascript">
         module("Christmas Tree");
         test('no height', function () {
             strictEqual(christmasTree(0), '');
+        });
+        test('1 height', function () {
+            strictEqual(christmasTree(1), '*');
         });
     </script>
 </head>
