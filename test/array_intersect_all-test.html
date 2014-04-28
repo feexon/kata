@@ -11,9 +11,20 @@
         /**
          *
          */
+        function intersect() {
+            for (var i = arguments.length; --i >= 0;) {
+                if (arguments[i].length == 0) {
+                    return [];
+                }
+            }
+        }
     </script>
     <script type="text/javascript">
-
+        module('Array intersect all');
+        test('interest with empty array', function () {
+            deepEqual(intersect([], [1, 2, 3]), []);
+            deepEqual(intersect([1, 2, 3], []), []);
+        });
     </script>
 </head>
 <body>
