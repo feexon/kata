@@ -11,9 +11,15 @@
         /**
          *
          */
+        function reindeers() {
+            return 2;
+        }
     </script>
     <script type="text/javascript">
-
+        module('How many reindeers');
+        test('Two reindeers are always required ', function () {
+            equal(reindeers(0), 2);
+        });
     </script>
 </head>
 <body>
