@@ -11,10 +11,10 @@
         /**
          *
          */
-        function intersect() {
-            var first = arguments[0] || [];
-            var arrays = [].slice.call(arguments, 1);
-            return first.filter(function (item) {
+        function intersect(source) {
+            var meta = Array.prototype;
+            var arrays = meta.slice.call(arguments, 1);
+            return meta.concat.apply([], source).filter(function (item) {
                 return arrays.every(function (array) {
                     return array.indexOf(item) != -1;
                 });
