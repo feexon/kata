@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function getAttendees(peopleInvited, responses) {
+            return peopleInvited.filter(function (person) {
+                return !responses.some(function (e) {
+                    return e.name == person && e.response == 'declined'
+                });
+            });
+        }
+    </script>
+    <script type="text/javascript">
+        var responses = [
+            {name: 'Easter Bunny', response: 'declined'},
+            {name: 'Jack Frost', response: 'declined'},
+            {name: 'Tooth Fairy', response: 'accepted'}
+        ];
+        module("Santa's master plan");
+        test('accepted', function () {
+            deepEqual(getAttendees(['Tooth Fairy'], responses), ['Tooth Fairy']);
+        });
+        test('declined', function () {
+            deepEqual(getAttendees(['Easter Bunny'], responses), []);
+        });
+        test('not response', function () {
+            deepEqual(getAttendees(['Easter Bunny'], []), ['Easter Bunny']);
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
