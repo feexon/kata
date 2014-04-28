@@ -33,22 +33,16 @@
          Only worry about whole numbers, round down for fractions
          The game is over only when all rolls have been completed! This means you can have a negative account balance at the end of the game, just like real gambling :)
          The passed variables myCoins and pot will always start non-negative.
+         todo:return coins if pot is 0
          */
-        function gamble(rolls, cions, pot) {
-            if(!rolls.length){
-                return cions;
+        function gamble(rolls, coins, pot) {
+            if (!rolls.length) {
+                return coins;
             }
+            var rates = {Gimel: 1, Hei: 1 / 2, Nun: 0};
             var first = rolls[0];
-            if (first == 'Gimel') {
-                return cions + pot / 1;
-            }
-            if (first == 'Shin') {
-                return gamble(rolls.slice(1), cions + 1, pot-1);
-            }
-            if (first == 'Hei') {
-                return gamble(rolls.slice(1), cions + pot / 2, pot / 2);
-            }
-            return gamble(rolls.slice(1), cions, pot );
+            var taken = pot * (isNaN(rates[first]) ? 1 / pot : rates[first]);
+            return gamble(rolls.slice(1), coins + taken, pot - taken);
         }
     </script>
     <script type="text/javascript">
@@ -59,7 +53,7 @@
             equal(gamble(['Gimel'], 1, 20), 21);
             equal(gamble(['Shin'], 1, 20), 2);
         });
-        test('empty rolls',function(){
+        test('empty rolls', function () {
             equal(gamble([], 1, 20), 1);
         });
         test('rolls', function () {
