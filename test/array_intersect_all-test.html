@@ -13,15 +13,11 @@
          */
         function intersect() {
             var first = arguments[0];
-            var arrays = arguments;
+            var arrays = [].slice.call(arguments, 1);
             return first.filter(function (item) {
-                for (var i = 0; i < arrays.length; i++) {
-                    if (arrays[i].indexOf(item) != -1) {
-                        continue;
-                    }
-                    return false;
-                }
-                return true;
+                return arrays.every(function (array) {
+                    return array.indexOf(item) != -1;
+                });
             });
         }
     </script>
