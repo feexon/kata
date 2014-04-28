@@ -36,16 +36,9 @@
          todo:return coins if pot is 0
          */
         function gamble(rolls, coins, pot) {
-            if (rolls == 'Shin') {
-                return coins -1;
-            }
-            if (rolls == 'Gimel') {
-                return coins + pot / 1;
-            }
-            if (rolls == 'Hei') {
-                return coins + pot / 2;
-            }
-            return coins;
+            var rates = {Gimel: 1, Hei: 1 / 2, Nun: 0};
+            var taken = pot * (isNaN(rates[rolls]) ? -1 / pot : rates[rolls]);
+            return coins + taken;
         }
     </script>
     <script type="text/javascript">
