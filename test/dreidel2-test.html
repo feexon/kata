@@ -41,7 +41,7 @@
             }
             var first = rolls[0];
             var rates = {Gimel: 1, Hei: 1 / 2, Nun: 0};
-            var taken = (isNaN(rates[first]) ? -1 : pot * rates[first]);
+            var taken = isNaN(rates[first]) ? -1 : pot * rates[first] | 0;
             return gamble(rolls.slice(1), coins + taken, pot - taken);
         }
     </script>
@@ -69,6 +69,10 @@
             equal(gamble(['Hei', 'Hei'], 10, 20), 25);
             equal(gamble(['Nun', 'Nun', 'Shin', 'Gimel', 'Shin'], 10, 20), 29);
             equal(gamble(['Shin', 'Shin', 'Hei'], 10, 20), 19);
+        });
+
+        test("taken can't be divided", function () {
+            equal(gamble(['Hei'], 10, 13), 16);
         });
     </script>
 </head>
