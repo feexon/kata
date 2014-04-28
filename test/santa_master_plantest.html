@@ -12,14 +12,15 @@
          *
          */
         function getAttendees(peopleInvited, responses) {
+            var declined = responses.filter(function (inviter) {
+                return inviter.response == 'declined';
+            });
+            var flags = declined.reduce(function (declined, inviter) {
+                declined[inviter.name] = true;
+                return declined;
+            }, {});
             return peopleInvited.filter(function (name) {
-                return responses.some(function (inviter) {
-                    if (inviter.name == name) {
-                        return  inviter.response == 'accepted';
-                    }
-                })||responses.every(function(inviter){
-                    return inviter.name!=name;
-                });
+               return !flags[name];
             });
         }
     </script>
