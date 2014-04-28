@@ -30,6 +30,9 @@
             equal(replaceAll('a dog?', '?', '!'), 'a dog!');
             equal(replaceAll('a ^ dog?', '^ ', ''), 'a dog?');
         });
+        test('replace empty string', function () {
+            equal(replaceAll('', '', 'the'), 'the');
+        });
     </script>
 </head>
 <body>
