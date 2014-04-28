@@ -33,6 +33,9 @@
         test('replace empty string', function () {
             equal(replaceAll('', '', 'the'), 'the');
         });
+        test('replace empty string with something', function () {
+            equal(replaceAll('1', '', '-'), '-1-');
+        });
     </script>
 </head>
 <body>
