@@ -12,12 +12,15 @@
          *
          */
         function intersect() {
-            for (var i = arguments.length; --i >= 0;) {
-                if (arguments[i].length == 0) {
-                    return [];
+            var first = arguments[0];
+            var last = arguments[1];
+            var result = [];
+            for (var i = first.length; --i >= 0;) {
+                if (last.indexOf(first[i]) != -1) {
+                    result.push(first[i]);
                 }
             }
-            return arguments[0];
+            return result;
         }
     </script>
     <script type="text/javascript">
@@ -27,7 +30,10 @@
             deepEqual(intersect([1, 2, 3], []), []);
         });
         test('interest with the same array', function () {
-            deepEqual(intersect([1, 2], [1, 2]), [1, 2]);
+            deepEqual(intersect([1, 2], [1, 2]).sort(), [1, 2]);
+        });
+        test('interest with two arrays', function () {
+            deepEqual(intersect([1, 2], [2, 3]), [2]);
         });
     </script>
 </head>
