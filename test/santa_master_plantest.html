@@ -13,7 +13,7 @@
          */
         function getAttendees(peopleInvited,responses){
             return peopleInvited.filter(function(){
-                return responses[0].response=='accepted';
+                return !responses[0]||responses[0].response=='accepted';
             });
         }
     </script>
@@ -24,6 +24,9 @@
         });
         test('declined', function () {
             deepEqual(getAttendees( ['Easter Bunny'],[{name: 'Easter Bunny', response: 'declined'}]),[]);
+        });
+        test('not response', function () {
+            deepEqual(getAttendees( ['Easter Bunny'],[]),['Easter Bunny']);
         });
     </script>
 </head>
