@@ -36,6 +36,9 @@
         test('replace empty string with something', function () {
             equal(replaceAll('1', '', '-'), '-1-');
         });
+        test('replace has find string included', function () {
+            equal(replaceAll('as', 's', 'ss'), 'ass');
+        });
     </script>
 </head>
 <body>
