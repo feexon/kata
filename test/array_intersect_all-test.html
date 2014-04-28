@@ -12,7 +12,7 @@
          *
          */
         function intersect() {
-            var first = arguments[0];
+            var first = arguments[0] || [];
             var arrays = [].slice.call(arguments, 1);
             return first.filter(function (item) {
                 return arrays.every(function (array) {
@@ -35,6 +35,9 @@
         });
         test('interest with multi arrays', function () {
             deepEqual(intersect([1, 2, 3], [2, 3, 4], [2, 4, 6]), [2]);
+        });
+        test('interest with nothing', function () {
+            deepEqual(intersect(), []);
         });
     </script>
 </head>
