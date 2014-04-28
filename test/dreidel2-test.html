@@ -41,7 +41,7 @@
             }
             var first = rolls[0];
             var rates = {Gimel: 1, Hei: 1 / 2, Nun: 0};
-            var taken = pot * (isNaN(rates[first]) ? -1 / pot : rates[first]);
+            var taken = (isNaN(rates[first]) ? -1 : pot * rates[first]);
             return gamble(rolls.slice(1), coins + taken, pot - taken);
         }
     </script>
@@ -59,6 +59,9 @@
         });
         test('rolls', function () {
             equal(gamble(['Hei', 'Shin'], 1, 20), 10);
+        });
+        test('skin on empty pot', function () {
+            equal(gamble(['Shin'], 1, 0), 0);
         });
 
 
