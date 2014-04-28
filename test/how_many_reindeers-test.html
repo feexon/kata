@@ -11,14 +11,17 @@
         /**
          *
          */
-        function reindeers() {
-            return 2;
+        function reindeers(present) {
+            return 2 + present / 30;
         }
     </script>
     <script type="text/javascript">
         module('How many reindeers');
         test('Two reindeers are always required ', function () {
             equal(reindeers(0), 2);
+        });
+        test('needs 1 reindeer per 30 presents', function () {
+            equal(reindeers(30), 3);
         });
     </script>
 </head>
