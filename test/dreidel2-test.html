@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         * Let's play a fun gambling game. A dreidel has four sides. Below are the descriptions for each of them:
+
+         Nun - nothing happens
+         Gimel - you take the pot!
+         Hei - you take half the pot
+         Shin - you put a piece into the pot
+         So here's how we play. You, being a raging gambling addict, start with all of your hard earned coins - oy vei!
+         The pot will also have some non-negative amount of coins when the game begins.
+         Create a function that given an array of dreidel rolls ordered from first to last
+         (so rolls[0] is the first roll and rolls[rolls.length - 1] is the last roll),
+         the number of coins in your account, and the number of coins in the pot,
+         returns the number of coins left in your account after the last roll.
+
+         For instance:
+
+         gamble(['Hei', 'Shin'], 10, 20) -> 19
+         gamble(['Hei', 'Hei'], 10, 20) -> 25
+         gamble(['Nun', 'Nun', 'Shin', 'Gimel', 'Shin'], 10, 20) -> 29
+         gamble(['Shin', 'Shin', 'Hei'], 10, 20) -> 19
+         Notes:
+
+         Only worry about whole numbers, round down for fractions
+         The game is over only when all rolls have been completed! This means you can have a negative account balance at the end of the game, just like real gambling :)
+         The passed variables myCoins and pot will always start non-negative.
+         todo:return coins if pot is 0
+         */
+        function gamble(rolls, coins, pot) {
+            var rates = {Gimel: 1, Hei: 1 / 2, Nun: 0};
+            return rolls.reduce(function (coins, side) {
+                var taken = isNaN(rates[side]) ? -1 : pot * rates[side] | 0;
+                pot -= taken;
+                return coins + taken;
+            }, coins);
+        }
+    </script>
+    <script type="text/javascript">
+        module('Dreidel');
+        test('one roll', function () {
+            equal(gamble(['Nun'], 1, 20), 1);
+            equal(gamble(['Hei'], 1, 20), 11);
+            equal(gamble(['Gimel'], 1, 20), 21);
+            equal(gamble(['Shin'], 1, 20), 0);
+
+        });
+        test('empty rolls', function () {
+            equal(gamble([], 1, 20), 1);
+        });
+        test('rolls', function () {
+            equal(gamble(['Hei', 'Shin'], 1, 20), 10);
+        });
+        test('skin on empty pot', function () {
+            equal(gamble(['Shin'], 1, 0), 0);
+        });
+
+        test('complex', function () {
+            equal(gamble(['Hei', 'Shin'], 10, 20), 19);
+            equal(gamble(['Hei', 'Hei'], 10, 20), 25);
+            equal(gamble(['Nun', 'Nun', 'Shin', 'Gimel', 'Shin'], 10, 20), 29);
+            equal(gamble(['Shin', 'Shin', 'Hei'], 10, 20), 19);
+        });
+
+        test("taken can't be divided", function () {
+            equal(gamble(['Hei'], 10, 13), 16);
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
