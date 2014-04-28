@@ -12,7 +12,7 @@
          *
          */
         function replaceAll(input, find, replace) {
-            return input.replace(new RegExp(find,'g'), replace);
+            return input.replace(new RegExp(find.replace(/([^\w])/g, '\\$1'), 'g'), replace);
         }
     </script>
     <script type="text/javascript">
@@ -22,6 +22,10 @@
         });
         test('replace all occurrences', function () {
             equal(replaceAll('an dog, an pig', 'an', 'a'), 'a dog, a pig');
+        });
+        test('replace special letters', function () {
+            equal(replaceAll('a dog?', '?', '!'), 'a dog!');
+            equal(replaceAll('a ^ dog?', '^ ', ''), 'a dog?');
         });
     </script>
 </head>
