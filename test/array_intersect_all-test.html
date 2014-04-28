@@ -39,6 +39,9 @@
         test('interest with nothing', function () {
             deepEqual(intersect(), []);
         });
+        test('interest with one array', function () {
+            deepEqual(intersect([1, 2]), [1, 2]);
+        });
     </script>
 </head>
 <body>
