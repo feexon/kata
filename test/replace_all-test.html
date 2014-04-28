@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function replaceAll(input, find, replace) {
+            return input.replace(new RegExp(find.replace(/([^\w])/g, '\\$1'), 'g'), replace);
+        }
+    </script>
+    <script type="text/javascript">
+        module("Replace All");
+        test('no matching', function () {
+            equal(replaceAll('an dog', 'the', 'a'), 'an dog');
+        });
+        test('replace word', function () {
+            equal(replaceAll('an dog', 'an', 'a'), 'a dog');
+        });
+        test('replace all occurrences', function () {
+            equal(replaceAll('an dog, an pig', 'an', 'a'), 'a dog, a pig');
+        });
+        test('replace special letters', function () {
+            equal(replaceAll('a dog?', '?', '!'), 'a dog!');
+            equal(replaceAll('a ^ dog?', '^ ', ''), 'a dog?');
+        });
+        test('replace empty string', function () {
+            equal(replaceAll('', '', 'the'), 'the');
+        });
+        test('replace empty string with something', function () {
+            equal(replaceAll('1', '', '-'), '-1-');
+        });
+        test('replace has find string included', function () {
+            equal(replaceAll('as', 's', 'ss'), 'ass');
+        });
+        test('replace with empty string', function () {
+            equal(replaceAll('string', 'trin', ''), 'sg');
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
