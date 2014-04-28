@@ -36,13 +36,12 @@
          todo:return coins if pot is 0
          */
         function gamble(rolls, coins, pot) {
-            if (!rolls.length) {
-                return coins;
-            }
-            var first = rolls[0];
             var rates = {Gimel: 1, Hei: 1 / 2, Nun: 0};
-            var taken = isNaN(rates[first]) ? -1 : pot * rates[first] | 0;
-            return gamble(rolls.slice(1), coins + taken, pot - taken);
+            return rolls.reduce(function (coins, side) {
+                var taken = isNaN(rates[side]) ? -1 : pot * rates[side] | 0;
+                pot -= taken;
+                return coins + taken;
+            }, coins);
         }
     </script>
     <script type="text/javascript">
