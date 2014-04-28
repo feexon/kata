@@ -12,13 +12,18 @@
          *
          */
         function getAttendees(peopleInvited,responses){
-            return peopleInvited;
+            return peopleInvited.filter(function(){
+                return responses[0].response=='accepted';
+            });
         }
     </script>
     <script type="text/javascript">
         module("Santa's master plan");
         test('accepted', function () {
             deepEqual(getAttendees( ['Easter Bunny'],[{name: 'Easter Bunny', response: 'accepted'}]),['Easter Bunny']);
+        });
+        test('declined', function () {
+            deepEqual(getAttendees( ['Easter Bunny'],[{name: 'Easter Bunny', response: 'declined'}]),[]);
         });
     </script>
 </head>
