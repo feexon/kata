@@ -36,6 +36,9 @@
          todo:return coins if pot is 0
          */
         function gamble(rolls, coins, pot) {
+            if (!rolls.length) {
+                return coins;
+            }
             var rates = {Gimel: 1, Hei: 1 / 2, Nun: 0};
             var taken = pot * (isNaN(rates[rolls]) ? -1 / pot : rates[rolls]);
             return coins + taken;
@@ -49,6 +52,9 @@
             equal(gamble(['Gimel'], 1, 20), 21);
             equal(gamble(['Shin'], 1, 20), 0);
 
+        });
+        test('empty rolls', function () {
+            equal(gamble([], 1, 20), 1);
         });
 
 
