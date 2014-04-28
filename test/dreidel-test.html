@@ -35,25 +35,39 @@
          The passed variables myCoins and pot will always start non-negative.
          */
         function gamble(rolls, cions, pot) {
-            if (rolls == 'Gimel') {
+            if(!rolls.length){
+                return cions;
+            }
+            var first = rolls[0];
+            if (first == 'Gimel') {
                 return cions + pot / 1;
             }
-            if (rolls == 'Shin') {
-                return cions + 1;
+            if (first == 'Shin') {
+                return gamble(rolls.slice(1), cions + 1, pot-1);
             }
-            if (rolls == 'Hei') {
-                return cions + pot / 2;
+            if (first == 'Hei') {
+                return gamble(rolls.slice(1), cions + pot / 2, pot / 2);
             }
-            return cions;
+            return gamble(rolls.slice(1), cions, pot );
         }
     </script>
     <script type="text/javascript">
         module('Dreidel');
         test('one roll', function () {
-            equal(gamble('Nun', 1, 20), 1);
-            equal(gamble('Hei', 1, 20), 11);
-            equal(gamble('Gimel', 1, 20), 21);
-            equal(gamble('Shin', 1, 20), 2);
+            equal(gamble(['Nun'], 1, 20), 1);
+            equal(gamble(['Hei'], 1, 20), 11);
+            equal(gamble(['Gimel'], 1, 20), 21);
+            equal(gamble(['Shin'], 1, 20), 2);
+        });
+        test('empty rolls',function(){
+            equal(gamble([], 1, 20), 1);
+        });
+        test('rolls', function () {
+            equal(gamble(['Hei', 'Shin'], 1, 20), 12);
+            equal(gamble(['Hei', 'Hei'], 1, 20), 16);
+            equal(gamble(['Gimel', 'Hei'], 1, 20), 21);
+            equal(gamble(['Shin', 'Hei'], 1, 21), 12);
+            equal(gamble(['Nun', 'Hei'], 1, 20), 11);
         });
     </script>
 </head>
