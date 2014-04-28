@@ -11,14 +11,20 @@
         /**
          *
          */
-        function ho() {
-            return "Ho!";
+        function ho(chain) {
+            if (chain) {
+                return [ "Ho", chain].join(' ');
+            }
+            return [ "Ho", "!"].join('');
         }
     </script>
     <script type="text/javascript">
         module('Ho Ho Ho with Functions!');
         test('single', function () {
             equal(ho(), 'Ho!');
+        });
+        test('pass ho as parameter', function () {
+            equal(ho(ho()), 'Ho Ho!');
         });
     </script>
 </head>
