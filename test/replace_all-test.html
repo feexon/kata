@@ -17,6 +17,9 @@
     </script>
     <script type="text/javascript">
         module("Replace All");
+        test('no matching', function () {
+            equal(replaceAll('an dog', 'the', 'a'), 'an dog');
+        });
         test('replace word', function () {
             equal(replaceAll('an dog', 'an', 'a'), 'a dog');
         });
