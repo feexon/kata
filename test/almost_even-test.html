@@ -11,9 +11,15 @@
         /**
          *
          */
+        function splitInteger(number,parts){
+            return [number];
+        }
     </script>
     <script type="text/javascript">
-
+        module('almost even');
+        test('one part', function () {
+            deepEqual(splitInteger(2, 1), [2]);
+        });
     </script>
 </head>
 <body>
