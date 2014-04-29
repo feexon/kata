@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function HolidayPriorityQueue() {
+            var queue = [];
+
+            function swap(a, b) {
+                var tmp = queue[a];
+                queue[a] = queue[b];
+                queue[b] = tmp;
+            }
+
+            function lessOrEq(source, target) {
+                return queue[source].priority <= queue[target].priority;
+            }
+
+            function fixUp(pos) {
+                while (true) {
+                    var parent = (pos - 1) / 2 | 0;
+                    if (lessOrEq(parent, pos)) {
+                        break;
+                    }
+                    swap(pos, parent);
+                    pos = parent;
+                }
+            }
+
+            function fixDown(parent) {
+                while (parent * 2 + 1 < queue.length) {
+                    var left = parent * 2 + 1, right = left + 1;
+                    right = right < queue.length ? right : left;
+                    var place = lessOrEq(right, left) ? right : left;
+                    if (lessOrEq(parent, place)) {
+                        break;
+                    }
+                    swap(parent, place);
+                    parent = place;
+                }
+            }
+
+            this.addGift = function (gift) {
+                var pos = queue.length;
+                queue[pos] = gift;
+                fixUp(pos);
+                return queue.length;
+            };
+
+            this.buyGift = function () {
+                if (!queue.length) {
+                    return '';
+                }
+                var ret = queue[0];
+                swap(0, queue.length - 1);
+                queue.splice(-1);
+                fixDown(0);
+                return ret.gift;
+            };
+
+        }
+    </script>
+    <script type="text/javascript">
+        module('Holiday Shopping Priority Queue');
+        var gun = { gift: 'Water gun', priority: 1};
+        var truck = { gift: 'Toy truck', priority: 4 };
+        var skates = { gift: 'Roller Skates', priority: 3 };
+        var phone = { gift: 'Mobile phone', priority: 0 };
+        test('increment size after gift was added', function () {
+            var giftList = new HolidayPriorityQueue();
+            equal(giftList.addGift(gun), 1);
+            equal(giftList.addGift(truck), 2);
+            equal(giftList.addGift(skates), 3);
+        });
+
+        test('buy gift', function () {
+            var giftList = new HolidayPriorityQueue();
+            giftList.addGift(gun);
+            giftList.addGift(truck);
+            giftList.addGift(skates);
+            giftList.addGift(phone);
+
+            equal(giftList.buyGift(), phone.gift);
+            equal(giftList.buyGift(), gun.gift);
+            equal(giftList.buyGift(), skates.gift);
+            equal(giftList.buyGift(), truck.gift);
+        });
+
+        test('buy gift on empty queue', function () {
+            var giftList = new HolidayPriorityQueue();
+            strictEqual(giftList.buyGift(), '');
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
