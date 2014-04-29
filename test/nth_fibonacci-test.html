@@ -12,6 +12,9 @@
          *
          */
         function nthFibo(n) {
+            if (n > 2) {
+                return nthFibo(n - 2) + nthFibo(n - 1);
+            }
             return n - 1;
         }
     </script>
@@ -20,6 +23,10 @@
         test('nthFibo(n) is n', function () {
             equal(nthFibo(1), 0);
             equal(nthFibo(2), 1);
+        });
+        test('nthFibo(n)=nthFibo(n-1)+nthFibo(n-2)', function () {
+            equal(nthFibo(3), 0 + 1);
+            equal(nthFibo(4), 1 + 1);
         });
 
     </script>
