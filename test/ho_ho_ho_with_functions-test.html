@@ -6,18 +6,25 @@
     <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
     <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
     <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
     <script type="text/javascript">
         /**
          *
          */
-        function Foo(val) {
-            return new Number(val);
+        function ho(tail) {
+            return [ "Ho",  tail ? ' ' + tail : '!'].join('');
         }
     </script>
     <script type="text/javascript">
-        module("Operator overload");
-        test('sum', function () {
-            equal(new Foo(2) + new Foo(3), 5);
+        module('Ho Ho Ho with Functions!');
+        test('single', function () {
+            equal(ho(), 'Ho!');
+        });
+        test('pass ho as parameter', function () {
+            equal(ho(ho()), 'Ho Ho!');
+        });
+        test('complex', function () {
+            equal(ho(ho(ho())), 'Ho Ho Ho!');
         });
     </script>
 </head>

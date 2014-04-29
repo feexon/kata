@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function intersect(source) {
+            var meta = Array.prototype;
+            var arrays = meta.slice.call(arguments, 1);
+            return meta.concat.apply([], source).filter(function (item) {
+                return arrays.every(function (array) {
+                    return array.indexOf(item) != -1;
+                });
+            });
+        }
+    </script>
+    <script type="text/javascript">
+        module('Array intersect all');
+        test('interest with empty array', function () {
+            deepEqual(intersect([], [1, 2, 3]), []);
+            deepEqual(intersect([1, 2, 3], []), []);
+        });
+        test('interest with the same array', function () {
+            deepEqual(intersect([1, 2], [1, 2]).sort(), [1, 2]);
+        });
+        test('interest with two arrays', function () {
+            deepEqual(intersect([1, 2], [2, 3]), [2]);
+        });
+        test('interest with multi arrays', function () {
+            deepEqual(intersect([1, 2, 3], [2, 3, 4], [2, 4, 6]), [2]);
+        });
+        test('interest with nothing', function () {
+            deepEqual(intersect(), []);
+        });
+        test('interest with one array', function () {
+            deepEqual(intersect([1, 2]), [1, 2]);
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
