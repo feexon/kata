@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function nthFibo(n) {
+            if (n > 2) {
+                return nthFibo(n - 2) + nthFibo(n - 1);
+            }
+            return n - 1;
+        }
+    </script>
+    <script type="text/javascript">
+        module("N-th Fibonacci");
+        test('nthFibo(n) is n', function () {
+            equal(nthFibo(1), 0);
+            equal(nthFibo(2), 1);
+        });
+        test('nthFibo(n)=nthFibo(n-1)+nthFibo(n-2)', function () {
+            equal(nthFibo(3), 0 + 1);
+            equal(nthFibo(4), 1 + 1);
+        });
+
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
