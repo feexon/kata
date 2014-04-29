@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function splitInteger(number, parts) {
+            var item = Math.floor(number / parts);
+            var requires = number - item * parts;
+            return Array.apply(null, Array(parts)).map(function (_, pos) {
+                return  item + (pos < requires ? 1 : 0);
+            });
+        }
+    </script>
+    <script type="text/javascript">
+        module('almost even');
+        test('one part', function () {
+            deepEqual(splitInteger(2, 1), [2]);
+        });
+        test('number can be divided by part', function () {
+            deepEqual(splitInteger(2, 2), [1, 1]);
+            deepEqual(splitInteger(20, 5), [4, 4, 4, 4, 4]);
+        });
+        test('split integer', function () {
+            deepEqual(splitInteger(20, 6), [4, 4, 3, 3, 3, 3]);
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
