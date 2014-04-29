@@ -13,10 +13,33 @@
          */
         function HolidayPriorityQueue() {
             var queue = [];
-            this.addGift = function (gift) {
-                queue.push(gift);
-                return queue.length;
+
+            function swap(a, b) {
+                var tmp = queue[a];
+                queue[a] = queue[b];
+                queue[b] = tmp;
             }
+
+            function fixUp(pos) {
+                while (true) {
+                    var parent = (pos - 1) / 2 | 0;
+                    if (queue[pos].priority <= queue[parent].priority) {
+                        break;
+                    }
+                    swap(pos, parent);
+                    pos = parent;
+                }
+            }
+
+            this.addGift = function (gift) {
+                var pos = queue.length;
+                queue[pos] = gift;
+                fixUp(pos);
+                return queue.length;
+            };
+            this.peek = function () {
+                return queue;
+            };
         }
     </script>
     <script type="text/javascript">
@@ -24,11 +47,21 @@
         var gun = { gift: 'Water gun', priority: 1};
         var truck = { gift: 'Toy truck', priority: 4 };
         var skates = { gift: 'Roller Skates', priority: 3 };
+        var skates = { gift: 'Roller Skates', priority: 3 };
+        var phone = { gift: 'Mobile phone', priority: 10 };
         test('increment size after gift was added', function () {
             var giftList = new HolidayPriorityQueue();
             equal(giftList.addGift(gun), 1);
             equal(giftList.addGift(truck), 2);
             equal(giftList.addGift(skates), 3);
+        });
+        test('add gift', function () {
+            var giftList = new HolidayPriorityQueue();
+            equal(giftList.addGift(gun), 1);
+            equal(giftList.addGift(truck), 2);
+            equal(giftList.addGift(skates), 3);
+            equal(giftList.addGift(phone), 4);
+            deepEqual(giftList.peek(), [phone, truck, skates, gun]);
         });
     </script>
 </head>
