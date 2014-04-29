@@ -13,9 +13,9 @@
          */
         function splitInteger(number, parts) {
             var item = Math.floor(number / parts);
-            var stop = number - item * parts;
+            var requires = number - item * parts;
             return Array.apply(null, Array(parts)).map(function (_, pos) {
-                return  item + (pos < stop ? 1 : 0);
+                return  item + (pos < requires ? 1 : 0);
             });
         }
     </script>
