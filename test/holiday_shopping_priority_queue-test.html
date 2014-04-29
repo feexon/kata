@@ -61,9 +61,7 @@
                 fixDown(0);
                 return ret.gift;
             };
-            this.peek = function () {
-                return queue;
-            };
+
         }
     </script>
     <script type="text/javascript">
@@ -78,24 +76,16 @@
             equal(giftList.addGift(truck), 2);
             equal(giftList.addGift(skates), 3);
         });
-        test('add gift', function () {
-            var giftList = new HolidayPriorityQueue();
-            equal(giftList.addGift(gun), 1);
-            equal(giftList.addGift(truck), 2);
-            equal(giftList.addGift(skates), 3);
-            equal(giftList.addGift(phone), 4);
-            deepEqual(giftList.peek(), [phone, truck, skates, gun]);
-        });
+
         test('buy gift', function () {
             var giftList = new HolidayPriorityQueue();
             equal(giftList.addGift(gun), 1);
             equal(giftList.addGift(truck), 2);
             equal(giftList.addGift(skates), 3);
             equal(giftList.addGift(phone), 4);
+
             equal(giftList.buyGift(), phone.gift);
-            deepEqual(giftList.peek(), [ truck, gun, skates]);
             equal(giftList.buyGift(), truck.gift);
-            deepEqual(giftList.peek(), [ skates, gun]);
             equal(giftList.buyGift(), skates.gift);
             equal(giftList.buyGift(), gun.gift);
         });
