@@ -47,6 +47,7 @@
                     parent = place;
                 }
             }
+
             this.addGift = function (gift) {
                 var pos = queue.length;
                 queue[pos] = gift;
@@ -55,6 +56,9 @@
             };
 
             this.buyGift = function () {
+                if (!queue.length) {
+                    return '';
+                }
                 var ret = queue[0];
                 swap(0, queue.length - 1);
                 queue.splice(-1);
@@ -88,6 +92,11 @@
             equal(giftList.buyGift(), truck.gift);
             equal(giftList.buyGift(), skates.gift);
             equal(giftList.buyGift(), gun.gift);
+        });
+
+        test('buy gift on empty queue', function () {
+            var giftList = new HolidayPriorityQueue();
+            strictEqual(giftList.buyGift(), '');
         });
     </script>
 </head>
