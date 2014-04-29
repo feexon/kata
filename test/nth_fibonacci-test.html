@@ -11,8 +11,16 @@
         /**
          *
          */
+        function nthFibo(n) {
+            return n - 1;
+        }
     </script>
     <script type="text/javascript">
+        module("N-th Fibonacci");
+        test('nthFibo(n) is n', function () {
+            equal(nthFibo(1), 0);
+            equal(nthFibo(2), 1);
+        });
 
     </script>
 </head>
