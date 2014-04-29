@@ -11,14 +11,20 @@
         /**
          *
          */
-        function splitInteger(number,parts){
-            return [number];
+        function splitInteger(number, parts) {
+            return Array.apply(null, Array(parts)).map(function () {
+                return number / parts;
+            });
         }
     </script>
     <script type="text/javascript">
         module('almost even');
         test('one part', function () {
             deepEqual(splitInteger(2, 1), [2]);
+        });
+        test('number can be divided by part', function () {
+            deepEqual(splitInteger(2, 2), [1, 1]);
+            deepEqual(splitInteger(20, 5), [4, 4, 4, 4, 4]);
         });
     </script>
 </head>
