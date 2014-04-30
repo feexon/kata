@@ -11,14 +11,19 @@
         /**
          *
          */
-        function manhattanDistance(pointA,pointB){
-            return 0;
+        function manhattanDistance(pointA, pointB) {
+            return pointA.reduce(function(distance,coord,axis){
+                return distance+coord-pointB[axis];
+            },0);
         }
     </script>
     <script type="text/javascript">
         module("Manhattan Distance");
         test('same points', function () {
             equal(manhattanDistance([1, 1], [1, 1]), 0);
+        });
+        test('pointA larger than pointB', function () {
+            equal(manhattanDistance([5, 3], [3, 2]), 2 + 1);
         });
     </script>
 </head>
