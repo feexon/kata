@@ -11,8 +11,16 @@
         /**
          *
          */
+        function fib(n) {
+            return n - 1;
+        }
     </script>
     <script type="text/javascript">
+        module("Fibonacci");
+        test('constant', function () {
+            equal(fib(1), 0);
+            equal(fib(2), 1);
+        });
 
     </script>
 </head>
