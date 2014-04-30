@@ -12,7 +12,7 @@
          *
          */
         function normIndex(array, index) {
-            return array[index];
+            return array[index%array.length];
         }
     </script>
     <script type="text/javascript">
@@ -21,6 +21,10 @@
         test('get element by index', function () {
             equal(normIndex(array, 0), 10);
             equal(normIndex(array, 1), 11);
+        });
+        test('get element by index out of range', function () {
+            equal(normIndex(array, 4), 10);
+            equal(normIndex(array, 5), 11);
         });
     </script>
 </head>
