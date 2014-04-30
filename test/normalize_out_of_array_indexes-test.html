@@ -11,9 +11,17 @@
         /**
          *
          */
+        function normIndex(array, index) {
+            return array[index];
+        }
     </script>
     <script type="text/javascript">
-
+        var array = [10, 11, 12, 13];
+        module('Normalizing Out of Range Array Indexes');
+        test('get element by index', function () {
+            equal(normIndex(array, 0), 10);
+            equal(normIndex(array, 1), 11);
+        });
     </script>
 </head>
 <body>
