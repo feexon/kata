@@ -12,9 +12,9 @@
          *
          */
         function manhattanDistance(pointA, pointB) {
-            return pointA.reduce(function(distance,coord,axis){
-                return distance+coord-pointB[axis];
-            },0);
+            return pointA.reduce(function (distance, coord, axis) {
+                return distance + Math.abs(coord - pointB[axis]);
+            }, 0);
         }
     </script>
     <script type="text/javascript">
@@ -24,6 +24,9 @@
         });
         test('pointA larger than pointB', function () {
             equal(manhattanDistance([5, 3], [3, 2]), 2 + 1);
+        });
+        test('pointA larger than pointB', function () {
+            equal(manhattanDistance([3, 2],[5, 3]), 2 + 1);
         });
     </script>
 </head>
