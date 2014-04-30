@@ -12,7 +12,10 @@
          *
          */
         function fib(n) {
-            return n - 1;
+            if (n <= 2) {
+                return n - 1;
+            }
+            return fib(n-1)+fib(n-2);
         }
     </script>
     <script type="text/javascript">
@@ -20,6 +23,11 @@
         test('constant', function () {
             equal(fib(1), 0);
             equal(fib(2), 1);
+        });
+        test('fib(n) if n >2', function () {
+            equal(fib(3), 1);
+            equal(fib(4), 2);
+            equal(fib(5), 3);
         });
 
     </script>
