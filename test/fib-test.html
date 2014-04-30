@@ -12,10 +12,14 @@
          *
          */
         function fib(n) {
-            if (n <= 2) {
-                return n - 1;
+            var ret = 0;
+            var prev = 1;
+            while (n-->= 2) {
+                var tmp=ret;
+                ret=ret+prev;
+                prev=tmp;
             }
-            return fib(n-1)+fib(n-2);
+            return ret;
         }
     </script>
     <script type="text/javascript">
@@ -28,6 +32,9 @@
             equal(fib(3), 1);
             equal(fib(4), 2);
             equal(fib(5), 3);
+        });
+        test('fib(n) if n is large number', function () {
+            equal(fib(100), 218922995834555200000);
         });
 
     </script>
