@@ -12,7 +12,7 @@
          *
          */
         function narcissistic(value) {
-            return !value.toString().split('').reduce(function (value, digit, _, digits) {
+            return !String(value).split('').reduce(function (value, digit, _, digits) {
                 return value - Math.pow(digit, digits.length);
             }, value);
         }
