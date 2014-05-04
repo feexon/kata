@@ -11,9 +11,15 @@
         /**
          *
          */
+        function collatz(n) {
+            return [n].join('');
+        }
     </script>
     <script type="text/javascript">
-
+        module('Collatz');
+        test('stop value', function () {
+            strictEqual(collatz(1), '1');
+        });
     </script>
 </head>
 <body>
