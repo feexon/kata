@@ -12,7 +12,9 @@
          *
          */
         function locate(array, value) {
-            return array.indexOf(value) != -1;
+            return array.indexOf(value) != -1 || array.some(function (item) {
+                return Array.isArray(item) && locate(item, value);
+            });
         }
     </script>
     <script type="text/javascript">
@@ -20,6 +22,10 @@
         test('1 dimension array', function () {
             ok(locate([1, 2, 3, 4], 3));
             ok(!locate([1, 2, 3, 4], 0));
+        });
+        test('multi dimensions array', function () {
+            ok(locate([1, 2, [3], 4], 3));
+            ok(locate(['a', 'b', ['c', 'd', ['e']]], 'e'));
         });
     </script>
 </head>
