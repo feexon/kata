@@ -11,9 +11,16 @@
         /**
          *
          */
+        function locate(array, value) {
+            return array.indexOf(value) != -1;
+        }
     </script>
     <script type="text/javascript">
-
+        module('search in multidimensional array');
+        test('1 dimension array', function () {
+            ok(locate([1, 2, 3, 4], 3));
+            ok(!locate([1, 2, 3, 4], 0));
+        });
     </script>
 </head>
 <body>
