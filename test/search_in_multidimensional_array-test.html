@@ -12,8 +12,8 @@
          *
          */
         function locate(array, value) {
-            return array.indexOf(value) != -1 || array.some(function (item) {
-                return Array.isArray(item) && locate(item, value);
+            return array.some(function (item) {
+                return item == value || Array.isArray(item) && locate(item, value);
             });
         }
     </script>
