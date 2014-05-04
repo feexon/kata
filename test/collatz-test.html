@@ -12,13 +12,27 @@
          *
          */
         function collatz(n) {
-            return [n].join('');
+            var numbers = [];
+            while (true) {
+                numbers.push(n);
+                if (n == 1) {
+                    break;
+                }
+                n /= 2;
+            }
+
+            return numbers.join('->');
+
         }
     </script>
     <script type="text/javascript">
         module('Collatz');
         test('stop value', function () {
             strictEqual(collatz(1), '1');
+        });
+        test('even', function () {
+            strictEqual(collatz(2), '2->1');
+            strictEqual(collatz(4), '4->2->1');
         });
     </script>
 </head>
