@@ -12,7 +12,10 @@
          *
          */
         function findNumber(array) {
-            return Math.max.apply(null,array) - 1;
+            var n = Math.max.apply(null, array);
+            return n * (n + 1) / 2 - array.reduce(function (sum, item) {
+                return sum + item;
+            }, 0);
         }
     </script>
     <script type="text/javascript">
@@ -21,6 +24,10 @@
             equal(findNumber([2]), 1);
             equal(findNumber([1, 3]), 2);
             equal(findNumber([3, 1]), 2);
+        });
+        test('find lost number', function () {
+            equal(findNumber([2, 3]), 1);
+            equal(findNumber([1, 2, 3, 5, 6]), 4);
         });
     </script>
 </head>
