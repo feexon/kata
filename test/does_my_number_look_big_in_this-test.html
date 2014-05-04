@@ -11,9 +11,16 @@
         /**
          *
          */
+        function narcissistic(value) {
+            return Math.pow(value, 1) == value;
+        }
     </script>
     <script type="text/javascript">
-
+        module('Does my number look big in this?');
+        test('small number', function () {
+            ok(narcissistic(1));
+            ok(narcissistic(2));
+        });
     </script>
 </head>
 <body>
