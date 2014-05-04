@@ -12,7 +12,9 @@
          *
          */
         function narcissistic(value) {
-            return Math.pow(value, 1) == value;
+            return !value.toString().split('').reduce(function (value, digit, _, digits) {
+                return value - Math.pow(digit, digits.length);
+            }, value);
         }
     </script>
     <script type="text/javascript">
@@ -20,6 +22,10 @@
         test('small number', function () {
             ok(narcissistic(1));
             ok(narcissistic(2));
+        });
+        test('narcissistic', function () {
+            ok(narcissistic(153));
+            ok(!narcissistic(154));
         });
     </script>
 </head>
