@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function collatz(n) {
+            var result = [n];
+            while (n != 1) {
+                result.push(n = n % 2 ? 3 * n + 1 : n / 2);
+            }
+            return result.join('->');
+        }
+    </script>
+    <script type="text/javascript">
+        module('Collatz');
+        test('stop value', function () {
+            strictEqual(collatz(1), '1');
+        });
+        test('even', function () {
+            strictEqual(collatz(2), '2->1');
+            strictEqual(collatz(4), '4->2->1');
+        });
+        test('odd', function () {
+            strictEqual(collatz(5), '5->16->8->4->2->1');
+            strictEqual(collatz(3), '3->10->5->16->8->4->2->1');
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
