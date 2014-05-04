@@ -11,9 +11,22 @@
         /**
          *
          */
+        function mineLocation(field) {
+            for (var row = 0; row < field.length; row++) {
+                var col = field[row].indexOf(1);
+                if (col != -1) {
+                    return [row, col];
+                }
+            }
+        }
     </script>
     <script type="text/javascript">
-
+        module('Find the Mine!');
+        test('find', function () {
+            deepEqual(mineLocation([[1, 0], [0, 0]]), [0, 0]);
+            deepEqual(mineLocation([[0, 1], [0, 0]]), [0, 1]);
+            deepEqual(mineLocation([[0, 0], [1, 0]]), [1, 0]);
+        });
     </script>
 </head>
 <body>
