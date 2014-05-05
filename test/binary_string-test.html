@@ -11,9 +11,15 @@
         /**
          *
          */
+        function toBinaryString(number) {
+            return [number].join('');
+        }
     </script>
     <script type="text/javascript">
-
+        module('Binary string');
+        test('zero', function () {
+            strictEqual(toBinaryString(0), '0');
+        });
     </script>
 </head>
 <body>
