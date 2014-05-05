@@ -12,10 +12,15 @@
          *
          */
         function toBinaryString(number) {
-            if (number >= 2) {
-                return [(number / 2) & 1, number % 2].join('');
-            }
-            return [number].join('');
+            var pos = 32;
+            var base = 2;
+            var mask = base - 1;
+            var digits = [];
+            do {
+                digits[--pos] = number & mask;
+                number = Math.floor(number / base);
+            } while (number);
+            return digits.slice(pos).join('');
         }
     </script>
     <script type="text/javascript">
@@ -27,6 +32,9 @@
         test('one carry', function () {
             strictEqual(toBinaryString(2), '10');
             strictEqual(toBinaryString(3), '11');
+        });
+        test('multi carries', function () {
+            strictEqual(toBinaryString(6), '110');
         });
     </script>
 </head>
