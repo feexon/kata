@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        String.prototype.trim = function () {
+            return this.replace(/^\s+|\s+$/g,'');
+        }
+    </script>
+    <script type="text/javascript">
+        module('Trim a string');
+        test('no whitespace', function () {
+            equal('word'.trim(), 'word');
+        });
+        test('leading whitespace', function () {
+            equal(' word'.trim(), 'word');
+            equal('\rword'.trim(), 'word');
+            equal(' \rword'.trim(), 'word');
+        });
+        test("can't drop whitespace in center", function () {
+            equal('simple word'.trim(), 'simple word');
+        });
+        test("tailing whitespace", function () {
+            equal('word '.trim(), 'word');
+            equal('word\r'.trim(), 'word');
+            equal('word \r'.trim(), 'word');
+        });
+        test("drop leading and tailing whitespace", function () {
+            equal(' word '.trim(), 'word');
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
