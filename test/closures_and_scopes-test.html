@@ -12,11 +12,15 @@
          *
          */
         function createFunctions(n) {
-            return Array.apply(null, Array(n)).map(function (_,index) {
-                return function(){
-                  return index;
-                };
-            });
+            var callbacks = [];
+
+            for (var i = 0; i < n; i++) {
+                callbacks.push(function (i) {
+                    return i;
+                }.bind(this, i));
+            }
+
+            return callbacks;
         }
     </script>
     <script type="text/javascript">
