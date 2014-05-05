@@ -11,9 +11,21 @@
         /**
          *
          */
+        function createFunctions(n) {
+            return Array.apply(null, Array(n)).map(function (_,index) {
+                return function(){
+                  return index;
+                };
+            });
+        }
     </script>
     <script type="text/javascript">
-
+        module('Closures and scopes');
+        test('create function', function () {
+            var callbacks = createFunctions(2);
+            equal(callbacks[0](), 0);
+            equal(callbacks[1](), 1);
+        })
     </script>
 </head>
 <body>
