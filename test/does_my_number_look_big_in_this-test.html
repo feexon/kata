@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function narcissistic(value) {
+            return !String(value).split('').reduce(function (value, digit, _, digits) {
+                return value - Math.pow(digit, digits.length);
+            }, value);
+        }
+    </script>
+    <script type="text/javascript">
+        module('Does my number look big in this?');
+        test('small number', function () {
+            ok(narcissistic(1));
+            ok(narcissistic(2));
+        });
+        test('narcissistic', function () {
+            ok(narcissistic(153));
+            ok(!narcissistic(154));
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
