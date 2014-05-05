@@ -12,6 +12,9 @@
          *
          */
         function toBinaryString(number) {
+            if (number >= 2) {
+                return [(number / 2) & 1, number % 2].join('');
+            }
             return [number].join('');
         }
     </script>
@@ -20,6 +23,10 @@
         test('no carry', function () {
             strictEqual(toBinaryString(0), '0');
             strictEqual(toBinaryString(1), '1');
+        });
+        test('one carry', function () {
+            strictEqual(toBinaryString(2), '10');
+            strictEqual(toBinaryString(3), '11');
         });
     </script>
 </head>
