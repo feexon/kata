@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function toBinaryString(number) {
+            var bits = '';
+            do {
+                bits = (number & 1) + bits;
+            } while (number >>= 1);
+            return bits;
+        }
+    </script>
+    <script type="text/javascript">
+        module('Binary string');
+        test('no carry', function () {
+            strictEqual(toBinaryString(0), '0');
+            strictEqual(toBinaryString(1), '1');
+        });
+        test('one carry', function () {
+            strictEqual(toBinaryString(2), '10');
+            strictEqual(toBinaryString(3), '11');
+        });
+        test('multi carries', function () {
+            strictEqual(toBinaryString(6), '110');
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
