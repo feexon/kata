@@ -11,9 +11,15 @@
         /**
          *
          */
+        function likes(name) {
+            return 'no one likes this';
+        }
     </script>
     <script type="text/javascript">
-
+        module("Who likes it?");
+        test('no one', function () {
+            equal(likes([]), 'no one likes this');
+        });
     </script>
 </head>
 <body>
