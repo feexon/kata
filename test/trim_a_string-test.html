@@ -11,14 +11,19 @@
         /**
          *
          */
-        String.prototype.trim=function(){
-            return this;
+        String.prototype.trim = function () {
+            return this.replace(/\s+/,'');
         }
     </script>
     <script type="text/javascript">
         module('Trim a string');
         test('no whitespace', function () {
-           equal('word'.trim(),'word');
+            equal('word'.trim(), 'word');
+        });
+        test('leading whitespace', function () {
+            equal(' word'.trim(), 'word');
+            equal('\rword'.trim(), 'word');
+            equal(' \rword'.trim(), 'word');
         });
     </script>
 </head>
