@@ -12,7 +12,8 @@
          *
          */
         function likes(names) {
-            return (names.join(' and ').replace(/\s*and(.*?and)/, ',$1') || 'no one') + ' likes this';
+            var form = names.length > 1 ? 'like' : 'likes';
+            return (names.join(' and ').replace(/\s*and(.*?and)/, ',$1') || 'no one') + ' ' + form + ' this';
         }
     </script>
     <script type="text/javascript">
@@ -24,10 +25,10 @@
             equal(likes(['Peter']), 'Peter likes this');
         });
         test('two likes', function () {
-            equal(likes(['Jacob', 'Alex']), 'Jacob and Alex likes this');
+            equal(likes(['Jacob', 'Alex']), 'Jacob and Alex like this');
         });
         test('three likes', function () {
-            equal(likes(['Max', 'John', 'Mark']), 'Max, John and Mark likes this');
+            equal(likes(['Max', 'John', 'Mark']), 'Max, John and Mark like this');
         });
     </script>
 </head>
