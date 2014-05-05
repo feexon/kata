@@ -12,8 +12,10 @@
          *
          */
         function likes(names) {
-            var form = names.length > 1 ? 'like' : 'likes';
-            return (names.join(' and ').replace(/\s*and(.*?and)/, ',$1') || 'no one') + ' ' + form + ' this';
+            var others = names.slice(2);
+            var parts = [names.slice(0, 2).join(others.length ? ', ' : ' and ') || 'no one'];
+            others.length && parts.push(others.length > 1 ? others.length + ' others' : others);
+            return [parts.join(' and ') , names.length > 1 ? 'like' : 'likes', 'this'].join(' ');
         }
     </script>
     <script type="text/javascript">
@@ -29,6 +31,10 @@
         });
         test('three likes', function () {
             equal(likes(['Max', 'John', 'Mark']), 'Max, John and Mark like this');
+        });
+        test('more than three likes', function () {
+            equal(likes(['Alex', 'Jacob', 'Mark', 'Max']), "Alex, Jacob and 2 others like this");
+            equal(likes(['Alex', 'Jacob', 'Mark', 'Max', 'Peter']), "Alex, Jacob and 3 others like this");
         });
     </script>
 </head>
