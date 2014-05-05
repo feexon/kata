@@ -12,7 +12,7 @@
          *
          */
         String.prototype.trim = function () {
-            return this.replace(/^\s+/,'');
+            return this.replace(/^\s+|\s+$/,'');
         }
     </script>
     <script type="text/javascript">
@@ -27,6 +27,11 @@
         });
         test("can't drop whitespace in center", function () {
             equal('simple word'.trim(), 'simple word');
+        });
+        test("tailing whitespace", function () {
+            equal('word '.trim(), 'word');
+            equal('word\r'.trim(), 'word');
+            equal('word \r'.trim(), 'word');
         });
     </script>
 </head>
