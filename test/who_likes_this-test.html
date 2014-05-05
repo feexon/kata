@@ -12,7 +12,7 @@
          *
          */
         function likes(names) {
-            return (names.join('') || 'no one') + ' likes this';
+            return (names.join(' and ') || 'no one') + ' likes this';
         }
     </script>
     <script type="text/javascript">
@@ -22,6 +22,9 @@
         });
         test('one', function () {
             equal(likes(['Peter']), 'Peter likes this');
+        });
+        test('two likes', function () {
+            equal(likes(['Jacob', 'Alex']), 'Jacob and Alex likes this');
         });
     </script>
 </head>
