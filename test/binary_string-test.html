@@ -17,8 +17,9 @@
     </script>
     <script type="text/javascript">
         module('Binary string');
-        test('zero', function () {
+        test('no carry', function () {
             strictEqual(toBinaryString(0), '0');
+            strictEqual(toBinaryString(1), '1');
         });
     </script>
 </head>
