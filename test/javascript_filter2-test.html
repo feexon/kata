@@ -21,6 +21,9 @@
             deepEqual(roomMates([], 1), []);
             deepEqual(roomMates([], 2), []);
         });
+        test('rooms of 1st floor', function () {
+            deepEqual(roomMates(['foo', 'bar'], 1),['foo', 'bar']);
+        });
     </script>
 </head>
 <body>
