@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function roomMates(rooms, floor) {
+            return rooms.slice((floor - 1) * 6, floor * 6).filter(Boolean);
+        }
+    </script>
+    <script type="text/javascript">
+        module("javascript filter2");
+        test('empty rooms', function () {
+            deepEqual(roomMates([], 1), []);
+            deepEqual(roomMates([], 2), []);
+        });
+        test('rooms of 1st floor', function () {
+            deepEqual(roomMates(['foo', 'bar'], 1), ['foo', 'bar']);
+        });
+        test('rooms of nth floor', function () {
+            deepEqual(roomMates(['foo', 'bar', 'key', 'value', 'zoo', 'even', 'jim'], 1), ['foo', 'bar', 'key', 'value', 'zoo', 'even']);
+            deepEqual(roomMates(['foo', 'bar', 'key', 'value', 'zoo', 'even', 'jim'], 2), ['jim']);
+        });
+        test('filter rooms if nobody in', function () {
+            deepEqual(roomMates(['foo', 'bar', '', 'key', ''], 1), ['foo', 'bar', 'key']);
+        });
+        test('six rooms per floor', function () {
+            deepEqual(roomMates(['foo', '', '', '', '', '', 'bar'], 1), ['foo']);
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
