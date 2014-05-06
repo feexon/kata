@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function spinWords(string) {
+            return string.replace(/\w{5,}/g,function(word){
+                return word.split('').reverse().join('');
+            });
+
+        }
+    </script>
+    <script type="text/javascript">
+        module('Stop gninnipS My sdroW!');
+        test('word less than 5 length', function () {
+            equal(spinWords('code'), 'code');
+        });
+        test('reverse word length more than or equal 5', function () {
+            equal(spinWords('thing'), 'gniht');
+        });
+
+        test('multi words', function () {
+            equal(spinWords('code base'), 'code base');
+            equal(spinWords('some thing'), 'some gniht');
+            equal(spinWords('some thing anyway'), 'some gniht yawyna');
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
