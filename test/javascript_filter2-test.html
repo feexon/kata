@@ -12,7 +12,7 @@
          *
          */
         function roomMates(rooms, floor) {
-            return rooms;
+            return rooms.slice((floor - 1) * 6, floor * 6);
         }
     </script>
     <script type="text/javascript">
@@ -22,7 +22,11 @@
             deepEqual(roomMates([], 2), []);
         });
         test('rooms of 1st floor', function () {
-            deepEqual(roomMates(['foo', 'bar'], 1),['foo', 'bar']);
+            deepEqual(roomMates(['foo', 'bar'], 1), ['foo', 'bar']);
+        });
+        test('rooms of nth floor', function () {
+            deepEqual(roomMates(['foo', 'bar', 'key', 'value', 'zoo', 'even', 'jim'], 1), ['foo', 'bar', 'key', 'value', 'zoo', 'even']);
+            deepEqual(roomMates(['foo', 'bar', 'key', 'value', 'zoo', 'even', 'jim'], 2), ['jim']);
         });
     </script>
 </head>
