@@ -11,9 +11,15 @@
         /**
          *
          */
+        function matrixAddition(augend, addend) {
+            return [];
+        }
     </script>
     <script type="text/javascript">
-
+        module('Matrix addition');
+        test('empty matrix', function () {
+            deepEqual(matrixAddition([], []), []);
+        });
     </script>
 </head>
 <body>
