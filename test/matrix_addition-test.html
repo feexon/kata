@@ -12,6 +12,9 @@
          *
          */
         function matrixAddition(augend, addend) {
+            if(augend.length==1){
+                return [[augend[0][0]+addend[0][0]]];
+            }
             return [];
         }
     </script>
@@ -19,6 +22,9 @@
         module('Matrix addition');
         test('empty matrix', function () {
             deepEqual(matrixAddition([], []), []);
+        });
+        test('simple matrix', function () {
+            deepEqual(matrixAddition([[1]], [[2]]), [[3]]);
         });
     </script>
 </head>
