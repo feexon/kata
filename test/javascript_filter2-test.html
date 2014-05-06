@@ -31,6 +31,9 @@
         test('filter rooms if nobody in', function () {
             deepEqual(roomMates(['foo', 'bar', '', 'key', ''], 1), ['foo', 'bar', 'key']);
         });
+        test('six rooms per floor', function () {
+            deepEqual(roomMates(['foo', '', '', '', '', '', 'bar'], 1), ['foo']);
+        });
     </script>
 </head>
 <body>
