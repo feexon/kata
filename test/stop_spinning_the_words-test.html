@@ -11,7 +11,10 @@
         /**
          *
          */
-        function spinWords(string){
+        function spinWords(string) {
+            if (string.length >= 5) {
+                return string.split('').reverse().join('');
+            }
             return string;
         }
     </script>
@@ -19,6 +22,9 @@
         module('Stop gninnipS My sdroW!');
         test('word less than 5 length', function () {
             equal(spinWords('code'), 'code');
+        });
+        test('reverse word length more than or equal 5', function () {
+            equal(spinWords('thing'), 'gniht');
         });
     </script>
 </head>
