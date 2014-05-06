@@ -11,11 +11,12 @@
         /**
          *
          */
-        function matrixAddition(augend, addend) {
-            if(augend.length==1){
-                return [[augend[0][0]+addend[0][0]]];
-            }
-            return [];
+        function matrixAddition(a, b) {
+            return a.map(function (cols, row) {
+                return cols.map(function (cell, col) {
+                    return cell + b[row][col];
+                });
+            });
         }
     </script>
     <script type="text/javascript">
@@ -24,7 +25,11 @@
             deepEqual(matrixAddition([], []), []);
         });
         test('simple matrix', function () {
-            deepEqual(matrixAddition([[1]], [[2]]), [[3]]);
+            deepEqual(matrixAddition([ [1] ], [ [2] ]), [ [3] ]);
+        });
+        test('complex matrix', function () {
+            deepEqual(matrixAddition([ [1, 2], [3, 4] ], [ [5, 6], [7, 8] ]), [ [6, 8], [10, 12] ]);
+            deepEqual(matrixAddition( [ [1, 2, 3], [3, 2, 1,], [1, 1, 1] ], [ [2, 2, 1], [3, 2, 3], [1, 1, 3] ] ), [ [3, 4, 4], [6, 4, 4], [2, 2, 4] ]);
         });
     </script>
 </head>
