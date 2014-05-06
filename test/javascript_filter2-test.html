@@ -11,9 +11,16 @@
         /**
          *
          */
+        function roomMates(rooms, floor) {
+            return rooms;
+        }
     </script>
     <script type="text/javascript">
-
+        module("javascript filter2");
+        test('empty rooms', function () {
+            deepEqual(roomMates([], 1), []);
+            deepEqual(roomMates([], 2), []);
+        });
     </script>
 </head>
 <body>
