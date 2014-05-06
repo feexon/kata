@@ -13,7 +13,7 @@
          */
         function spinWords(string) {
             return string.replace(/\w{5,}/,function(word){
-                return word.length >= 5 ? word.split('').reverse().join('') : word;
+                return word.split('').reverse().join('');
             });
 
         }
