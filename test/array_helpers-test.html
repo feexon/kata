@@ -8,12 +8,19 @@
     <script type="text/javascript" src="../libs/qunit.js"></script>
     <script type="text/javascript" src="../libs/qunit-extras.js"></script>
     <script type="text/javascript">
-        /**
-         *
-         */
+        var extension = Array.prototype;
+        extension.sum = function () {
+            return this.reduce(function (sum, value) {
+                return sum + value;
+            }, 0);
+        }
     </script>
     <script type="text/javascript">
-
+        module("Array Helpers");
+        test('sum', function () {
+            equal([].sum(), 0);
+            equal([1, 2, 3].sum(), 6);
+        });
     </script>
 </head>
 <body>
