@@ -11,8 +11,16 @@
         /**
          *
          */
+        function createPhoneNumber(numbers) {
+
+            return numbers.join('').replace(/(\d{3})/, '($1)');
+        }
     </script>
     <script type="text/javascript">
+        module('Create phone number');
+        test('type', function () {
+            equal(createPhoneNumber([1, 2, 3, 4, 5, 6, 7, 8, 9, 0]).indexOf('(123)'), 0);
+        });
 
     </script>
 </head>
