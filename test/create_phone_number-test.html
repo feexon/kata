@@ -12,7 +12,9 @@
          *
          */
         function createPhoneNumber(numbers) {
-            return numbers.join('').replace(/(\d{3})(\d{3})/, '($1) $2-');
+            return '(012) 345-6789'.replace(/\d/g,function(which){
+                return numbers[which];
+            });
         }
     </script>
     <script type="text/javascript">
