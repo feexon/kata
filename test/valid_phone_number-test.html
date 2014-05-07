@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function validPhoneNumber(number) {
+            return /^\(\d{3}\) \d{3}-\d{4}$/.test(number);
+        }
+    </script>
+    <script type="text/javascript">
+        module('Valid Phone Number');
+
+        test('valid phone number', function () {
+            ok(validPhoneNumber('(123) 456-7890'));
+        });
+        test('invalid phone number type', function () {
+            ok(!validPhoneNumber('(1234) 456-7890'));
+        });
+        test('must separate type with retains using whitespace', function () {
+            ok(!validPhoneNumber('(123)456-7890'));
+        });
+        test('must retains number separate by -', function () {
+            ok(!validPhoneNumber('(123) 4567890'));
+            ok(!validPhoneNumber('(123) 4567-890'));
+        });
+        test('invalid phone number length', function () {
+            ok(!validPhoneNumber('(123) 456-789011'));
+        });
+        test('phone number must start (###)', function () {
+            ok(!validPhoneNumber('11(123) 456-7890'));
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
