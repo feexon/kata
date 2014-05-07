@@ -8,15 +8,21 @@
     <script type="text/javascript" src="../libs/qunit.js"></script>
     <script type="text/javascript" src="../libs/qunit-extras.js"></script>
     <script type="text/javascript">
-        var extension = Array.prototype;
-        extension.sum = function () {
+        var meta = Array.prototype;
+        meta.sum = function () {
             return this.reduce(function (sum, value) {
                 return sum + value;
             }, 0);
-        }
-        extension.average = function () {
-            return this.sum()/(this.length||1);
-        }
+        };
+        meta.average = function () {
+            return this.sum() / (this.length || 1);
+        };
+        meta.even = function () {
+            return this.filter(function (value) {
+                return value % 2 == 0;
+            });
+        };
+
     </script>
     <script type="text/javascript">
         module("Array Helpers");
@@ -28,6 +34,11 @@
             equal([].average(), 0);
             equal([1, 2, 3].average(), 2);
         });
+        test('even', function () {
+            deepEqual([].even(), []);
+            deepEqual([1, 2, 3, 4].even(), [2, 4]);
+        });
+       
     </script>
 </head>
 <body>
