@@ -11,9 +11,16 @@
         /**
          *
          */
+        function validPhoneNumber(number) {
+            return true;
+        }
     </script>
     <script type="text/javascript">
+        module('Valid Phone Number');
 
+        test('valid phone number', function () {
+            ok(validPhoneNumber('(123) 456-7890'));
+        })
     </script>
 </head>
 <body>
