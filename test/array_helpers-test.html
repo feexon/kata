@@ -14,12 +14,19 @@
                 return sum + value;
             }, 0);
         }
+        extension.average = function () {
+            return this.sum()/(this.length||1);
+        }
     </script>
     <script type="text/javascript">
         module("Array Helpers");
         test('sum', function () {
             equal([].sum(), 0);
             equal([1, 2, 3].sum(), 6);
+        });
+        test('average', function () {
+            equal([].average(), 0);
+            equal([1, 2, 3].average(), 2);
         });
     </script>
 </head>
