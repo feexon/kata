@@ -41,7 +41,7 @@
             }, 0);
         };
         meta.average = function () {
-            return this.sum() / (this.length || 1);
+            return this.sum() / this.length;
         };
     </script>
     <script type="text/javascript">
@@ -51,7 +51,7 @@
             equal([1, 2, 3].sum(), 6);
         });
         test('average', function () {
-            equal([].average(), 0);
+            ok(isNaN([].average()));
             equal([1, 2, 3].average(), 2);
         });
         test('even', function () {
