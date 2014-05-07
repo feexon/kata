@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        var meta = Array.prototype;
+
+        function even(value) {
+            return value % 2 == 0;
+        }
+        function not(filter) {
+            return function () {
+                return !filter.apply(this, arguments);
+            }
+        }
+        function filter(filter) {
+            return function () {
+                return this.filter(filter);
+            };
+        }
+        meta.even = filter(even);
+        meta.odd = filter(not(even));
+        var power = function (n) {
+            return function () {
+                return this.map(function (value) {
+                    return Math.pow(value, n);
+                });
+            };
+        };
+        meta.square = power(2);
+        meta.cube = power(3);
+
+        meta.sum = function () {
+            return this.reduce(function (sum, value) {
+                return sum + value;
+            }, 0);
+        };
+        meta.average = function () {
+            return this.sum() / this.length;
+        };
+    </script>
+    <script type="text/javascript">
+        module("Array Helpers");
+        test('sum', function () {
+            equal([].sum(), 0);
+            equal([1, 2, 3].sum(), 6);
+        });
+        test('average', function () {
+            ok(isNaN([].average()));
+            equal([1, 2, 3].average(), 2);
+        });
+        test('even', function () {
+            deepEqual([].even(), []);
+            deepEqual([1, 2, 3, 4].even(), [2, 4]);
+        });
+        test('odd', function () {
+            deepEqual([].odd(), []);
+            deepEqual([1, 2, 3, 4].odd(), [1, 3]);
+        });
+        test('square', function () {
+            deepEqual([].square(), []);
+            deepEqual([1, 2, 3].square(), [1, 4, 9]);
+        });
+        test('cube', function () {
+            deepEqual([].cube(), []);
+            deepEqual([1, 2, 3].cube(), [1, 8, 27]);
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
