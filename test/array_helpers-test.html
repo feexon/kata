@@ -17,16 +17,21 @@
         meta.average = function () {
             return this.sum() / (this.length || 1);
         };
-        meta.even = function () {
-            return this.filter(function (value) {
-                return value % 2 == 0;
-            });
-        };
-        meta.odd = function () {
-            return this.filter(function (value) {
-                return !(value % 2 == 0);
-            });
-        };
+        function even(value) {
+            return value % 2 == 0;
+        }
+        function not(filter) {
+            return function () {
+                return !filter.apply(this, arguments);
+            }
+        }
+        function filter(filter) {
+            return function () {
+                return this.filter(filter);
+            };
+        }
+        meta.even = filter(even);
+        meta.odd = filter(not(even));
     </script>
     <script type="text/javascript">
         module("Array Helpers");
