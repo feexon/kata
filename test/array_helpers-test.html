@@ -32,6 +32,12 @@
         }
         meta.even = filter(even);
         meta.odd = filter(not(even));
+
+        meta.square = function () {
+            return this.map(function (value) {
+                return Math.pow(value, 2);
+            });
+        };
     </script>
     <script type="text/javascript">
         module("Array Helpers");
@@ -50,6 +56,10 @@
         test('odd', function () {
             deepEqual([].odd(), []);
             deepEqual([1, 2, 3, 4].odd(), [1, 3]);
+        });
+        test('square', function () {
+            deepEqual([].square(), []);
+            deepEqual([1, 2, 3].square(), [1, 4, 9]);
         });
     </script>
 </head>
