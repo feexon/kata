@@ -12,7 +12,7 @@
          *
          */
         function validPhoneNumber(number) {
-            return /\(\d{3}\)/.test(number);
+            return /\(\d{3}\) /.test(number);
         }
     </script>
     <script type="text/javascript">
@@ -23,6 +23,9 @@
         });
         test('invalid phone number type', function () {
             ok(!validPhoneNumber('(1234) 456-7890'));
+        });
+        test('must separate type with retains using whitespace', function () {
+            ok(!validPhoneNumber('(123)456-7890'));
         });
     </script>
 </head>
