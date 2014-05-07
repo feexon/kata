@@ -9,14 +9,7 @@
     <script type="text/javascript" src="../libs/qunit-extras.js"></script>
     <script type="text/javascript">
         var meta = Array.prototype;
-        meta.sum = function () {
-            return this.reduce(function (sum, value) {
-                return sum + value;
-            }, 0);
-        };
-        meta.average = function () {
-            return this.sum() / (this.length || 1);
-        };
+
         function even(value) {
             return value % 2 == 0;
         }
@@ -32,11 +25,23 @@
         }
         meta.even = filter(even);
         meta.odd = filter(not(even));
+        var power = function (n) {
+            return function () {
+                return this.map(function (value) {
+                    return Math.pow(value, n);
+                });
+            };
+        };
+        meta.square = power(2);
+        meta.cube = power(3);
 
-        meta.square = function () {
-            return this.map(function (value) {
-                return Math.pow(value, 2);
-            });
+        meta.sum = function () {
+            return this.reduce(function (sum, value) {
+                return sum + value;
+            }, 0);
+        };
+        meta.average = function () {
+            return this.sum() / (this.length || 1);
         };
     </script>
     <script type="text/javascript">
@@ -60,6 +65,10 @@
         test('square', function () {
             deepEqual([].square(), []);
             deepEqual([1, 2, 3].square(), [1, 4, 9]);
+        });
+        test('cube', function () {
+            deepEqual([].cube(), []);
+            deepEqual([1, 2, 3].cube(), [1, 8, 27]);
         });
     </script>
 </head>
