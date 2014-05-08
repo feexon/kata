@@ -11,9 +11,18 @@
         /**
          *
          */
+        function scoreThrows(radiuses) {
+            var rates = [1, 1 / 2, 0];
+            return 10 * rates[Math.floor(radiuses/5)];
+        }
     </script>
     <script type="text/javascript">
-
+        module("Throwing darts");
+        test('score one dart', function () {
+            equal(scoreThrows(11), 0);
+            equal(scoreThrows(5), 5);
+            equal(scoreThrows(1), 10);
+        });
     </script>
 </head>
 <body>
