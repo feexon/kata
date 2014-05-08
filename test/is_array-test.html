@@ -11,8 +11,20 @@
         /**
          *
          */
+        function isArray(array) {
+            return toString.call(array)=='[object Array]';
+        }
     </script>
     <script type="text/javascript">
+        module("Array.isArray");
+        test('isArray', function () {
+            ok(isArray([]));
+            ok(!isArray({ __proto__ : Array.prototype }));
+        });
+        test('other types', function () {
+            ok(!isArray(''));
+            ok(!isArray(1));
+        });
 
     </script>
 </head>
