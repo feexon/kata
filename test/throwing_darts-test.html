@@ -13,7 +13,7 @@
          */
         function scoreThrows(radiuses) {
             var rates = [1, 1 / 2, 0];
-            return 10 * rates[Math.floor(radiuses/5)];
+            return 10 * rates[Math.min(Math.floor((radiuses + 1) / 6), 2)];
         }
     </script>
     <script type="text/javascript">
@@ -22,6 +22,8 @@
             equal(scoreThrows(11), 0);
             equal(scoreThrows(5), 5);
             equal(scoreThrows(1), 10);
+            equal(scoreThrows(10), 5);
+            equal(scoreThrows(23), 0);
         });
     </script>
 </head>
