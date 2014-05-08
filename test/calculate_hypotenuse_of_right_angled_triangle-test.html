@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function calculateHypotenuse(length, width) {
+            function isValid(number) {
+                return number > 0 && typeof(number) == 'number' && !isNaN(number);
+            }
+
+            if (!isValid(length)||!isValid(width)) {
+                throw 'invalid input';
+            }
+            return +Math.sqrt(length * length + width * width).toFixed(3);
+        }
+    </script>
+    <script type="text/javascript">
+        module('Calculate Hypotenuse of Right-angled Triangle');
+        test('calculate', function () {
+            equal(calculateHypotenuse(3, 4), 5);
+        });
+        test('The returned value should be a number rounded to three decimal places', function () {
+            equal(calculateHypotenuse(1, 1) + '', '1.414');
+        });
+        test('The returned value should be a number', function () {
+            equal(typeof calculateHypotenuse(1, 1), 'number');
+        });
+        test('should other types of input raise exception', function (assert) {
+            assert.throws(function () {
+                calculateHypotenuse(true, 1);
+            });
+        });
+
+        test('should NaN input raise exception', function (assert) {
+            assert.throws(function () {
+                calculateHypotenuse(NaN, 1);
+            });
+            assert.throws(function () {
+                calculateHypotenuse(1, 'two');
+            });
+        });
+        test('should input not above 0 raise exception', function (assert) {
+            assert.throws(function () {
+                calculateHypotenuse(0, 1);
+            });
+            assert.throws(function () {
+                calculateHypotenuse(1, 0);
+            });
+            assert.throws(function () {
+                calculateHypotenuse(1, -1);
+            });
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
