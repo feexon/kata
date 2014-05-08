@@ -12,7 +12,11 @@
          *
          */
         function calculateHypotenuse(length, width) {
-            if (width <= 0 || length <= 0 || isNaN(length) || isNaN(width)) {
+            function isValid(number) {
+                return number > 0 && typeof(number) == 'number' && !isNaN(number);
+            }
+
+            if (!isValid(length)||!isValid(width)) {
                 throw 'invalid input';
             }
             return +Math.sqrt(length * length + width * width).toFixed(3);
@@ -29,9 +33,15 @@
         test('The returned value should be a number', function () {
             equal(typeof calculateHypotenuse(1, 1), 'number');
         });
+        test('should other types of input raise exception', function (assert) {
+            assert.throws(function () {
+                calculateHypotenuse(true, 1);
+            });
+        });
+
         test('should NaN input raise exception', function (assert) {
             assert.throws(function () {
-                calculateHypotenuse('one', 1);
+                calculateHypotenuse(NaN, 1);
             });
             assert.throws(function () {
                 calculateHypotenuse(1, 'two');
