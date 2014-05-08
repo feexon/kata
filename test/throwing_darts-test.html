@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function scoreThrows(radiuses) {
+            var bonus = radiuses.length > 1 && radiuses.every(function (radius) {
+                return radius < 5;
+            }) ? 100 : 0;
+            return bonus + radiuses.reduce(function (score, radius) {
+                return score + (radius > 10 ? 0 : radius < 5 ? 10 : 5);
+            }, 0);
+        }
+    </script>
+    <script type="text/javascript">
+        module("Throwing darts");
+        test('score one dart', function () {
+            equal(scoreThrows([11]), 0);
+            equal(scoreThrows([5]), 5);
+            equal(scoreThrows([1]), 10);
+            equal(scoreThrows([10]), 5);
+            equal(scoreThrows([23]), 0);
+            equal(scoreThrows([10.5]), 0);
+        });
+        test('sum all score', function () {
+            equal(scoreThrows([1, 5, 11]), 15);
+        });
+        test('all radius less than 5 will award 100 bonus points', function () {
+            equal(scoreThrows([1, 2, 3, 4]), 100 + 40);
+        });
+        test('score with float radius', function () {
+            equal(scoreThrows([0, 5, 10, 10.5, 4.5]), 30);
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
