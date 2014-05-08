@@ -13,10 +13,11 @@
          */
         function scoreThrows(radiuses) {
             var rates = [1, 1 / 2, 0];
-
-            return radiuses.reduce(function (score, radius) {
-                return score + 10 * rates[Math.min(Math.floor((radius + 1) / 6), 2)];
+            var top = 10;
+            var points = radiuses.reduce(function (score, radius) {
+                return score + top * rates[Math.min(Math.floor((radius + 1) / 6), 2)];
             }, 0);
+            return radiuses.length > 1 && points / top == radiuses.length ? 100 + points : points;
         }
     </script>
     <script type="text/javascript">
@@ -30,6 +31,9 @@
         });
         test('sum all score', function () {
             equal(scoreThrows([1, 5, 11]), 15);
+        });
+        test('all radius less than 5 will award 100 bonus points', function () {
+            equal(scoreThrows([1, 2, 3, 4]), 100 + 40);
         });
     </script>
 </head>
