@@ -11,14 +11,17 @@
         /**
          *
          */
-        function calculateHypotenuse(length,width){
-            return Math.sqrt(length*length+width*width);
+        function calculateHypotenuse(length, width) {
+            return Math.sqrt(length * length + width * width).toFixed(3);
         }
     </script>
     <script type="text/javascript">
         module('Calculate Hypotenuse of Right-angled Triangle');
         test('calculate', function () {
             equal(calculateHypotenuse(3, 4), 5);
+        });
+        test('The returned value should be a number rounded to three decimal places', function () {
+            equal(calculateHypotenuse(1, 1) + '', '1.414');
         });
     </script>
 </head>
