@@ -12,7 +12,7 @@
          *
          */
         function calculateHypotenuse(length, width) {
-            if (isNaN(length) || isNaN(width)) {
+            if (width <= 0 || length <= 0 || isNaN(length) || isNaN(width)) {
                 throw 'invalid input';
             }
             return +Math.sqrt(length * length + width * width).toFixed(3);
@@ -35,6 +35,17 @@
             });
             assert.throws(function () {
                 calculateHypotenuse(1, 'two');
+            });
+        });
+        test('should input not above 0 raise exception', function (assert) {
+            assert.throws(function () {
+                calculateHypotenuse(0, 1);
+            });
+            assert.throws(function () {
+                calculateHypotenuse(1, 0);
+            });
+            assert.throws(function () {
+                calculateHypotenuse(1, -1);
             });
         });
     </script>
