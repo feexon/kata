@@ -12,12 +12,12 @@
          *
          */
         function scoreThrows(radiuses) {
-            var rates = [1, 1 / 2, 0];
-            var top = 10;
-            var points = radiuses.reduce(function (score, radius) {
-                return score + top * rates[Math.min(Math.floor((radius + 1) / 6), 2)];
+            var bonus = radiuses.length > 1 && radiuses.every(function (radius) {
+                return radius < 5;
+            }) ? 100 : 0;
+            return bonus + radiuses.reduce(function (score, radius) {
+                return score + (radius > 10 ? 0 : radius < 5 ? 10 : 5);
             }, 0);
-            return radiuses.length > 1 && points / top == radiuses.length ? 100 + points : points;
         }
     </script>
     <script type="text/javascript">
@@ -28,12 +28,16 @@
             equal(scoreThrows([1]), 10);
             equal(scoreThrows([10]), 5);
             equal(scoreThrows([23]), 0);
+            equal(scoreThrows([10.5]), 0);
         });
         test('sum all score', function () {
             equal(scoreThrows([1, 5, 11]), 15);
         });
         test('all radius less than 5 will award 100 bonus points', function () {
             equal(scoreThrows([1, 2, 3, 4]), 100 + 40);
+        });
+        test('score with float radius', function () {
+            equal(scoreThrows([0, 5, 10, 10.5, 4.5]), 30);
         });
     </script>
 </head>
