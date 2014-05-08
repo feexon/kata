@@ -11,9 +11,15 @@
         /**
          *
          */
+        function calculateHypotenuse(length,width){
+            return Math.sqrt(length*length+width*width);
+        }
     </script>
     <script type="text/javascript">
-
+        module('Calculate Hypotenuse of Right-angled Triangle');
+        test('calculate', function () {
+            equal(calculateHypotenuse(3, 4), 5);
+        });
     </script>
 </head>
 <body>
