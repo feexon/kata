@@ -13,10 +13,10 @@
          */
         function calculateHypotenuse(length, width) {
             function isValid(number) {
-                return number > 0 && typeof(number) == 'number' && !isNaN(number);
+                return number > 0 && +number === number;
             }
 
-            if (!isValid(length)||!isValid(width)) {
+            if (!isValid(length) || !isValid(width)) {
                 throw 'invalid input';
             }
             return +Math.sqrt(length * length + width * width).toFixed(3);
