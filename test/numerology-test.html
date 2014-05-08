@@ -11,9 +11,17 @@
         /**
          *
          */
+        function solution(date) {
+            return [date.getDate(), date.getMonth() + 1, date.getFullYear()].join('').split('').reduce(function (sum, digit) {
+                return +digit + sum;
+            }, 0);
+        }
     </script>
     <script type="text/javascript">
-
+        module("Numerology");
+        test('sum all digits < 10', function () {
+            equal(solution(new Date('01-01-2014')), 9);
+        })
     </script>
 </head>
 <body>
