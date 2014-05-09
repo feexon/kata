@@ -12,7 +12,7 @@
          *
          */
         function reverseWords(str) {
-            return str.replace(/\w+/g,function(word){
+            return str.replace(/[^\s]+/g,function(word){
                 return word.split('').reverse().join('');
             });
         }
@@ -28,6 +28,9 @@
         });
         test('reverse all words', function () {
             equal(reverseWords('This is an example'), 'sihT si na elpmaxe');
+        });
+        test('reverse words include special symbols', function () {
+            equal(reverseWords('This is an example!'), 'sihT si na !elpmaxe');
         });
     </script>
 </head>
