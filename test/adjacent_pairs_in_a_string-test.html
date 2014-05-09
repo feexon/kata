@@ -15,7 +15,7 @@
             var words = string.split(/\s+/);
             var previous = null;
             return words.reduce(function (count, word) {
-                if (previous == word) {
+                if (previous && previous.toLowerCase() == word.toLowerCase()) {
                     previous = null;
                     return count + 1;
                 }
@@ -38,6 +38,9 @@
         });
         test('ignore matched items', function () {
             equal(countAdjacentPairs('dog dog dog'), 1);
+        });
+        test('case insensitive', function () {
+            equal(countAdjacentPairs('DOG dog'), 1);
         });
     </script>
 </head>
