@@ -11,8 +11,10 @@
         /**
          *
          */
-        function array_diff(a,b){
-            return a;
+        function array_diff(a, b) {
+            return a.filter(function (value, index) {
+                return value != b[index];
+            });
         }
     </script>
     <script type="text/javascript">
@@ -20,6 +22,9 @@
 
         test('diff with empty array', function () {
             deepEqual(array_diff([1, 2, 3], []), [1, 2, 3]);
+        });
+        test('diff with same array', function () {
+            deepEqual(array_diff([1, 2, 3], [1, 2, 3]), []);
         });
     </script>
 </head>
