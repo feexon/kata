@@ -11,9 +11,16 @@
         /**
          *
          */
+        function array_diff(a,b){
+            return a;
+        }
     </script>
     <script type="text/javascript">
+        module('Array diff');
 
+        test('diff with empty array', function () {
+            deepEqual(array_diff([1, 2, 3], []), [1, 2, 3]);
+        });
     </script>
 </head>
 <body>
