@@ -11,10 +11,16 @@
         /**
          *
          */
-        function Archiver(){
-           this.getArchive=function(){
-               return [{date:new Date(),val:this.temperature}];
-           }
+        function Archiver() {
+            var archive=[];
+            Object.defineProperty(this,'temperature',{
+               set:function(value){
+                   archive.push({date: new Date(), val: value});
+               }
+            });
+            this.getArchive = function () {
+                return archive;
+            }
         }
     </script>
     <script type="text/javascript">
@@ -23,8 +29,18 @@
             var archiver = new Archiver();
             archiver.temperature = 23;
             var archive = archiver.getArchive();
-            equal(archive[0].date.constructor,Date);
-            equal(archive[0].val,23);
+            equal(archive[0].date.constructor, Date);
+            equal(archive[0].val, 23);
+        });
+        test('recording', function () {
+            var archiver = new Archiver();
+            archiver.temperature = 23;
+            archiver.temperature = 22;
+            archiver.temperature = 21;
+            var archive = archiver.getArchive();
+            equal(archive[0].val, 23);
+            equal(archive[1].val, 22);
+            equal(archive[2].val, 21);
         });
     </script>
 </head>
