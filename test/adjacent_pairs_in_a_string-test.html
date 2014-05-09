@@ -11,15 +11,20 @@
         /**
          *
          */
-        function countAdjacentPairs(string){
-            return 0;
+        function countAdjacentPairs(string) {
+            var words = string.split(/\s+/);
+            return words[0] == words[1] ? 1 : 0;
         }
     </script>
     <script type="text/javascript">
         module('Adjacent pairs in a string');
-        test('empty string',function(){
-            equal(countAdjacentPairs(''),0);
-        })
+        test('empty string', function () {
+            equal(countAdjacentPairs(''), 0);
+        });
+        test('simple', function () {
+            equal(countAdjacentPairs('dog dog'), 1);
+            equal(countAdjacentPairs('cat dog'), 0);
+        });
     </script>
 </head>
 <body>
