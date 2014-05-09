@@ -12,15 +12,8 @@
          *
          */
         function countAdjacentPairs(string) {
-            var previous = null;
-            return string.toLowerCase().split(/\s+/).reduce(function (count, word) {
-                if (previous== word) {
-                    previous = null;
-                    return count + 1;
-                }
-                previous = word;
-                return count;
-            }, 0);
+            var matcher = string.match(/(\S+)\s+\1/gi);
+            return matcher?matcher.length:0;
         }
     </script>
     <script type="text/javascript">
