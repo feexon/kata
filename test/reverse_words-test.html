@@ -12,7 +12,7 @@
          *
          */
         function reverseWords(str) {
-            return str.replace(/[^\s]+/g,function(word){
+            return str.replace(/\S+/g,function(word){
                 return word.split('').reverse().join('');
             });
         }
