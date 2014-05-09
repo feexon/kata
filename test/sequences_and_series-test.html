@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *      Have a look at the following numbers.
+
+         n | score
+         ---+-------
+         1 |  50
+         2 |  150
+         3 |  300
+         4 |  500
+         5 |  750
+         Can you find a pattern in it? If so, then write a function getScore(n) which returns the score for any positive number n:
+
+         getScore(1); // === 50
+         getScore(2); // === 150
+         getScore(3); // === 300
+         // ...
+         */
+        function getScore(n) {
+            return 50 * n*(n+1)/2;
+        }
+    </script>
+    <script type="text/javascript">
+        module('Sequences and Series');
+        test('score', function () {
+            equal(getScore(1), 50);
+            equal(getScore(2), 150);
+            equal(getScore(3), 300);
+            equal(getScore(4), 500);
+            equal(getScore(5), 750);
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
