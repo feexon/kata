@@ -12,14 +12,26 @@
          *
          */
         function fibonacci(n) {
-            return [];
+            var ret = [];
+            for (var i = 0; i <= n; i++) {
+                ret.push((ret[i - 2] || (i - 1 ? 0 : 1)) + (ret[i - 1] || 0));
+            }
+            return  ret;
         }
     </script>
     <script type="text/javascript">
         module('Complete Fibonacci Series');
         test('return [] if n == -1', function () {
             deepEqual(fibonacci(-1), []);
-        })
+        });
+        test('return [fib(0)..fib(n)] if n >= 0', function () {
+            deepEqual(fibonacci(0), [0]);
+            deepEqual(fibonacci(1), [0, 1]);
+            deepEqual(fibonacci(2), [0, 1, 1]);
+            deepEqual(fibonacci(3), [0, 1, 1, 2]);
+            deepEqual(fibonacci(4), [0, 1, 1, 2, 3]);
+
+        });
     </script>
 </head>
 <body>
