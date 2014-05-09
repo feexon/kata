@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function array_diff(a, b) {
+            return a.filter(function (value) {
+                return b.indexOf(value) < 0;
+            });
+        }
+    </script>
+    <script type="text/javascript">
+        module('Array diff');
+
+        test('diff with empty array', function () {
+            deepEqual(array_diff([1, 2, 3], []), [1, 2, 3]);
+        });
+        test('diff with same array', function () {
+            deepEqual(array_diff([1, 2, 3], [1, 2, 3]), []);
+        });
+        test('diff', function () {
+            deepEqual(array_diff([1, 2, 3], [3, 1, 2]), []);
+            deepEqual(array_diff([1, 2, 3], [1, 2]), [3]);
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
