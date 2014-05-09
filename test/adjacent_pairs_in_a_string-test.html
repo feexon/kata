@@ -12,9 +12,8 @@
          *
          */
         function countAdjacentPairs(string) {
-            var words = string.split(/\s+/);
             var previous = null;
-            return words.reduce(function (count, word) {
+            return string.split(/\s+/).reduce(function (count, word) {
                 if (previous && previous.toLowerCase() == word.toLowerCase()) {
                     previous = null;
                     return count + 1;
