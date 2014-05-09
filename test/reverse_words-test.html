@@ -11,18 +11,23 @@
         /**
          *
          */
-        function reverseWords(str){
-            return str.split('').reverse().join('');
+        function reverseWords(str) {
+            return str.replace(/\w+/g,function(word){
+                return word.split('').reverse().join('');
+            });
         }
     </script>
     <script type="text/javascript">
         module('Reverse words');
-        test('reversed word are the same',function(){
-           equal(reverseWords(''),'');
-           equal(reverseWords('aba'),'aba');
+        test('reversed word are the same', function () {
+            equal(reverseWords(''), '');
+            equal(reverseWords('aba'), 'aba');
         });
-        test('reverse word',function(){
-           equal(reverseWords('hi'),'ih');
+        test('reverse word', function () {
+            equal(reverseWords('hi'), 'ih');
+        });
+        test('reverse all words', function () {
+            equal(reverseWords('This is an example'), 'sihT si na elpmaxe');
         });
     </script>
 </head>
