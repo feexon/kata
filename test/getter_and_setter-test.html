@@ -13,8 +13,13 @@
          */
         function Archiver() {
             var archive=[];
+            var temperature;
             Object.defineProperty(this,'temperature',{
+               get:function(){
+                   return temperature;
+               },
                set:function(value){
+                   temperature=value;
                    archive.push({date: new Date(), val: value});
                }
             });
@@ -31,6 +36,7 @@
             var archive = archiver.getArchive();
             equal(archive[0].date.constructor, Date);
             equal(archive[0].val, 23);
+            equal(archiver.temperature,23);
         });
         test('recording', function () {
             var archiver = new Archiver();
