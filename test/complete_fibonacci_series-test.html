@@ -11,9 +11,15 @@
         /**
          *
          */
+        function fibonacci(n) {
+            return [];
+        }
     </script>
     <script type="text/javascript">
-
+        module('Complete Fibonacci Series');
+        test('return [] if n == -1', function () {
+            deepEqual(fibonacci(-1), []);
+        })
     </script>
 </head>
 <body>
