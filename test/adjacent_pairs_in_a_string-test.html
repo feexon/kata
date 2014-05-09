@@ -13,7 +13,16 @@
          */
         function countAdjacentPairs(string) {
             var words = string.split(/\s+/);
-            return words[0] == words[1] ? 1 : 0;
+            var previous=null;
+            var count=0;
+            for (var i = 0; i < words.length; i++) {
+                var word = words[i];
+                if(previous==word){
+                    count++;
+                }
+                previous=word;
+            }
+            return count;
         }
     </script>
     <script type="text/javascript">
@@ -24,6 +33,9 @@
         test('simple', function () {
             equal(countAdjacentPairs('dog dog'), 1);
             equal(countAdjacentPairs('cat dog'), 0);
+        });
+        test('having other words', function () {
+            equal(countAdjacentPairs('cat dog dog'), 1);
         });
     </script>
 </head>
