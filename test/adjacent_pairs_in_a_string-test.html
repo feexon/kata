@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function countAdjacentPairs(string) {
+            var matcher = string.match(/(\S+)\s+\1/gi);
+            return matcher?matcher.length:0;
+        }
+    </script>
+    <script type="text/javascript">
+        module('Adjacent pairs in a string');
+        test('empty string', function () {
+            equal(countAdjacentPairs(''), 0);
+        });
+        test('simple', function () {
+            equal(countAdjacentPairs('dog dog'), 1);
+            equal(countAdjacentPairs('cat dog'), 0);
+        });
+        test('having other words', function () {
+            equal(countAdjacentPairs('cat dog dog'), 1);
+        });
+        test('ignore matched items', function () {
+            equal(countAdjacentPairs('dog dog dog'), 1);
+        });
+        test('case insensitive', function () {
+            equal(countAdjacentPairs('DOG dog'), 1);
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>

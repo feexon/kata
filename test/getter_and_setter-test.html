@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function Archiver() {
+            var archive=[];
+            var temperature;
+            Object.defineProperty(this,'temperature',{
+               get:function(){
+                   return temperature;
+               },
+               set:function(value){
+                   temperature=value;
+                   archive.push({date: new Date(), val: value});
+               }
+            });
+            this.getArchive = function () {
+                return archive;
+            }
+        }
+    </script>
+    <script type="text/javascript">
+        module('Getter and Setters');
+        test('single', function () {
+            var archiver = new Archiver();
+            archiver.temperature = 23;
+            var archive = archiver.getArchive();
+            equal(archive[0].date.constructor, Date);
+            equal(archive[0].val, 23);
+            equal(archiver.temperature,23);
+        });
+        test('recording', function () {
+            var archiver = new Archiver();
+            archiver.temperature = 23;
+            archiver.temperature = 22;
+            archiver.temperature = 21;
+            var archive = archiver.getArchive();
+            equal(archive[0].val, 23);
+            equal(archive[1].val, 22);
+            equal(archive[2].val, 21);
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
