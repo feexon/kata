@@ -16,7 +16,8 @@
             var previous = null;
             return words.reduce(function (count, word) {
                 if (previous == word) {
-                    count+=1;
+                    previous = null;
+                    return count + 1;
                 }
                 previous = word;
                 return count;
@@ -34,6 +35,9 @@
         });
         test('having other words', function () {
             equal(countAdjacentPairs('cat dog dog'), 1);
+        });
+        test('ignore matched items', function () {
+            equal(countAdjacentPairs('dog dog dog'), 1);
         });
     </script>
 </head>
