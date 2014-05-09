@@ -13,8 +13,8 @@
          */
         function countAdjacentPairs(string) {
             var previous = null;
-            return string.split(/\s+/).reduce(function (count, word) {
-                if (previous && previous.toLowerCase() == word.toLowerCase()) {
+            return string.toLowerCase().split(/\s+/).reduce(function (count, word) {
+                if (previous== word) {
                     previous = null;
                     return count + 1;
                 }
