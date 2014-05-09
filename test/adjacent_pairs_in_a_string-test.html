@@ -13,16 +13,14 @@
          */
         function countAdjacentPairs(string) {
             var words = string.split(/\s+/);
-            var previous=null;
-            var count=0;
-            for (var i = 0; i < words.length; i++) {
-                var word = words[i];
-                if(previous==word){
-                    count++;
+            var previous = null;
+            return words.reduce(function (count, word) {
+                if (previous == word) {
+                    count+=1;
                 }
-                previous=word;
-            }
-            return count;
+                previous = word;
+                return count;
+            }, 0);
         }
     </script>
     <script type="text/javascript">
