@@ -11,9 +11,21 @@
         /**
          *
          */
+        function Archiver(){
+           this.getArchive=function(){
+               return [{date:new Date(),val:this.temperature}];
+           }
+        }
     </script>
     <script type="text/javascript">
-
+        module('Getter and Setters');
+        test('single', function () {
+            var archiver = new Archiver();
+            archiver.temperature = 23;
+            var archive = archiver.getArchive();
+            equal(archive[0].date.constructor,Date);
+            equal(archive[0].val,23);
+        });
     </script>
 </head>
 <body>
