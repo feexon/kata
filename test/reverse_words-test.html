@@ -11,9 +11,16 @@
         /**
          *
          */
+        function reverseWords(str){
+            return str;
+        }
     </script>
     <script type="text/javascript">
-
+        module('Reverse words');
+        test('reversed word are the same',function(){
+           equal(reverseWords(''),'');
+           equal(reverseWords('aba'),'aba');
+        });
     </script>
 </head>
 <body>
