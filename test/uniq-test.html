@@ -22,7 +22,10 @@
         });
         test('remove following duplicated item', function () {
             deepEqual(uniq(['a', 'a']), ['a']);
-            deepEqual(uniq(['a', 'a', 'b', 'c', 'c']), ['a','b','c']);
+            deepEqual(uniq(['a', 'a', 'b', 'c', 'c']), ['a', 'b', 'c']);
+        });
+        test('duplicated item not following will be reserved',function(){
+            deepEqual(uniq(['a', 'b', 'a']), ['a', 'b', 'a']);
         });
     </script>
 </head>
