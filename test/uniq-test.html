@@ -11,14 +11,18 @@
         /**
          *
          */
-        function uniq(array){
-            return array;
+        function uniq(array) {
+            return array.join('').replace(/(.)\1/g, '$1').split('');
         }
     </script>
     <script type="text/javascript">
         module('uniq');
-        test('uniq array',function(){
-            deepEqual(uniq(['a','b','c']),['a','b','c']);
+        test('uniq array', function () {
+            deepEqual(uniq(['a', 'b', 'c']), ['a', 'b', 'c']);
+        });
+        test('remove following duplicated item', function () {
+            deepEqual(uniq(['a', 'a']), ['a']);
+            deepEqual(uniq(['a', 'a', 'b', 'c', 'c']), ['a','b','c']);
         });
     </script>
 </head>
