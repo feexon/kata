@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function uniq(array) {
+            return array.filter(function (item, index) {
+                return !item || item !== array[index - 1];
+            });
+        }
+    </script>
+    <script type="text/javascript">
+        module('uniq');
+        test('uniq array', function () {
+            deepEqual(uniq(['a', 'b', 'c']), ['a', 'b', 'c']);
+        });
+        test('remove following duplicated item', function () {
+            deepEqual(uniq(['a', 'a']), ['a']);
+            deepEqual(uniq(['a', 'a', 'b', 'c', 'c']), ['a', 'b', 'c']);
+        });
+        test('duplicated item not following will be reserved', function () {
+            deepEqual(uniq(['a', 'b', 'a']), ['a', 'b', 'a']);
+        });
+        test('remove all following duplicated items', function () {
+            deepEqual(uniq(['a', 'a', 'a', 'b', 'b', 'b', 'c', 'c', 'c']), ['a', 'b', 'c']);
+        });
+        test('one element', function () {
+            deepEqual(uniq(['foo']), ['foo']);
+        });
+        test('array are the same items', function () {
+            deepEqual(uniq(['foo', 'foo']), ['foo']);
+        });
+        test('array containing one undefined element', function () {
+            deepEqual(uniq([undefined]), [undefined]);
+        });
+
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
