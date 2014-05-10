@@ -12,8 +12,8 @@
          *
          */
         function uniq(array) {
-            return array.filter(function(item,index){
-                return item!=array[index-1];
+            return array.filter(function (item, index) {
+                return item != array[index - 1];
             });
         }
     </script>
@@ -34,6 +34,9 @@
         });
         test('one element', function () {
             deepEqual(uniq(['foo']), ['foo']);
+        });
+        test('array are the same items', function () {
+            deepEqual(uniq(['foo', 'foo']), ['foo']);
         });
 
     </script>
