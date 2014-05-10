@@ -13,7 +13,7 @@
          */
         function uniq(array) {
             return array.filter(function (item, index) {
-                return item != array[index - 1];
+                return !item || item !== array[index - 1];
             });
         }
     </script>
@@ -37,6 +37,9 @@
         });
         test('array are the same items', function () {
             deepEqual(uniq(['foo', 'foo']), ['foo']);
+        });
+        test('array containing one undefined element', function () {
+            deepEqual(uniq([undefined]), [undefined]);
         });
 
     </script>
