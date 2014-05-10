@@ -11,9 +11,15 @@
         /**
          *
          */
+        function uniq(array){
+            return array;
+        }
     </script>
     <script type="text/javascript">
-
+        module('uniq');
+        test('uniq array',function(){
+            deepEqual(uniq(['a','b','c']),['a','b','c']);
+        });
     </script>
 </head>
 <body>
