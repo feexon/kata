@@ -12,8 +12,8 @@
          *
          */
         function solution() {
-            var args = [].concat.apply([],arguments);
-            return args.indexOf(args[0])!=-1;
+            var args = [].concat.apply([], arguments);
+            return args.indexOf(args[0], 1) != -1;
         }
     </script>
     <script type="text/javascript">
@@ -24,6 +24,9 @@
         });
         test('duplicated args', function () {
             ok(solution(1, 2, 1));
+        });
+        test('single argument', function () {
+            ok(!solution(1));
         });
     </script>
 </head>
