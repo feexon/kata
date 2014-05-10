@@ -12,7 +12,7 @@
          *
          */
         function uniq(array) {
-            return array.join('').replace(/(.)\1/g, '$1').split('');
+            return array.join('').replace(/(.)\1+/g, '$1').split('');
         }
     </script>
     <script type="text/javascript">
@@ -24,8 +24,11 @@
             deepEqual(uniq(['a', 'a']), ['a']);
             deepEqual(uniq(['a', 'a', 'b', 'c', 'c']), ['a', 'b', 'c']);
         });
-        test('duplicated item not following will be reserved',function(){
+        test('duplicated item not following will be reserved', function () {
             deepEqual(uniq(['a', 'b', 'a']), ['a', 'b', 'a']);
+        });
+        test('remove all following duplicated items', function () {
+            deepEqual(uniq(['a', 'a', 'a', 'b', 'b', 'b', 'c', 'c', 'c']), ['a', 'b', 'c']);
         });
     </script>
 </head>
