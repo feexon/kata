@@ -11,9 +11,19 @@
         /**
          *
          */
+        function swapper() {
+            var result=[].concat.apply([],arguments);
+            result[0] = result[0] + result[1];
+            result[1] = result[0] - result[1];
+            result[0] = result[0] - result[1];
+            return result;
+        }
     </script>
     <script type="text/javascript">
-
+        module("Swapper");
+        test('swap', function () {
+            deepEqual(swapper(1, 2), [2, 1]);
+        })
     </script>
 </head>
 <body>
