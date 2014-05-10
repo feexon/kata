@@ -12,7 +12,9 @@
          *
          */
         function uniq(array) {
-            return array.join('').replace(/(.)\1+/g, '$1').split('');
+            return array.filter(function(item,index){
+                return item!=array[index-1];
+            });
         }
     </script>
     <script type="text/javascript">
@@ -30,6 +32,10 @@
         test('remove all following duplicated items', function () {
             deepEqual(uniq(['a', 'a', 'a', 'b', 'b', 'b', 'c', 'c', 'c']), ['a', 'b', 'c']);
         });
+        test('one element', function () {
+            deepEqual(uniq(['foo']), ['foo']);
+        });
+
     </script>
 </head>
 <body>
