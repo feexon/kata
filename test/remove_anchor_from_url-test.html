@@ -12,7 +12,7 @@
          *
          */
         function removeUrlAnchor(url) {
-            return url.replace(/#[^?]+/, '');
+            return url.replace(/#[^?]*/, '');
         }
     </script>
     <script type="text/javascript">
@@ -25,6 +25,9 @@
         });
         test('reserve params', function () {
             equal(removeUrlAnchor('www.domain.com#main?page=1'), 'www.domain.com?page=1');
+        });
+        test('remove empty anchor', function () {
+            equal(removeUrlAnchor('www.domain.com#?page=1'), 'www.domain.com?page=1');
         });
     </script>
 </head>
