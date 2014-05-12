@@ -9,11 +9,22 @@
     <script type="text/javascript" src="../libs/qunit-extras.js"></script>
     <script type="text/javascript">
         /**
-         *
+         *Simple sort, but this time sort regardless of upper / lower case. So the input of
+
+         [ "Hello", "there", "I'm", "fine"]
+         is translated to
+
+         ["fine", "Hello", "I'm", "there" ]
          */
+        function sortme(array) {
+            return array.sort();
+        }
     </script>
     <script type="text/javascript">
-
+        module('Array sort2');
+        test('sort', function () {
+            deepEqual(sortme([ "hello", "there", "i'm", "fine"]), ["fine", "hello", "i'm", "there" ]);
+        });
     </script>
 </head>
 <body>
