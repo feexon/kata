@@ -11,14 +11,17 @@
         /**
          *
          */
-        function removeUrlAnchor(url){
-            return url;
+        function removeUrlAnchor(url) {
+            return url.replace(/#.*/,'');
         }
     </script>
     <script type="text/javascript">
         module('Remove anchor from URL');
         test('no anchor', function () {
             equal(removeUrlAnchor('www.domain.com'), 'www.domain.com');
+        });
+        test('remove anchor', function () {
+            equal(removeUrlAnchor('www.domain.com#main'), 'www.domain.com');
         });
     </script>
 </head>
