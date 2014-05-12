@@ -26,23 +26,18 @@
     </script>
     <script type="text/javascript">
         module('Find within array');
+        function hasEvenItem(value, index) {
+            return value % 2 == 0;
+        }
         test('empty array', function () {
             ok(!findInArray([], undefined));
         });
         test('simple match', function () {
-            function matcher(value, index) {
-                return value % 2 == 0;
-            }
-
-            ok(!findInArray([1], matcher));
-            ok(findInArray([2], matcher));
+            ok(!findInArray([1], hasEvenItem));
+            ok(findInArray([2], hasEvenItem));
         });
         test('match', function () {
-            function matcher(value, index) {
-                return value % 2 == 0;
-            }
-
-            ok(findInArray([1, 3, 5, 7, 8], matcher));
+            ok(findInArray([1, 3, 5, 7, 8], hasEvenItem));
         });
 
     </script>
