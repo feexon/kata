@@ -11,9 +11,15 @@
         /**
          *
          */
+        function removeUrlAnchor(url){
+            return url;
+        }
     </script>
     <script type="text/javascript">
-
+        module('Remove anchor from URL');
+        test('no anchor', function () {
+            equal(removeUrlAnchor('www.domain.com'), 'www.domain.com');
+        });
     </script>
 </head>
 <body>
