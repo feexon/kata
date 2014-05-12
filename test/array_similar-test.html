@@ -19,9 +19,7 @@
          arraysSimilar(arr3, arr4); // Should equal false
          */
         function arraysSimilar(arr1, arr2) {
-            return arr1.length == arr2.length &&arr2.sort()&& arr1.sort().every(function (value, index) {
-                return value === arr2[index];
-            });
+            return JSON.stringify(arr1.sort())==JSON.stringify(arr2.sort());
         }
     </script>
     <script type="text/javascript">
