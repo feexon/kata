@@ -18,7 +18,7 @@
          */
         function sortme(array) {
             return array.sort(function (a, b) {
-                return a.toLowerCase() > b.toLowerCase() ? 1 : -1;
+                return a.toLowerCase().localeCompare(b.toLowerCase());
             });
         }
     </script>
