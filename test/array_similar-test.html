@@ -19,7 +19,9 @@
          arraysSimilar(arr3, arr4); // Should equal false
          */
         function arraysSimilar(arr1, arr2) {
-           return arr1[0]===arr2[0];
+            return arr1.every(function (value, index) {
+                return value === arr2[index];
+            });
         }
     </script>
     <script type="text/javascript">
@@ -28,6 +30,10 @@
             ok(arraysSimilar([1], [1]));
             ok(!arraysSimilar([1], [2]));
             ok(!arraysSimilar([1], ['1']));
+        });
+        test('items in order', function () {
+            ok(arraysSimilar([1, 2, 3], [1, 2, 3]));
+            ok(!arraysSimilar([1, 2, 3], [1, 2, 4]));
         });
     </script>
 </head>
