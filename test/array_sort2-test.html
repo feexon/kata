@@ -17,13 +17,18 @@
          ["fine", "Hello", "I'm", "there" ]
          */
         function sortme(array) {
-            return array.sort();
+            return array.sort(function (a, b) {
+                return a.toLowerCase() > b.toLowerCase() ? 1 : -1;
+            });
         }
     </script>
     <script type="text/javascript">
         module('Array sort2');
         test('sort', function () {
             deepEqual(sortme([ "hello", "there", "i'm", "fine"]), ["fine", "hello", "i'm", "there" ]);
+        });
+        test('case insensitive', function () {
+            deepEqual(sortme([ "Hello", "there", "I'm", "fine"]), ["fine", "Hello", "I'm", "there" ]);
         });
     </script>
 </head>
