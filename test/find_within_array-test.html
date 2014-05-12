@@ -21,7 +21,7 @@
          findInArray([1,3,5,6,7], trueIfEven) // should === 3
          */
         function findInArray(array, iterator) {
-            return array.length && array.some(iterator);
+            return array.length > 0 && array.some(iterator);
         }
     </script>
     <script type="text/javascript">
@@ -30,7 +30,7 @@
             return value % 2 == 0;
         }
         test('empty array', function () {
-            ok(!findInArray([], undefined));
+            strictEqual(findInArray([], undefined), false);
         });
         test('simple match', function () {
             ok(!findInArray([1], hasEvenItem));
