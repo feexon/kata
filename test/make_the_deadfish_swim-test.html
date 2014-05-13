@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *Write a simple parser that will parse and run Deadfish.
+         Deadfish has 4 commands, each 1 character long.
+         'i' will increment the value ( initially 0 ).
+         'd' will decrement the value.
+         's' will square the value.
+         'o' will output the value into the return array.
+         Invalid characters should be ignored.
+
+         parse( "iiisdoso" ); // should == [ 8 , 64 ]
+         */
+        function parse(commands) {
+            var value = 0;
+
+            return commands.split('').reduce(function (result, command) {
+                switch (command) {
+                    case 'i':
+                        value++;
+                        break;
+                    case 'd':
+                        value--;
+                        break;
+                    case 's':
+                        value *= value;
+                        break;
+                    case 'o':
+                        result.push(value);
+                        break;
+                }
+                return result;
+            }, []);
+        }
+    </script>
+    <script type="text/javascript">
+        module('Make the deadfish swim');
+        test('output result', function () {
+            deepEqual(parse('o'), [0]);
+            deepEqual(parse(''), []);
+            deepEqual(parse('ooo'), [0, 0, 0]);
+        });
+        test('increment', function () {
+            deepEqual(parse('io'), [1]);
+            deepEqual(parse('iio'), [2]);
+        });
+        test('decrement', function () {
+            deepEqual(parse('do'), [-1]);
+            deepEqual(parse('ddo'), [-2]);
+        });
+        test('square', function () {
+            deepEqual(parse('iiso'), [4]);
+            deepEqual(parse('iisso'), [16]);
+        });
+        test('mixed', function () {
+            deepEqual(parse('iiisdoso'), [8, 64]);
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
