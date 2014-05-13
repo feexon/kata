@@ -12,7 +12,9 @@
          *
          */
         function squareSum(numbers) {
-            return numbers[0]*numbers[0];
+            return numbers.reduce(function (sum, number) {
+                return sum + number * number;
+            }, 0);
         }
     </script>
     <script type="text/javascript">
@@ -20,6 +22,10 @@
         test('one item', function () {
             equal(squareSum([1]), 1);
             equal(squareSum([2]), 4);
+        });
+        test('sum items', function () {
+            equal(squareSum([1, 2]), 5);
+            equal(squareSum([1, 2, 2]), 9);
         });
     </script>
 </head>
