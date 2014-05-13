@@ -15,17 +15,20 @@
          formatWords(['ninja', '', 'ronin']) // should return "ninja and ronin"
          formatWords([]) // should return ""
          */
-        function formatWords(words){
-            return words.join('');
+        function formatWords(words) {
+            return words.join(' and ');
         }
     </script>
     <script type="text/javascript">
         module('Format words into a sentence');
-        test('empty words',function(){
-           equal(formatWords([]),'');
+        test('empty words', function () {
+            equal(formatWords([]), '');
         });
-        test('one word',function(){
-           equal(formatWords(['ninja']),'ninja');
+        test('one word', function () {
+            equal(formatWords(['ninja']), 'ninja');
+        });
+        test('two words', function () {
+            equal(formatWords(['ninja', 'samurai']), 'ninja and samurai');
         });
     </script>
 </head>
