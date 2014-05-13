@@ -13,7 +13,7 @@
             solution('aaabbbcccc', 'bbb') # should return 1
          */
         function solution(fullText,searchText){
-            var result = fullText.match(new RegExp(searchText));
+            var result = fullText.match(new RegExp(searchText,'g'));
             return result?result.length:0;
         }
     </script>
@@ -24,6 +24,9 @@
        });
        test('once',function(){
            equal(solution('abcd','cd'),1);
+       });
+       test('many times',function(){
+           equal(solution('aa_bb_cc_dd_bb_e','bb'),2);
        });
     </script>
 </head>
