@@ -30,6 +30,9 @@
                     case 'd':
                         value--;
                         break;
+                    case 's':
+                        value *= value;
+                        break;
                     case 'o':
                         result.push(value);
                         break;
@@ -52,6 +55,10 @@
         test('decrement', function () {
             deepEqual(parse('do'), [-1]);
             deepEqual(parse('ddo'), [-2]);
+        });
+        test('square', function () {
+            deepEqual(parse('iiso'), [4]);
+            deepEqual(parse('iisso'), [16]);
         });
     </script>
 </head>
