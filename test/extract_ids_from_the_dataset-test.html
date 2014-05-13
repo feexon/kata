@@ -11,9 +11,15 @@
         /**
          *
          */
+        function extractIds(dataset){
+            return [];
+        }
     </script>
     <script type="text/javascript">
-
+        module('Extract the IDs from the data set');
+        test('empty data object', function () {
+            deepEqual(extractIds({}),[]);
+        });
     </script>
 </head>
 <body>
