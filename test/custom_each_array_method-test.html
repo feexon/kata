@@ -12,11 +12,7 @@
          *
          */
         Array.prototype.each = function (iterator) {
-           for(var i=0;i<this.length;i++){
-               if(iterator(this[i],i)){
-                    break;
-               }
-           }
+          return this.some(iterator);
         }
     </script>
     <script type="text/javascript">
