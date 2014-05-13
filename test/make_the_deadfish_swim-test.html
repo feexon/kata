@@ -20,9 +20,19 @@
          parse( "iiisdoso" ); // should == [ 8 , 64 ]
          */
         function parse(commands) {
-            return commands.split('').map(function(){
-                return 0;
-            });
+            var value = 0;
+
+            return commands.split('').reduce(function (result, command) {
+                switch (command) {
+                    case 'i':
+                        value++;
+                        break;
+                    case 'o':
+                        result.push(value);
+                        break;
+                }
+                return result;
+            }, []);
         }
     </script>
     <script type="text/javascript">
@@ -31,6 +41,10 @@
             deepEqual(parse('o'), [0]);
             deepEqual(parse(''), []);
             deepEqual(parse('ooo'), [0, 0, 0]);
+        });
+        test('increment', function () {
+            deepEqual(parse('io'), [1]);
+            deepEqual(parse('iio'), [2]);
         });
     </script>
 </head>
