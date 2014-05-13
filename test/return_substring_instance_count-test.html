@@ -13,13 +13,17 @@
             solution('aaabbbcccc', 'bbb') # should return 1
          */
         function solution(fullText,searchText){
-            return 0;
+            var result = fullText.match(new RegExp(searchText));
+            return result?result.length:0;
         }
     </script>
     <script type="text/javascript">
        module('Return substring instance count');
        test('substring not found',function(){
            equal(solution('abcd','ef'),0);
+       });
+       test('once',function(){
+           equal(solution('abcd','cd'),1);
        });
     </script>
 </head>
