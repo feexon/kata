@@ -13,8 +13,7 @@
             solution('aaabbbcccc', 'bbb') # should return 1
          */
         function solution(fullText,searchText){
-            var result = fullText.match(new RegExp(searchText,'g'));
-            return result?result.length:0;
+           return fullText.split(searchText).length-1;
         }
     </script>
     <script type="text/javascript">
