@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function squareSum(numbers) {
+            return numbers.reduce(function (sum, number) {
+                return sum + number * number;
+            }, 0);
+        }
+    </script>
+    <script type="text/javascript">
+        module('Square(n) Sum');
+        test('one item', function () {
+            equal(squareSum([1]), 1);
+            equal(squareSum([2]), 4);
+        });
+        test('sum items', function () {
+            equal(squareSum([1, 2]), 5);
+            equal(squareSum([1, 2, 2]), 9);
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
