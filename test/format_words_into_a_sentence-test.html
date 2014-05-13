@@ -16,7 +16,7 @@
          formatWords([]) // should return ""
          */
         function formatWords(words) {
-            return words.join(' and ');
+            return words.join(', ').replace(/, (\S+)$/, ' and $1');
         }
     </script>
     <script type="text/javascript">
@@ -29,6 +29,10 @@
         });
         test('two words', function () {
             equal(formatWords(['ninja', 'samurai']), 'ninja and samurai');
+        });
+        test('more than two words', function () {
+            equal(formatWords(['ninja', 'samurai', 'ronin']), 'ninja, samurai and ronin');
+            equal(formatWords(['robot', 'ninja', 'samurai', 'ronin']), 'robot, ninja, samurai and ronin');
         });
     </script>
 </head>
