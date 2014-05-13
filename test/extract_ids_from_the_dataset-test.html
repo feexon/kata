@@ -12,14 +12,13 @@
          *
          */
         function extractIds(data) {
-            var ids = [];
-            [].concat(data).forEach(function (object) {
+            return [].concat(data).reduce(function (ids,object) {
                 if (object.id) {
                     ids.push(object.id);
                 }
-                ids=ids.concat(extractIds(object.items || []));
-            });
-            return ids;
+                return ids.concat(extractIds(object.items || []));
+            },[]);
+
         }
     </script>
     <script type="text/javascript">
