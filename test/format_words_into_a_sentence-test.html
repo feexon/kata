@@ -35,6 +35,7 @@
             equal(formatWords(['robot', 'ninja', 'samurai', 'ronin']), 'robot, ninja, samurai and ronin');
         });
         test('skip empty words', function () {
+            equal( formatWords(['']), "");
             equal( formatWords(['ninja', '', 'ronin']), "ninja and ronin");
         });
         test('format null', function () {
