@@ -60,6 +60,9 @@
             deepEqual(parse('iiso'), [4]);
             deepEqual(parse('iisso'), [16]);
         });
+        test('mixed', function () {
+            deepEqual(parse('iiisdoso'), [8, 64]);
+        });
     </script>
 </head>
 <body>
