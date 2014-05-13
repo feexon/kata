@@ -27,6 +27,9 @@
                     case 'i':
                         value++;
                         break;
+                    case 'd':
+                        value--;
+                        break;
                     case 'o':
                         result.push(value);
                         break;
@@ -45,6 +48,10 @@
         test('increment', function () {
             deepEqual(parse('io'), [1]);
             deepEqual(parse('iio'), [2]);
+        });
+        test('decrement', function () {
+            deepEqual(parse('do'), [-1]);
+            deepEqual(parse('ddo'), [-2]);
         });
     </script>
 </head>
