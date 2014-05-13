@@ -12,7 +12,8 @@
          *
          */
         function solution(string) {
-            return string.replace(/(.{2})/g, '$1,').replace(/,$/,'').replace(/(^\w$|,\w)$/g, '$1_').split(/,/);
+            string = string.length % 2 == 0 ? string : string + '_';
+            return string.match(/^$|.{2}/g);
         }
     </script>
     <script type="text/javascript">
@@ -23,7 +24,7 @@
         test('even string', function () {
             deepEqual(solution('ab'), ['ab']);
             deepEqual(solution('abcd'), ['ab', 'cd']);
-            deepEqual(solution('abcdef'), ['ab', 'cd','ef']);
+            deepEqual(solution('abcdef'), ['ab', 'cd', 'ef']);
         });
         test('odd string', function () {
             deepEqual(solution('a'), ['a_']);
