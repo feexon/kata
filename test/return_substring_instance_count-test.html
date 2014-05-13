@@ -9,11 +9,18 @@
     <script type="text/javascript" src="../libs/qunit-extras.js"></script>
     <script type="text/javascript">
         /**
-         *
+         *  solution('aa_bb_cc_dd_bb_e', 'bb') # should return 2 since bb shows up twice
+            solution('aaabbbcccc', 'bbb') # should return 1
          */
+        function solution(fullText,searchText){
+            return 0;
+        }
     </script>
     <script type="text/javascript">
-
+       module('Return substring instance count');
+       test('substring not found',function(){
+           equal(solution('abcd','ef'),0);
+       });
     </script>
 </head>
 <body>
