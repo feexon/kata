@@ -11,14 +11,17 @@
         /**
          *
          */
-        function extractIds(dataset){
-            return [];
+        function extractIds(dataset) {
+            return dataset.id ? [dataset.id] : [];
         }
     </script>
     <script type="text/javascript">
         module('Extract the IDs from the data set');
         test('empty data object', function () {
-            deepEqual(extractIds({}),[]);
+            deepEqual(extractIds({}), []);
+        });
+        test('simple object', function () {
+            deepEqual(extractIds({id: 1}), [1]);
         });
     </script>
 </head>
