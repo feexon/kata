@@ -11,9 +11,16 @@
         /**
          *
          */
+        function squareSum(numbers) {
+            return numbers[0]*numbers[0];
+        }
     </script>
     <script type="text/javascript">
-
+        module('Square(n) Sum');
+        test('one item', function () {
+            equal(squareSum([1]), 1);
+            equal(squareSum([2]), 4);
+        });
     </script>
 </head>
 <body>
