@@ -11,9 +11,18 @@
         /**
          *
          */
+        Array.prototype.each=function(){
+
+        }
     </script>
     <script type="text/javascript">
-
+        module('Custom each() Array method');
+        test('empty array', function () {
+            [].each(function (value, index) {
+                ok(false, 'each was called with empty array!');
+            });
+            ok(true);
+        });
     </script>
 </head>
 <body>
