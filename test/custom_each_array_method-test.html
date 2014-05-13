@@ -11,8 +11,8 @@
         /**
          *
          */
-        Array.prototype.each=function(){
-
+        Array.prototype.each = function (iterator) {
+           return this.forEach(iterator);
         }
     </script>
     <script type="text/javascript">
@@ -22,6 +22,13 @@
                 ok(false, 'each was called with empty array!');
             });
             ok(true);
+        });
+        test('iterate all', function () {
+            var records = [];
+            ['a', 'b'].each(function (value, index) {
+                records.push([value, index].join(''));
+            });
+            deepEqual(records, ['a0', 'b1']);
         });
     </script>
 </head>
