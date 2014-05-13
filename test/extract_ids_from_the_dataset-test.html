@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function extractIds(data) {
+            return [].concat(data).reduce(function (ids,object) {
+                if (object.id) {
+                    ids.push(object.id);
+                }
+                return ids.concat(extractIds(object.items || []));
+            },[]);
+
+        }
+    </script>
+    <script type="text/javascript">
+        module('Extract the IDs from the data set');
+        test('empty data object', function () {
+            deepEqual(extractIds({}), []);
+        });
+        test('simple object', function () {
+            deepEqual(extractIds({id: 1}), [1]);
+        });
+        test('collection objects', function () {
+            deepEqual(extractIds([ {id: 1}, {id: 2} ]), [1, 2]);
+        });
+        test('nested ids', function () {
+            var data = {
+                id: 1,
+                items: [
+                    {id: 2},
+                    {id: 3, items: [
+                        {id: 4},
+                        {id: 5}
+                    ]}
+                ]
+            };
+            deepEqual(extractIds([data]), [1, 2, 3, 4, 5]);
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
