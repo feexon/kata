@@ -11,14 +11,18 @@
         /**
          *
          */
-        function solution(string){
-            return string.split();
+        function solution(string) {
+            return string.replace(/(.{2})(.+)/g,'$1,$2').split(/,/);
         }
     </script>
     <script type="text/javascript">
         module('split strings');
-        test('empty string',function(){
-           deepEqual(solution(''),['']);
+        test('empty string', function () {
+            deepEqual(solution(''), ['']);
+        });
+        test('even string', function () {
+            deepEqual(solution('ab'), ['ab']);
+            deepEqual(solution('abcd'), ['ab','cd']);
         });
     </script>
 </head>
