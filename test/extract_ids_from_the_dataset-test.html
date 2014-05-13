@@ -19,6 +19,7 @@
                 if (object.id) {
                     ids.push(object.id);
                 }
+                ids.push.apply(ids,extractIds(object.items||[]));
             }
             return ids;
         }
@@ -33,6 +34,19 @@
         });
         test('collection objects', function () {
             deepEqual(extractIds([{id: 1},{id:2}]), [1,2]);
+        });
+        test('nested ids', function () {
+            var data = {
+              id: 1,
+              items: [
+                {id: 2},
+                {id: 3, items: [
+                  {id: 4},
+                  {id: 5}
+                ]}
+              ]
+            };
+            deepEqual(extractIds([data]), [1,2,3,4,5]);
         });
     </script>
 </head>
