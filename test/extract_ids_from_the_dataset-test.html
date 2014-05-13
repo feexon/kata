@@ -12,15 +12,13 @@
          *
          */
         function extractIds(data) {
-            var dataset=Array.isArray(data)?data:[data];
             var ids = [];
-            for (var i in dataset) {
-                var object = dataset[i];
+            [].concat(data).forEach(function (object) {
                 if (object.id) {
                     ids.push(object.id);
                 }
-                ids.push.apply(ids,extractIds(object.items||[]));
-            }
+                ids=ids.concat(extractIds(object.items || []));
+            });
             return ids;
         }
     </script>
@@ -33,20 +31,20 @@
             deepEqual(extractIds({id: 1}), [1]);
         });
         test('collection objects', function () {
-            deepEqual(extractIds([{id: 1},{id:2}]), [1,2]);
+            deepEqual(extractIds([ {id: 1}, {id: 2} ]), [1, 2]);
         });
         test('nested ids', function () {
             var data = {
-              id: 1,
-              items: [
-                {id: 2},
-                {id: 3, items: [
-                  {id: 4},
-                  {id: 5}
-                ]}
-              ]
+                id: 1,
+                items: [
+                    {id: 2},
+                    {id: 3, items: [
+                        {id: 4},
+                        {id: 5}
+                    ]}
+                ]
             };
-            deepEqual(extractIds([data]), [1,2,3,4,5]);
+            deepEqual(extractIds([data]), [1, 2, 3, 4, 5]);
         });
     </script>
 </head>
