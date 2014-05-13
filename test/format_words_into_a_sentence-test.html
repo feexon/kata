@@ -16,13 +16,16 @@
          formatWords([]) // should return ""
          */
         function formatWords(words){
-            return '';
+            return words.join('');
         }
     </script>
     <script type="text/javascript">
         module('Format words into a sentence');
         test('empty words',function(){
            equal(formatWords([]),'');
+        });
+        test('one word',function(){
+           equal(formatWords(['ninja']),'ninja');
         });
     </script>
 </head>
