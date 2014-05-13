@@ -16,7 +16,7 @@
          formatWords([]) // should return ""
          */
         function formatWords(words) {
-            return words.filter(Boolean).join(', ').replace(/, (\S+)$/, ' and $1');
+            return (words||[]).filter(Boolean).join(', ').replace(/, (\S+)$/, ' and $1');
         }
     </script>
     <script type="text/javascript">
@@ -36,6 +36,9 @@
         });
         test('skip empty words', function () {
             equal( formatWords(['ninja', '', 'ronin']), "ninja and ronin");
+        });
+        test('format null', function () {
+            equal( formatWords(null), '');
         });
     </script>
 </head>
