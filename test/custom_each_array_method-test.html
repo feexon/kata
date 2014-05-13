@@ -12,7 +12,11 @@
          *
          */
         Array.prototype.each = function (iterator) {
-           return this.forEach(iterator);
+           for(var i=0;i<this.length;i++){
+               if(iterator(this[i],i)){
+                    break;
+               }
+           }
         }
     </script>
     <script type="text/javascript">
@@ -26,6 +30,16 @@
         test('iterate all', function () {
             var records = [];
             ['a', 'b'].each(function (value, index) {
+                records.push([value, index].join(''));
+            });
+            deepEqual(records, ['a0', 'b1']);
+        });
+        test('breaking', function () {
+            var records = [];
+            ['a', 'b', 'c', 'd'].each(function (value, index) {
+                if(value=='c'){
+                    return true;
+                }
                 records.push([value, index].join(''));
             });
             deepEqual(records, ['a0', 'b1']);
