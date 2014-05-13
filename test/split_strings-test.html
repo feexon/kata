@@ -12,7 +12,7 @@
          *
          */
         function solution(string) {
-            return string.replace(/(.{2})(.+)/g,'$1,$2').split(/,/);
+            return string.replace(/(.{2})(.+)/g, '$1,$2').replace(/(^\w$|,\w)$/g, '$1_').split(/,/);
         }
     </script>
     <script type="text/javascript">
@@ -22,7 +22,11 @@
         });
         test('even string', function () {
             deepEqual(solution('ab'), ['ab']);
-            deepEqual(solution('abcd'), ['ab','cd']);
+            deepEqual(solution('abcd'), ['ab', 'cd']);
+        });
+        test('odd string', function () {
+            deepEqual(solution('a'), ['a_']);
+            deepEqual(solution('abc'), ['ab', 'c_']);
         });
     </script>
 </head>
