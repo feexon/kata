@@ -11,8 +11,16 @@
         /**
          *
          */
-        function extractIds(dataset) {
-            return dataset.id ? [dataset.id] : [];
+        function extractIds(data) {
+            var dataset=Array.isArray(data)?data:[data];
+            var ids = [];
+            for (var i in dataset) {
+                var object = dataset[i];
+                if (object.id) {
+                    ids.push(object.id);
+                }
+            }
+            return ids;
         }
     </script>
     <script type="text/javascript">
@@ -22,6 +30,9 @@
         });
         test('simple object', function () {
             deepEqual(extractIds({id: 1}), [1]);
+        });
+        test('collection objects', function () {
+            deepEqual(extractIds([{id: 1},{id:2}]), [1,2]);
         });
     </script>
 </head>
