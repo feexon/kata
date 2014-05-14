@@ -13,23 +13,28 @@
          */
         function RNG(n) {
             this.n = n;
+
+            var list = Array.apply(null, Array(n)).map(function (_, i) {
+                return i;
+            });
             var next = 0;
-            var list = [];
-            for (var i = 0; i < n; i++) {
-                list[i] = i;
-            }
-            this.rand = function () {
-                var ret = next;
-                if (!next) {
-                    for (var i = n; --i >= 0;) {
-                        var m = Math.ceil(Math.random() * i);
-                        var tmp = list[m];
-                        list[m] = list[i];
-                        list[i] = tmp;
-                    }
+
+            function shuffle() {
+
+                for (var i = n; --i >= 1;) {
+                    var j = Math.ceil(Math.random() * i);
+                    var tmp = list[j];
+                    list[j] = list[i];
+                    list[i] = tmp;
                 }
-                next = (next + 1) % n;
-                return list[ret];
+            }
+
+            this.rand = function () {
+                next = next % n;
+                if (!next) {
+                    shuffle();
+                }
+                return list[next++];
             }
         }
     </script>
