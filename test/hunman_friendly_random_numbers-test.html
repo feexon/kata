@@ -30,7 +30,7 @@
             }
 
             this.rand = function () {
-                current = current % n;
+                current %= n;
                 if (!current) {
                     shuffle();
                 }
