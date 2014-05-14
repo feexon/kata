@@ -11,9 +11,18 @@
         /**
          *
          */
+        function solution(number) {
+            number--;
+            var n = Math.floor(number / 3);
+            var m = Math.floor(number / 5);
+            return 3 * n * (n + 1) / 2 + 5 * m * (m + 1) / 2;
+        }
     </script>
     <script type="text/javascript">
-
+        module('Multiples of 3 and 5');
+        test('disjoint', function () {
+            equal(solution(10), 3 + 6 + 9 + 5);
+        });
     </script>
 </head>
 <body>
