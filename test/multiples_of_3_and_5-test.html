@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function solution(number) {
+            number--;
+            function sumMultiplesOf(multiples) {
+                var n = Math.floor(number / multiples);
+                return multiples * n * (n + 1) / 2;
+            }
+
+            return  sumMultiplesOf(3) + sumMultiplesOf(5) - sumMultiplesOf(3 * 5);
+        }
+    </script>
+    <script type="text/javascript">
+        module('Multiples of 3 and 5');
+        test('none', function () {
+            equal(solution(0), 0);
+            equal(solution(1), 0);
+            equal(solution(2), 0);
+        });
+        test('only multiples 3', function () {
+            equal(solution(4), 3 );
+        });
+        test('disjoint', function () {
+            equal(solution(10), 3 + 6 + 9 + 5);
+        });
+        test('intersection', function () {
+            equal(solution(16), 3 + 6 + 9 + 12 + 15 + 5 + 10);
+            equal(solution(31), 3 + 6 + 9 + 12 + 15 + 18 + 21 + 24 + 27 + 30 + 5 + 10 + 20 + 25);
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>

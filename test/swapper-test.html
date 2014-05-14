@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function swapper() {
+            var a = arguments[0];
+            var b = arguments[1];
+            a=a^b;
+            b=a^b;
+            a=a^b;
+            return [a,b];
+        }
+    </script>
+    <script type="text/javascript">
+        module("Swapper");
+        test('swap', function () {
+            deepEqual(swapper(1, 2), [2, 1]);
+            deepEqual(swapper(4, 5), [5, 4]);
+        })
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>

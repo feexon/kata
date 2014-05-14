@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        Array.prototype.each = function (iterator) {
+          return this.some(iterator);
+        }
+    </script>
+    <script type="text/javascript">
+        module('Custom each() Array method');
+        test('empty array', function () {
+            [].each(function (value, index) {
+                ok(false, 'each was called with empty array!');
+            });
+            ok(true);
+        });
+        test('iterate all', function () {
+            var records = [];
+            ['a', 'b'].each(function (value, index) {
+                records.push([value, index].join(''));
+            });
+            deepEqual(records, ['a0', 'b1']);
+        });
+        test('breaking', function () {
+            var records = [];
+            ['a', 'b', 'c', 'd'].each(function (value, index) {
+                if(value=='c'){
+                    return true;
+                }
+                records.push([value, index].join(''));
+            });
+            deepEqual(records, ['a0', 'b1']);
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>

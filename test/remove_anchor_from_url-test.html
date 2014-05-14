@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function removeUrlAnchor(url) {
+            return url.replace(/#[^?]*/, '');
+        }
+    </script>
+    <script type="text/javascript">
+        module('Remove anchor from URL');
+        test('no anchor', function () {
+            equal(removeUrlAnchor('www.domain.com'), 'www.domain.com');
+        });
+        test('remove anchor', function () {
+            equal(removeUrlAnchor('www.domain.com#main'), 'www.domain.com');
+        });
+        test('reserve params', function () {
+            equal(removeUrlAnchor('www.domain.com#main?page=1'), 'www.domain.com?page=1');
+        });
+        test('remove empty anchor', function () {
+            equal(removeUrlAnchor('www.domain.com#?page=1'), 'www.domain.com?page=1');
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
