@@ -13,11 +13,10 @@
          */
         function RNG(n) {
             this.n = n;
-            var next = n;
+            var next = 0;
             this.rand = function () {
-               var ret=--next;
-               next=!ret?n:next;
-               return ret;
+                next = (next + 1) % n;
+                return next++;
             }
         }
     </script>
