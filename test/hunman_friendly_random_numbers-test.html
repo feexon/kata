@@ -17,7 +17,7 @@
             var list = Array.apply(null, Array(n)).map(function (_, i) {
                 return i;
             });
-            var next = 0;
+            var current = 0;
 
             function shuffle() {
 
@@ -30,11 +30,11 @@
             }
 
             this.rand = function () {
-                next = next % n;
-                if (!next) {
+                current = current % n;
+                if (!current) {
                     shuffle();
                 }
-                return list[next++];
+                return list[current++];
             }
         }
     </script>
