@@ -13,10 +13,12 @@
          */
         function solution(number) {
             number--;
-            var n = Math.floor(number / 3);
-            var m = Math.floor(number / 5);
-            var c = Math.floor(number / 3 / 5);
-            return 3 * n * (n + 1) / 2 + 5 * m * (m + 1) / 2 - 3 * 5 * c * (c + 1) / 2;
+            function sum(multiples) {
+                var n = Math.floor(number / multiples);
+                return multiples * n * (n + 1) / 2;
+            }
+
+            return  sum(3) + sum(5) - sum(3 * 5);
         }
     </script>
     <script type="text/javascript">
