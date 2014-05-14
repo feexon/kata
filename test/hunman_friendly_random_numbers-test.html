@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function RNG(n) {
+            this.n = n;
+
+            var list = Array.apply(null, Array(n)).map(function (_, i) {
+                return i;
+            });
+            var current = 0;
+
+            function shuffle() {
+
+                for (var i = n; i >= 1; i) {
+                    var j = Math.floor(Math.random() * i--);
+                    var tmp = list[j];
+                    list[j] = list[i];
+                    list[i] = tmp;
+                }
+            }
+
+            this.rand = function () {
+                current %= n;
+                if (!current) {
+                    shuffle();
+                }
+                return list[current++];
+            }
+        }
+    </script>
+    <script type="text/javascript">
+        module('Human Friendly Random Numbers');
+        test('generate in cycle', function () {
+            var random = new RNG(3);
+            deepEqual([random.rand(), random.rand(), random.rand()].sort(), [0, 1, 2]);
+            deepEqual([random.rand(), random.rand(), random.rand()].sort(), [0, 1, 2]);
+        });
+        test('generate random', function () {
+            var random = new RNG(3);
+            var sum = 0;
+            for (var i = 0; i < 3 * 10; i++) {
+                sum += (i % 3) * random.rand();
+            }
+            notEqual(sum, (0 * 0 + 1 * 1 + 2 * 2) * 10);
+        });
+        test('variance', function () {
+            var rng = new RNG(6);
+            var variance = 0;
+            var mean = 0;
+            var n = 10000;
+            //Check a random element, but keep it the same each time.
+            var checkJ = Math.floor(Math.random() * 6);
+            for (var i = 0; i < n; i++) {
+                for (var j = 0; j < 6; j++) {
+                    var r = rng.rand();
+                    if (j === checkJ) {
+                        variance += (r - 2.5) * (r - 2.5);
+                        mean += r;
+                    }
+                }
+            }
+            variance /= n;
+            mean /= n;
+            ok(Math.abs(variance - 35 / 12) < .1, "Variance should be about " + 35 / 12 + " but was " + variance);
+            ok(Math.abs(mean - 2.5) < .1, "Mean should be about " + 2.5 + " but was " + mean);
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
