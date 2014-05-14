@@ -23,6 +23,9 @@
     </script>
     <script type="text/javascript">
         module('Multiples of 3 and 5');
+        test('only multiples 3', function () {
+            equal(solution(4), 3 );
+        });
         test('disjoint', function () {
             equal(solution(10), 3 + 6 + 9 + 5);
         });
