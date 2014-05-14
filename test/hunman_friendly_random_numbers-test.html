@@ -13,19 +13,20 @@
          */
         function RNG(n) {
             this.n = n;
-            var next = 0;
+            var next = n;
             this.rand = function () {
-                next = (next % n);
-                return next++;
+               var ret=--next;
+               next=!ret?n:next;
+               return ret;
             }
         }
     </script>
     <script type="text/javascript">
         module('Human Friendly Random Numbers');
-        test('generate in sequence', function () {
+        test('generate in cycle', function () {
             var random = new RNG(3);
-            deepEqual([random.rand(), random.rand(), random.rand()], [0, 1, 2]);
-            deepEqual([random.rand(), random.rand(), random.rand()], [0, 1, 2]);
+            deepEqual([random.rand(), random.rand(), random.rand()].sort(), [0, 1, 2]);
+            deepEqual([random.rand(), random.rand(), random.rand()].sort(), [0, 1, 2]);
         });
     </script>
 </head>
