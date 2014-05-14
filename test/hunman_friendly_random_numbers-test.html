@@ -14,9 +14,22 @@
         function RNG(n) {
             this.n = n;
             var next = 0;
+            var list = [];
+            for (var i = 0; i < n; i++) {
+                list[i] = i;
+            }
             this.rand = function () {
+                var ret = next;
+                if (!next) {
+                    for (var i = n; --i >= 0;) {
+                        var m = Math.ceil(Math.random() * i);
+                        var tmp = list[m];
+                        list[m] = list[i];
+                        list[i] = tmp;
+                    }
+                }
                 next = (next + 1) % n;
-                return next++;
+                return list[ret];
             }
         }
     </script>
@@ -26,6 +39,14 @@
             var random = new RNG(3);
             deepEqual([random.rand(), random.rand(), random.rand()].sort(), [0, 1, 2]);
             deepEqual([random.rand(), random.rand(), random.rand()].sort(), [0, 1, 2]);
+        });
+        test('generate random', function () {
+            var random = new RNG(3);
+            var sum = 0;
+            for (var i = 0; i < 3 * 10; i++) {
+                sum += (i % 3) * random.rand();
+            }
+            notEqual(sum, (0 * 0 + 1 * 1 + 2 * 2) * 10);
         });
     </script>
 </head>
