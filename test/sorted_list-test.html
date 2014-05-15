@@ -11,9 +11,21 @@
         /**
          *
          */
+        function SortedList(){
+            this.length=0;
+            this.add=function(value){
+               this.length++;
+            }
+        }
     </script>
     <script type="text/javascript">
-
+        module('Sorted list');
+        test('length', function () {
+            var list = new SortedList();
+            equal(list.length,0);
+            list.add(3);
+            equal(list.length,1);
+        });
     </script>
 </head>
 <body>
