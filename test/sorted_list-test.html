@@ -16,6 +16,12 @@
             var items=[];
             this.add=function(value){
                this.length++;
+               for(var i=0;i<items.length;i++){
+                   if(items[i]>value){
+                       items.splice(i,0,value);
+                       return;
+                   }
+               }
                items.push(value);
             }
             this.get=function(index){
@@ -40,6 +46,15 @@
             var list = new SortedList();
             list.add(1);
             list.add(2);
+            list.add(3);
+            equal(list.get(0),1);
+            equal(list.get(1),2);
+            equal(list.get(2),3);
+        });
+        test('add in random order', function () {
+            var list = new SortedList();
+            list.add(2);
+            list.add(1);
             list.add(3);
             equal(list.get(0),1);
             equal(list.get(1),2);
