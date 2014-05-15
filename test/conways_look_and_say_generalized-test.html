@@ -12,7 +12,9 @@
          *
          */
         function lookSay(integer) {
-            return 10+integer;
+            return +integer.toString().replace(/(\d)\1*/,function(item,digit){
+                return [item.length,digit].join('');
+            });
         }
     </script>
     <script type="text/javascript">
@@ -20,6 +22,11 @@
         test('single', function () {
             equal(lookSay(0), 10);
             equal(lookSay(1), 11);
+        });
+        test('multiple', function () {
+            equal(lookSay(11), 21);
+            equal(lookSay(33), 23);
+            equal(lookSay(222222222222), 122);
         });
     </script>
 </head>
