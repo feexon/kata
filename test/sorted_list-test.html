@@ -12,10 +12,13 @@
          *
          */
         function SortedList() {
-            this.length = 0;
             var items = [];
+            Object.defineProperty(this,'length',{
+                get:function(){
+                    return items.length;
+                }
+            });
             this.add = function (value) {
-                this.length++;
                 for (var i = 0; i < items.length; i++) {
                     if (items[i] > value) {
                         items.splice(i, 0, value);
