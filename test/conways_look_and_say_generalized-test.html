@@ -11,9 +11,16 @@
         /**
          *
          */
+        function lookSay(integer) {
+            return 10+integer;
+        }
     </script>
     <script type="text/javascript">
-
+        module("Conway's Look and Say - Generalized");
+        test('single', function () {
+            equal(lookSay(0), 10);
+            equal(lookSay(1), 11);
+        });
     </script>
 </head>
 <body>
