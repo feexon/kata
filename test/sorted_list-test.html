@@ -95,6 +95,32 @@
             equal(list.get(1), 2);
             equal(list.get(2), 3);
         });
+        test('random insert', function () {
+            function make(size) {
+                return Array.apply(null, Array(size)).map(function (_, index) {
+                    return index;
+                });
+            }
+
+            var items = make(1000);
+            var expected = make(1000);
+            for (var i = items.length; --i >= 0;) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var tmp = items[j];
+                items[j] = items[i];
+                items[i] = tmp;
+            }
+            notDeepEqual(items, expected);
+            items.forEach(function (value) {
+               list.add(value);
+            });
+            equal(list.length,1000);
+            var actual=[];
+            for(var i=0;i<list.length;i++){
+                actual.push(list.get(i));
+            }
+            deepEqual(actual,expected);
+        });
     </script>
 </head>
 <body>
