@@ -13,13 +13,13 @@
          */
         function SortedList(){
             this.length=0;
-            var item;
+            var items=[];
             this.add=function(value){
                this.length++;
-               item=value;
+               items.push(value);
             }
             this.get=function(index){
-              return item;
+              return items[index];
             }
         }
     </script>
@@ -35,6 +35,15 @@
             var list = new SortedList();
             list.add(3);
             equal(list.get(0),3);
+        });
+        test('add in order', function () {
+            var list = new SortedList();
+            list.add(1);
+            list.add(2);
+            list.add(3);
+            equal(list.get(0),1);
+            equal(list.get(1),2);
+            equal(list.get(2),3);
         });
     </script>
 </head>
