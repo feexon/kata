@@ -13,23 +13,32 @@
          */
         function SortedList() {
             var items = [];
-            Object.defineProperty(this,'length',{
-                get:function(){
+            Object.defineProperty(this, 'length', {
+                get: function () {
                     return items.length;
                 }
             });
-            this.add = function (value) {
-                for (var i = 0; i < items.length; i++) {
-                    if (items[i] > value) {
-                        items.splice(i, 0, value);
-                        return;
+            function insertionOf(value) {
+                var low = 0, high = items.length - 1;
+                while (low <= high) {
+                    var mid = Math.floor((low + high) / 2);
+                    if (items[mid] > value) {
+                        if (items[mid - 1] === undefined || items[mid - 1] <= value) {
+                            return mid;
+                        }
+                        high=mid-1;
                     }
                 }
-                items.push(value);
+
+                return items.length;
             }
+
+            this.add = function (value) {
+                items.splice(insertionOf(value), 0, value);
+            };
             this.get = function (index) {
                 return items[index];
-            }
+            };
         }
     </script>
     <script type="text/javascript">
@@ -49,18 +58,12 @@
             list.add(3);
             equal(list.get(0), 3);
         });
-        test('add in order', function () {
-            list.add(1);
-            list.add(2);
+        test('insert first', function () {
             list.add(3);
-            equal(list.get(0), 1);
-            equal(list.get(1), 2);
-            equal(list.get(2), 3);
-        });
-        test('add in random order', function () {
             list.add(2);
+            equal(list.get(0), 2);
+            equal(list.get(1), 3);
             list.add(1);
-            list.add(3);
             equal(list.get(0), 1);
             equal(list.get(1), 2);
             equal(list.get(2), 3);
