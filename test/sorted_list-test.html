@@ -11,54 +11,56 @@
         /**
          *
          */
-        function SortedList(){
-            this.length=0;
-            var items=[];
-            this.add=function(value){
-               this.length++;
-               for(var i=0;i<items.length;i++){
-                   if(items[i]>value){
-                       items.splice(i,0,value);
-                       return;
-                   }
-               }
-               items.push(value);
+        function SortedList() {
+            this.length = 0;
+            var items = [];
+            this.add = function (value) {
+                this.length++;
+                for (var i = 0; i < items.length; i++) {
+                    if (items[i] > value) {
+                        items.splice(i, 0, value);
+                        return;
+                    }
+                }
+                items.push(value);
             }
-            this.get=function(index){
-              return items[index];
+            this.get = function (index) {
+                return items[index];
             }
         }
     </script>
     <script type="text/javascript">
-        module('Sorted list');
+        var list;
+        module('Sorted list', {
+            setup: function () {
+                list = new SortedList();
+            }
+        });
+
         test('length', function () {
-            var list = new SortedList();
-            equal(list.length,0);
+            equal(list.length, 0);
             list.add(3);
-            equal(list.length,1);
+            equal(list.length, 1);
         });
         test('get', function () {
-            var list = new SortedList();
             list.add(3);
-            equal(list.get(0),3);
+            equal(list.get(0), 3);
         });
         test('add in order', function () {
-            var list = new SortedList();
             list.add(1);
             list.add(2);
             list.add(3);
-            equal(list.get(0),1);
-            equal(list.get(1),2);
-            equal(list.get(2),3);
+            equal(list.get(0), 1);
+            equal(list.get(1), 2);
+            equal(list.get(2), 3);
         });
         test('add in random order', function () {
-            var list = new SortedList();
             list.add(2);
             list.add(1);
             list.add(3);
-            equal(list.get(0),1);
-            equal(list.get(1),2);
-            equal(list.get(2),3);
+            equal(list.get(0), 1);
+            equal(list.get(1), 2);
+            equal(list.get(2), 3);
         });
     </script>
 </head>
