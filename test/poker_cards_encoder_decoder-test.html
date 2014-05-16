@@ -15,21 +15,25 @@
         function cardsConverter(input) {
             var symbols = 'cdhs';
             var cards = 'A23456789TJQK';
+            if (!Array.isArray(input)) {
+                return null;
+            }
+            function decode(item) {
+                return cards[item % 13] + symbols[item / 13 | 0];
+            }
 
             function encode(item) {
                 return 13 * symbols.search(item[1]) + cards.search(item[0]);
             }
 
-            if (input && !isNaN(input[0])) {
-                return input.map(function (item) {
-                    return cards[item % 13] + symbols[item / 13 | 0];
-                }).sort(function (a, b) {
+            if (typeof input[0] == 'number') {
+                return input.map(decode).sort(function (a, b) {
                     return encode(a) - encode(b);
                 });
             }
 
-            return !Array.isArray(input) ? null : input.map(encode).sort(function (x, y) {
-                return x - y;
+            return input.map(encode).sort(function (a, b) {
+                return a - b;
             });
         }
     </script>
