@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         ['Ac', 'Ks', '5h', 'Td', '3c'] -> [0, 2 ,22, 30, 51] //encoding
+         [0, 51, 30, 22, 2] -> ['Ac', '3c', 'Td', '5h', 'Ks'] //decoding
+         */
+        function cardsConverter(input) {
+            var symbols = 'cdhs';
+            var cards = 'A23456789TJQK';
+            if (!Array.isArray(input)) {
+                return null;
+            }
+            
+            var byNumbers = function (a, b) {
+                return a - b;
+            };
+
+            if (typeof input[0] == 'string') {
+                return input.map(function (item) {
+                    return 13 * symbols.search(item[1]) + cards.search(item[0]);
+                }).sort(byNumbers);
+            }
+            return input.sort(byNumbers).map(function (item) {
+                return cards[item % 13] + symbols[item / 13 | 0];
+            });
+        }
+    </script>
+    <script type="text/javascript">
+        module('Poker cards encoder/decoder');
+        test('encode symbols', function () {
+            deepEqual(cardsConverter(['Ac']), [0]);
+            deepEqual(cardsConverter(['Ad']), [13]);
+            deepEqual(cardsConverter(['Ah']), [26]);
+            deepEqual(cardsConverter(['As']), [39]);
+        });
+        test('encode cards', function () {
+            deepEqual(cardsConverter(['Ac']), [0]);
+            deepEqual(cardsConverter(['2c']), [1]);
+            deepEqual(cardsConverter(['3c']), [2]);
+            deepEqual(cardsConverter(['Kc']), [12]);
+            deepEqual(cardsConverter(['Kd']), [25]);
+
+        });
+        test('encode', function () {
+            deepEqual(cardsConverter(['Ac', 'Ks', '5h', 'Td', '3c']), [0, 2 , 22, 30, 51]);
+        });
+        test('return null without Array', function () {
+            strictEqual(cardsConverter(), null);
+            strictEqual(cardsConverter('other type'), null);
+        });
+        test('decode to symbols', function () {
+            deepEqual(cardsConverter([0]), ['Ac']);
+            deepEqual(cardsConverter([13]), ['Ad']);
+            deepEqual(cardsConverter([26]), ['Ah']);
+            deepEqual(cardsConverter([39]), ['As']);
+        });
+        test('decode to cards', function () {
+            deepEqual(cardsConverter([0]), ['Ac']);
+            deepEqual(cardsConverter([1]), ['2c']);
+            deepEqual(cardsConverter([2]), ['3c']);
+            deepEqual(cardsConverter([12]), ['Kc']);
+            deepEqual(cardsConverter([25]), ['Kd']);
+        });
+        test('decode ordered values', function () {
+            deepEqual(cardsConverter([0, 2 , 22, 30, 51]), ['Ac', '3c', 'Td', '5h', 'Ks']);
+        });
+        test('sort decoded values', function () {
+            deepEqual(cardsConverter([0, 22, 51, 2, 30]), ['Ac', '3c', 'Td', '5h', 'Ks']);
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
