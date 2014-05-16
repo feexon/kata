@@ -15,8 +15,10 @@
         function cardsConverter(input) {
             var symbols = 'cdhs';
             var cards = 'A23456789TJQK';
-
-            return !Array.isArray(input)?null:input.map(function (_, index) {
+            if (input && !isNaN(input[0])) {
+                return ['A'+symbols[input[0] / 13]];
+            }
+            return !Array.isArray(input) ? null : input.map(function (_, index) {
                 var addend = cards.search(_[0]);
                 return 13 * symbols.search(_[1]) + addend;
             }).sort(function (x, y) {
@@ -44,8 +46,14 @@
             deepEqual(cardsConverter(['Ac', 'Ks', '5h', 'Td', '3c']), [0, 2 , 22, 30, 51]);
         });
         test('return null without Array', function () {
-           strictEqual(cardsConverter(),null);
-           strictEqual(cardsConverter('other type'),null);
+            strictEqual(cardsConverter(), null);
+            strictEqual(cardsConverter('other type'), null);
+        });
+        test('decode to symbols', function () {
+            deepEqual(cardsConverter([0]), ['Ac']);
+            deepEqual(cardsConverter([13]), ['Ad']);
+            deepEqual(cardsConverter([26]), ['Ah']);
+            deepEqual(cardsConverter([39]), ['As']);
         });
     </script>
 </head>
