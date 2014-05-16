@@ -16,7 +16,9 @@
             var symbols = 'cdhs';
             var cards = 'A23456789TJQK';
             if (input && !isNaN(input[0])) {
-                return [cards[input[0] % 13] + symbols[input[0] / 13 | 0]];
+                return input.map(function (item) {
+                    return cards[item % 13] + symbols[item / 13 | 0];
+                });
             }
             return !Array.isArray(input) ? null : input.map(function (_, index) {
                 var addend = cards.search(_[0]);
@@ -61,6 +63,9 @@
             deepEqual(cardsConverter([2]), ['3c']);
             deepEqual(cardsConverter([12]), ['Kc']);
             deepEqual(cardsConverter([25]), ['Kd']);
+        });
+        test('decode ordered values', function () {
+            deepEqual(cardsConverter([0, 2 , 22, 30, 51]), ['Ac', '3c', 'Td', '5h', 'Ks']);
         });
     </script>
 </head>
