@@ -18,22 +18,18 @@
             if (!Array.isArray(input)) {
                 return null;
             }
-            function decode(item) {
-                return cards[item % 13] + symbols[item / 13 | 0];
-            }
-
-            function encode(item) {
-                return 13 * symbols.search(item[1]) + cards.search(item[0]);
-            }
-
-            if (typeof input[0] == 'number') {
-                return input.map(decode).sort(function (a, b) {
-                    return encode(a) - encode(b);
-                });
-            }
-
-            return input.map(encode).sort(function (a, b) {
+            
+            var byNumbers = function (a, b) {
                 return a - b;
+            };
+
+            if (typeof input[0] == 'string') {
+                return input.map(function (item) {
+                    return 13 * symbols.search(item[1]) + cards.search(item[0]);
+                }).sort(byNumbers);
+            }
+            return input.sort(byNumbers).map(function (item) {
+                return cards[item % 13] + symbols[item / 13 | 0];
             });
         }
     </script>
