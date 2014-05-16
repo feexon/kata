@@ -15,15 +15,20 @@
         function cardsConverter(input) {
             var symbols = 'cdhs';
             var cards = 'A23456789TJQK';
+
+            function encode(item) {
+                return 13 * symbols.search(item[1]) + cards.search(item[0]);
+            }
+
             if (input && !isNaN(input[0])) {
                 return input.map(function (item) {
                     return cards[item % 13] + symbols[item / 13 | 0];
+                }).sort(function (a, b) {
+                    return encode(a) - encode(b);
                 });
             }
-            return !Array.isArray(input) ? null : input.map(function (_, index) {
-                var addend = cards.search(_[0]);
-                return 13 * symbols.search(_[1]) + addend;
-            }).sort(function (x, y) {
+
+            return !Array.isArray(input) ? null : input.map(encode).sort(function (x, y) {
                 return x - y;
             });
         }
@@ -66,6 +71,9 @@
         });
         test('decode ordered values', function () {
             deepEqual(cardsConverter([0, 2 , 22, 30, 51]), ['Ac', '3c', 'Td', '5h', 'Ks']);
+        });
+        test('sort decoded values', function () {
+            deepEqual(cardsConverter([0, 22, 51, 2, 30]), ['Ac', '3c', 'Td', '5h', 'Ks']);
         });
     </script>
 </head>
