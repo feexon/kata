@@ -15,8 +15,13 @@
         function cardsConverter(input) {
             var symbols = 'cdhs';
             var cards = 'A23456789TJQK';
-            var addend = cards.search(input[0][0]);
-            return [13 * symbols.search(input[0][1]) + addend];
+
+            return input.map(function (_, index) {
+                var addend = cards.search(_[0]);
+                return 13 * symbols.search(_[1]) + addend;
+            }).sort(function (x, y) {
+                return x - y;
+            });
         }
     </script>
     <script type="text/javascript">
@@ -34,6 +39,9 @@
             deepEqual(cardsConverter(['Kc']), [12]);
             deepEqual(cardsConverter(['Kd']), [25]);
 
+        });
+        test('encode', function () {
+            deepEqual(cardsConverter(['Ac', 'Ks', '5h', 'Td', '3c']), [0, 2 , 22, 30, 51]);
         });
     </script>
 </head>
