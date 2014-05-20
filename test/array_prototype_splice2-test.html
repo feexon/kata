@@ -12,15 +12,19 @@
          * var array=[1,2,3,4];
          * array.splice(1,2,5,6)==[2,3] then array==[1,5,6,4];
          * array.splice(1,2)==[2,3] then array==[1,4]
-         * #array.splice(1)==[2,3,4] the array==[1]
+         * #array.splice(0,1)==[1] then array==[2,3,4]
+         * --array.splice(1)==[2,3,4] the array==[1]
          * --[].splice(..)
          * array.splice(1,0,5,6)==[] the array==[1,2,5,6,3,4];
          */
         Array.prototype.splice = function (from, count) {
             var removed = [];
             var size = this.length;
-            while (from++ < size) {
+            for (var offset = from; offset++ < size;) {
                 removed.unshift(this.pop());
+            }
+            if (count) {
+                this.push.apply(this,removed.splice(from + 1));
             }
             return  removed;
         }
@@ -37,6 +41,11 @@
             var array = [1, 2, 3, 4];
             deepEqual(array.splice(1), [2, 3, 4]);
             deepEqual(array, [1]);
+        });
+        test('splice first', function () {
+            var array = [1, 2, 3, 4];
+            deepEqual(array.splice(0, 1), [1]);
+            deepEqual(array, [2, 3, 4]);
         });
     </script>
 </head>
