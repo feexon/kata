@@ -24,7 +24,7 @@
                 removed.unshift(this.pop());
             }
             if (count) {
-                this.push.apply(this,removed.splice(from + 1));
+                this.push.apply(this, removed.splice(from + 1));
             }
             return  removed;
         }
@@ -46,6 +46,11 @@
             var array = [1, 2, 3, 4];
             deepEqual(array.splice(0, 1), [1]);
             deepEqual(array, [2, 3, 4]);
+        });
+        test('splice last', function () {
+            var array = [1, 2, 3, 4];
+            deepEqual(array.splice(3, 1), [4]);
+            deepEqual(array, [1, 2, 3]);
         });
     </script>
 </head>
