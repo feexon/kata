@@ -12,12 +12,17 @@
          * var array=[1,2,3,4];
          * array.splice(1,2,5,6)==[2,3] then array==[1,5,6,4];
          * array.splice(1,2)==[2,3] then array==[1,4]
-         * array.splice(1)==[2,3,4] the array==[1]
-         * [].splice(..)
+         * #array.splice(1)==[2,3,4] the array==[1]
+         * --[].splice(..)
          * array.splice(1,0,5,6)==[] the array==[1,2,5,6,3,4];
          */
         Array.prototype.splice = function (from, count) {
-            return [];
+            var removed = [];
+            var size = this.length;
+            while (from++ < size) {
+                removed.unshift(this.pop());
+            }
+            return  removed;
         }
     </script>
     <script type="text/javascript">
@@ -27,6 +32,11 @@
             var array = [];
             deepEqual(array.splice(1), []);
             deepEqual(array, []);
+        });
+        test('splice from to end', function () {
+            var array = [1, 2, 3, 4];
+            deepEqual(array.splice(1), [2, 3, 4]);
+            deepEqual(array, [1]);
         });
     </script>
 </head>
