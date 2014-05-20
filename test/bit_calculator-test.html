@@ -11,8 +11,10 @@
         /**
          *
          */
-        function calculate(number){
-            return parseInt(number,2);
+        function calculate(){
+            return Array.prototype.reduce.call(arguments,function(sum,number){
+                return sum+parseInt(number,2);
+            },0);
         }
     </script>
     <script type="text/javascript">
@@ -21,6 +23,10 @@
             equal(calculate('0'),0);
             equal(calculate('1'),1);
             equal(calculate('10'),2);
+        });
+        test('sum',function(){
+            equal(calculate('1','0'),1);
+            equal(calculate('0','1'),1);
         });
     </script>
 </head>
