@@ -11,14 +11,15 @@
         /**
          *  var array=[1,2,3]
          *  array.splice(1,1,4,5,6)==[2] and array==[1,4,5,6,3]
-         *  #array.splice(1)==[2,3] and array==[1]
-         *  array.splice(1,1)==[2] and array==[1,3]
+         *  --array.splice(1)==[2,3] and array==[1]
+         *  --array.splice(1,1)==[2] and array==[1,3]
          *  array.splice(1,0,4,5,6)==[] and array==[1, 4, 5, 6, 2, 3]
          */
         Array.prototype.splice = function (from, count, items) {
             var size = this.length;
+
             function cut(source, offset) {
-                var ret=[];
+                var ret = [];
                 while (offset++ < size) {
                     ret.unshift(source.pop());
                 }
@@ -26,7 +27,7 @@
             }
 
             var removed = cut(this, from);
-            this.push.apply(this, cut(removed, from + count));
+            this.push.apply(this, [].slice.call(arguments,2).concat(cut(removed, from + count)));
 
             return removed;
         }
@@ -58,6 +59,11 @@
             var array = [1, 2, 3, 4];
             deepEqual(array.splice(1, 1), [2]);
             deepEqual(array, [1, 3, 4]);
+        });
+        test('insert items', function () {
+            var array = [1, 2, 3, 4];
+            deepEqual(array.splice(1, 1, 5, 6), [2]);
+            deepEqual(array, [1, 5, 6, 3, 4]);
         });
     </script>
 </head>
