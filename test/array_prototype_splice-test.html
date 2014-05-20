@@ -17,10 +17,17 @@
          */
         Array.prototype.splice = function (from, count, items) {
             var removed = [];
-            var to=this.length;
-            while(from++<to){
+            var size = this.length;
+            while (from++ < size) {
                 removed.unshift(this.pop());
             }
+
+            var retains = [];
+            while (count++ < size) {
+                retains.unshift(removed.pop());
+            }
+            this.push.apply(this, retains);
+
             return removed;
         }
     </script>
@@ -36,6 +43,11 @@
             var array = [1, 2, 3, 4];
             deepEqual(array.splice(1), [2, 3, 4]);
             deepEqual(array, [1]);
+        });
+        test('splice first', function () {
+            var array = [1, 2, 3, 4];
+            deepEqual(array.splice(0, 1), [1]);
+            deepEqual(array, [2, 3, 4]);
         });
     </script>
 </head>
