@@ -26,11 +26,9 @@
             for (var offset = Math.max(0, from); offset++ < size;) {
                 removed.unshift(this.pop());
             }
-
-            this.push.apply(this, [].slice.call(arguments, 2));
-            if (count !== undefined) {
-                this.push.apply(this, removed.splice(from + count - 1));
-            }
+            var items = [].slice.call(arguments, 2);
+            var added = count === undefined ? items : items.concat(removed.splice(from + count - 1));
+            this.push.apply(this, added);
             return  removed;
         }
     </script>
