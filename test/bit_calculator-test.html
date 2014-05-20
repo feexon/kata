@@ -12,8 +12,8 @@
          *
          */
         function decimal(binary) {
-            return binary.split('').reverse().reduce(function (sum, bit, shift) {
-                return (+bit << shift) + sum;
+            return binary.split('').reduce(function (sum, bit) {
+                return sum << 1 | +bit;
             }, 0);
         }
         function calculate() {
