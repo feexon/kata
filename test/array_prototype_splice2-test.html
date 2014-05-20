@@ -15,9 +15,9 @@
          * --array.splice(0,1)==[1] then array==[2,3,4]
          * --array.splice(1)==[2,3,4] then array==[1]
          * --[].splice(..)
-         * array.splice(1,0)==[] then array==[1,2,3,4]
+         * #array.splice(1,0)==[] then array==[1,2,3,4]
          * array.splice(1,0,5,6)==[] the array==[1,2,5,6,3,4];
-         * array.splice(4,0,5,6)==[] the array==[1,2,3,4,5,6];
+         * --array.splice(4,0,5,6)==[] the array==[1,2,3,4,5,6];
          * --[].splice(3,0,5,6)==[] the array==[5,6];
          */
         Array.prototype.splice = function (from, count) {
@@ -27,8 +27,8 @@
                 removed.unshift(this.pop());
             }
 
-            if (count) {
-                this.push.apply(this, removed.splice(from + 1));
+            if (count !== undefined) {
+                this.push.apply(this, removed.splice(from + count - 1));
             }
             this.push.apply(this, [].slice.call(arguments, 2));
             return  removed;
@@ -52,6 +52,10 @@
             deepEqual(array.splice(1), [2, 3, 4]);
             deepEqual(array, [1]);
         });
+        test('splice no items', function () {
+            deepEqual(array.splice(1, 0), []);
+            deepEqual(array, [1, 2, 3, 4]);
+        });
         test('splice', function () {
             deepEqual(array.splice(1, 2), [2, 3]);
             deepEqual(array, [1, 4]);
@@ -66,6 +70,11 @@
             deepEqual(array.splice(4, 0, 5, 6), []);
             deepEqual(array, [1, 2, 3, 4, 5, 6]);
         });
+
+        //        test('insert items at first', function () {
+        //            deepEqual(array.splice(0, 0, 5, 6), []);
+        //            deepEqual(array, [5, 6, 1, 2, 3, 4]);
+        //        });
     </script>
 </head>
 <body>
