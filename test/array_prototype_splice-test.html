@@ -16,18 +16,17 @@
          *  array.splice(1,0,4,5,6)==[] and array==[1, 4, 5, 6, 2, 3]
          */
         Array.prototype.splice = function (from, count, items) {
-            var removed = [];
             var size = this.length;
-
-            for (var offset = from; offset++ < size;) {
-                removed.unshift(this.pop());
+            function cut(source, offset) {
+                var ret=[];
+                while (offset++ < size) {
+                    ret.unshift(source.pop());
+                }
+                return ret;
             }
 
-            var retains = [];
-            for (var offset = from + count; offset++ < size;) {
-                retains.unshift(removed.pop());
-            }
-            this.push.apply(this, retains);
+            var removed = cut(this, from);
+            this.push.apply(this, cut(removed, from + count));
 
             return removed;
         }
