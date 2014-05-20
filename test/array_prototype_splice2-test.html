@@ -44,19 +44,10 @@
             deepEqual(array, []);
         });
         test('splice from to end', function () {
-
             deepEqual(array.splice(1), [2, 3, 4]);
             deepEqual(array, [1]);
         });
-        test('splice first', function () {
-            deepEqual(array.splice(0, 1), [1]);
-            deepEqual(array, [2, 3, 4]);
-        });
-        test('splice last', function () {
-            deepEqual(array.splice(3, 1), [4]);
-            deepEqual(array, [1, 2, 3]);
-        });
-        test('splice without items', function () {
+        test('splice', function () {
             deepEqual(array.splice(1, 2), [2, 3]);
             deepEqual(array, [1, 4]);
         });
