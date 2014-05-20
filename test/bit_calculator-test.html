@@ -13,7 +13,7 @@
          */
         function decimal(binary) {
             return binary.split('').reverse().reduce(function (sum, bit, shift) {
-                return +bit << shift + sum;
+                return (+bit << shift) + sum;
             }, 0);
         }
         function calculate() {
@@ -33,6 +33,7 @@
             equal(calculate('1', '0'), 1);
             equal(calculate('0', '1'), 1);
             equal(calculate('0', '1', '100'), 5);
+            equal(calculate("101", "10"), 7);
         });
     </script>
 </head>
