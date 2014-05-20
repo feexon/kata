@@ -23,14 +23,14 @@
         Array.prototype.splice = function (from, count) {
             var removed = [];
             var size = this.length;
-            for (var offset = from; offset++ < size;) {
+            for (var offset = Math.max(0, from); offset++ < size;) {
                 removed.unshift(this.pop());
             }
 
+            this.push.apply(this, [].slice.call(arguments, 2));
             if (count !== undefined) {
                 this.push.apply(this, removed.splice(from + count - 1));
             }
-            this.push.apply(this, [].slice.call(arguments, 2));
             return  removed;
         }
     </script>
@@ -71,10 +71,10 @@
             deepEqual(array, [1, 2, 3, 4, 5, 6]);
         });
 
-        //        test('insert items at first', function () {
-        //            deepEqual(array.splice(0, 0, 5, 6), []);
-        //            deepEqual(array, [5, 6, 1, 2, 3, 4]);
-        //        });
+        test('insert items at first', function () {
+            deepEqual(array.splice(0, 0, 5, 6), []);
+            deepEqual(array, [5, 6, 1, 2, 3, 4]);
+        });
     </script>
 </head>
 <body>
