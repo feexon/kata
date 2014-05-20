@@ -22,13 +22,14 @@
          */
         Array.prototype.splice = function (from, count) {
             var removed = [];
-            var size = this.length;
+            var self = this;
+            var size = self.length;
             for (var offset = Math.max(0, from); offset++ < size;) {
-                removed.unshift(this.pop());
+                removed.unshift(self.pop());
             }
             var items = [].slice.call(arguments, 2);
             var added = count === undefined ? items : items.concat(removed.splice(count));
-            this.push.apply(this, added);
+            self.push.apply(self, added);
             return  removed;
         }
     </script>
