@@ -11,9 +11,17 @@
         /**
          *
          */
+        function calculate(number){
+            return parseInt(number,2);
+        }
     </script>
     <script type="text/javascript">
-
+        module('Bit calculator');
+        test('parse binary string to number',function(){
+            equal(calculate('0'),0);
+            equal(calculate('1'),1);
+            equal(calculate('10'),2);
+        });
     </script>
 </head>
 <body>
