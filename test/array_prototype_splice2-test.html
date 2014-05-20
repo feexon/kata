@@ -30,7 +30,13 @@
         }
     </script>
     <script type="text/javascript">
-        module('Array prototype splice');
+        var array;
+
+        module('Array prototype splice', {
+            setup: function () {
+                array = [1, 2, 3, 4];
+            }
+        });
 
         test('splice empty array', function () {
             var array = [];
@@ -38,17 +44,15 @@
             deepEqual(array, []);
         });
         test('splice from to end', function () {
-            var array = [1, 2, 3, 4];
+
             deepEqual(array.splice(1), [2, 3, 4]);
             deepEqual(array, [1]);
         });
         test('splice first', function () {
-            var array = [1, 2, 3, 4];
             deepEqual(array.splice(0, 1), [1]);
             deepEqual(array, [2, 3, 4]);
         });
         test('splice last', function () {
-            var array = [1, 2, 3, 4];
             deepEqual(array.splice(3, 1), [4]);
             deepEqual(array, [1, 2, 3]);
         });
