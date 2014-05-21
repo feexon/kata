@@ -10,13 +10,16 @@
     <script type="text/javascript">
         /**
          * --Event.subscribe(subscriber)
-         * Event.subscribe(subscriber) more than multi-times
+         * --Event.subscribe(subscriber) more than multi-times
          * Event.unsubscribe(subscriber)
          * --Event.emit(..)
          */
         function Event() {
             this.subscribers = [];
             this.subscribe = function (subscriber) {
+                if (this.subscribers.indexOf(subscriber) != -1) {
+                    return;
+                }
                 this.subscribers.push(subscriber);
             };
             this.emit = function () {
@@ -41,8 +44,10 @@
                 args = null;
             }
         });
-        test('subscribe', function () {
+        test('subscribe repeat', function () {
             deepEqual(event.subscribers, []);
+            event.subscribe(handler);
+            deepEqual(event.subscribers, [handler]);
             event.subscribe(handler);
             deepEqual(event.subscribers, [handler]);
         });
