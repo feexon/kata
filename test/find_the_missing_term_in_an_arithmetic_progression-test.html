@@ -19,14 +19,11 @@
         function findMissing(numbers) {
             var gap = diff(numbers);
             var missing;
-            numbers.slice(1).some(function (value, index) {
-                if (value - numbers[index] != gap) {
-                    missing = value - gap;
-                    return true;
+            for (var i = 1; i < numbers.length; i++) {
+                if (numbers[i] - numbers[i - 1] != gap) {
+                    return numbers[i] - gap;
                 }
-                return false;
-            });
-            return missing;
+            }
         }
     </script>
     <script type="text/javascript">
@@ -42,7 +39,7 @@
         test('findMissing', function () {
             equal(findMissing([1, 2, 4]), 3);
             equal(findMissing([1, 3, 7]), 5);
-            equal(findMissing ([1,3,5,9,11]), 7);
+            equal(findMissing([1, 3, 5, 9, 11]), 7);
         })
     </script>
 </head>
