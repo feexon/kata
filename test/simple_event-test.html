@@ -12,7 +12,7 @@
          * --Event.subscribe(subscriber)
          * Event.subscribe(subscriber) more than multi-times
          * Event.unsubscribe(subscriber)
-         * #Event.emit(..)
+         * --Event.emit(..)
          */
         function Event() {
             this.subscribers = [];
@@ -20,47 +20,41 @@
                 this.subscribers.push(subscriber);
             };
             this.emit = function () {
-                var args=[].slice.call(arguments);
+                var args = [].slice.call(arguments);
                 this.subscribers.forEach(function (subscriber) {
-                    subscriber.apply(null,args);
+                    subscriber.apply(null, args);
                 });
             };
         }
     </script>
     <script type="text/javascript">
-        module('Simple Event');
-        test('subscribe', function () {
-            var event = new Event();
-            deepEqual(event.subscribers, []);
-            function handler() {
-            }
+        var event;
+        var args;
 
+        function handler() {
+            args = [].slice.call(arguments);
+        }
+
+        module('Simple Event', {
+            setup: function () {
+                event = new Event();
+                args = null;
+            }
+        });
+        test('subscribe', function () {
+            deepEqual(event.subscribers, []);
             event.subscribe(handler);
             deepEqual(event.subscribers, [handler]);
         });
         test('emit', function () {
-            var event = new Event();
-            var emitted = false;
-
-            function handler() {
-                emitted = true;
-            }
-
             event.subscribe(handler);
             event.emit();
-            ok(emitted);
+            ok(args);
         });
         test('emit with arguments', function () {
-            var event = new Event();
-
-            var args;
-            function handler() {
-                args=[].slice.call(arguments);
-            }
-
             event.subscribe(handler);
             event.emit('a', 'b');
-            deepEqual(args,['a','b']);
+            deepEqual(args, ['a', 'b']);
         });
     </script>
 </head>
