@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         * #Event.subscribe(subscriber)
+         * Event.unsubscribe(subscriber)
+         * Event.emit(..)
+         */
+        function Event(){
+            this.subscribers=[];
+            this.subscribe=function(subscriber){
+                this.subscribers.push(subscriber);
+            }
+        }
+    </script>
+    <script type="text/javascript">
+        module('Simple Event');
+        test('subscribe', function () {
+            var event = new Event();
+            deepEqual(event.subscribers, []);
+            function handler(){}
+            event.subscribe(handler);
+            deepEqual(event.subscribers, [handler]);
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
