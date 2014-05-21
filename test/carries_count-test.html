@@ -12,14 +12,26 @@
          *
          */
         function carries(augend, addend) {
-            return +augend + +addend > 9 ? 1 : 0;
+            var n = 0;
+            while (augend) {
+                n += augend % 10 + addend % 10 > 9 ? 1 : 0;
+                augend = Math.floor(augend / 10);
+                addend = Math.floor(addend / 10);
+            }
+            return n;
         }
     </script>
     <script type="text/javascript">
         module('Elementary Arithmetic - Carries Count');
         test('simple carries', function () {
-            equal(carries('1', '8'), 0);
-            equal(carries('1', '9'), 1);
+            equal(carries(1, 8), 0);
+            equal(carries(1, 9), 1);
+        });
+        test('carries', function () {
+            equal(carries(10, 8), 0);
+            equal(carries(8, 10), 0);
+            equal(carries(11, 19), 1);
+            equal(carries(901, 109), 2);
         });
     </script>
 </head>
