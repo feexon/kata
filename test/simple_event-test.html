@@ -15,20 +15,19 @@
          * --Event.emit(..)
          */
         function Event() {
-            this.subscribers = [];
+            var subscribers = [];
             this.subscribe = function (subscriber) {
                 this.unsubscribe(subscriber);
-                this.subscribers.push(subscriber);
+                subscribers.push(subscriber);
             };
             this.emit = function () {
                 var args = [].slice.call(arguments);
-                this.subscribers.forEach(function (subscriber) {
+                subscribers.forEach(function (subscriber) {
                     subscriber.apply(null, args);
                 });
             };
             this.unsubscribe = function (subscriber) {
-               var index = this.subscribers.indexOf(subscriber);
-               this.subscribers.splice(index,1);
+                subscribers.splice(subscribers.indexOf(subscriber),1);
             };
         }
     </script>
