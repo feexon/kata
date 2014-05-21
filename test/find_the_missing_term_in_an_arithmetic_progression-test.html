@@ -11,9 +11,15 @@
         /**
          *
          */
+        function diff(numbers) {
+            return numbers[1]-numbers[0];
+        }
     </script>
     <script type="text/javascript">
-
+        module('Find the missing term in an Arithmetic Progression');
+        test('same diff', function () {
+            equal(diff([1, 2, 3]), 1);
+        });
     </script>
 </head>
 <body>
