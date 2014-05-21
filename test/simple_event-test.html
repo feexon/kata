@@ -20,9 +20,10 @@
                 this.subscribers.push(subscriber);
             };
             this.emit = function () {
-               this.subscribers.forEach(function(subscriber){
-                    subscriber.call(null);
-               });
+                var args=[].slice.call(arguments);
+                this.subscribers.forEach(function (subscriber) {
+                    subscriber.apply(null,args);
+                });
             };
         }
     </script>
@@ -48,6 +49,18 @@
             event.subscribe(handler);
             event.emit();
             ok(emitted);
+        });
+        test('emit with arguments', function () {
+            var event = new Event();
+
+            var args;
+            function handler() {
+                args=[].slice.call(arguments);
+            }
+
+            event.subscribe(handler);
+            event.emit('a', 'b');
+            deepEqual(args,['a','b']);
         });
     </script>
 </head>
