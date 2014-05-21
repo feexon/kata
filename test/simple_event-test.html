@@ -9,15 +9,21 @@
     <script type="text/javascript" src="../libs/qunit-extras.js"></script>
     <script type="text/javascript">
         /**
-         * #Event.subscribe(subscriber)
+         * --Event.subscribe(subscriber)
+         * Event.subscribe(subscriber) more than multi-times
          * Event.unsubscribe(subscriber)
-         * Event.emit(..)
+         * #Event.emit(..)
          */
-        function Event(){
-            this.subscribers=[];
-            this.subscribe=function(subscriber){
+        function Event() {
+            this.subscribers = [];
+            this.subscribe = function (subscriber) {
                 this.subscribers.push(subscriber);
-            }
+            };
+            this.emit = function () {
+               this.subscribers.forEach(function(subscriber){
+                    subscriber.call(null);
+               });
+            };
         }
     </script>
     <script type="text/javascript">
@@ -25,9 +31,23 @@
         test('subscribe', function () {
             var event = new Event();
             deepEqual(event.subscribers, []);
-            function handler(){}
+            function handler() {
+            }
+
             event.subscribe(handler);
             deepEqual(event.subscribers, [handler]);
+        });
+        test('emit', function () {
+            var event = new Event();
+            var emitted = false;
+
+            function handler() {
+                emitted = true;
+            }
+
+            event.subscribe(handler);
+            event.emit();
+            ok(emitted);
         });
     </script>
 </head>
