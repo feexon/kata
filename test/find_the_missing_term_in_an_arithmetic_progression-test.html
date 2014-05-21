@@ -11,38 +11,24 @@
         /**
          *
          */
-        function diff(numbers) {
-            return numbers.slice(1).reduce(function (diff, value, index) {
-                var gap = value - numbers[index];
-                return Math.abs(gap) < Math.abs(diff) ? value - numbers[index] : diff;
-            }, Number.MAX_VALUE);
-        }
-        function findMissing(numbers) {
-            var gap = diff(numbers);
-            var missing;
-            for (var i = 1; i < numbers.length; i++) {
-                if (numbers[i] - numbers[i - 1] != gap) {
-                    return numbers[i] - gap;
-                }
-            }
+        var findMissing = function (list) {
+            var first = list[0];
+            var last = list[list.length - 1];
+            var n = list.length + 1;//list.length + missing
+            var total = n * (first + last) / 2;
+            var sum = list.reduce(function (sum, value) {
+                return sum + value
+            }, 0);
+
+            return total - sum;
         }
     </script>
     <script type="text/javascript">
         module('Find the missing term in an Arithmetic Progression');
-        test('same diff', function () {
-            equal(diff([1, 2, 3]), 1);
-        });
-        test('diff', function () {
-            equal(diff([1, 5, 7]), 2);
-            equal(diff([1, 3, 7]), 2);
-            equal(diff([1, 3, 5]), 2);
-        });
-        test('diff with negative numbers', function () {
-            equal(diff([-2, -3, -5, -6, -7]), -1);
-        });
         test('findMissing', function () {
             equal(findMissing([1, 2, 4]), 3);
             equal(findMissing([1, 3, 7]), 5);
+            equal(findMissing([1, 3, 5, 9]), 7);
             equal(findMissing([1, 3, 5, 9, 11]), 7);
             equal(findMissing([-2, -3, -5, -6, -7]), -4);
         })
