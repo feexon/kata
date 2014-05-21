@@ -26,9 +26,10 @@
             });
         }
         function solve(input){
-            var groups=pairs(input);
-            var n=carries(groups[0][0],groups[0][1]);
-            return n?n+' carry operations':'No carry operation';
+            return pairs(input).map(function(pair){
+                var n=carries(pair[0],pair[1]);
+                return n?n+' carry operations':'No carry operation';
+            }).join('\n');
         }
     </script>
     <script type="text/javascript">
@@ -51,6 +52,9 @@
             deepEqual(solve('123 456'),'No carry operation');
             deepEqual(solve('555 555'),'3 carry operations');
             deepEqual(solve('123 594'),'1 carry operations');
+        });
+        test('display carries',function(){
+            deepEqual(solve("123 456\n555 555\n123 594"),'No carry operation\n3 carry operations\n1 carry operations');
         });
     </script>
 </head>
