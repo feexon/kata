@@ -42,22 +42,28 @@
             setup: function () {
                 event = new Event();
                 args = null;
+                event.subscribe(handler);
+
             }
         });
-        test('subscribe repeat', function () {
-            deepEqual(event.subscribers, []);
-            event.subscribe(handler);
-            deepEqual(event.subscribers, [handler]);
-            event.subscribe(handler);
-            deepEqual(event.subscribers, [handler]);
-        });
         test('emit', function () {
-            event.subscribe(handler);
             event.emit();
             ok(args);
         });
+        test('subscribe repeat', function () {
+            var times = 0;
+
+            function counter() {
+                times++;
+            }
+
+            event.subscribe(counter);
+            event.subscribe(counter);
+
+            event.emit();
+            equal(times, 1);
+        });
         test('emit with arguments', function () {
-            event.subscribe(handler);
             event.emit('a', 'b');
             deepEqual(args, ['a', 'b']);
         });
