@@ -20,6 +20,11 @@
             }
             return n;
         }
+        function pairs(input) {
+            return input.split('\n').map(function(pair){
+                return pair.split(' ');
+            });
+        }
     </script>
     <script type="text/javascript">
         module('Elementary Arithmetic - Carries Count');
@@ -32,6 +37,10 @@
             equal(carries(8, 10), 0);
             equal(carries(11, 19), 1);
             equal(carries(901, 109), 2);
+        });
+        test('pairs', function () {
+            deepEqual(pairs("123 456"), [['123', '456']]);
+            deepEqual(pairs("123 456\n555 555\n123 594"),[['123','456'],['555','555'],['123','594']]);
         });
     </script>
 </head>
