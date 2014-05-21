@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function carries(augend, addend) {
+            var n = 0;
+            var carry = 0;
+            while (augend) {
+                n += carry = augend % 10 + addend % 10 + carry > 9 ? 1 : 0;
+                augend = Math.floor(augend / 10);
+                addend = Math.floor(addend / 10);
+            }
+            return n;
+        }
+        function pairs(input) {
+            return input.split('\n').map(function (pair) {
+                return pair.split(' ');
+            });
+        }
+        function solve(input) {
+            return pairs(input).map(function (pair) {
+                var n = carries(pair[0], pair[1]);
+                return n ? n + ' carry operations' : 'No carry operation';
+            }).join('\n');
+        }
+    </script>
+    <script type="text/javascript">
+        module('Elementary Arithmetic - Carries Count');
+        test('simple carries', function () {
+            equal(carries(1, 8), 0);
+            equal(carries(1, 9), 1);
+        });
+        test('carries', function () {
+            equal(carries(10, 8), 0);
+            equal(carries(8, 10), 0);
+            equal(carries(11, 19), 1);
+            equal(carries(901, 109), 2);
+        });
+        test('carry recorded', function () {
+            equal(carries(121 ,679), 2);
+        });
+        test('pairs', function () {
+            deepEqual(pairs("123 456"), [['123', '456']]);
+            deepEqual(pairs("123 456\n555 555\n123 594"),[['123','456'],['555','555'],['123','594']]);
+        });
+        test('display carries of a pair numbers',function(){
+            deepEqual(solve('123 456'),'No carry operation');
+            deepEqual(solve('555 555'),'3 carry operations');
+            deepEqual(solve('123 594'),'1 carry operations');
+        });
+        test('display carries',function(){
+            deepEqual(solve("123 456\n555 555\n123 594"),'No carry operation\n3 carry operations\n1 carry operations');
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
