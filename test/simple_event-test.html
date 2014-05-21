@@ -38,51 +38,46 @@
     </script>
     <script type="text/javascript">
         var event;
-        var args;
-
-        function handler() {
-            args = [].slice.call(arguments);
+        var stub;
+        function Stub() {
+            var stub = function () {
+                stub.calls++;
+                stub.args = [].slice.call(arguments);
+            };
+            stub.calls = 0;
+            return stub;
         }
+
 
         module('Simple Event', {
             setup: function () {
                 event = new Event();
-                args = null;
-                event.subscribe(handler);
-
+                event.subscribe(stub = new Stub());
             }
         });
         test('emit', function () {
             event.emit();
-            ok(args);
+            equal(stub.calls, 1);
         });
         test('subscribe repeat', function () {
-            var times = 0;
-
-            function counter() {
-                times++;
-            }
-
-            event.subscribe(counter);
-            event.subscribe(counter);
-
+            event.subscribe(stub);
             event.emit();
-            equal(times, 1);
+            equal(stub.calls, 1);
         });
         test('emit with arguments', function () {
             event.emit('a', 'b');
-            deepEqual(args, ['a', 'b']);
+            deepEqual(stub.args, ['a', 'b']);
         });
         test('unsubscribe', function () {
-            event.unsubscribe(handler);
+            event.unsubscribe(stub);
             event.emit();
-            ok(!args);
+            equal(stub.calls, 0);
         });
         test('unsubscribe unknown handler', function () {
             event.unsubscribe(function unknown() {
             });
             event.emit();
-            ok(args);
+            equal(stub.calls, 1);
         });
 
 
