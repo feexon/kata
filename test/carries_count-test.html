@@ -13,22 +13,23 @@
          */
         function carries(augend, addend) {
             var n = 0;
+            var carry = 0;
             while (augend) {
-                n += augend % 10 + addend % 10 > 9 ? 1 : 0;
+                n += carry = augend % 10 + addend % 10 + carry > 9 ? 1 : 0;
                 augend = Math.floor(augend / 10);
                 addend = Math.floor(addend / 10);
             }
             return n;
         }
         function pairs(input) {
-            return input.split('\n').map(function(pair){
+            return input.split('\n').map(function (pair) {
                 return pair.split(' ');
             });
         }
-        function solve(input){
-            return pairs(input).map(function(pair){
-                var n=carries(pair[0],pair[1]);
-                return n?n+' carry operations':'No carry operation';
+        function solve(input) {
+            return pairs(input).map(function (pair) {
+                var n = carries(pair[0], pair[1]);
+                return n ? n + ' carry operations' : 'No carry operation';
             }).join('\n');
         }
     </script>
@@ -43,6 +44,9 @@
             equal(carries(8, 10), 0);
             equal(carries(11, 19), 1);
             equal(carries(901, 109), 2);
+        });
+        test('carry recorded', function () {
+            equal(carries(121 ,679), 2);
         });
         test('pairs', function () {
             deepEqual(pairs("123 456"), [['123', '456']]);
