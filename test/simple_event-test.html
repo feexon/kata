@@ -17,9 +17,7 @@
         function Event() {
             this.subscribers = [];
             this.subscribe = function (subscriber) {
-                if (this.subscribers.indexOf(subscriber) != -1) {
-                    return;
-                }
+                this.unsubscribe(subscriber);
                 this.subscribers.push(subscriber);
             };
             this.emit = function () {
@@ -27,6 +25,10 @@
                 this.subscribers.forEach(function (subscriber) {
                     subscriber.apply(null, args);
                 });
+            };
+            this.unsubscribe = function (subscriber) {
+               var index = this.subscribers.indexOf(subscriber);
+               this.subscribers.splice(index,1);
             };
         }
     </script>
@@ -66,6 +68,11 @@
         test('emit with arguments', function () {
             event.emit('a', 'b');
             deepEqual(args, ['a', 'b']);
+        });
+        test('unsubscribe', function () {
+            event.unsubscribe(handler);
+            event.emit();
+            ok(!args);
         });
     </script>
 </head>
