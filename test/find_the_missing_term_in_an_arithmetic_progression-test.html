@@ -16,6 +16,18 @@
                 return Math.min(value - numbers[index], diff);
             }, Number.MAX_VALUE);
         }
+        function findMissing(numbers) {
+            var gap = diff(numbers);
+            var missing;
+            numbers.slice(1).some(function (value, index) {
+                if (value - numbers[index] != gap) {
+                    missing = value - gap;
+                    return true;
+                }
+                return false;
+            });
+            return missing;
+        }
     </script>
     <script type="text/javascript">
         module('Find the missing term in an Arithmetic Progression');
@@ -27,6 +39,11 @@
             equal(diff([1, 3, 7]), 2);
             equal(diff([1, 3, 5]), 2);
         });
+        test('findMissing', function () {
+            equal(findMissing([1, 2, 4]), 3);
+            equal(findMissing([1, 3, 7]), 5);
+            equal(findMissing ([1,3,5,9,11]), 7);
+        })
     </script>
 </head>
 <body>
