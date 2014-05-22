@@ -9,11 +9,17 @@
     <script type="text/javascript" src="../libs/qunit-extras.js"></script>
     <script type="text/javascript">
         /**
-         *
+         * maxZeroSequenceLength([25, -35, 12, 6, 92, -115, 17, 2, 2, 2, -7, 2, -9, 16, 2, -11]) [92, -115, 17, 2, 2, 2]
          */
+        function maxZeroSequenceLength(array) {
+            return array;
+        }
     </script>
     <script type="text/javascript">
-
+        module('Longest sequence with zero sum');
+        test('max sequence is self', function () {
+            deepEqual(maxZeroSequenceLength([92, -115, 17, 2, 2, 2]), [92, -115, 17, 2, 2, 2]);
+        });
     </script>
 </head>
 <body>
