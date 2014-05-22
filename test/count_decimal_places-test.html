@@ -12,8 +12,8 @@
          *
          */
         function decimalPlaces(decimal) {
-            var result = /\.\d+/.exec(decimal);
-            return result ? result[0].length - 1 : 0;
+            var result = /\.(\d+)(?:e-(\d+))?/.exec(decimal);
+            return result ? result[1].length + (result[2] | 0) : 0;
         }
     </script>
     <script type="text/javascript">
@@ -27,6 +27,9 @@
         test('others', function () {
             equal(decimalPlaces(NaN), 0);
             equal(decimalPlaces(Infinity), 0);
+        });
+        test('decimal with exponentials', function () {
+            equal(decimalPlaces(-3.14e-21), 23);
         });
     </script>
 </head>
