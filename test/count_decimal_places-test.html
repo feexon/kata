@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function decimalPlaces(decimal) {
+            var result = /(\.\d+)?(?:e-(\d+))?$/.exec(decimal);
+            return result ? (result[1] ? result[1].length - 1 : 0) + (result[2] | 0) : 0;
+        }
+    </script>
+    <script type="text/javascript">
+        module('Count Decimal Places');
+        test('integer', function () {
+            equal(decimalPlaces(10), 0);
+        });
+        test('decimal', function () {
+            equal(decimalPlaces(10.23), 2);
+        });
+        test('others', function () {
+            equal(decimalPlaces(NaN), 0);
+            equal(decimalPlaces(Infinity), 0);
+        });
+        test('decimal with exponentials', function () {
+            equal(decimalPlaces(-3.14e-21), 23);
+        });
+        test('decimal without precision', function () {
+            equal(decimalPlaces(-3.e-21), 21);
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
