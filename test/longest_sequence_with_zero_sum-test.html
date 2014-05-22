@@ -16,10 +16,10 @@
             for (var i = 0; i < array.length; i++) {
                 sum += array[i];
                 if (!sum) {
-                    return array.slice(0, i+1);
+                    break;
                 }
             }
-            return array;
+            return sum ? null : array.slice(0, i + 1);
         }
     </script>
     <script type="text/javascript">
@@ -29,6 +29,9 @@
         });
         test('sequence at head', function () {
             deepEqual(maxZeroSequenceLength([92, -115, 17, 2, 2, 2, 5]), [92, -115, 17, 2, 2, 2]);
+        });
+        test('no sequence found', function () {
+            deepEqual(maxZeroSequenceLength([92, -115, 17, 2, 2]), null);
         });
     </script>
 </head>
