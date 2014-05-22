@@ -12,6 +12,13 @@
          * maxZeroSequenceLength([25, -35, 12, 6, 92, -115, 17, 2, 2, 2, -7, 2, -9, 16, 2, -11]) [92, -115, 17, 2, 2, 2]
          */
         function maxZeroSequenceLength(array) {
+            var sum = 0;
+            for (var i = 0; i < array.length; i++) {
+                sum += array[i];
+                if (!sum) {
+                    return array.slice(0, i+1);
+                }
+            }
             return array;
         }
     </script>
@@ -19,6 +26,9 @@
         module('Longest sequence with zero sum');
         test('max sequence is self', function () {
             deepEqual(maxZeroSequenceLength([92, -115, 17, 2, 2, 2]), [92, -115, 17, 2, 2, 2]);
+        });
+        test('sequence at head', function () {
+            deepEqual(maxZeroSequenceLength([92, -115, 17, 2, 2, 2, 5]), [92, -115, 17, 2, 2, 2]);
         });
     </script>
 </head>
