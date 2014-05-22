@@ -12,8 +12,8 @@
          *
          */
         function decimalPlaces(decimal) {
-            var result = /\.(\d+)(?:e-(\d+))?/.exec(decimal);
-            return result ? result[1].length + (result[2] | 0) : 0;
+            var result = /(\.\d+)?(?:e-(\d+))?$/.exec(decimal);
+            return result ? (result[1] ? result[1].length - 1 : 0) + (result[2] | 0) : 0;
         }
     </script>
     <script type="text/javascript">
@@ -30,6 +30,9 @@
         });
         test('decimal with exponentials', function () {
             equal(decimalPlaces(-3.14e-21), 23);
+        });
+        test('decimal without precision', function () {
+            equal(decimalPlaces(-3.e-21), 21);
         });
     </script>
 </head>
