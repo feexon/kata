@@ -24,6 +24,10 @@
         test('decimal', function () {
             equal(decimalPlaces(10.23), 2);
         });
+        test('others', function () {
+            equal(decimalPlaces(NaN), 0);
+            equal(decimalPlaces(Infinity), 0);
+        });
     </script>
 </head>
 <body>
