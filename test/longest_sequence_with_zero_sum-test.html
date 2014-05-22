@@ -12,17 +12,21 @@
          * maxZeroSequenceLength([25, -35, 12, 6, 92, -115, 17, 2, 2, 2, -7, 2, -9, 16, 2, -11]) [92, -115, 17, 2, 2, 2]
          */
         function maxZeroSequenceLength(array) {
-            if(!array.length){
+            if (!array.length) {
                 return null;
             }
             var sum = 0;
-            for (var i = 0; i < array.length; i++) {
-                sum += array[i];
+            for (var i = 0; i < array.length;) {
+                sum += array[i++];
                 if (!sum) {
                     break;
                 }
             }
-            return sum ? maxZeroSequenceLength(array.slice(1)) : array.slice(0, i + 1);
+            var sequence = maxZeroSequenceLength(array.slice(1));
+            if (sum || sequence && sequence.length > i) {
+                return sequence;
+            }
+            return array.slice(0, i);
         }
     </script>
     <script type="text/javascript">
@@ -38,6 +42,9 @@
         });
         test('sequence at last', function () {
             deepEqual(maxZeroSequenceLength([-1, 92, -115, 17, 2, 2, 2]), [92, -115, 17, 2, 2, 2]);
+        });
+        test('get longest in multi sequences', function () {
+            deepEqual(maxZeroSequenceLength([25, -35, 12, 6, 92, -115, 17, 2, 2, 2, -7, 2, -9, 16, 2, -11]), [92, -115, 17, 2, 2, 2]);
         });
     </script>
 </head>
