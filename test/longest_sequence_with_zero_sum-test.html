@@ -12,8 +12,8 @@
          * maxZeroSequenceLength([25, -35, 12, 6, 92, -115, 17, 2, 2, 2, -7, 2, -9, 16, 2, -11]) [92, -115, 17, 2, 2, 2]
          */
         function maxZeroSequence(array) {
-            if (!array.length) {
-                return null;
+            if(!array.length){
+                return array;
             }
             var sum = 0;
             for (var i = 0; i < array.length;) {
@@ -38,7 +38,7 @@
             deepEqual(maxZeroSequence([92, -115, 17, 2, 2, 2, 5]), [92, -115, 17, 2, 2, 2]);
         });
         test('no sequence found', function () {
-            deepEqual(maxZeroSequence([92, -115, 17, 2, 2]), null);
+            deepEqual(maxZeroSequence([92, -115, 17, 2, 2]), []);
         });
         test('sequence at last', function () {
             deepEqual(maxZeroSequence([-1, 92, -115, 17, 2, 2, 2]), [92, -115, 17, 2, 2, 2]);
