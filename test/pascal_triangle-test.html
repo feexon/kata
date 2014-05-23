@@ -15,19 +15,24 @@
          *  --pascal(2) // [[1],[1,1]]
          *  --pascal(0) // []
          */
+        function fact(n) {
+            if (fact.memo[n]) return fact.memo[n]
+            return fact.memo[n] = fact(n-1) * n
+        }
+        fact.memo = [1]
+
+        function nChooseK(n, k) {
+            return fact(n) / (fact(k) * fact(n-k))
+        }
+
         function pascal(depth) {
-            var result = [];
-            for (var i = 0; i < depth; i++) {
-                var tier = Array.apply(null, Array(i+1)).map(function () {
-                    return 1;
-                });
-                for(var j=1;j<i;j++){
-                    var above=result[i-1];
-                    tier[j]=above[j-1]+above[j];
-                }
-                result.push(tier);
+            var result = []
+            for (var n = 0; n < depth; n++) {
+                var row = []
+                for (var k = 0; k <= n; k++) row.push(nChooseK(n, k))
+                result.push(row)
             }
-            return result;
+            return result
         }
     </script>
     <script type="text/javascript">
