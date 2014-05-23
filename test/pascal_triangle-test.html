@@ -16,13 +16,21 @@
          *  pascal(0) // []
          */
         function pascal(depth) {
-            return [];
+            return Array.apply(null, Array(depth)).map(function (_, tier) {
+                return Array.apply(null, Array(tier + 1)).map(function () {
+                    return 1;
+                });
+            });
         }
     </script>
     <script type="text/javascript">
         module("Pascal's Triangle #2");
         test('empty', function () {
             deepEqual(pascal(0), []);
+        });
+        test('sides only', function () {
+            deepEqual(pascal(1), [[1]]);
+            deepEqual(pascal(2), [[1],[1,1]]);
         });
     </script>
 </head>
