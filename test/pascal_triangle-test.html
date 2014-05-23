@@ -16,8 +16,11 @@
          *  pascal(0) // []
          */
         function pascal(depth) {
-            return Array.apply(null, Array(depth)).map(function (_, tier) {
-                return Array.apply(null, Array(tier + 1)).map(function () {
+            function times(n){
+               return Array.apply(null, Array(n));
+            }
+            return times(depth).map(function (_, tier) {
+                return times(tier+1).map(function () {
                     return 1;
                 });
             });
