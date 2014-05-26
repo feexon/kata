@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        var memo = [0, 1];
+        function fibonacci(n) {
+            if (memo[n]!==undefined) {
+                return memo[n];
+            }
+            return memo[n] = fibonacci(n - 2) + fibonacci(n - 1);
+        }
+    </script>
+    <script type="text/javascript">
+        module('Memoized Fibonacci');
+        test('small', function () {
+            equal(fibonacci(0), 0);
+            equal(fibonacci(1), 1);
+            equal(fibonacci(2), fibonacci(0) + fibonacci(1));
+            equal(fibonacci(3), fibonacci(1) + fibonacci(2));
+        });
+        test('constants in memo', function (assert) {
+            strictEqual(memo[0], 0);
+            strictEqual(memo[1], 1);
+        });
+        test('cache fibonacci', function (assert) {
+            fibonacci(2);
+            strictEqual(memo[2], 1);
+            fibonacci(4);
+            strictEqual(memo[3], 2);
+            strictEqual(memo[4], 3);
+        });
+        test('using cache', function (assert) {
+            expect(1);
+            stop();
+
+            var thread = setTimeout(function () {
+                if (!thread) {
+                    return;
+                }
+                ok(false, 'timed out');
+                start();
+            }, 1000);
+            equal(fibonacci(50), 12586269025);
+            clearTimeout(thread);
+            thread = null;
+            start();
+
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
