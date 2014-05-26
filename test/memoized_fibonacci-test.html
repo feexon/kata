@@ -11,9 +11,21 @@
         /**
          *
          */
+        function fibonacci(n) {
+            if (n >= 2) {
+                return fibonacci(n - 2) + fibonacci(n - 1);
+            }
+            return 1;
+        }
     </script>
     <script type="text/javascript">
-
+        module('Memoized Fibonacci');
+        test('small', function () {
+            equal(fibonacci(0), 1);
+            equal(fibonacci(1), 1);
+            equal(fibonacci(2), fibonacci(0) + fibonacci(1));
+            equal(fibonacci(3), fibonacci(1) + fibonacci(2));
+        });
     </script>
 </head>
 <body>
