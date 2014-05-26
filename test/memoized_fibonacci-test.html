@@ -13,16 +13,19 @@
          */
         var memo = [];
         function fibonacci(n) {
-            if (n >= 2) {
-                return memo[n]=fibonacci(n - 2) + fibonacci(n - 1);
+            if (memo[n]) {
+                return memo[n];
             }
-            return 1;
+            if (n >= 2) {
+                return memo[n] = fibonacci(n - 2) + fibonacci(n - 1);
+            }
+            return n;
         }
     </script>
     <script type="text/javascript">
         module('Memoized Fibonacci');
         test('small', function () {
-            equal(fibonacci(0), 1);
+            equal(fibonacci(0), 0);
             equal(fibonacci(1), 1);
             equal(fibonacci(2), fibonacci(0) + fibonacci(1));
             equal(fibonacci(3), fibonacci(1) + fibonacci(2));
@@ -35,10 +38,27 @@
         });
         test('cache fibonacci', function (assert) {
             fibonacci(2);
-            strictEqual(memo[2], 2);
+            strictEqual(memo[2], 1);
             fibonacci(4);
-            strictEqual(memo[3], 3);
-            strictEqual(memo[4], 5);
+            strictEqual(memo[3], 2);
+            strictEqual(memo[4], 3);
+        });
+        test('using cache', function (assert) {
+            expect(1);
+            stop();
+
+            var thread = setTimeout(function () {
+                if (!thread) {
+                    return;
+                }
+                ok(false, 'timed out');
+                start();
+            }, 1000);
+            equal(fibonacci(50), 12586269025);
+            clearTimeout(thread);
+            thread = null;
+            start();
+
         });
     </script>
 </head>
