@@ -14,7 +14,7 @@
         var memo = [];
         function fibonacci(n) {
             if (n >= 2) {
-                return fibonacci(n - 2) + fibonacci(n - 1);
+                return memo[n]=fibonacci(n - 2) + fibonacci(n - 1);
             }
             return 1;
         }
@@ -32,6 +32,13 @@
             strictEqual(memo[0], undefined);
             fibonacci(1);
             strictEqual(memo[1], undefined);
+        });
+        test('cache fibonacci', function (assert) {
+            fibonacci(2);
+            strictEqual(memo[2], 2);
+            fibonacci(4);
+            strictEqual(memo[3], 3);
+            strictEqual(memo[4], 5);
         });
     </script>
 </head>
