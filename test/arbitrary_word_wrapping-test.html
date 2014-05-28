@@ -15,7 +15,7 @@
          Test.expect(result === expectedResult);
          */
         function wordWrap(str) {
-            return str.replace(/(.{23}\w)(?=\w)|(.{25})(?=.)/g, function (part) {
+            return str.replace(/(.{23}\w)(?=[a-z])|(.{25})(?=.)/g, function (part) {
                 return part + (part.length == 24 ? '-\n' : '\n');
             });
         }
@@ -34,7 +34,9 @@
         });
         test('insert new lines with the hyphen', function () {
             equal(wordWrap('The quick brown fox jumped over the lazy developer.'), 'The quick brown fox jump-\ned over the lazy develop-\ner.');
-
+        });
+        test("don't insert new lines with the hyphen for digits", function () {
+            equal(wordWrap('1234567890123456789012345 1234567890'), '1234567890123456789012345\n 1234567890');
         });
     </script>
 </head>
