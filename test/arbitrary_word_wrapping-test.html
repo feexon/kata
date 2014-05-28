@@ -16,8 +16,7 @@
          */
         function wordWrap(str) {
             return str.replace(/(.{23}\w)(?=\w)|(.{25})(?=.)/g, function (part) {
-                return part.length == 24 ? part + '-\n' : part + '\n';
-
+                return part + (part.length == 24 ? '-\n' : '\n');
             });
         }
     </script>
