@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         * var input = "The quick brown fox jumped over the lazy developer.";
+         var expectedResult ="The quick brown fox jump-\ned over the lazy develop-\ner.";
+         var result = wordWrap(input);
+         Test.expect(result === expectedResult);
+         */
+        function wordWrap(str) {
+            return str.replace(/(.{23}\w)(?=[a-zA-Z])|(.{25})(?=.)/g, function (part) {
+                return part + (part.length == 24 ? '-\n' : '\n');
+            });
+        }
+    </script>
+    <script type="text/javascript">
+        module('Arbitrary word wrapping');
+        test('empty string', function () {
+            equal(wordWrap(''), '');
+        });
+        test('insert new lines', function () {
+            equal(wordWrap('The quick brown fox jump over the lazy developer.'), 'The quick brown fox jump \nover the lazy developer.');
+            equal(wordWrap('The quick brown fox jump over the lazy developer.a fox!'), 'The quick brown fox jump \nover the lazy developer.a\n fox!');
+        });
+        test("don't insert new line at the end", function () {
+            equal(wordWrap('The quick brown fox jump over the lazy developers.'), 'The quick brown fox jump \nover the lazy developers.');
+        });
+        test('insert new lines with the hyphen', function () {
+            equal(wordWrap('The quick brown fox jumped over the lazy developer.'), 'The quick brown fox jump-\ned over the lazy develop-\ner.');
+        });
+        test('insert new lines with the hyphen of upper case', function () {
+            equal(wordWrap('THE QUICK BROWN FOX JUMPED OVER THE LAZY DEVELOPER.'), 'THE QUICK BROWN FOX JUMP-\nED OVER THE LAZY DEVELOP-\nER.');
+        });
+        test("don't insert new lines with the hyphen for digits", function () {
+            equal(wordWrap('1234567890123456789012345 1234567890'), '1234567890123456789012345\n 1234567890');
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
