@@ -15,14 +15,18 @@
          Test.expect(result === expectedResult);
          */
         function wordWrap(str) {
-            return str;
+            return str.replace(/(.{25})/g,'$1\n');
         }
     </script>
     <script type="text/javascript">
         module('Arbitrary word wrapping');
         test('empty string', function () {
             equal(wordWrap(''), '');
-        })
+        });
+        test('insert new lines', function () {
+            equal(wordWrap('The quick brown fox jump over the lazy developer.'), 'The quick brown fox jump \nover the lazy developer.');
+            equal(wordWrap('The quick brown fox jump over the lazy developer.a fox!'), 'The quick brown fox jump \nover the lazy developer.a\n fox!');
+        });
     </script>
 </head>
 <body>
