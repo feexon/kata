@@ -9,11 +9,20 @@
     <script type="text/javascript" src="../libs/qunit-extras.js"></script>
     <script type="text/javascript">
         /**
-         *
+         * var input = "The quick brown fox jumped over the lazy developer.";
+         var expectedResult ="The quick brown fox jump-\ned over the lazy develop-\ner.";
+         var result = wordWrap(input);
+         Test.expect(result === expectedResult);
          */
+        function wordWrap(str) {
+            return str;
+        }
     </script>
     <script type="text/javascript">
-
+        module('Arbitrary word wrapping');
+        test('empty string', function () {
+            equal(wordWrap(''), '');
+        })
     </script>
 </head>
 <body>
