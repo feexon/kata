@@ -21,14 +21,14 @@
          If a string contains all repeating characters, it should return the empty string ('').
 
          --'aaaa'=> ''
-         #'stress' => 't'
-         'STress' => 'T'
+         --'stress' => 't'
+         --'STress' => 'T'
          */
         function firstNonRepeatingCharacter(string) {
             if(!string){
                 return '';
             }
-            var pattern = new RegExp(string[0], 'g');
+            var pattern = new RegExp(string[0], 'gi');
             var occurs = string.match(pattern);
             return occurs.length > 1 ? firstNonRepeatingCharacter(string.replace(pattern,'')) : string[0];
         }
@@ -41,6 +41,9 @@
         test('find first non-repeating letter', function () {
             equal(firstNonRepeatingCharacter('first'), 'f');
             equal(firstNonRepeatingCharacter('stress'), 't');
+        });
+        test('case insensitive', function () {
+            equal(firstNonRepeatingCharacter('STress'), 'T');
         });
     </script>
 </head>
