@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function sevenSegmentNumber(number) {
+            var instructions = ['1111101', '1010000', '0110111', '1010111','1011010','1001111','1101111','1010001','1111111','1011111'];
+            return parseInt(instructions[number], 2);
+        }
+    </script>
+    <script type="text/javascript">
+        module('7-segment converter');
+        test('sevenSegmentNumber', function () {
+            equal(sevenSegmentNumber(0), 125);
+            equal(sevenSegmentNumber(1), 80);
+            equal(sevenSegmentNumber(2), 55);
+            equal(sevenSegmentNumber(3), 87);
+            equal(sevenSegmentNumber(4), 90);
+            equal(sevenSegmentNumber(5), 79);
+            equal(sevenSegmentNumber(6), 111);
+            equal(sevenSegmentNumber(7), 81);
+            equal(sevenSegmentNumber(8), 127);
+            equal(sevenSegmentNumber(9), 95);
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
