@@ -12,14 +12,12 @@
          *
          */
         function findSpecialIdx(vms) {
-            for (var i = 0; i < 100; i++) {
-                for (var j = 100; --j >= i;) {
-                    vms[j].vend();
+            for (var end = 0; end < 100; end++) {
+                for (var from = 100; --from >= end;) {
+                    vms[from].vend();
                 }
             }
-
             return (vms.weigh() - 1) % 100;
-
         }
     </script>
     <script type="text/javascript">
