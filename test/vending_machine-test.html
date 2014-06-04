@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function findSpecialIdx(vms) {
+            for (var i = 0; i < 100; i++) {
+                for (var j = 100; --j >= i;) {
+                    vms[j].vend();
+                }
+            }
+
+            return (vms.weigh() - 1) % 100;
+
+        }
+    </script>
+    <script type="text/javascript">
+        module('Vending Machines');
+        function specialAt(pos) {
+            var vms = [];
+            var weight = 0;
+            for (var i = 0; i < 100; i++) {
+                (function (current) {
+                    vms.push({vend: function () {
+                        weight += current == pos ? 101 : 100;
+                    }});
+                })(i);
+            }
+            vms.weigh = function () {
+                return weight;
+            };
+            return vms;
+        }
+        test('find special index', function () {
+            equal(findSpecialIdx(specialAt(0)), 0);
+            equal(findSpecialIdx(specialAt(1)), 1);
+            equal(findSpecialIdx(specialAt(50)), 50);
+            equal(findSpecialIdx(specialAt(51)), 51);
+            equal(findSpecialIdx(specialAt(99)), 99);
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
