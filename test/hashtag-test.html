@@ -15,7 +15,7 @@
             if (post == '#') {
                 return [];
             }
-            return [post.replace(/#/, '')];
+            return [post.replace(/#/g, '')];
         }
     </script>
     <script type="text/javascript">
@@ -23,6 +23,10 @@
         test('simple', function () {
             deepEqual(getHashtags('#'), []);
             deepEqual(getHashtags('#alot'), ['alot']);
+        });
+
+        test('more pound signs', function () {
+            deepEqual(getHashtags('##alot'), ['alot']);
         });
     </script>
 </head>
