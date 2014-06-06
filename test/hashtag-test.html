@@ -12,10 +12,10 @@
          *
          */
         function getHashtags(post) {
-            if (post == '#') {
-                return [];
-            }
-            return post.match(/(?:^|\s)#+\w+/)?[post.replace(/\s*#*/g, '')]:[];
+            var result = post.match(/(?:^|\s)#+\w+/g)||[];
+            return Array.prototype.map.call(result,function(keyword){
+                return keyword.replace(/\s*#*/g, '');
+            });
         }
     </script>
     <script type="text/javascript">
@@ -35,6 +35,11 @@
 
         test('ignore whitespaces', function () {
             deepEqual(getHashtags(' #alot '), ['alot']);
+        });
+
+        test('more words', function () {
+            deepEqual(getHashtags("Hello #world"), ['world']);
+            deepEqual(getHashtags("Hello #world #lol"), ['world', 'lol']);
         });
     </script>
 </head>
