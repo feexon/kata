@@ -12,7 +12,7 @@
          *
          */
         function getHashtags(post) {
-            var result = post.match(/(?:^|\s)#+\w+/g)||[];
+            var result = post.match(/(?:^|\s)#+[a-zA-Z]+/g)||[];
             return Array.prototype.map.call(result,function(keyword){
                 return keyword.replace(/\s*#*/g, '');
             });
@@ -40,6 +40,9 @@
         test('more words', function () {
             deepEqual(getHashtags("Hello #world"), ['world']);
             deepEqual(getHashtags("Hello #world #lol"), ['world', 'lol']);
+        });
+        test('cannot be within precede alphabetical character', function () {
+            deepEqual(getHashtags("#12345"), []);
         });
     </script>
 </head>
