@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function getHashtags(post) {
+            var result = post.match(/(?:^|\s+)#+[a-zA-Z]+(?=\s+|$)/g)||[];
+            return Array.prototype.map.call(result,function(keyword){
+                return keyword.replace(/\s*#*/g, '');
+            });
+        }
+    </script>
+    <script type="text/javascript">
+        module('hashtag');
+        test('simple', function () {
+            deepEqual(getHashtags('#'), []);
+            deepEqual(getHashtags('#alot'), ['alot']);
+        });
+
+        test('more pound signs', function () {
+            deepEqual(getHashtags('##alot'), ['alot']);
+        });
+
+        test('cannot be within the middle of a word', function () {
+            deepEqual(getHashtags('in#line'), []);
+        });
+
+        test('ignore whitespaces', function () {
+            deepEqual(getHashtags(' #alot '), ['alot']);
+        });
+
+        test('more words', function () {
+            deepEqual(getHashtags("Hello #world"), ['world']);
+            deepEqual(getHashtags("Hello #world #lol"), ['world', 'lol']);
+        });
+        test('cannot be within precede alphabetical character', function () {
+            deepEqual(getHashtags("#12345"), []);
+        });
+        test('words without whitespace', function () {
+            deepEqual(getHashtags("#r#g#b"), []);
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
