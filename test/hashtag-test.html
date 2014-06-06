@@ -11,9 +11,19 @@
         /**
          *
          */
+        function getHashtags(post) {
+            if (post == '#') {
+                return [];
+            }
+            return [post.replace(/#/, '')];
+        }
     </script>
     <script type="text/javascript">
-
+        module('hashtag');
+        test('simple', function () {
+            deepEqual(getHashtags('#'), []);
+            deepEqual(getHashtags('#alot'), ['alot']);
+        });
     </script>
 </head>
 <body>
