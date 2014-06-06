@@ -15,7 +15,7 @@
             if (post == '#') {
                 return [];
             }
-            return [post.replace(/#/g, '')];
+            return post.match(/(?:^|\s)#+\w+/)?[post.replace(/#/g, '')]:[];
         }
     </script>
     <script type="text/javascript">
@@ -27,6 +27,10 @@
 
         test('more pound signs', function () {
             deepEqual(getHashtags('##alot'), ['alot']);
+        });
+
+        test('cannot be within the middle of a word', function () {
+            deepEqual(getHashtags('in#line'), []);
         });
     </script>
 </head>
