@@ -13,7 +13,7 @@
          */
         function getHashtags(post) {
             var result = post.match(/(?:^|\s+)#+[a-zA-Z]+(?=\s+|$)/g)||[];
-            return Array.prototype.map.call(result,function(keyword){
+            return result.map(function(keyword){
                 return keyword.replace(/\s*#*/g, '');
             });
         }
