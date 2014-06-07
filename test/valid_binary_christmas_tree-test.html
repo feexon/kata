@@ -11,8 +11,17 @@
         /**
          *
          */
-        function isValidTree(tree) {
-            return tree.ornament == 'star';
+        function isValidTree(tree, descendant) {
+            if (descendant) {
+                return tree.color == 'blue';
+            }
+
+            if (tree.ornament != 'star') {
+                return false;
+            }
+
+            return (!tree.left || isValidTree(tree.left, true)) && (!tree.right || isValidTree(tree.right, true));
+
         }
     </script>
     <script type="text/javascript">
@@ -23,6 +32,12 @@
         test('simple tree', function () {
             ok(isValidTree({ornament: 'star'}));
             ok(!isValidTree({ornament: 'others'}));
+        });
+        test('simple tree with leaf', function () {
+            ok(isValidTree({ornament: 'star', left: {color: 'blue'}}));
+            ok(!isValidTree({ornament: 'star', left: {color: 'red'}}));
+            ok(isValidTree({ornament: 'star', right: {color: 'blue'}}));
+            ok(!isValidTree({ornament: 'star', right: {color: 'red'}}));
         });
     </script>
 </head>
