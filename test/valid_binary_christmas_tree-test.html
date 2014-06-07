@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function isValidTree(tree) {
+            function valid(node) {
+                if (!node) {
+                    return true;
+                }
+                if (!node.left && !node.right) {
+                    return node.color == 'blue';
+                }
+                return node.color == 'red' && valid(node.left) && valid(node.right);
+            }
+
+            return tree.ornament == 'star' && valid(tree.left) && valid(tree.right);
+        }
+    </script>
+    <script type="text/javascript">
+        module('Valid Binary Christmas Tree');
+        test('empty tree', function () {
+            ok(!isValidTree({}));
+        });
+        test('simple tree', function () {
+            ok(isValidTree({ornament: 'star'}));
+            ok(!isValidTree({ornament: 'others'}));
+        });
+        test('simple tree with leaf', function () {
+            ok(isValidTree({ornament: 'star', left: {color: 'blue'}}));
+            ok(!isValidTree({ornament: 'star', left: {color: 'red'}}));
+            ok(isValidTree({ornament: 'star', right: {color: 'blue'}}));
+            ok(!isValidTree({ornament: 'star', right: {color: 'red'}}));
+        });
+
+        test('simple tree with branch', function () {
+            ok(isValidTree({ornament: 'star', left: {color: 'red', left: {color: 'blue'}}}));
+            ok(isValidTree({ornament: 'star', left: {color: 'red', right: {color: 'blue'}}}));
+        });
+        test('validate recursive', function () {
+            ok(!isValidTree({ornament: 'star', left: {color: 'red', left: {color: 'red'}}}));
+            ok(!isValidTree({ornament: 'star', left: {color: 'red', right: {color: 'red'}}}));
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
