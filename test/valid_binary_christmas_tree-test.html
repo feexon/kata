@@ -11,9 +11,19 @@
         /**
          *
          */
+        function isValidTree(tree) {
+            return tree.ornament == 'star';
+        }
     </script>
     <script type="text/javascript">
-
+        module('Valid Binary Christmas Tree');
+        test('empty tree', function () {
+            ok(!isValidTree({}));
+        });
+        test('simple tree', function () {
+            ok(isValidTree({ornament: 'star'}));
+            ok(!isValidTree({ornament: 'others'}));
+        });
     </script>
 </head>
 <body>
