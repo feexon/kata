@@ -13,7 +13,7 @@
          */
         function isValidTree(tree, descendant) {
             if (descendant) {
-                return tree.color == 'blue';
+                return tree.left || tree.right ? tree.color == 'red' : tree.color == 'blue';
             }
 
             if (tree.ornament != 'star') {
@@ -38,6 +38,11 @@
             ok(!isValidTree({ornament: 'star', left: {color: 'red'}}));
             ok(isValidTree({ornament: 'star', right: {color: 'blue'}}));
             ok(!isValidTree({ornament: 'star', right: {color: 'red'}}));
+        });
+
+        test('simple tree with branch', function () {
+            ok(isValidTree({ornament: 'star', left: {color: 'red', left: {color: 'blue'}}}));
+            ok(isValidTree({ornament: 'star', left: {color: 'red', right: {color: 'blue'}}}));
         });
     </script>
 </head>
