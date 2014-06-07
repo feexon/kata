@@ -13,10 +13,11 @@
          */
         function isValidTree(tree, descendant) {
             if (descendant) {
-                return tree.left || tree.right ? tree.color == 'red' : tree.color == 'blue';
+                if (tree.color != (tree.left || tree.right ? 'red' : 'blue')) {
+                    return false;
+                }
             }
-
-            if (tree.ornament != 'star') {
+            else if (tree.ornament != 'star') {
                 return false;
             }
 
@@ -43,6 +44,10 @@
         test('simple tree with branch', function () {
             ok(isValidTree({ornament: 'star', left: {color: 'red', left: {color: 'blue'}}}));
             ok(isValidTree({ornament: 'star', left: {color: 'red', right: {color: 'blue'}}}));
+        });
+        test('validate recursive', function () {
+            ok(!isValidTree({ornament: 'star', left: {color: 'red', left: {color: 'red'}}}));
+            ok(!isValidTree({ornament: 'star', left: {color: 'red', right: {color: 'red'}}}));
         });
     </script>
 </head>
