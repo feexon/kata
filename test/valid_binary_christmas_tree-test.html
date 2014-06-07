@@ -11,18 +11,18 @@
         /**
          *
          */
-        function isValidTree(tree, descendant) {
-            if (descendant) {
-                if (tree.color != (tree.left || tree.right ? 'red' : 'blue')) {
-                    return false;
+        function isValidTree(tree) {
+            function valid(node) {
+                if (!node) {
+                    return true;
                 }
-            }
-            else if (tree.ornament != 'star') {
-                return false;
+                if (!node.left && !node.right) {
+                    return node.color == 'blue';
+                }
+                return node.color == 'red' && valid(node.left) && valid(node.right);
             }
 
-            return (!tree.left || isValidTree(tree.left, true)) && (!tree.right || isValidTree(tree.right, true));
-
+            return tree.ornament == 'star' && valid(tree.left) && valid(tree.right);
         }
     </script>
     <script type="text/javascript">
