@@ -14,14 +14,15 @@
          * --pipeline(obj , fn1);
          */
         function pipeline(obj) {
-            return Array.prototype.slice.call(arguments, 1).reduce(function (result, fn) {
+            var fns = Array.prototype.slice.call(arguments, 1);
+            return fns.reduce(function (result, fn) {
                 return fn(result);
             }, obj);
         }
         function compose() {
-            var fns=arguments;
+            var fns = Array.prototype.slice.call(arguments, 0);
             return function (obj) {
-                return pipeline.apply(this,[obj].concat(Array.prototype.slice.call(fns,0)));
+                return pipeline.apply(this, [obj].concat(fns));
             }
         }
     </script>
