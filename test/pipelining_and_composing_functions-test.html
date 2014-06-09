@@ -18,6 +18,11 @@
                 return fn(result);
             }, obj);
         }
+        function compose() {
+            return function (obj) {
+                return obj;
+            }
+        }
     </script>
     <script type="text/javascript">
         module('Pipelining and composing functions');
@@ -36,6 +41,10 @@
         test('pipelining chain', function () {
             deepEqual(pipeline([1, 2, 3, 4], reset, reset, first), 3);
         });
+        test('compose empty functions', function () {
+            var fn = compose();
+            deepEqual(fn([1, 2, 3]), [1, 2, 3]);
+        })
     </script>
 </head>
 <body>
