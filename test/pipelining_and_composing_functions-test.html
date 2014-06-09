@@ -9,12 +9,14 @@
     <script type="text/javascript" src="../libs/qunit-extras.js"></script>
     <script type="text/javascript">
         /**
-         * #pipeline(obj)
-         * pipeline(obj , fn1 , fn2 , fn3 , fn4);
+         * --pipeline(obj)
+         * --pipeline(obj , fn1 , fn2 , fn3 , fn4);
          * --pipeline(obj , fn1);
          */
-        function pipeline(obj, fn) {
-            return fn ? fn(obj) : obj;
+        function pipeline(obj) {
+            return Array.prototype.slice.call(arguments, 1).reduce(function (result, fn) {
+                return fn(result);
+            }, obj);
         }
     </script>
     <script type="text/javascript">
@@ -22,11 +24,17 @@
         function reset(array) {
             return array.slice(1);
         }
+        function first(array) {
+            return array[0];
+        }
         test('pipelining single function', function () {
             deepEqual(pipeline([1, 2, 3], reset), [2, 3]);
         });
         test('pipelining with obj only', function () {
             deepEqual(pipeline([1, 2, 3]), [1, 2, 3]);
+        });
+        test('pipelining chain', function () {
+            deepEqual(pipeline([1, 2, 3, 4], reset, reset, first), 3);
         });
     </script>
 </head>
