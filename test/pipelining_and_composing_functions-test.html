@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         * --pipeline(obj)
+         * --pipeline(obj , fn1 , fn2 , fn3 , fn4);
+         * --pipeline(obj , fn1);
+         */
+        function pipeline(obj/*,fns*/) {
+            var fns = Array.prototype.slice.call(arguments, 1);
+            return fns.reduce(function (result, fn) {
+                return fn(result);
+            }, obj);
+        }
+        function compose(/*fns*/) {
+            var fns = Array.prototype.slice.call(arguments, 0).reverse();
+            return function (obj) {
+                return pipeline.apply(this, [obj].concat(fns));
+            }
+        }
+    </script>
+    <script type="text/javascript">
+        module('Pipelining and composing functions');
+        function reset(array) {
+            return array.slice(1);
+        }
+        function first(array) {
+            return array[0];
+        }
+        test('pipelining single function', function () {
+            deepEqual(pipeline([1, 2, 3], reset), [2, 3]);
+        });
+        test('pipelining with obj only', function () {
+            deepEqual(pipeline([1, 2, 3]), [1, 2, 3]);
+        });
+        test('pipelining chain', function () {
+            deepEqual(pipeline([1, 2, 3, 4], reset, reset, first), 3);
+        });
+        test('compose empty functions', function () {
+            var fn = compose();
+            deepEqual(fn([1, 2, 3]), [1, 2, 3]);
+        });
+        test('compose single function', function () {
+            var chain = compose(reset);
+            deepEqual(chain([1, 2, 3]), [2, 3]);
+        });
+        test('compose chain', function () {
+            var chain = compose(first, reset, reset);
+            deepEqual(chain([1, 2, 3, 4]), 3);
+        });
+        test('complex example', function () {
+            var greet = function (name) {
+                return "hi: " + name;
+            };
+            var exclaim = function (statement) {
+                return statement.toUpperCase() + "!";
+            };
+            var welcome = compose(greet, exclaim);
+
+            equal(welcome('moe'), 'hi: MOE!')
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
