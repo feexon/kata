@@ -18,9 +18,10 @@
                 return fn(result);
             }, obj);
         }
-        function compose(fn) {
+        function compose() {
+            var fns=arguments;
             return function (obj) {
-                return fn ? fn(obj) : obj;
+                return pipeline.apply(this,[obj].concat(Array.prototype.slice.call(fns,0)));
             }
         }
     </script>
@@ -48,6 +49,10 @@
         test('compose single function', function () {
             var chain = compose(reset);
             deepEqual(chain([1, 2, 3]), [2, 3]);
+        });
+        test('compose chain', function () {
+            var chain = compose(reset, reset, first);
+            deepEqual(chain([1, 2, 3, 4]), 3);
         });
     </script>
 </head>
