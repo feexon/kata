@@ -9,11 +9,22 @@
     <script type="text/javascript" src="../libs/qunit-extras.js"></script>
     <script type="text/javascript">
         /**
-         *
+         * pipeline(obj)
+         * pipeline(obj , fn1 , fn2 , fn3 , fn4);
+         * pipeline(obj , fn1);
          */
+        function pipeline(obj,fn) {
+            return fn(obj);
+        }
     </script>
     <script type="text/javascript">
-
+        module('Pipelining and composing functions');
+        function reset(array) {
+            return array.slice(1);
+        }
+        test('pipelining single function', function () {
+            deepEqual(pipeline([1, 2, 3], reset), [2, 3]);
+        });
     </script>
 </head>
 <body>
