@@ -18,9 +18,9 @@
                 return fn(result);
             }, obj);
         }
-        function compose() {
+        function compose(fn) {
             return function (obj) {
-                return obj;
+                return fn ? fn(obj) : obj;
             }
         }
     </script>
@@ -44,7 +44,11 @@
         test('compose empty functions', function () {
             var fn = compose();
             deepEqual(fn([1, 2, 3]), [1, 2, 3]);
-        })
+        });
+        test('compose single function', function () {
+            var chain = compose(reset);
+            deepEqual(chain([1, 2, 3]), [2, 3]);
+        });
     </script>
 </head>
 <body>
