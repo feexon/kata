@@ -9,12 +9,12 @@
     <script type="text/javascript" src="../libs/qunit-extras.js"></script>
     <script type="text/javascript">
         /**
-         * pipeline(obj)
+         * #pipeline(obj)
          * pipeline(obj , fn1 , fn2 , fn3 , fn4);
-         * pipeline(obj , fn1);
+         * --pipeline(obj , fn1);
          */
-        function pipeline(obj,fn) {
-            return fn(obj);
+        function pipeline(obj, fn) {
+            return fn ? fn(obj) : obj;
         }
     </script>
     <script type="text/javascript">
@@ -24,6 +24,9 @@
         }
         test('pipelining single function', function () {
             deepEqual(pipeline([1, 2, 3], reset), [2, 3]);
+        });
+        test('pipelining with obj only', function () {
+            deepEqual(pipeline([1, 2, 3]), [1, 2, 3]);
         });
     </script>
 </head>
