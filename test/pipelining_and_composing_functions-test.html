@@ -13,13 +13,13 @@
          * --pipeline(obj , fn1 , fn2 , fn3 , fn4);
          * --pipeline(obj , fn1);
          */
-        function pipeline(obj) {
+        function pipeline(obj/*,fns*/) {
             var fns = Array.prototype.slice.call(arguments, 1);
             return fns.reduce(function (result, fn) {
                 return fn(result);
             }, obj);
         }
-        function compose() {
+        function compose(/*fns*/) {
             var fns = Array.prototype.slice.call(arguments, 0).reverse();
             return function (obj) {
                 return pipeline.apply(this, [obj].concat(fns));
@@ -52,16 +52,20 @@
             deepEqual(chain([1, 2, 3]), [2, 3]);
         });
         test('compose chain', function () {
-            var chain = compose(first,reset, reset);
+            var chain = compose(first, reset, reset);
             deepEqual(chain([1, 2, 3, 4]), 3);
         });
-//        test('complex example',function(){
-//            var greet    = function(name){ return "hi: " + name; };
-//            var exclaim  = function(statement){ return statement.toUpperCase() + "!"; };
-//            var welcome = compose(greet, exclaim);
-//
-//            equal(welcome('moe'), 'hi: MOE!')
-//        });
+        test('complex example', function () {
+            var greet = function (name) {
+                return "hi: " + name;
+            };
+            var exclaim = function (statement) {
+                return statement.toUpperCase() + "!";
+            };
+            var welcome = compose(greet, exclaim);
+
+            equal(welcome('moe'), 'hi: MOE!')
+        });
     </script>
 </head>
 <body>
