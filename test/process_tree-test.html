@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function Process(pid, children) {
+            this.pid = pid;
+            this.children = children;
+        }
+        function makeProcessTree(processes) {
+            function search(ppid) {
+               return processes.filter(function(process){
+                   return process.ppid==ppid;
+               });
+            }
+            function branch(process){
+                return new Process(process.pid, search(process.pid).map(branch));
+            }
+            var roots=search(-1);
+            return roots.length ? branch(roots[0]) : null;
+        }
+    </script>
+    <script type="text/javascript">
+        module('process tree');
+        test('root only', function () {
+            deepEqual(makeProcessTree([{pid:1,ppid:-1}]),new Process(1,[]));
+        });
+        test('empty processes', function () {
+            deepEqual(makeProcessTree([]),null);
+        });
+        test('simple tree',function(){
+            deepEqual(makeProcessTree([{pid:1,ppid:-1},{pid:11,ppid:1},{pid:12,ppid:1}]),new Process(1,[new Process(11,[]),new Process(12,[])]));
+        });
+        test('complex tree',function(){
+            var expected = new Process(1, [
+                new Process(11, [new Process(111, [])]),
+                new Process(12, [])
+            ]);
+            var processes = [
+                {pid: 1, ppid: -1},
+                {pid: 11, ppid: 1},
+                {pid: 12, ppid: 1},
+                {pid: 111, ppid: 11}
+            ];
+            deepEqual(makeProcessTree(processes), expected);
+        });
+        test("side effect:can't modified parameters",function(){
+            var processes = [
+                {pid: 1, ppid: -1},
+                {pid: 219, ppid: 214},
+                {pid: 214, ppid: 1},
+                {pid: 124, ppid: 1}
+            ];
+
+            var params = processes.slice();
+            makeProcessTree(params);
+            deepEqual(params,processes);
+
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
