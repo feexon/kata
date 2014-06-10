@@ -17,25 +17,20 @@
         }
         function makeProcessTree(processes) {
             function evict(ppid) {
-                var results=[];
-                for (var i = 0; i<processes.length;i++) {
+                var results = [];
+                for (var i = 0; i < processes.length; i++) {
                     if (processes[i].ppid == ppid) {
                         results.push(processes[i]);
-                        processes.splice(i--,1);
+                        processes.splice(i--, 1);
                     }
                 }
                 return results;
             }
 
-            var root = evict(-1);
-            if (!root.length) {
-                return null;
-            }
-            var process = root[0];
-            var children = evict(process.pid).map(function(process){
-                return new Process(process.pid,evict(process.pid).map(arguments.callee));
+            var roots = evict(-1).map(function (process) {
+                return new Process(process.pid, evict(process.pid).map(arguments.callee));
             });
-            return new Process(process.pid, children);
+            return roots.length ? roots[0] : null;
         }
     </script>
     <script type="text/javascript">
