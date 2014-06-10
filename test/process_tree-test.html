@@ -16,7 +16,14 @@
             this.children = children;
         }
         function makeProcessTree(processes){
-            var process = processes[0];
+            function find(ppid){
+               for(var i=0;i<processes.length;i++){
+                   if(processes[i].ppid==ppid){
+                       return processes[i];
+                   }
+               }
+            }
+            var process = find(-1);
             if(!process){
                 return null;
             }
