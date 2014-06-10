@@ -16,6 +16,9 @@
             this.children = children;
         }
         function makeProcessTree(processes) {
+            processes.sort(function(p1,p2){
+                return p1.pid-p2.pid;
+            });
             function evict(ppid) {
                 var results = [];
                 for (var i = 0; i < processes.length; i++) {
@@ -57,7 +60,23 @@
             ];
             deepEqual(makeProcessTree(processes), expected);
         });
+        test('processes in order',function(){
+            var processes = [
+                {pid: 1, ppid: -1},
+                {pid: 219, ppid: 214},
+                {pid: 214, ppid: 1},
+                {pid: 124, ppid: 1}
+            ];
 
+            var expected = new Process(1, [
+                new Process(124, []),
+                new Process(214, [
+                    new Process(219, [])
+                ])
+            ]);
+
+            deepEqual(makeProcessTree(processes),expected);
+        })
     </script>
 </head>
 <body>
