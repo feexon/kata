@@ -22,9 +22,7 @@
                });
             }
             function branch(process){
-                return new Process(process.pid, search(process.pid).map(function(process){
-                    return branch(process);
-                }));
+                return new Process(process.pid, search(process.pid).map(branch));
             }
             var roots=search(-1);
             return roots.length ? branch(roots[0]) : null;
