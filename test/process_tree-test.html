@@ -16,13 +16,20 @@
             this.children = children;
         }
         function makeProcessTree(processes){
-            return new Process(processes[0].pid,[]);
+            var process = processes[0];
+            if(!process){
+                return null;
+            }
+            return new Process(process.pid,[]);
         }
     </script>
     <script type="text/javascript">
         module('process tree');
         test('root only', function () {
             deepEqual(makeProcessTree([{pid:1,ppid:-1}]),new Process(1,[]));
+        });
+        test('empty processes', function () {
+            deepEqual(makeProcessTree([]),null);
         });
     </script>
 </head>
