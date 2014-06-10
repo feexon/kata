@@ -16,15 +16,15 @@
             this.children = children;
         }
         function makeProcessTree(processes) {
-            processes.sort(function(p1,p2){
+            var snapshots=processes.slice().sort(function(p1,p2){
                 return p1.pid-p2.pid;
             });
             function evict(ppid) {
                 var results = [];
-                for (var i = 0; i < processes.length; i++) {
-                    if (processes[i].ppid == ppid) {
-                        results.push(processes[i]);
-                        processes.splice(i--, 1);
+                for (var i = 0; i < snapshots.length; i++) {
+                    if (snapshots[i].ppid == ppid) {
+                        results.push(snapshots[i]);
+                        snapshots.splice(i--, 1);
                     }
                 }
                 return results;
@@ -76,7 +76,20 @@
             ]);
 
             deepEqual(makeProcessTree(processes),expected);
-        })
+        });
+        test("side effect:can't modified parameters",function(){
+            var processes = [
+                {pid: 1, ppid: -1},
+                {pid: 219, ppid: 214},
+                {pid: 214, ppid: 1},
+                {pid: 124, ppid: 1}
+            ];
+
+            var params = processes.slice();
+            makeProcessTree(params);
+            deepEqual(params,processes);
+
+        });
     </script>
 </head>
 <body>
