@@ -11,9 +11,19 @@
         /**
          *
          */
+        function Process(pid, children) {
+            this.pid = pid;
+            this.children = children;
+        }
+        function makeProcessTree(processes){
+            return new Process(processes[0].pid,[]);
+        }
     </script>
     <script type="text/javascript">
-
+        module('process tree');
+        test('root only', function () {
+            deepEqual(makeProcessTree([{pid:1,ppid:-1}]),new Process(1,[]));
+        });
     </script>
 </head>
 <body>
