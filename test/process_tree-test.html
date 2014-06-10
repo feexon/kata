@@ -21,6 +21,7 @@
                 for (var i = 0; i<processes.length;i++) {
                     if (processes[i].ppid == ppid) {
                         results.push(processes[i]);
+                        processes.splice(i--,1);
                     }
                 }
                 return results;
@@ -30,9 +31,9 @@
             if (!root.length) {
                 return null;
             }
-            var children = evict(root[0].pid).length ?evict(root[0].pid).map(function(process){
+            var children = evict(root[0].pid).map(function(process){
                 return new Process(process.pid,[]);
-            }) : [];
+            });
             return new Process(root[0].pid, children);
         }
     </script>
