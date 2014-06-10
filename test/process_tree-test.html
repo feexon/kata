@@ -16,23 +16,17 @@
             this.children = children;
         }
         function makeProcessTree(processes) {
-            var snapshots=processes.slice().sort(function(p1,p2){
-                return p1.pid-p2.pid;
-            });
-            function evict(ppid) {
-                var results = [];
-                for (var i = 0; i < snapshots.length; i++) {
-                    if (snapshots[i].ppid == ppid) {
-                        results.push(snapshots[i]);
-                        snapshots.splice(i--, 1);
-                    }
-                }
-                return results;
+            function children(ppid) {
+               return processes.filter(function(process){
+                   return process.ppid==ppid;
+               });
             }
-
-            var roots = evict(-1).map(function (process) {
-                return new Process(process.pid, evict(process.pid).map(arguments.callee));
-            });
+            function branch(ppid){
+                return children(ppid).map(function (process) {
+                    return new Process(process.pid, branch(process.pid));
+                });
+            }
+            var roots = branch(-1);
             return roots.length ? roots[0] : null;
         }
     </script>
@@ -59,23 +53,6 @@
                 {pid: 111, ppid: 11}
             ];
             deepEqual(makeProcessTree(processes), expected);
-        });
-        test('processes in order',function(){
-            var processes = [
-                {pid: 1, ppid: -1},
-                {pid: 219, ppid: 214},
-                {pid: 214, ppid: 1},
-                {pid: 124, ppid: 1}
-            ];
-
-            var expected = new Process(1, [
-                new Process(124, []),
-                new Process(214, [
-                    new Process(219, [])
-                ])
-            ]);
-
-            deepEqual(makeProcessTree(processes),expected);
         });
         test("side effect:can't modified parameters",function(){
             var processes = [
