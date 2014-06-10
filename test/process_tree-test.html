@@ -16,18 +16,18 @@
             this.children = children;
         }
         function makeProcessTree(processes) {
-            function children(ppid) {
+            function search(ppid) {
                return processes.filter(function(process){
                    return process.ppid==ppid;
                });
             }
-            function branch(ppid){
-                return children(ppid).map(function (process) {
-                    return new Process(process.pid, branch(process.pid));
-                });
+            function branch(process){
+                return new Process(process.pid, search(process.pid).map(function(process){
+                    return branch(process);
+                }));
             }
-            var roots = branch(-1);
-            return roots.length ? roots[0] : null;
+            var roots=search(-1);
+            return roots.length ? branch(roots[0]) : null;
         }
     </script>
     <script type="text/javascript">
