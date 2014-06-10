@@ -31,10 +31,11 @@
             if (!root.length) {
                 return null;
             }
-            var children = evict(root[0].pid).map(function(process){
-                return new Process(process.pid,[]);
+            var process = root[0];
+            var children = evict(process.pid).map(function(process){
+                return new Process(process.pid,evict(process.pid).map(arguments.callee));
             });
-            return new Process(root[0].pid, children);
+            return new Process(process.pid, children);
         }
     </script>
     <script type="text/javascript">
@@ -47,6 +48,19 @@
         });
         test('simple tree',function(){
             deepEqual(makeProcessTree([{pid:1,ppid:-1},{pid:11,ppid:1},{pid:12,ppid:1}]),new Process(1,[new Process(11,[]),new Process(12,[])]));
+        });
+        test('complex tree',function(){
+            var expected = new Process(1, [
+                new Process(11, [new Process(111, [])]),
+                new Process(12, [])
+            ]);
+            var processes = [
+                {pid: 1, ppid: -1},
+                {pid: 11, ppid: 1},
+                {pid: 12, ppid: 1},
+                {pid: 111, ppid: 11}
+            ];
+            deepEqual(makeProcessTree(processes), expected);
         });
 
     </script>
