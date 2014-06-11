@@ -11,31 +11,30 @@
         /**
          *
          */
-        Function.prototype.pipe=function(last){
-            var executions=Array.prototype.concat.apply(this,arguments);
-            return function(obj){
-              return executions.reduce(function(obj,action){
-                 return action.call(null,obj);
-              },obj);
-            }
+        Function.prototype.pipe = function (last) {
+            return function (obj) {
+                return this.reduce(function (obj, action) {
+                    return action.call(null, obj);
+                }, obj);
+            }.bind(Array.prototype.concat.apply(this, arguments));
         }
     </script>
     <script type="text/javascript">
         module('Concatenating functions');
-        function addOne(n){
-            return n+1;
+        function addOne(n) {
+            return n + 1;
         }
-        function square(n){
-            return n*n;
+        function square(n) {
+            return n * n;
         }
-        test('function pipe',function(){
-          equal(typeof addOne.pipe,'function');
+        test('function pipe', function () {
+            equal(typeof addOne.pipe, 'function');
         });
-        test('pipe',function(){
-          equal(addOne.pipe(square).call(null,1),4);
+        test('pipe', function () {
+            equal(addOne.pipe(square).call(null, 1), 4);
         });
-        test('pipe multiple functions',function(){
-          equal(addOne.pipe(square,addOne).call(null,1),5);
+        test('pipe multiple functions', function () {
+            equal(addOne.pipe(square, addOne).call(null, 1), 5);
         });
     </script>
 </head>
