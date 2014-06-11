@@ -58,7 +58,13 @@
         test('attached after kicked', function () {
             equal(darkRoom(2)()(1)(1)()()()()().end(), 'CROTCH KICK');
         });
-
+        test('complex', function () {
+            equal(darkRoom(2)()(1)()()()()()().end(), 'BLOCK');
+            equal(darkRoom(3)()()(1)()()()()().end(), 'BLOCK');
+            equal(darkRoom(2)(1)()()()()()()().end(), 'CROTCH KICK');
+            equal(darkRoom(2)()()(1)()()()()().end(), 'CROTCH KICK');
+            equal(darkRoom(2)()()()()()()()().end(), 'CROTCH KICK');
+        });
     </script>
 </head>
 <body>
