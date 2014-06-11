@@ -12,11 +12,11 @@
          *
          */
         function darkRoom(direction) {
-            var status = 'CROTCH KICK';
+            var blocks=['CROTCH KICK','BLOCK'];
+            var status = blocks[0];
 
             function kick(flag) {
-
-                status = flag?'BLOCK':'CROTCH KICK';
+                status = blocks[~~flag];
                 return arguments.callee;
             }
 
