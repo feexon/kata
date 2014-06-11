@@ -12,26 +12,17 @@
          *
          */
         function darkRoom(direction) {
-            var blocks = ['CROTCH KICK', 'BLOCK'];
-            var status = 0;
-            var attacked = false;
+            var count = 0;
 
             function kick(flag) {
+                ++count;
                 if (flag) {
-                    if (!--direction) {
-                        status = attacked ? 0 : 1;
-                    } else {
-                        status = 0;
-                    }
-                } else if (!--direction) {
-                    status = 0;
+                    direction -= count;
                 }
-                attacked |= flag;
-                return arguments.callee;
-            }
-
+                return kick;
+            };
             kick.end = function () {
-                return blocks[status];
+                return direction ? "CROTCH KICK" : "BLOCK";
             };
             return kick;
         }
