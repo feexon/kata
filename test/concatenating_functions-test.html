@@ -11,7 +11,7 @@
         /**
          *
          */
-        Function.prototype.pipe = function (last) {
+        Function.prototype.pipe = function (/*chain*/) {
             return function (obj) {
                 return this.reduce(function (obj, action) {
                     return action.call(null, obj);
