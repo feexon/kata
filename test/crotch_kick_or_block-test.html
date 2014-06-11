@@ -16,7 +16,9 @@
             var status = blocks[0];
 
             function kick(flag) {
-                status = blocks[~~flag];
+                if(!--direction){
+                    status = blocks[~~flag];
+                }
                 return arguments.callee;
             }
 
@@ -34,6 +36,11 @@
         test('simple calls', function () {
             equal(darkRoom(1)(1).end(), 'BLOCK');
             equal(darkRoom(1)().end(), 'CROTCH KICK');
+        });
+        test('kick in wrong position', function () {
+            equal(darkRoom(1)()(1).end(), 'CROTCH KICK');
+            equal(darkRoom(2)(1).end(), 'CROTCH KICK');
+
         });
     </script>
 </head>
