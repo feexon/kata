@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function darkRoom(direction) {
+            var count = 0;
+            var attacks=0;
+            function kick(flag) {
+                ++count;
+                if (flag) {
+                    direction -= count*++attacks;
+                }
+                return kick;
+            };
+            kick.end = function () {
+                return direction ? "CROTCH KICK" : "BLOCK";
+            };
+            return kick;
+        }
+    </script>
+    <script type="text/javascript">
+        module('The "CROTCH KICK OR BLOCK" kata');
+        test('no calls', function () {
+            equal(darkRoom(1).end(), 'CROTCH KICK');
+        });
+        test('simple calls', function () {
+            equal(darkRoom(1)(1).end(), 'BLOCK');
+            equal(darkRoom(1)().end(), 'CROTCH KICK');
+        });
+        test('kick in wrong position', function () {
+            equal(darkRoom(1)()(1).end(), 'CROTCH KICK');
+            equal(darkRoom(2)(1).end(), 'CROTCH KICK');
+
+        });
+
+        test('kick with empty calls', function () {
+            equal(darkRoom(1)(1)()()().end(), 'BLOCK');
+            equal(darkRoom(2)()(1)()().end(), 'BLOCK');
+        });
+        test('attached', function () {
+            equal(darkRoom(2)(1)(1)()()()()()().end(), 'CROTCH KICK');
+            equal(darkRoom(2)(1)(1)(1)(1)(1)(1)(1)(1).end(), 'CROTCH KICK');
+        });
+        test('attached after kicked', function () {
+            equal(darkRoom(2)()(1)(1)()()()()().end(), 'CROTCH KICK');
+        });
+        test('complex', function () {
+            equal(darkRoom(2)()(1)()()()()()().end(), 'BLOCK');
+            equal(darkRoom(3)()()(1)()()()()().end(), 'BLOCK');
+            equal(darkRoom(2)(1)()()()()()()().end(), 'CROTCH KICK');
+            equal(darkRoom(2)()()(1)()()()()().end(), 'CROTCH KICK');
+            equal(darkRoom(2)()()()()()()()().end(), 'CROTCH KICK');
+        });
+        test('fix bug', function () {
+            equal(darkRoom(3)(1)(1)()()()()()().end(), 'CROTCH KICK');
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
