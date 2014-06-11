@@ -14,7 +14,9 @@
         Function.prototype.pipe=function(last){
             var executions=[this,last];
             return function(obj){
-              return executions[1](executions[0](obj));
+              return executions.reduce(function(obj,action){
+                 return action.call(null,obj);
+              },obj);
             }
         }
     </script>
