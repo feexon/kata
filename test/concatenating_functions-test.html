@@ -11,9 +11,18 @@
         /**
          *
          */
+        Function.prototype.pipe=function(){
+
+        }
     </script>
     <script type="text/javascript">
-
+        module('Concatenating functions');
+        function addOne(n){
+            return n+1;
+        }
+        test('function pipe',function(){
+          equal(typeof addOne.pipe,'function');
+        });
     </script>
 </head>
 <body>
