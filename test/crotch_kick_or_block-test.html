@@ -12,16 +12,28 @@
          *
          */
         function darkRoom(direction) {
-            this.end = function () {
-                return 'CROTCH KICK';
+            var status = 'CROTCH KICK';
+
+            function kick(flag) {
+
+                status = flag?'BLOCK':'CROTCH KICK';
+                return arguments.callee;
+            }
+
+            kick.end = function () {
+                return status;
             };
-            return this;
+            return kick;
         }
     </script>
     <script type="text/javascript">
         module('The "CROTCH KICK OR BLOCK" kata');
         test('no calls', function () {
             equal(darkRoom(1).end(), 'CROTCH KICK');
+        });
+        test('simple calls', function () {
+            equal(darkRoom(1)(1).end(), 'BLOCK');
+            equal(darkRoom(1)().end(), 'CROTCH KICK');
         });
     </script>
 </head>
