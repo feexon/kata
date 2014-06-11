@@ -42,6 +42,11 @@
             equal(darkRoom(2)(1).end(), 'CROTCH KICK');
 
         });
+
+        test('kick with empty calls', function () {
+            equal(darkRoom(1)(1)()()().end(), 'BLOCK');
+            equal(darkRoom(2)()(1)()().end(), 'BLOCK');
+        });
     </script>
 </head>
 <body>
