@@ -17,9 +17,13 @@
             var attacked = false;
 
             function kick(flag) {
-                if (!--direction) {
-                    status = attacked ? 0 : flag | 0;
-                } else if (flag && status) {
+                if (flag) {
+                    if (!--direction) {
+                        status = attacked ? 0 : 1;
+                    } else {
+                        status = 0;
+                    }
+                } else if (!--direction) {
                     status = 0;
                 }
                 attacked |= flag;
