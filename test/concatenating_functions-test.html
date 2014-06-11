@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        Function.prototype.pipe = function (/*chain*/) {
+            return function (obj) {
+                return this.reduce(function (obj, action) {
+                    return action.call(null, obj);
+                }, obj);
+            }.bind(Array.prototype.concat.apply(this, arguments));
+        }
+    </script>
+    <script type="text/javascript">
+        module('Concatenating functions');
+        function addOne(n) {
+            return n + 1;
+        }
+        function square(n) {
+            return n * n;
+        }
+        test('function pipe', function () {
+            equal(typeof addOne.pipe, 'function');
+        });
+        test('pipe', function () {
+            equal(addOne.pipe(square).call(null, 1), 4);
+        });
+        test('pipe multiple functions', function () {
+            equal(addOne.pipe(square, addOne).call(null, 1), 5);
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
