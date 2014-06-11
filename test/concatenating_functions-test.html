@@ -12,7 +12,7 @@
          *
          */
         Function.prototype.pipe=function(last){
-            var executions=[this,last];
+            var executions=Array.prototype.concat.apply(this,arguments);
             return function(obj){
               return executions.reduce(function(obj,action){
                  return action.call(null,obj);
@@ -33,6 +33,9 @@
         });
         test('pipe',function(){
           equal(addOne.pipe(square).call(null,1),4);
+        });
+        test('pipe multiple functions',function(){
+          equal(addOne.pipe(square,addOne).call(null,1),5);
         });
     </script>
 </head>
