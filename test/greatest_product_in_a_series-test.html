@@ -11,16 +11,26 @@
         /**
          *
          */
-        function greatestProduct(input){
-            return input.split('').reduce(function(result,number){
-                return result*number;
-            },1);
+        function greatestProduct(input) {
+            var digits = input.split('');
+            var numbers = [];
+            for(var i=0;i<=digits.length-5;i++) {
+                numbers.push(digits.slice(i, 5 + i).reduce(function (result, number) {
+                    return result * number;
+                }, 1));
+            }
+            return Math.max.apply(null, numbers);
         }
     </script>
     <script type="text/javascript">
         module("Largest product in a series");
-        test('5 digits',function(){
-           equal(greatestProduct('12345'),1*2*3*4*5);
+        test('5 digits', function () {
+            equal(greatestProduct('12345'), 1 * 2 * 3 * 4 * 5);
+        });
+        test('simple example', function () {
+            equal(greatestProduct('123456'), 2 * 3 * 4 * 5 * 6);
+            equal(greatestProduct('123450'), 1 * 2 * 3 * 4 * 5);
+            equal(greatestProduct('1234516'), 3 * 4 * 5 * 1 * 6);
         });
     </script>
 </head>
