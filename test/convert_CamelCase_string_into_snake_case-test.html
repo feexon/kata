@@ -12,7 +12,7 @@
          *
          */
         function toUnderscore(string){
-            return string.toString().replace(/(.)([A-Z])/g,'$1_$2').toLowerCase();
+            return string.toString().split(/(?=[A-Z])/).join('_').toLowerCase();
         }
     </script>
     <script type="text/javascript">
