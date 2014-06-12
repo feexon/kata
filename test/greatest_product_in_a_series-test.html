@@ -11,9 +11,17 @@
         /**
          *
          */
+        function greatestProduct(input){
+            return input.split('').reduce(function(result,number){
+                return result*number;
+            },1);
+        }
     </script>
     <script type="text/javascript">
-
+        module("Largest product in a series");
+        test('5 digits',function(){
+           equal(greatestProduct('12345'),1*2*3*4*5);
+        });
     </script>
 </head>
 <body>
