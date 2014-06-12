@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function toUnderscore(string){
+            return string.toString().split(/(?=[A-Z])/).join('_').toLowerCase();
+        }
+    </script>
+    <script type="text/javascript">
+        module('Convert CamelCase string into snake_case');
+        test('lower case',function(){
+            equal(toUnderscore('java'),'java');
+        });
+        test('upper case at first',function(){
+            equal(toUnderscore('Java'),'java');
+        });
+        test('upper case',function(){
+            equal(toUnderscore('javaEjb'),'java_ejb');
+            equal(toUnderscore('java7Ejb'),'java7_ejb');
+        });
+        test('convert all upper case',function(){
+            equal(toUnderscore('javaEjbApp'),'java_ejb_app');
+        });
+        test('mixed',function(){
+            equal(toUnderscore('JavaEjbApp'),'java_ejb_app');
+        });
+        test('convert number',function(){
+            equal(toUnderscore(1),'1');
+        });
+
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
