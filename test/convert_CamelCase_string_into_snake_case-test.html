@@ -12,7 +12,7 @@
          *
          */
         function toUnderscore(string){
-            return string.replace(/(.)([A-Z])/g,'$1_$2').toLowerCase();
+            return string.toString().replace(/(.)([A-Z])/g,'$1_$2').toLowerCase();
         }
     </script>
     <script type="text/javascript">
@@ -32,6 +32,9 @@
         });
         test('mixed',function(){
             equal(toUnderscore('JavaEjbApp'),'java_ejb_app');
+        });
+        test('convert number',function(){
+            equal(toUnderscore(1),'1');
         });
 
     </script>
