@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function greatestProduct(input) {
+            var digits = input.split('');
+            var numbers = [];
+            for(var i=0;i<=digits.length-5;i++) {
+                numbers.push(digits.slice(i, 5 + i).reduce(function (result, number) {
+                    return result * number;
+                }, 1));
+            }
+            return Math.max.apply(null, numbers);
+        }
+    </script>
+    <script type="text/javascript">
+        module("Largest product in a series");
+        test('5 digits', function () {
+            equal(greatestProduct('12345'), 1 * 2 * 3 * 4 * 5);
+        });
+        test('simple example', function () {
+            equal(greatestProduct('123456'), 2 * 3 * 4 * 5 * 6);
+            equal(greatestProduct('123450'), 1 * 2 * 3 * 4 * 5);
+            equal(greatestProduct('1234516'), 3 * 4 * 5 * 1 * 6);
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
