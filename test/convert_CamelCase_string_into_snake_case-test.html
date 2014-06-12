@@ -12,13 +12,16 @@
          *
          */
         function toUnderscore(string){
-            return string;
+            return string.toLowerCase();
         }
     </script>
     <script type="text/javascript">
         module('Convert CamelCase string into snake_case');
         test('lower case',function(){
             equal(toUnderscore('java'),'java');
+        });
+        test('upper case at first',function(){
+            equal(toUnderscore('Java'),'java');
         });
 
     </script>
