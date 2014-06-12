@@ -11,8 +11,15 @@
         /**
          *
          */
+        function toUnderscore(string){
+            return string;
+        }
     </script>
     <script type="text/javascript">
+        module('Convert CamelCase string into snake_case');
+        test('lower case',function(){
+            equal(toUnderscore('java'),'java');
+        });
 
     </script>
 </head>
