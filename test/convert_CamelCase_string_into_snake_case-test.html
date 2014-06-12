@@ -30,6 +30,9 @@
         test('convert all upper case',function(){
             equal(toUnderscore('javaEjbApp'),'java_ejb_app');
         });
+        test('mixed',function(){
+            equal(toUnderscore('JavaEjbApp'),'java_ejb_app');
+        });
 
     </script>
 </head>
