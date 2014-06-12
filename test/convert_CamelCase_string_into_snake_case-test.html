@@ -12,7 +12,7 @@
          *
          */
         function toUnderscore(string){
-            return string.replace(/(.)([A-Z])/,'$1_$2').toLowerCase();
+            return string.replace(/(.)([A-Z])/g,'$1_$2').toLowerCase();
         }
     </script>
     <script type="text/javascript">
@@ -26,6 +26,9 @@
         test('upper case',function(){
             equal(toUnderscore('javaEjb'),'java_ejb');
             equal(toUnderscore('java7Ejb'),'java7_ejb');
+        });
+        test('convert all upper case',function(){
+            equal(toUnderscore('javaEjbApp'),'java_ejb_app');
         });
 
     </script>
