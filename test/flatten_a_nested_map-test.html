@@ -11,9 +11,16 @@
         /**
          *
          */
+        function flattenMap(map){
+            return map;
+        }
     </script>
     <script type="text/javascript">
-
+        module('Flatten a Nested Map');
+        test('non nested map',function(){
+           deepEqual(flattenMap({}),{});
+           deepEqual(flattenMap({key:'value'}),{key:'value'});
+        });
     </script>
 </head>
 <body>
