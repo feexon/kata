@@ -11,15 +11,33 @@
         /**
          *
          */
-        function flattenMap(map){
-            return map;
+        function flattenMap(map) {
+            var result = {};
+
+            function flatten(map, prefix) {
+                Object.keys(map).forEach(function (key) {
+                    var finalKey = prefix ? prefix + '/' + key : key;
+                    if (typeof map[key] == 'object') {
+                        flatten(map[key], finalKey);
+                        return;
+                    }
+                    result[finalKey] = map[key];
+                });
+            }
+
+            flatten(map, '');
+            return result;
         }
     </script>
     <script type="text/javascript">
         module('Flatten a Nested Map');
-        test('non nested map',function(){
-           deepEqual(flattenMap({}),{});
-           deepEqual(flattenMap({key:'value'}),{key:'value'});
+        test('non nested map', function () {
+            deepEqual(flattenMap({}), {});
+            deepEqual(flattenMap({key: 'value'}), {key: 'value'});
+        });
+        test('simple nested map', function () {
+            deepEqual(flattenMap({a: {b: 'c'}}), {'a/b': 'c'});
+            deepEqual(flattenMap({a: {b: {c: 'd'}}}), {'a/b/c': 'd'});
         });
     </script>
 </head>
