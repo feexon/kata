@@ -11,9 +11,17 @@
         /**
          *
          */
+        function gcd(m,n){
+            return m%n?gcd(n,m%n):n;
+        }
     </script>
     <script type="text/javascript">
-
+        module('Least Common Multiple');
+        test('gcd',function(){
+           equal(gcd(2,1),1);
+           equal(gcd(1,2),1);
+           equal(gcd(6,4),2);
+        });
     </script>
 </head>
 <body>
