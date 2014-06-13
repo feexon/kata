@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function format(string, o) {
+           return string.replace(/\{(.*?)\}/g,function(token,key){
+               return key in o?o[key]:token;
+           })
+        }
+    </script>
+    <script type="text/javascript">
+        module("String insert values");
+        test('plain text', function () {
+            equal(format('text', {foo: 'bar'}), 'text');
+        });
+        test('replace all occurrences of variable with value', function () {
+            equal(format('this is {foo}', {foo: 'bar'}), 'this is bar');
+            equal(format('key={key}', {key: 'value'}), 'key=value');
+            equal(format('this is {foo}, {foo}', {foo: 'bar'}), 'this is bar, bar');
+            equal(format('this is {foo}\r\n {foo}', {foo: 'bar'}), 'this is bar\r\n bar');
+        });
+        test('replace all variables', function () {
+            equal(format('foo={foo},key={key}', {foo: 'bar', key: 'value'}), 'foo=bar,key=value');
+        });
+        test('replace with array', function () {
+            equal(format('foo={0},key={1}', ['bar', 'value']), 'foo=bar,key=value');
+        });
+
+        test("can't replace multiple times", function () {
+            var actual = format('Hello {foo} - make me a {bar}... {foo}!!?', { bar: 'sandwich {foo}', foo: 'Jack' });
+            equal(actual, "Hello Jack - make me a sandwich {foo}... Jack!!?");
+        });
+        test("missing value", function () {
+            equal(format('{foo}', {}), "{foo}");
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
