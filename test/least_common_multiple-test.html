@@ -12,11 +12,14 @@
          *
          */
         function gcd(m, n) {
-            return m % n ? gcd(n, m % n) : n;
+            var remains = [].slice.call(arguments, 2);
+            return m % n ? gcd.apply(this, [n, m % n].concat(remains)) : remains.length ? gcd.apply(this, [n].concat(remains)) : n;
         }
         function lcm(m, n) {
             n = n || 1;
-            return arguments.length <= 2 ? m * n / gcd(m, n) : lcm(m * n / gcd(m, n), arguments[2]);
+            var remains = [].slice.call(arguments, 2);
+            var result=m * n / gcd(m, n);
+            return !remains.length ? result : lcm.apply(this, [result].concat(remains));
         }
     </script>
     <script type="text/javascript">
@@ -25,6 +28,7 @@
             equal(gcd(2, 1), 1);
             equal(gcd(1, 2), 1);
             equal(gcd(6, 4), 2);
+            equal(gcd(40, 20, 10), 10);
         });
         test('lcm of two numbers', function () {
             equal(lcm(3, 4), 3 * 4 / gcd(3, 4));
@@ -35,7 +39,9 @@
         });
         test('lcm of more than two numbers', function () {
             equal(lcm(2, 3, 4), 12);
+            equal(lcm(2, 3, 7, 8, 10, 36), 2520);
         });
+
     </script>
 </head>
 <body>
