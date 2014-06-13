@@ -19,7 +19,7 @@
         function compile(template) {
             var variable = function (key) {
                 return function (o) {
-                    return o[key];
+                    return o[key] === undefined ? "{" + key + "}" : o[key];
                 }
             };
             var tokens = [];
@@ -48,6 +48,10 @@
             equal(typeof token, 'function');
             equal(token({foo: 'bar'}), 'bar');
             equal(token({foo: 'value'}), 'value');
+        });
+        test('variable missing value', function () {
+            var variable = compile('{foo}')[0];
+            equal(variable({}), '{foo}');
         });
         test('start with literal', function () {
             var tokens = compile('this{foo}');
@@ -89,7 +93,11 @@
             equal(format('name={foo}', obj), 'name=Jack');
         });
         test("can't replace variable multi times", function () {
-            equal(format("{foo}", {foo: '{key}', key: 'value'}),'{key}');
+            equal(format("{foo}", {foo: '{key}', key: 'value'}), '{key}');
+        });
+
+        test("format missing value", function () {
+            equal(format("{foo}", {}), '{foo}');
         });
     </script>
 </head>
