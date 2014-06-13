@@ -12,44 +12,17 @@
          *
          */
         function format(string, o) {
-            var matcher = string.match(/\{(.*?)\}/);
-            if (!matcher) {
-                return string;
-            }
-            var result = '';
-            while (matcher) {
-                result += string.substring(0, matcher.index) + (o[matcher[1]]===undefined?matcher[0]:o[matcher[1]]);
-                string = string.substring(matcher.index + matcher[0].length);
-                matcher = string.match(/\{(.*?)\}/)
-            }
-            return result+string;
+
+        }
+        function compile(template){
+           return [template];
         }
     </script>
     <script type="text/javascript">
         module("String insert values");
-        test('plain text', function () {
-            equal(format('text', {foo: 'bar'}), 'text');
-        });
-        test('replace all occurrences of variable with value', function () {
-            equal(format('this is {foo}', {foo: 'bar'}), 'this is bar');
-            equal(format('key={key}', {key: 'value'}), 'key=value');
-            equal(format('this is {foo}, {foo}', {foo: 'bar'}), 'this is bar, bar');
-            equal(format('this is {foo}\r\n {foo}', {foo: 'bar'}), 'this is bar\r\n bar');
-        });
-        test('replace all variables', function () {
-            equal(format('foo={foo},key={key}', {foo: 'bar', key: 'value'}), 'foo=bar,key=value');
-        });
-        test('replace with array', function () {
-            equal(format('foo={0},key={1}', ['bar', 'value']), 'foo=bar,key=value');
-        });
-
-        test("can't replace multiple times", function () {
-            var actual = format('Hello {foo} - make me a {bar}... {foo}!!?', { bar: 'sandwich {foo}', foo: 'Jack' });
-            equal(actual, "Hello Jack - make me a sandwich {foo}... Jack!!?");
-        });
-        test("missing value", function () {
-            equal(format('{foo}', {}), "{foo}");
-        });
+        test('compile plain text',function(){
+            deepEqual(compile('text'),['text']);
+        })
     </script>
 </head>
 <body>
