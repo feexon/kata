@@ -20,22 +20,20 @@
                     return o[key];
                 }
             };
-            var matcher = template.match(/\{(.*?)\}/);
             var tokens = [];
-
-            if (matcher) {
+            while (true) {
+                var matcher = template.match(/\{(.*?)\}/);
+                if (!matcher) {
+                    break;
+                }
                 if (matcher.index) {
                     tokens.push(template.substring(0, matcher.index));
-                    tokens.push(variable(matcher[1]));
-                } else {
-                    tokens.push(variable(matcher[1]));
                 }
+                tokens.push(variable(matcher[1]));
                 template = template.substring(matcher.index + matcher[0].length);
+
             }
-            if (template) {
-                tokens.push(template);
-            }
-            return tokens;
+            return template ? tokens.concat(template) : tokens;
         }
     </script>
     <script type="text/javascript">
@@ -67,6 +65,13 @@
         });
         test('compile empty string', function () {
             deepEqual(compile(''), []);
+        });
+        test('compile complex template', function () {
+            var tokens = compile('{foo}={bar}!');
+            equal(typeof tokens[0], 'function');
+            equal(tokens[1], '=');
+            equal(typeof tokens[2], 'function');
+            equal(tokens[3], '!');
         });
     </script>
 </head>
