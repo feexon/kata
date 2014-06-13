@@ -11,9 +11,15 @@
         /**
          *
          */
+        function format(string,o){
+            return string;
+        }
     </script>
     <script type="text/javascript">
-
+        module("String insert values");
+        test('plain text',function(){
+            equal(format('text',{foo:'bar'}),'text');
+        })
     </script>
 </head>
 <body>
