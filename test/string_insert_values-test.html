@@ -15,10 +15,19 @@
 
         }
         function compile(template) {
+            var variable = function (key) {
+                return function(o){
+                    return o[key];
+                }
+            };
             var matcher = template.match(/\{(.*?)\}/);
-            return matcher ? [function (o) {
-                return o[matcher[1]];
-            }] : [template];
+            if(!matcher){
+                return [template];
+            }
+            if(matcher.index){
+                return [template.substring(0,matcher.index),variable(matcher[1])];
+            }
+            return [variable(matcher[1])];
         }
     </script>
     <script type="text/javascript">
@@ -31,6 +40,12 @@
             equal(typeof token, 'function');
             equal(token({foo: 'bar'}), 'bar');
             equal(token({foo: 'value'}), 'value');
+        });
+        test('compile mixed', function () {
+            var tokens = compile('this{foo}');
+            equal(tokens[0],'this');
+            equal(typeof tokens[1],'function');
+
         });
     </script>
 </head>
