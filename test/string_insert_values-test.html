@@ -12,9 +12,17 @@
          *
          */
         function format(string, o) {
-            return Object.keys(o).reduce(function (string, key) {
-                return string.replace(new RegExp("\\{" + key + "\\}", "g"), o[key]);
-            },string);
+            var matcher = string.match(/\{(.*?)\}/);
+            if (!matcher) {
+                return string;
+            }
+            var result = '';
+            while (matcher) {
+                result += string.substring(0, matcher.index) + o[matcher[1]];
+                string = string.substring(matcher.index + matcher[0].length);
+                matcher = string.match(/\{(.*?)\}/)
+            }
+            return result+string;
         }
     </script>
     <script type="text/javascript">
@@ -32,7 +40,12 @@
             equal(format('foo={foo},key={key}', {foo: 'bar', key: 'value'}), 'foo=bar,key=value');
         });
         test('replace with array', function () {
-            equal(format('foo={0},key={1}', ['bar','value']), 'foo=bar,key=value');
+            equal(format('foo={0},key={1}', ['bar', 'value']), 'foo=bar,key=value');
+        });
+
+        test("can't replace multiple times", function () {
+            var actual = format('Hello {foo} - make me a {bar}... {foo}!!?', { bar: 'sandwich {foo}', foo: 'Jack' });
+            equal(actual, "Hello Jack - make me a sandwich {foo}... Jack!!?");
         });
     </script>
 </head>
