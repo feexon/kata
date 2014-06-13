@@ -51,12 +51,12 @@
             equal(token({foo: 'bar'}), 'bar');
             equal(token({foo: 'value'}), 'value');
         });
-        test('compile mixed', function () {
+        test('start with literal', function () {
             var tokens = compile('this{foo}');
             equal(tokens[0], 'this');
             equal(typeof tokens[1], 'function');
         });
-        test('compile mixed2', function () {
+        test('compile mixed', function () {
             var tokens = compile('this{foo}bar');
             equal(tokens[0], 'this');
             equal(typeof tokens[1], 'function');
