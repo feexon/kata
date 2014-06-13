@@ -16,12 +16,12 @@
                 return typeof  token == 'function' ? token(o) : token;
             }).join('');
         }
+        function variable(key) {
+            return function (o) {
+                return o[key] === undefined ? "{" + key + "}" : o[key];
+            }
+        }
         function compile(template) {
-            var variable = function (key) {
-                return function (o) {
-                    return o[key] === undefined ? "{" + key + "}" : o[key];
-                }
-            };
             var tokens = [];
             while (true) {
                 var matcher = template.match(/\{(.*?)\}/);
@@ -40,6 +40,9 @@
     </script>
     <script type="text/javascript">
         module("String insert values");
+        test('variable missing value', function () {
+            equal(variable('foo')({}), '{foo}');
+        });
         test('compile plain text', function () {
             deepEqual(compile('text'), ['text']);
         });
@@ -48,10 +51,6 @@
             equal(typeof token, 'function');
             equal(token({foo: 'bar'}), 'bar');
             equal(token({foo: 'value'}), 'value');
-        });
-        test('variable missing value', function () {
-            var variable = compile('{foo}')[0];
-            equal(variable({}), '{foo}');
         });
         test('start with literal', function () {
             var tokens = compile('this{foo}');
@@ -96,9 +95,7 @@
             equal(format("{foo}", {foo: '{key}', key: 'value'}), '{key}');
         });
 
-        test("format missing value", function () {
-            equal(format("{foo}", {}), '{foo}');
-        });
+
     </script>
 </head>
 <body>
