@@ -12,11 +12,9 @@
          *
          */
         function format(string, o) {
-            var tokens=compile(string);
-            if(!tokens.length){
-                return '';
-            }
-            return typeof tokens[0]=='function'?tokens[0](o):tokens[0];
+            return compile(string).map(function (token) {
+                return typeof  token == 'function' ? token(o) : token;
+            }).join('');
         }
         function compile(template) {
             var variable = function (key) {
@@ -79,13 +77,16 @@
         });
         var obj = { foo: 'Jack', bar: 'sandwich' };
         test('format variable', function () {
-            equal(format('{foo}',obj),'Jack');
+            equal(format('{foo}', obj), 'Jack');
         });
         test('format text', function () {
-            equal(format('text',obj),'text');
+            equal(format('text', obj), 'text');
         });
         test('format empty string', function () {
-            equal(format('',obj),'');
+            equal(format('', obj), '');
+        });
+        test('format mixed string', function () {
+            equal(format('name={foo}', obj), 'name=Jack');
         });
     </script>
 </head>
