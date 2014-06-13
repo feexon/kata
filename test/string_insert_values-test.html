@@ -16,11 +16,6 @@
                 return typeof  token == 'function' ? token(o) : token;
             }).join('');
         }
-        function variable(key) {
-            return function (o) {
-                return o[key] === undefined ? "{" + key + "}" : o[key];
-            }
-        }
         function compile(template) {
             var tokens = [];
             while (true) {
@@ -33,13 +28,22 @@
                 }
                 tokens.push(variable(matcher[1]));
                 template = template.substring(matcher.index + matcher[0].length);
-
             }
             return template ? tokens.concat(template) : tokens;
+        }
+        function variable(key) {
+            return function (o) {
+                return o[key] === undefined ? "{" + key + "}" : o[key];
+            }
         }
     </script>
     <script type="text/javascript">
         module("String insert values");
+        var obj = { foo: 'Jack', bar: 'sandwich' };
+        test('calculate variable', function () {
+            equal(variable('foo')(obj), 'Jack');
+            equal(variable('bar')(obj), 'sandwich');
+        });
         test('variable missing value', function () {
             equal(variable('foo')({}), '{foo}');
         });
@@ -47,10 +51,7 @@
             deepEqual(compile('text'), ['text']);
         });
         test('compile variable', function () {
-            var token = compile('{foo}')[0];
-            equal(typeof token, 'function');
-            equal(token({foo: 'bar'}), 'bar');
-            equal(token({foo: 'value'}), 'value');
+            equal(typeof compile('{foo}')[0], 'function');
         });
         test('start with literal', function () {
             var tokens = compile('this{foo}');
@@ -78,7 +79,7 @@
             equal(typeof tokens[2], 'function');
             equal(tokens[3], '!');
         });
-        var obj = { foo: 'Jack', bar: 'sandwich' };
+
         test('format variable', function () {
             equal(format('{foo}', obj), 'Jack');
         });
