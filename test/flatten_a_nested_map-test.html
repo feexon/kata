@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function flattenMap(map, result, prefix) {
+            result = result || {};
+            Object.keys(map).forEach(function (key) {
+                var finalKey = prefix ? prefix + '/' + key : key;
+                if (Object.prototype.toString.call(map[key]) == '[object Object]') {
+                    flattenMap(map[key], result, finalKey);
+                    return;
+                }
+                result[finalKey] = map[key];
+            });
+            return result;
+        }
+    </script>
+    <script type="text/javascript">
+        module('Flatten a Nested Map');
+        test('set properties into flattened map', function () {
+            var cases = [
+                {},
+                {number: 1},
+                {string: 'a'},
+                {truth: true},
+                {error: false},
+                {non: null},
+                {fn: function () { }},
+                {array: [1, 2, 3]}
+            ];
+            cases.forEach(function (_case) {
+                deepEqual(flattenMap(_case), _case);
+            });
+        });
+        test('simple nested map', function () {
+            deepEqual(flattenMap({a: {b: 'c'}}), {'a/b': 'c'});
+            deepEqual(flattenMap({a: {b: {c: 'd'}}}), {'a/b/c': 'd'});
+
+        });
+        test('complex map', function () {
+            var map = {
+                'a': {
+                    'b': {
+                        'c': 12,
+                        'd': 'Hello World'
+                    },
+                    'e': [1, 2, 3]
+                }
+            };
+            deepEqual(flattenMap(map), {
+                'a/b/c': 12,
+                'a/b/d': 'Hello World',
+                'a/e': [1, 2, 3]
+            });
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
