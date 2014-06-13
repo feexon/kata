@@ -14,15 +14,24 @@
         function format(string, o) {
 
         }
-        function compile(template){
-           return [template];
+        function compile(template) {
+            var matcher = template.match(/\{(.*?)\}/);
+            return matcher ? [function (o) {
+                return o[matcher[1]];
+            }] : [template];
         }
     </script>
     <script type="text/javascript">
         module("String insert values");
-        test('compile plain text',function(){
-            deepEqual(compile('text'),['text']);
-        })
+        test('compile plain text', function () {
+            deepEqual(compile('text'), ['text']);
+        });
+        test('compile variable', function () {
+            var token = compile('{foo}')[0];
+            equal(typeof token, 'function');
+            equal(token({foo: 'bar'}), 'bar');
+            equal(token({foo: 'value'}), 'value');
+        });
     </script>
 </head>
 <body>
