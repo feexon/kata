@@ -17,6 +17,10 @@
             function flatten(map, prefix) {
                 Object.keys(map).forEach(function (key) {
                     var finalKey = prefix ? prefix + '/' + key : key;
+                    if(Array.isArray(map[key])){
+                        result[finalKey] = map[key];
+                        return;
+                    }
                     if (typeof map[key] == 'object') {
                         flatten(map[key], finalKey);
                         return;
@@ -34,6 +38,9 @@
         test('non nested map', function () {
             deepEqual(flattenMap({}), {});
             deepEqual(flattenMap({key: 'value'}), {key: 'value'});
+        });
+        test('array properties', function () {
+            deepEqual(flattenMap({array:[1,2,3]}), {array:[1,2,3]});
         });
         test('simple nested map', function () {
             deepEqual(flattenMap({a: {b: 'c'}}), {'a/b': 'c'});
