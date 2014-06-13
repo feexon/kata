@@ -27,6 +27,10 @@
                 if (matcher.index) {
                     tokens.push(template.substring(0, matcher.index));
                     tokens.push(variable(matcher[1]));
+                    template=template.substring(matcher.index+matcher[0].length);
+                    if(template){
+                        tokens.push(template);
+                    }
                 } else {
                     tokens.push(variable(matcher[1]));
                 }
@@ -51,7 +55,12 @@
             var tokens = compile('this{foo}');
             equal(tokens[0], 'this');
             equal(typeof tokens[1], 'function');
-
+        });
+        test('compile mixed2', function () {
+            var tokens = compile('this{foo}bar');
+            equal(tokens[0], 'this');
+            equal(typeof tokens[1], 'function');
+            equal(tokens[2], 'bar');
         });
     </script>
 </head>
