@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function gcd2(a, b) {
+            if (b == 0) {
+                return a
+            }
+            return a % b == 0 ? b : gcd2(b, a % b)
+        }
+
+        function lcm2(a, b) {
+            return a * b / gcd2(a, b)
+        }
+
+        var lcm = function () {
+            return Array.prototype.slice.call(arguments).reduce(function (prev, curr) {
+                return lcm2(prev, curr)
+            },1);
+        };
+    </script>
+    <script type="text/javascript">
+        module('Least Common Multiple');
+        test('gcd', function () {
+            equal(gcd2(2, 1), 1);
+            equal(gcd2(1, 2), 1);
+            equal(gcd2(6, 4), 2);
+        });
+        test('lcm of two numbers', function () {
+            equal(lcm(3, 4), 3 * 4 / gcd2(3, 4));
+            equal(lcm(5, 4), 5 * 4 / gcd2(5, 4));
+        });
+        test('lcm of single number', function () {
+            equal(lcm(9), 9);
+        });
+        test('lcm of more than two numbers', function () {
+            equal(lcm(2, 3, 4), 12);
+            equal(lcm(2, 3, 7, 8, 10, 36), 2520);
+        });
+        test('zero', function () {
+            equal(lcm(2, 0), 0);
+            equal(lcm(0, 2), 0);
+        });
+
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
