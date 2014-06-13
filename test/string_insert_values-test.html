@@ -12,14 +12,21 @@
          *
          */
         function format(string,o){
-            return string;
+            var key = Object.keys(o)[0];
+            return string.replace(new RegExp("\{"+key+"\}","g"),o[  key]);
         }
     </script>
     <script type="text/javascript">
         module("String insert values");
         test('plain text',function(){
             equal(format('text',{foo:'bar'}),'text');
-        })
+        });
+        test('replace all occurrences of variable with value',function(){
+            equal(format('this is {foo}',{foo:'bar'}),'this is bar');
+            equal(format('key={key}',{key:'value'}),'key=value');
+            equal(format('this is {foo}, {foo}',{foo:'bar'}),'this is bar, bar');
+            equal(format('this is {foo}\r\n {foo}',{foo:'bar'}),'this is bar\r\n bar');
+        });
     </script>
 </head>
 <body>
