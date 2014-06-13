@@ -15,6 +15,7 @@
             return m%n?gcd(n,m%n):n;
         }
         function lcm(m,n){
+           n=n||1;
            return m*n/gcd(m,n);
         }
     </script>
@@ -28,7 +29,10 @@
         test('lcm of two numbers',function(){
             equal(lcm(3,4),3*4/gcd(3,4));
             equal(lcm(5,4),5*4/gcd(5,4));
-        })
+        });
+        test('lcm of single number',function(){
+            equal(lcm(9),9);
+        });
     </script>
 </head>
 <body>
