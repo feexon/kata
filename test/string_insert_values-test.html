@@ -88,6 +88,9 @@
         test('format mixed string', function () {
             equal(format('name={foo}', obj), 'name=Jack');
         });
+        test("can't replace variable multi times", function () {
+            equal(format("{foo}", {foo: '{key}', key: 'value'}),'{key}');
+        });
     </script>
 </head>
 <body>
