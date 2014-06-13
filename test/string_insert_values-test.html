@@ -18,7 +18,7 @@
             }
             var result = '';
             while (matcher) {
-                result += string.substring(0, matcher.index) + o[matcher[1]];
+                result += string.substring(0, matcher.index) + (o[matcher[1]]===undefined?matcher[0]:o[matcher[1]]);
                 string = string.substring(matcher.index + matcher[0].length);
                 matcher = string.match(/\{(.*?)\}/)
             }
@@ -46,6 +46,9 @@
         test("can't replace multiple times", function () {
             var actual = format('Hello {foo} - make me a {bar}... {foo}!!?', { bar: 'sandwich {foo}', foo: 'Jack' });
             equal(actual, "Hello Jack - make me a sandwich {foo}... Jack!!?");
+        });
+        test("missing value", function () {
+            equal(format('{foo}', {}), "{foo}");
         });
     </script>
 </head>
