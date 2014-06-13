@@ -30,14 +30,10 @@
                 } else {
                     tokens.push(variable(matcher[1]));
                 }
-                template=template.substring(matcher.index+matcher[0].length);
-                if(template){
-                    tokens.push(template);
-                }
-            } else {
-                if(template){
-                    tokens.push(template);
-                }
+                template = template.substring(matcher.index + matcher[0].length);
+            }
+            if (template) {
+                tokens.push(template);
             }
             return tokens;
         }
@@ -70,7 +66,7 @@
             equal(tokens[2], 'bar');
         });
         test('compile empty string', function () {
-            deepEqual(compile(''),[]);
+            deepEqual(compile(''), []);
         });
     </script>
 </head>
