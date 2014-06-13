@@ -13,22 +13,16 @@
          */
         function flattenMap(map) {
             var result = {};
-
             function flatten(map, prefix) {
                 Object.keys(map).forEach(function (key) {
                     var finalKey = prefix ? prefix + '/' + key : key;
-                    if (map[key] == null || Array.isArray(map[key])) {
-                        result[finalKey] = map[key];
-                        return;
-                    }
-                    if (typeof map[key] == 'object') {
+                    if (Object.prototype.toString.call(map[key]) == '[object Object]') {
                         flatten(map[key], finalKey);
                         return;
                     }
                     result[finalKey] = map[key];
                 });
             }
-
             flatten(map, '');
             return result;
         }
@@ -46,7 +40,8 @@
                 {truth: true},
                 {error: false},
                 {non: null},
-                {fn: function () { }},
+                {fn: function () {
+                }},
                 {array: [1, 2, 3]}
             ];
             cases.forEach(function (_case) {
@@ -56,6 +51,7 @@
         test('simple nested map', function () {
             deepEqual(flattenMap({a: {b: 'c'}}), {'a/b': 'c'});
             deepEqual(flattenMap({a: {b: {c: 'd'}}}), {'a/b/c': 'd'});
+
         });
     </script>
 </head>
