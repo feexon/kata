@@ -16,8 +16,7 @@
         }
         function lcm(m, n) {
             n = n || 1;
-            var result = m * n / gcd(m, n);
-            return arguments.length > 2 ? lcm(result, arguments[2]) : result;
+            return arguments.length <= 2 ? m * n / gcd(m, n) : lcm(m * n / gcd(m, n), arguments[2]);
         }
     </script>
     <script type="text/javascript">
