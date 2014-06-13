@@ -17,7 +17,7 @@
             function flatten(map, prefix) {
                 Object.keys(map).forEach(function (key) {
                     var finalKey = prefix ? prefix + '/' + key : key;
-                    if(Array.isArray(map[key])){
+                    if (map[key] == null || Array.isArray(map[key])) {
                         result[finalKey] = map[key];
                         return;
                     }
@@ -39,12 +39,19 @@
             deepEqual(flattenMap({}), {});
             deepEqual(flattenMap({key: 'value'}), {key: 'value'});
         });
-        test('array properties', function () {
-            deepEqual(flattenMap({array:[1,2,3]}), {array:[1,2,3]});
-        });
-        test('function properties', function () {
-            function fn(){}
-            deepEqual(flattenMap({fn:fn}), {fn:fn});
+        test('use other properties directly', function () {
+            var cases = [
+                {number: 1},
+                {string: 'a'},
+                {truth: true},
+                {error: false},
+                {non: null},
+                {fn: function () { }},
+                {array: [1, 2, 3]}
+            ];
+            cases.forEach(function (_case) {
+                deepEqual(flattenMap(_case), _case);
+            });
         });
         test('simple nested map', function () {
             deepEqual(flattenMap({a: {b: 'c'}}), {'a/b': 'c'});
