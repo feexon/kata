@@ -11,31 +11,33 @@
         /**
          *
          */
-        function gcd(m, n) {
-            var remains = [].slice.call(arguments, 2);
-            return m % n ? gcd.apply(this, [n, m % n].concat(remains)) : remains.length ? gcd.apply(this, [n].concat(remains)) : n;
-        }
-        function lcm(m, n) {
-            if (n == 0) {
-                return 0;
+        function gcd2(a, b) {
+            if (b == 0) {
+                return a
             }
-            n = n || 1;
-            var remains = [].slice.call(arguments, 2);
-            var result = m * n / gcd(m, n);
-            return !remains.length ? result : lcm.apply(this, [result].concat(remains));
+            return a % b == 0 ? b : gcd2(b, a % b)
         }
+
+        function lcm2(a, b) {
+            return a * b / gcd2(a, b)
+        }
+
+        var lcm = function () {
+            return Array.prototype.slice.call(arguments).reduce(function (prev, curr) {
+                return lcm2(prev, curr)
+            },1);
+        };
     </script>
     <script type="text/javascript">
         module('Least Common Multiple');
         test('gcd', function () {
-            equal(gcd(2, 1), 1);
-            equal(gcd(1, 2), 1);
-            equal(gcd(6, 4), 2);
-            equal(gcd(40, 20, 10), 10);
+            equal(gcd2(2, 1), 1);
+            equal(gcd2(1, 2), 1);
+            equal(gcd2(6, 4), 2);
         });
         test('lcm of two numbers', function () {
-            equal(lcm(3, 4), 3 * 4 / gcd(3, 4));
-            equal(lcm(5, 4), 5 * 4 / gcd(5, 4));
+            equal(lcm(3, 4), 3 * 4 / gcd2(3, 4));
+            equal(lcm(5, 4), 5 * 4 / gcd2(5, 4));
         });
         test('lcm of single number', function () {
             equal(lcm(9), 9);
