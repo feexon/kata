@@ -27,16 +27,12 @@
                 if (matcher.index) {
                     tokens.push(template.substring(0, matcher.index));
                     tokens.push(variable(matcher[1]));
-                    template=template.substring(matcher.index+matcher[0].length);
-                    if(template){
-                        tokens.push(template);
-                    }
                 } else {
                     tokens.push(variable(matcher[1]));
-                    template=template.substring(matcher.index+matcher[0].length);
-                    if(template){
-                        tokens.push(template);
-                    }
+                }
+                template=template.substring(matcher.index+matcher[0].length);
+                if(template){
+                    tokens.push(template);
                 }
             } else {
                 tokens.push(template);
