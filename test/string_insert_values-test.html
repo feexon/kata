@@ -12,91 +12,36 @@
          *
          */
         function format(string, o) {
-            return compile(string).map(function (token) {
-                return typeof  token == 'function' ? token(o) : token;
-            }).join('');
-        }
-        function compile(template) {
-            var tokens = [];
-            while (true) {
-                var matcher = template.match(/\{(.*?)\}/);
-                if (!matcher) {
-                    break;
-                }
-                if (matcher.index) {
-                    tokens.push(template.substring(0, matcher.index));
-                }
-                tokens.push(variable(matcher[1]));
-                template = template.substring(matcher.index + matcher[0].length);
-            }
-            return template ? tokens.concat(template) : tokens;
-        }
-        function variable(key) {
-            return function (o) {
-                return o[key] === undefined ? "{" + key + "}" : o[key];
-            }
+           return string.replace(/\{(.*?)\}/g,function(token,key){
+               return key in o?o[key]:token;
+           })
         }
     </script>
     <script type="text/javascript">
         module("String insert values");
-        var obj = { foo: 'Jack', bar: 'sandwich' };
-        test('calculate variable', function () {
-            equal(variable('foo')(obj), 'Jack');
-            equal(variable('bar')(obj), 'sandwich');
+        test('plain text', function () {
+            equal(format('text', {foo: 'bar'}), 'text');
         });
-        test('variable missing value', function () {
-            equal(variable('foo')({}), '{foo}');
+        test('replace all occurrences of variable with value', function () {
+            equal(format('this is {foo}', {foo: 'bar'}), 'this is bar');
+            equal(format('key={key}', {key: 'value'}), 'key=value');
+            equal(format('this is {foo}, {foo}', {foo: 'bar'}), 'this is bar, bar');
+            equal(format('this is {foo}\r\n {foo}', {foo: 'bar'}), 'this is bar\r\n bar');
         });
-        test('compile plain text', function () {
-            deepEqual(compile('text'), ['text']);
+        test('replace all variables', function () {
+            equal(format('foo={foo},key={key}', {foo: 'bar', key: 'value'}), 'foo=bar,key=value');
         });
-        test('compile variable', function () {
-            equal(typeof compile('{foo}')[0], 'function');
-        });
-        test('start with literal', function () {
-            var tokens = compile('this{foo}');
-            equal(tokens[0], 'this');
-            equal(typeof tokens[1], 'function');
-        });
-        test('start with variable', function () {
-            var tokens = compile('{foo}this');
-            equal(typeof tokens[0], 'function');
-            equal(tokens[1], 'this');
-        });
-        test('compile mixed', function () {
-            var tokens = compile('this{foo}bar');
-            equal(tokens[0], 'this');
-            equal(typeof tokens[1], 'function');
-            equal(tokens[2], 'bar');
-        });
-        test('compile empty string', function () {
-            deepEqual(compile(''), []);
-        });
-        test('compile complex template', function () {
-            var tokens = compile('{foo}={bar}!');
-            equal(typeof tokens[0], 'function');
-            equal(tokens[1], '=');
-            equal(typeof tokens[2], 'function');
-            equal(tokens[3], '!');
+        test('replace with array', function () {
+            equal(format('foo={0},key={1}', ['bar', 'value']), 'foo=bar,key=value');
         });
 
-        test('format variable', function () {
-            equal(format('{foo}', obj), 'Jack');
+        test("can't replace multiple times", function () {
+            var actual = format('Hello {foo} - make me a {bar}... {foo}!!?', { bar: 'sandwich {foo}', foo: 'Jack' });
+            equal(actual, "Hello Jack - make me a sandwich {foo}... Jack!!?");
         });
-        test('format text', function () {
-            equal(format('text', obj), 'text');
+        test("missing value", function () {
+            equal(format('{foo}', {}), "{foo}");
         });
-        test('format empty string', function () {
-            equal(format('', obj), '');
-        });
-        test('format mixed string', function () {
-            equal(format('name={foo}', obj), 'name=Jack');
-        });
-        test("can't replace variable multi times", function () {
-            equal(format("{foo}", {foo: '{key}', key: 'value'}), '{key}');
-        });
-
-
     </script>
 </head>
 <body>
