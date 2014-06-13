@@ -29,12 +29,9 @@
     </script>
     <script type="text/javascript">
         module('Flatten a Nested Map');
-        test('non nested map', function () {
-            deepEqual(flattenMap({}), {});
-            deepEqual(flattenMap({key: 'value'}), {key: 'value'});
-        });
-        test('use other properties directly', function () {
+        test('set properties into flattened map', function () {
             var cases = [
+                {},
                 {number: 1},
                 {string: 'a'},
                 {truth: true},
