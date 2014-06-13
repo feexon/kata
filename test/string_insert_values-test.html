@@ -13,6 +13,9 @@
          */
         function format(string, o) {
             var tokens=compile(string);
+            if(!tokens.length){
+                return '';
+            }
             return typeof tokens[0]=='function'?tokens[0](o):tokens[0];
         }
         function compile(template) {
@@ -80,6 +83,9 @@
         });
         test('format text', function () {
             equal(format('text',obj),'text');
+        });
+        test('format empty string', function () {
+            equal(format('',obj),'');
         });
     </script>
 </head>
