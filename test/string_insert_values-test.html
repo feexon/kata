@@ -13,7 +13,7 @@
          */
         function format(string, o) {
             return Object.keys(o).reduce(function (string, key) {
-                return string.replace(new RegExp("\{" + key + "\}", "g"), o[key]);
+                return string.replace(new RegExp("\\{" + key + "\\}", "g"), o[key]);
             },string);
         }
     </script>
@@ -30,6 +30,9 @@
         });
         test('replace all variables', function () {
             equal(format('foo={foo},key={key}', {foo: 'bar', key: 'value'}), 'foo=bar,key=value');
+        });
+        test('replace with array', function () {
+            equal(format('foo={0},key={1}', ['bar','value']), 'foo=bar,key=value');
         });
     </script>
 </head>
