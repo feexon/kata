@@ -42,6 +42,10 @@
         test('array properties', function () {
             deepEqual(flattenMap({array:[1,2,3]}), {array:[1,2,3]});
         });
+        test('function properties', function () {
+            function fn(){}
+            deepEqual(flattenMap({fn:fn}), {fn:fn});
+        });
         test('simple nested map', function () {
             deepEqual(flattenMap({a: {b: 'c'}}), {'a/b': 'c'});
             deepEqual(flattenMap({a: {b: {c: 'd'}}}), {'a/b/c': 'd'});
