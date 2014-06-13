@@ -13,7 +13,7 @@
          */
         function format(string, o) {
             var tokens=compile(string);
-            return tokens[0](o);
+            return typeof tokens[0]=='function'?tokens[0](o):tokens[0];
         }
         function compile(template) {
             var variable = function (key) {
@@ -77,6 +77,9 @@
         var obj = { foo: 'Jack', bar: 'sandwich' };
         test('format variable', function () {
             equal(format('{foo}',obj),'Jack');
+        });
+        test('format text', function () {
+            equal(format('text',obj),'text');
         });
     </script>
 </head>
