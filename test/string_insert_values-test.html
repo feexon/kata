@@ -33,6 +33,10 @@
                     }
                 } else {
                     tokens.push(variable(matcher[1]));
+                    template=template.substring(matcher.index+matcher[0].length);
+                    if(template){
+                        tokens.push(template);
+                    }
                 }
             } else {
                 tokens.push(template);
@@ -55,6 +59,11 @@
             var tokens = compile('this{foo}');
             equal(tokens[0], 'this');
             equal(typeof tokens[1], 'function');
+        });
+        test('start with variable', function () {
+            var tokens = compile('{foo}this');
+            equal(typeof tokens[0], 'function');
+            equal(tokens[1], 'this');
         });
         test('compile mixed', function () {
             var tokens = compile('this{foo}bar');
