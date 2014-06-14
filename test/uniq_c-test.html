@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function uniq_c(a) {
+            return !a.length?[]:a.join('').match(/(.)\1*/g).map(function (all) {
+                return [all[0], all.length];
+            });
+        }
+    </script>
+    <script type="text/javascript">
+        module('uniq -c (UNIX style)');
+        test('empty array',function(){
+            deepEqual(uniq_c([]),[]);
+        });
+        test('no repeat items in an array',function(){
+            deepEqual(uniq_c(['a']),[['a',1]]);
+            deepEqual(uniq_c(['a','b','c']),[['a',1],['b',1],['c',1]]);
+        });
+        test('counting occurrences times',function(){
+            deepEqual(uniq_c(['a','a','b','b','c','a','b','c']),[['a',2],['b',2],['c',1],['a',1],['b',1],['c',1]]);
+        });
+
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
