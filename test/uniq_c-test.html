@@ -12,13 +12,23 @@
          *
          */
         function uniq_c(a){
-            return a;
+            var counter=[];
+            if(a.length){
+                counter= counter.concat(a.map(function(item){
+                    return [item,1];
+                }));
+            }
+            return counter;
         }
     </script>
     <script type="text/javascript">
         module('uniq -c (UNIX style)');
         test('empty array',function(){
             deepEqual(uniq_c([]),[]);
+        });
+        test('no repeat items in an array',function(){
+            deepEqual(uniq_c(['a']),[['a',1]]);
+            deepEqual(uniq_c(['a','b','c']),[['a',1],['b',1],['c',1]]);
         });
     </script>
 </head>
