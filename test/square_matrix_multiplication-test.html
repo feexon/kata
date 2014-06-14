@@ -12,13 +12,26 @@
          *
          */
         function matrixMultiplication(a,b){
-            return [[a[0][0]*b[0][0]]];
+            return a.map(function(row){
+                return row.map(function(_,i){
+                    return row.reduce(function(sum,cell,j){
+                        return sum+cell*b[j][i];
+                    },0);
+                });
+            });
         }
     </script>
     <script type="text/javascript">
         module('Square Matrix Multiplication');
         test('1*1',function(){
             deepEqual(matrixMultiplication([[3]],[[4]]),[[12]]);
+        });
+        test('2*2',function(){
+            var matrix = matrixMultiplication([ [1, 2], [3, 2] ], [ [3, 2], [1, 1] ]);
+            equal(matrix[0][0],5);
+            equal(matrix[0][1],4);
+            equal(matrix[1][0],11);
+            equal(matrix[1][1],8);
         });
     </script>
 </head>
