@@ -11,9 +11,15 @@
         /**
          *
          */
+        function matrixMultiplication(a,b){
+            return [[a[0][0]*b[0][0]]];
+        }
     </script>
     <script type="text/javascript">
-
+        module('Square Matrix Multiplication');
+        test('1*1',function(){
+            deepEqual(matrixMultiplication([[3]],[[4]]),[[12]]);
+        });
     </script>
 </head>
 <body>
