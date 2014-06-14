@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function matrixMultiplication(a,b){
+            return a.map(function(row){
+                return row.map(function(_,i){
+                    return row.reduce(function(sum,cell,j){
+                        return sum+cell*b[j][i];
+                    },0);
+                });
+            });
+        }
+    </script>
+    <script type="text/javascript">
+        module('Square Matrix Multiplication');
+        test('1*1',function(){
+            deepEqual(matrixMultiplication([[3]],[[4]]),[[12]]);
+        });
+        test('2*2',function(){
+            var matrix = matrixMultiplication([ [1, 2], [3, 2] ], [ [3, 2], [1, 1] ]);
+            equal(matrix[0][0],5);
+            equal(matrix[0][1],4);
+            equal(matrix[1][0],11);
+            equal(matrix[1][1],8);
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
