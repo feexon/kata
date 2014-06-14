@@ -11,14 +11,10 @@
         /**
          *
          */
-        function uniq_c(a){
-            var counter=[];
-            if(a.length){
-                counter= counter.concat(a.map(function(item){
-                    return [item,1];
-                }));
-            }
-            return counter;
+        function uniq_c(a) {
+            return !a.length?[]:a.join('').match(/(.)\1*/g).map(function (item) {
+                return [item[0], item.length];
+            });
         }
     </script>
     <script type="text/javascript">
@@ -30,6 +26,10 @@
             deepEqual(uniq_c(['a']),[['a',1]]);
             deepEqual(uniq_c(['a','b','c']),[['a',1],['b',1],['c',1]]);
         });
+        test('counting occurrences times',function(){
+            deepEqual(uniq_c(['a','a','b','b','c','a','b','c']),[['a',2],['b',2],['c',1],['a',1],['b',1],['c',1]]);
+        });
+
     </script>
 </head>
 <body>
