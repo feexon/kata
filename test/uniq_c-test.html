@@ -11,9 +11,15 @@
         /**
          *
          */
+        function uniq_c(a){
+            return a;
+        }
     </script>
     <script type="text/javascript">
-
+        module('uniq -c (UNIX style)');
+        test('empty array',function(){
+            deepEqual(uniq_c([]),[]);
+        });
     </script>
 </head>
 <body>
