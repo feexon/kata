@@ -14,10 +14,9 @@
         function cache(fn) {
             var results = {};
             return function () {
-                var key = JSON.stringify([].slice.call(arguments));
-                var result = results[ key];
-                if (result) {
-                    return result;
+                var key = JSON.stringify(arguments);
+                if (results.hasOwnProperty(key)) {
+                    return results[ key];
                 }
                 return results[key] = fn.apply(this, arguments);
             };
@@ -60,6 +59,14 @@
             equal(wrapper({foo:'bar'}),'one');
             equal(wrapper({key:'value'}), 'two');
 
+        });
+        test('cache void function', function () {
+            var count=0;
+            var wrapper = cache(function(){++count;});
+            equal(wrapper(),undefined);
+            equal(count,1);
+            equal(wrapper(),undefined);
+            equal(count,1);
         });
     </script>
 </head>
