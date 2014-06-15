@@ -19,7 +19,7 @@
                 if (result) {
                     return result;
                 }
-                return results[key] = fn.apply(this, null);
+                return results[key] = fn.apply(this, arguments);
             };
         }
     </script>
@@ -43,6 +43,15 @@
             equal(wrapper(1),'one');
             equal(wrapper(1, 2), 'two');
             equal(wrapper(3),null);
+        });
+        test('pass parameters into target', function () {
+            var passed=[];
+            var wrapper = cache(function(){
+                passed.push.apply(passed,arguments);
+            });
+            wrapper(1,'a');
+            deepEqual(passed,[1,'a']);
+
         });
     </script>
 </head>
