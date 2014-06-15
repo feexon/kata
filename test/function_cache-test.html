@@ -12,13 +12,14 @@
          *
          */
         function cache(fn) {
-            var results={};
-            return function(){
-                var result = results[arguments[0]];
-                if(result){
+            var results = {};
+            return function () {
+                var key = [].join.call(arguments,',');
+                var result = results[ key];
+                if (result) {
                     return result;
                 }
-                return results[arguments[0]]= fn.apply(this, null);
+                return results[key] = fn.apply(this, null);
             };
         }
     </script>
@@ -35,11 +36,13 @@
             equal(wrapper(1), 'one');
             equal(wrapper(2), 'two');
         });
-        test('cache', function () {
+        test('cache by parameters', function () {
             var wrapper = cache(returns('one', 'two'));
             equal(wrapper(1), 'one');
-            equal(wrapper(1), 'one');
-            equal(wrapper(2), 'two');
+            equal(wrapper(1, 2), 'two');
+            equal(wrapper(1),'one');
+            equal(wrapper(1, 2), 'two');
+            equal(wrapper(3),null);
         });
     </script>
 </head>
