@@ -11,9 +11,23 @@
         /**
          *
          */
+        function cache(fn){
+            return fn;
+        }
     </script>
     <script type="text/javascript">
-
+        module('Function Cache');
+        function returns(){
+            var values=[].slice.call(arguments);
+            return function(){
+                return values.shift();
+            };
+        }
+        test('wrapper',function(){
+            var wrapper=cache(returns('one','two'));
+            equal(wrapper(),'one');
+            equal(wrapper(),'two');
+        })
     </script>
 </head>
 <body>
