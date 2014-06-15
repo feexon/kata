@@ -14,7 +14,7 @@
         function cache(fn) {
             var results = {};
             return function () {
-                var key = [].join.call(arguments,',');
+                var key = JSON.stringify([].slice.call(arguments));
                 var result = results[ key];
                 if (result) {
                     return result;
@@ -51,6 +51,14 @@
             });
             wrapper(1,'a');
             deepEqual(passed,[1,'a']);
+
+        });
+
+        test('cache by object parameters', function () {
+            var wrapper = cache(returns('one', 'two'));
+            equal(wrapper({foo:'bar'}), 'one');
+            equal(wrapper({foo:'bar'}),'one');
+            equal(wrapper({key:'value'}), 'two');
 
         });
     </script>
