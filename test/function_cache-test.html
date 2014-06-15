@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function cache(fn) {
+            var results = {};
+            return function () {
+                var key = JSON.stringify(arguments);
+                if (key in results) {
+                    return results[ key];
+                }
+                return results[key] = fn.apply(this, arguments);
+            };
+        }
+    </script>
+    <script type="text/javascript">
+        module('Function Cache');
+        function returns() {
+            var values = [].slice.call(arguments);
+            return function () {
+                return values.shift();
+            };
+        }
+        test('wrapper', function () {
+            var wrapper = cache(returns('one', 'two'));
+            equal(wrapper(1), 'one');
+            equal(wrapper(2), 'two');
+        });
+        test('cache by parameters', function () {
+            var wrapper = cache(returns('one', 'two'));
+            equal(wrapper(1), 'one');
+            equal(wrapper(1, 2), 'two');
+            equal(wrapper(1),'one');
+            equal(wrapper(1, 2), 'two');
+            equal(wrapper(3),null);
+        });
+        test('pass parameters into target', function () {
+            var passed=[];
+            var wrapper = cache(function(){
+                passed.push.apply(passed,arguments);
+            });
+            wrapper(1,'a');
+            deepEqual(passed,[1,'a']);
+
+        });
+
+        test('cache by object parameters', function () {
+            var wrapper = cache(returns('one', 'two'));
+            equal(wrapper({foo:'bar'}), 'one');
+            equal(wrapper({foo:'bar'}),'one');
+            equal(wrapper({key:'value'}), 'two');
+
+        });
+        test('cache void function', function () {
+            var count=0;
+            var wrapper = cache(function(){++count;});
+            equal(wrapper(),undefined);
+            equal(count,1);
+            equal(wrapper(),undefined);
+            equal(count,1);
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
