@@ -11,23 +11,36 @@
         /**
          *
          */
-        function cache(fn){
-            return fn;
+        function cache(fn) {
+            var results={};
+            return function(){
+                var result = results[arguments[0]];
+                if(result){
+                    return result;
+                }
+                return results[arguments[0]]= fn.apply(this, null);
+            };
         }
     </script>
     <script type="text/javascript">
         module('Function Cache');
-        function returns(){
-            var values=[].slice.call(arguments);
-            return function(){
+        function returns() {
+            var values = [].slice.call(arguments);
+            return function () {
                 return values.shift();
             };
         }
-        test('wrapper',function(){
-            var wrapper=cache(returns('one','two'));
-            equal(wrapper(),'one');
-            equal(wrapper(),'two');
-        })
+        test('wrapper', function () {
+            var wrapper = cache(returns('one', 'two'));
+            equal(wrapper(1), 'one');
+            equal(wrapper(2), 'two');
+        });
+        test('cache', function () {
+            var wrapper = cache(returns('one', 'two'));
+            equal(wrapper(1), 'one');
+            equal(wrapper(1), 'one');
+            equal(wrapper(2), 'two');
+        });
     </script>
 </head>
 <body>
