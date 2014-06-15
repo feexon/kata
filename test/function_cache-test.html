@@ -15,7 +15,7 @@
             var results = {};
             return function () {
                 var key = JSON.stringify(arguments);
-                if (results.hasOwnProperty(key)) {
+                if (key in results) {
                     return results[ key];
                 }
                 return results[key] = fn.apply(this, arguments);
