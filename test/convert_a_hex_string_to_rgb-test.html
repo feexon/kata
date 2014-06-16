@@ -11,9 +11,16 @@
         /**
          *
          */
+        function hexStringToRGB(hexString) {
+            var rgb = parseInt(hexString.substring(1), 16);
+            return {r: rgb >>> 16, g: (rgb >>> 8) & 0xFF, b: rgb & 0xFF};
+        }
     </script>
     <script type="text/javascript">
-
+        module('Convert A Hex String To RGB');
+        test('hex to rgb', function () {
+            deepEqual(hexStringToRGB("#FF9933"), {r: 255, g: 153, b: 51});
+        });
     </script>
 </head>
 <body>
