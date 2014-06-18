@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function meters(x) {
+            var units = ['m', 'km', 'Mm', 'Gm','Tm','Pm','Em','Zm','Ym'];
+            var KM = 1000;
+            for(var i=0;i<units.length;i++){
+                var base=Math.pow(KM,i+1);
+                if(x<base){
+                    return x/(base/KM)+units[i];
+                }
+            }
+        }
+    </script>
+    <script type="text/javascript">
+        module('Metric Units - 1');
+        test('simple', function () {
+            equal(meters(5), '5m');
+        });
+        test('convert to units', function () {
+            equal(meters(1000), '1km');
+            equal(meters(1000000), '1Mm');
+            equal(meters(9000000000), '9Gm');
+            equal(meters(9000000000000), '9Tm');
+            equal(meters(9000000000000000), '9Pm');
+            equal(meters(9000000000000000000), '9Em');
+            equal(meters(9e+21), '9Zm');
+            equal(meters(9e+24), '9Ym');
+        });
+        test('keep decimal', function () {
+            equal(meters(1200), '1.2km');
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
