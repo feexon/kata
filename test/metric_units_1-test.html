@@ -18,7 +18,10 @@
             if (x < 1000000) {
                 return x / 1000 + 'km';
             }
-            return x / 1000000 + 'Mm';
+            if (x < 1000000000) {
+                return x / 1000000 + 'Mm';
+            }
+            return x / 1000000000 + 'Gm';
         }
     </script>
     <script type="text/javascript">
@@ -29,6 +32,7 @@
         test('convert to units', function () {
             equal(meters(1000), '1km');
             equal(meters(1000000), '1Mm');
+            equal(meters(9000000000), '9Gm');
         });
         test('keep decimal', function () {
             equal(meters(1200), '1.2km');
