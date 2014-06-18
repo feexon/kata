@@ -12,6 +12,12 @@
          *
          */
         function meters(x) {
+            if(x>=1000000){
+                return x/1000000+'Mm';
+            }
+            if(x>=1000){
+                return x/1000+'km';
+            }
             return x + 'm';
         }
     </script>
@@ -19,6 +25,10 @@
         module('Metric Units - 1');
         test('simple', function () {
             equal(meters(5), '5m');
+        });
+        test('convert to units', function () {
+            equal(meters(1000), '1km');
+            equal(meters(1000000), '1Mm');
         });
     </script>
 </head>
