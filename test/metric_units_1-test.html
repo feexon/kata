@@ -12,13 +12,13 @@
          *
          */
         function meters(x) {
-            if(x>=1000000){
-                return x/1000000+'Mm';
+            if (x < 1000) {
+                return x + 'm';
             }
-            if(x>=1000){
-                return x/1000+'km';
+            if (x < 1000000) {
+                return x / 1000 + 'km';
             }
-            return x + 'm';
+            return x / 1000000 + 'Mm';
         }
     </script>
     <script type="text/javascript">
