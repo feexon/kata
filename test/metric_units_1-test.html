@@ -11,9 +11,15 @@
         /**
          *
          */
+        function meters(x) {
+            return x + 'm';
+        }
     </script>
     <script type="text/javascript">
-
+        module('Metric Units - 1');
+        test('simple', function () {
+            equal(meters(5), '5m');
+        });
     </script>
 </head>
 <body>
