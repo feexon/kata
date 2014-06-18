@@ -30,6 +30,9 @@
             equal(meters(1000), '1km');
             equal(meters(1000000), '1Mm');
         });
+        test('keep decimal', function () {
+            equal(meters(1200), '1.2km');
+        });
     </script>
 </head>
 <body>
