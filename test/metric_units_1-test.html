@@ -12,16 +12,14 @@
          *
          */
         function meters(x) {
-            if (x < 1000) {
-                return x + 'm';
+            var units = ['m', 'km', 'Mm', 'Gm'];
+            var KM = 1000;
+            for(var i=0;i<units.length;i++){
+                var base=Math.pow(KM,i+1);
+                if(x<base){
+                    return x/(base/KM)+units[i];
+                }
             }
-            if (x < 1000000) {
-                return x / 1000 + 'km';
-            }
-            if (x < 1000000000) {
-                return x / 1000000 + 'Mm';
-            }
-            return x / 1000000000 + 'Gm';
         }
     </script>
     <script type="text/javascript">
