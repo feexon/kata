@@ -14,17 +14,13 @@
         function tongues(code) {
             var vowels = ['a', 'i', 'y', 'e', 'o' , 'u'];
             var consonants = ['b', 'k', 'x' , 'z' , 'n', 'h', 'd', 'c', 'w', 'g' , 'p', 'v', 'j', 'q', 't', 's', 'r' , 'l' , 'm' , 'f'];
-            return code.split('').map(function (code) {
-                if (!/[a-z]/i.test(code)) {
-                    return code;
-                }
-
-                var downcase = code.toLowerCase();
+            return code.replace(/[a-z]/ig, function (letter) {
+                var downcase = letter.toLowerCase();
                 var result = (vowels.indexOf(downcase) != -1 ?
                         vowels[(vowels.indexOf(downcase) + 3) % vowels.length] :
                         consonants[(consonants.indexOf(downcase) + 10) % consonants.length]);
-                return downcase == code ? result : result.toUpperCase();
-            }).join('');
+                return downcase == letter ? result : result.toUpperCase();
+            });
 
         }
     </script>
