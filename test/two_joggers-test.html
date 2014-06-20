@@ -11,14 +11,27 @@
         /**
          *
          */
-        function nbrOfLaps(x,y){
-            return [y,x];
+        function gcd(m, n) {
+            if (n == 0) {
+                return m;
+            }
+            
+            return gcd(n, m % n);
+        }
+        function nbrOfLaps(x, y) {
+            var n = gcd(x, y);
+            return [y / n, x / n];
         }
     </script>
     <script type="text/javascript">
         module('Two Joggers');
-        test('reverse values',function(){
-            deepEqual(nbrOfLaps(5,3),[3,5]);
+        test('reverse values', function () {
+            deepEqual(nbrOfLaps(5, 3), [3, 5]);
+        });
+        test('mod', function () {
+            deepEqual(nbrOfLaps(4, 6), [3, 2]);
+            deepEqual(nbrOfLaps(5, 5), [1, 1]);
+
         });
     </script>
 </head>
