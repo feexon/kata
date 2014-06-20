@@ -8,23 +8,20 @@
     <script type="text/javascript" src="../libs/qunit.js"></script>
     <script type="text/javascript" src="../libs/qunit-extras.js"></script>
     <script type="text/javascript">
-        /**
-         *
-         */
-        var groups = [
-            ['a', 'i', 'y', 'e', 'o' , 'u'],
-            ['b', 'k', 'x' , 'z' , 'n', 'h', 'd', 'c', 'w', 'g' , 'p', 'v', 'j', 'q', 't', 's', 'r' , 'l' , 'm' , 'f']
-        ];
+
         function compile(groups) {
             return groups.reduce(function (table, group) {
-                return group.reduce(function (table, code,pos) {
+                return group.reduce(function (table, code, pos) {
                     table[code] = group[(pos + group.length / 2) % group.length];
                     table[code.toUpperCase()] = table[code].toUpperCase();
                     return table;
                 }, table);
             }, {});
         }
-        var table = compile(groups);
+        var table = compile([
+            ['a', 'i', 'y', 'e', 'o' , 'u'],
+            ['b', 'k', 'x' , 'z' , 'n', 'h', 'd', 'c', 'w', 'g' , 'p', 'v', 'j', 'q', 't', 's', 'r' , 'l' , 'm' , 'f']
+        ]);
         function tongues(code) {
             return code.replace(/[a-z]/ig, function (letter) {
                 return table[letter];
@@ -34,14 +31,12 @@
     <script type="text/javascript">
         module('Tongues');
 
-        test('compile', function () {
-            var table = compile(groups);
+        test('compiled table', function () {
             equal(table['a'], 'e');
             equal(table['e'], 'a');
             equal(table['t'], 'n');
             equal(table['n'], 't');
             equal(table['A'], 'E');
-
         });
         test('vowels', function () {
             equal(tongues('a'), 'e');
