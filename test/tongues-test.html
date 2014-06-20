@@ -16,16 +16,13 @@
             ['b', 'k', 'x' , 'z' , 'n', 'h', 'd', 'c', 'w', 'g' , 'p', 'v', 'j', 'q', 't', 's', 'r' , 'l' , 'm' , 'f']
         ];
         function compile(groups) {
-            var table = {};
-            for (var i = 0; i < groups.length; i++) {
-                var group = groups[i];
-                for (var j = 0; j < group.length; j++) {
-                    var code = group[j];
-                    table[code] = group[(j + group.length / 2) % group.length];
+            return groups.reduce(function (table, group) {
+                return group.reduce(function (table, code,pos) {
+                    table[code] = group[(pos + group.length / 2) % group.length];
                     table[code.toUpperCase()] = table[code].toUpperCase();
-                }
-            }
-            return table;
+                    return table;
+                }, table);
+            }, {});
         }
         var table = compile(groups);
         function tongues(code) {
