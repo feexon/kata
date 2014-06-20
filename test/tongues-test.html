@@ -12,8 +12,11 @@
          *
          */
         function tongues(code) {
-            var vowels=['a', 'i', 'y', 'e', 'o' , 'u'];
-            return vowels[(vowels.indexOf(code)+3)%vowels.length];
+            var vowels = ['a', 'i', 'y', 'e', 'o' , 'u'];
+            var consonants = ['b', 'k', 'x' , 'z' , 'n', 'h', 'd', 'c', 'w', 'g' , 'p', 'v', 'j', 'q', 't', 's', 'r' , 'l' , 'm' , 'f'];
+            return vowels.indexOf(code) != -1 ?
+                    vowels[(vowels.indexOf(code) + 3) % vowels.length] :
+                    consonants[(consonants.indexOf(code) + 10) % consonants.length];
         }
     </script>
     <script type="text/javascript">
@@ -22,6 +25,10 @@
             equal(tongues('a'), 'e');
             equal(tongues('i'), 'o');
             equal(tongues('e'), 'a');
+        });
+        test('consonants', function () {
+            equal(tongues('n'), 't');
+            equal(tongues('t'), 'n');
         });
 
     </script>
