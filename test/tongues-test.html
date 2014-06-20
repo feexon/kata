@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+
+        function compile(groups) {
+            return groups.reduce(function (table, group) {
+                return group.reduce(function (table, code, pos) {
+                    table[code] = group[(pos + group.length / 2) % group.length];
+                    table[code.toUpperCase()] = table[code].toUpperCase();
+                    return table;
+                }, table);
+            }, {});
+        }
+        var table = compile([
+            ['a', 'i', 'y', 'e', 'o' , 'u'],
+            ['b', 'k', 'x' , 'z' , 'n', 'h', 'd', 'c', 'w', 'g' , 'p', 'v', 'j', 'q', 't', 's', 'r' , 'l' , 'm' , 'f']
+        ]);
+        function tongues(code) {
+            return code.replace(/[a-z]/ig, function (letter) {
+                return table[letter];
+            });
+        }
+    </script>
+    <script type="text/javascript">
+        module('Tongues');
+
+        test('compiled table', function () {
+            equal(table['a'], 'e');
+            equal(table['e'], 'a');
+            equal(table['t'], 'n');
+            equal(table['n'], 't');
+            equal(table['A'], 'E');
+        });
+        test('vowels', function () {
+            equal(tongues('a'), 'e');
+            equal(tongues('i'), 'o');
+            equal(tongues('e'), 'a');
+        });
+        test('consonants', function () {
+            equal(tongues('n'), 't');
+            equal(tongues('t'), 'n');
+        });
+        test('others', function () {
+            equal(tongues(' '), ' ');
+            equal(tongues('.'), '.');
+        });
+        test('upper case', function () {
+            equal(tongues('A'), 'E');
+            equal(tongues('I'), 'O');
+        });
+        test('mixed', function () {
+            equal(tongues('Ai'), 'Eo');
+            equal(tongues('Ai '), 'Eo ');
+        });
+
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
