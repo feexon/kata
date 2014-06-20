@@ -11,9 +11,15 @@
         /**
          *
          */
+        function nbrOfLaps(x,y){
+            return [y,x];
+        }
     </script>
     <script type="text/javascript">
-
+        module('Two Joggers');
+        test('reverse values',function(){
+            deepEqual(nbrOfLaps(5,3),[3,5]);
+        });
     </script>
 </head>
 <body>
