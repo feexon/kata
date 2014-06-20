@@ -12,14 +12,16 @@
          *
          */
         function tongues(code) {
-            if(!/[a-z]/.test(code)){
+            if (!/[a-z]/i.test(code)) {
                 return code;
             }
             var vowels = ['a', 'i', 'y', 'e', 'o' , 'u'];
             var consonants = ['b', 'k', 'x' , 'z' , 'n', 'h', 'd', 'c', 'w', 'g' , 'p', 'v', 'j', 'q', 't', 's', 'r' , 'l' , 'm' , 'f'];
-            return vowels.indexOf(code) != -1 ?
-                    vowels[(vowels.indexOf(code) + 3) % vowels.length] :
-                    consonants[(consonants.indexOf(code) + 10) % consonants.length];
+            var downcase = code.toLowerCase();
+            var result = (vowels.indexOf(downcase) != -1 ?
+                    vowels[(vowels.indexOf(downcase) + 3) % vowels.length] :
+                    consonants[(consonants.indexOf(downcase) + 10) % consonants.length]);
+            return downcase == code ? result : result.toUpperCase();
         }
     </script>
     <script type="text/javascript">
@@ -36,6 +38,10 @@
         test('others', function () {
             equal(tongues(' '), ' ');
             equal(tongues('.'), '.');
+        });
+        test('upper case', function () {
+            equal(tongues('A'), 'E');
+            equal(tongues('I'), 'O');
         });
 
     </script>
