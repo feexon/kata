@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function gcd(m, n) {
+            if (n == 0) {
+                return m;
+            }
+            
+            return gcd(n, m % n);
+        }
+        function nbrOfLaps(x, y) {
+            var n = gcd(x, y);
+            return [y / n, x / n];
+        }
+    </script>
+    <script type="text/javascript">
+        module('Two Joggers');
+        test('reverse values', function () {
+            deepEqual(nbrOfLaps(5, 3), [3, 5]);
+        });
+        test('mod', function () {
+            deepEqual(nbrOfLaps(4, 6), [3, 2]);
+            deepEqual(nbrOfLaps(5, 5), [1, 1]);
+
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
