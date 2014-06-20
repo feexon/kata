@@ -11,8 +11,18 @@
         /**
          *
          */
+        function tongues(code) {
+            var vowels=['a', 'i', 'y', 'e', 'o' , 'u'];
+            return vowels[(vowels.indexOf(code)+3)%vowels.length];
+        }
     </script>
     <script type="text/javascript">
+        module('Tongues');
+        test('vowels', function () {
+            equal(tongues('a'), 'e');
+            equal(tongues('i'), 'o');
+            equal(tongues('e'), 'a');
+        });
 
     </script>
 </head>
