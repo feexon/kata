@@ -11,9 +11,16 @@
         /**
          *
          */
+        function csvColumns(csv, indices) {
+            return '';
+        }
     </script>
     <script type="text/javascript">
-
+        module('Grab CSV Columns');
+        test('empty data', function () {
+            equal(csvColumns('', [0]), '');
+            equal(csvColumns('', [0, 1, 2, 3]), '');
+        });
     </script>
 </head>
 <body>
