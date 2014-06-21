@@ -12,19 +12,12 @@
          *
          */
         function csvColumns(csv, indices) {
-            var rows = csv.split('\n');
-            if (rows.length > 1) {
-                return rows.map(function (row) {
-                    var cells = row.split(',');
-                    return indices.map(function (index) {
-                        return cells[index];
-                    }).filter(Boolean).join(',');
-                }).filter(Boolean).join('\n');
-            }
-            var cells = rows[0].split(',');
-            return indices.map(function (index) {
-                return cells[index];
-            }).filter(Boolean).join(',');
+            return csv.split('\n').map(function (row) {
+                var cells = row.split(',');
+                return indices.map(function (index) {
+                    return cells[index];
+                }).filter(Boolean).join(',');
+            }).filter(Boolean).join('\n');
         }
     </script>
     <script type="text/javascript">
@@ -45,7 +38,7 @@
             equal(csvColumns('a,b\nc,d', [0]), 'a\nc');
         });
         test('drop empty rows', function () {
-            equal(csvColumns('a,b\nc,d', [3,4,5]), '');
+            equal(csvColumns('a,b\nc,d', [3, 4, 5]), '');
         });
     </script>
 </head>
