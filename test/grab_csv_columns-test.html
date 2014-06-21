@@ -12,7 +12,16 @@
          *
          */
         function csvColumns(csv, indices) {
-            var cells = csv.split(',');
+            var rows = csv.split('\n');
+            if (rows.length > 1) {
+                return rows.map(function (row) {
+                    var cells = row.split(',');
+                    return indices.map(function (index) {
+                        return cells[index];
+                    }).filter(Boolean).join(',');
+                }).join('\n');
+            }
+            var cells = rows[0].split(',');
             return indices.map(function (index) {
                 return cells[index];
             }).filter(Boolean).join(',');
@@ -31,6 +40,9 @@
         test('column out of bounds', function () {
             equal(csvColumns('a,b,c,d', [4, 5, 6]), '');
             equal(csvColumns('a,b,c,d', [1, 2, 4]), 'b,c');
+        });
+        test('multi rows', function () {
+            equal(csvColumns('a,b\nc,d', [0]), 'a\nc');
         });
     </script>
 </head>
