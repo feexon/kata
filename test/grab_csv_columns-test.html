@@ -12,13 +12,10 @@
          *
          */
         function csvColumns(csv, indices) {
-            if (csv) {
-                var cells = csv.split(',');
-                return indices.map(function (index) {
-                    return cells[index];
-                }).filter(Boolean).join(',');
-            }
-            return '';
+            var cells = csv.split(',');
+            return indices.map(function (index) {
+                return cells[index];
+            }).filter(Boolean).join(',');
         }
     </script>
     <script type="text/javascript">
