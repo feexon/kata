@@ -11,14 +11,25 @@
         /**
          *
          */
-        function score(dice){
+        function score(dice) {
+            if (dice.length) {
+                return dice[0] == 1 ? 100 : dice[0] == 5 ? 50 : 0;
+            }
             return 0;
         }
     </script>
     <script type="text/javascript">
         module('Greed is Good');
-        test('empty dice',function(){
-           equal(score([]),0);
+        test('empty dice', function () {
+            equal(score([]), 0);
+        });
+        test('one dice', function () {
+            equal(score([1]), 100);
+            equal(score([5]), 50);
+            equal(score([2]), 0);
+            equal(score([3]), 0);
+            equal(score([4]), 0);
+            equal(score([6]), 0);
         });
     </script>
 </head>
