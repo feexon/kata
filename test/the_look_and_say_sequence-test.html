@@ -20,6 +20,9 @@
             return '1';
         }
         function getLines(line) {
+            if(line<0){
+                return -1;
+            }
             var result = [];
             for (var i = 0; i < line; i++) {
                 result.push(lookAndSay(result[i - 1]));
@@ -52,6 +55,10 @@
             equal(getLines(2), '1,11');
             equal(getLines(3), '1,11,21');
             equal(getLines(5), '1,11,21,1211,111221');
+        });
+        test('negative number', function () {
+            equal(getLines(-1), -1);
+            equal(getLines(-2), -1);
         });
 
     </script>
