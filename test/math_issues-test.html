@@ -11,9 +11,16 @@
         /**
          *
          */
+        Math.floor = function (number) {
+            return parseInt(number);
+        }
     </script>
     <script type="text/javascript">
-
+        module('Math Issues');
+        test('floor', function () {
+            equal(Math.floor(1.2), 1);
+            equal(Math.floor(1.7), 1);
+        });
     </script>
 </head>
 <body>
