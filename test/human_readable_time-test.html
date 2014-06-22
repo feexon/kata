@@ -11,19 +11,19 @@
         /**
          *
          */
-        function pad(number){
-            return number<10?'0'+number:''+number;
+        function pad(number) {
+            return (number < 10 ? '0' : '') + number;
         }
     </script>
     <script type="text/javascript">
         module('Human Readable Time');
         test('pad one digit', function () {
-            equal(pad(0),"00");
-            equal(pad(1),"01");
+            equal(pad(0), "00");
+            equal(pad(1), "01");
         });
         test('pad digits', function () {
-            strictEqual(pad(10),"10");
-            strictEqual(pad(11),"11");
+            strictEqual(pad(10), "10");
+            strictEqual(pad(11), "11");
         });
     </script>
 </head>
