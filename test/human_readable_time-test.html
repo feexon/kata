@@ -11,9 +11,16 @@
         /**
          *
          */
+        function pad(number){
+            return '0'+number;
+        }
     </script>
     <script type="text/javascript">
-
+        module('Human Readable Time');
+        test('pad one digit', function () {
+            equal(pad(0),"00");
+            equal(pad(1),"01");
+        });
     </script>
 </head>
 <body>
