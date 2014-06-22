@@ -28,7 +28,13 @@
                 return string.replace(/./g,function(letter){
                   return table[letter];
                 });
-            }
+            };
+            this.decode=function(string){
+                var table = this.compile('ABCDEFGHIJKLMNOPQRSTUVWXYZ', -5);
+                return string.replace(/./g,function(letter){
+                  return table[letter];
+                });
+            };
         }
     </script>
     <script type="text/javascript">
@@ -51,6 +57,11 @@
             deepEqual(cipher.encode('C'), 'H');
             deepEqual(cipher.encode('Z'), 'E');
             deepEqual(cipher.encode('CZ'), 'HE');
+        });
+        test('decode', function () {
+            deepEqual(cipher.decode('H'), 'C');
+            deepEqual(cipher.decode('E'), 'Z');
+            deepEqual(cipher.decode('HE'), 'CZ');
         });
 
     </script>
