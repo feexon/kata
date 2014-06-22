@@ -48,6 +48,14 @@
             equal(score([4]), 0);
             equal(score([6]), 0);
         });
+        test('two dice', function () {
+            equal(score([1, 1]), 200);
+            equal(score([5, 5]), 100);
+            equal(score([2, 2]), 0);
+            equal(score([3, 3]), 0);
+            equal(score([4, 4]), 0);
+            equal(score([6, 6]), 0);
+        });
         test('dice are different', function () {
             equal(score([1, 5]), 150);
             equal(score([1, 5, 1, 3, 4]), 250);
