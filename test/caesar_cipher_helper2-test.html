@@ -30,25 +30,22 @@
     </script>
     <script type="text/javascript">
         module('Caesar Cipher Helper');
+        var cipher = new CaesarCipher(5);
         test('encode', function () {
-            var cipher = new CaesarCipher(5);
             equal(cipher.encode('C'), 'H');
             equal(cipher.encode('D'), 'I');
             equal(cipher.encode('CD'), 'HI');
         });
         test('encode in cycle', function () {
-            var cipher = new CaesarCipher(5);
             equal(cipher.encode('Z'), 'E');
         });
 
         test('decode', function () {
-            var cipher = new CaesarCipher(5);
             equal(cipher.decode('H'), 'C');
             equal(cipher.decode('I'), 'D');
             equal(cipher.decode('HI'), 'CD');
         });
         test('encode in cycle', function () {
-            var cipher = new CaesarCipher(5);
             equal(cipher.decode('E'), 'Z');
         });
     </script>
