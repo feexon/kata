@@ -17,7 +17,7 @@
 
             function translate(offset) {
                 return function (string) {
-                    return string.toUpperCase().replace(/./g, function (letter) {
+                    return string.toUpperCase().replace(/[A-Z]/g, function (letter) {
                         return String.fromCharCode(first + (count + letter.charCodeAt(0) - first + offset) % count);
                     })
                 };
@@ -52,6 +52,10 @@
         test('translate lowercase into uppercase', function () {
             equal(cipher.decode('e'), 'Z');
             equal(cipher.encode('z'), 'E');
+        });
+        test('output others', function () {
+            equal(cipher.decode('1~_@'), '1~_@');
+            equal(cipher.encode('1~_@'), '1~_@');
         });
     </script>
 </head>
