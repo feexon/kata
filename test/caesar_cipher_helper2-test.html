@@ -18,6 +18,12 @@
                         var first = 'A'.charCodeAt(0);
                         return String.fromCharCode(first + (letter.charCodeAt(0) - first + shift) % 26);
                     });
+                },
+                decode: function (string) {
+                    return string.replace(/./g, function (letter) {
+                        var first = 'A'.charCodeAt(0);
+                        return String.fromCharCode(first + (letter.charCodeAt(0) - first - shift) % 26);
+                    });
                 }
             };
         }
@@ -34,6 +40,14 @@
             var cipher = new CaesarCipher(5);
             equal(cipher.encode('Z'), 'E');
         });
+
+        test('decode', function () {
+            var cipher = new CaesarCipher(5);
+            equal(cipher.decode('H'), 'C');
+            equal(cipher.decode('I'), 'D');
+            equal(cipher.decode('HI'), 'CD');
+        });
+
     </script>
 </head>
 <body>
