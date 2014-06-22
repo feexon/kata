@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function CaesarCipher(shift) {
+            this.shift = function (letters, shift) {
+                var offset = shift < 0 ? letters.length : 0;
+                return letters.substring(offset + shift) + letters.substring(0, offset + shift);
+            };
+            this.compile = function (letters, shift) {
+                var result = this.shift(letters, shift);
+                return letters.split('').reduce(function (table, letter, pos) {
+                    table[letter] = result[pos];
+                    return table;
+                }, {});
+            };
+            function translate(shift) {
+                var table = this.compile('ABCDEFGHIJKLMNOPQRSTUVWXYZ', shift);
+                return function (string) {
+                    return string.toUpperCase().replace(/[A-Z]/g, function (letter) {
+                        return table[letter];
+                    });
+                }
+            }
+
+            this.encode = translate.call(this, shift);
+            this.decode = translate.call(this, -shift);
+        }
+    </script>
+    <script type="text/javascript">
+        module('Caesar Cipher Helper');
+        var letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        var cipher = new CaesarCipher(5);
+        test('shift forward', function () {
+            deepEqual(cipher.shift(letters, 5), 'FGHIJKLMNOPQRSTUVWXYZABCDE');
+            deepEqual(cipher.shift(letters, 2), 'CDEFGHIJKLMNOPQRSTUVWXYZAB');
+        });
+        test('shift backward', function () {
+            deepEqual(cipher.shift('FGHIJKLMNOPQRSTUVWXYZABCDE', -5), letters);
+            deepEqual(cipher.shift('CDEFGHIJKLMNOPQRSTUVWXYZAB', -2), letters);
+        });
+        test('compile', function () {
+            deepEqual(cipher.compile('FGHIJKLMNOPQRSTUVWXYZABCDE', 5)['C'], 'H');
+            deepEqual(cipher.compile('FGHIJKLMNOPQRSTUVWXYZABCDE', 2)['C'], 'E');
+        });
+        test('encode', function () {
+            deepEqual(cipher.encode('C'), 'H');
+            deepEqual(cipher.encode('Z'), 'E');
+            deepEqual(cipher.encode('CZ'), 'HE');
+        });
+        test('decode', function () {
+            deepEqual(cipher.decode('H'), 'C');
+            deepEqual(cipher.decode('E'), 'Z');
+            deepEqual(cipher.decode('HE'), 'CZ');
+        });
+        test('translate lowercase to uppercase', function () {
+            deepEqual(cipher.decode('h'), 'C');
+            deepEqual(cipher.encode('z'), 'E');
+
+        });
+        test('output others', function () {
+            deepEqual(cipher.decode('!~@'), '!~@');
+            deepEqual(cipher.encode('!~@'), '!~@');
+        });
+        test('shift', function () {
+            equal(new CaesarCipher(2).encode('A'),'C');
+        });
+
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
