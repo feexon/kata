@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function capacity(address) {
+            var parts = address.split('.');
+            return parts.reduce(function (total, part) {
+                return +part + total * 256;
+            }, 0);
+        }
+        function ipsBetween(start, end) {
+            return capacity(end)-capacity(start);
+        }
+    </script>
+    <script type="text/javascript">
+        module('Count IP Addresses');
+        test('capacity', function () {
+            equal(capacity('0.0.0.1'), 1);
+            equal(capacity('0.0.1.0'), 256);
+            equal(capacity('0.10.0.0'), 10 * 256 * 256);
+            equal(capacity('1.2.3.4'), 1 * 256 * 256 * 256 + 2 * 256 * 256 + 3 * 256 + 4);
+        });
+        test('low part', function () {
+            equal(ipsBetween("10.0.0.0", "10.0.0.50"), 50);
+            equal(ipsBetween("10.0.0.1", "10.0.0.22"), 21);
+        });
+        test('high part', function () {
+            equal(ipsBetween("10.0.0.0", "10.0.1.0"), 256);
+            equal(ipsBetween("10.0.0.0", "10.1.0.0"), 256 * 256);
+        });
+        test('start equal end', function () {
+            equal(ipsBetween("10.0.0.0", "10.0.0.0"), 0);
+        });
+        test('mixed', function () {
+            equal(ipsBetween("10.0.0.0", "10.0.1.50"), 306);
+        });
+        test('end part low than from part', function () {
+            equal(ipsBetween("20.0.0.10", "20.0.1.0"), 246);
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
