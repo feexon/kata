@@ -14,9 +14,16 @@
         function pad(number) {
             return (number < 10 ? '0' : '') + number;
         }
+        function humanReadable(seconds) {
+            return '00:00:' + pad(seconds % 60);
+        }
     </script>
     <script type="text/javascript">
         module('Human Readable Time');
+        function match(string, regex) {
+            regex = typeof regex == 'string' ? new RegExp(regex) : regex;
+            ok(regex.test(string), "'" + string + "' not matching " + regex);
+        }
         test('pad one digit', function () {
             equal(pad(0), "00");
             equal(pad(1), "01");
@@ -24,6 +31,11 @@
         test('pad digits', function () {
             strictEqual(pad(10), "10");
             strictEqual(pad(11), "11");
+        });
+        test('seconds', function () {
+            match(humanReadable(0), '00:00:00');
+            match(humanReadable(59), '00:00:59');
+            match(humanReadable(60), /:00$/);
         });
     </script>
 </head>
