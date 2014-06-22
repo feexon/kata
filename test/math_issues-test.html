@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        Math.floor = function (number) {
+            return parseInt(number);
+        };
+        Math.round = function (number) {
+            return Math.floor(number + 0.55555555555555);
+        };
+        Math.ceil = function (number) {
+            return Math.floor(number + 0.99999999999999);
+        };
+    </script>
+    <script type="text/javascript">
+        module('Math Issues');
+        test('floor', function () {
+            equal(Math.floor(1.2), 1);
+            equal(Math.floor(1.7), 1);
+        });
+        test('round', function () {
+            equal(Math.round(1.2), 1);
+            equal(Math.round(1.7), 2);
+        });
+        test('ceil', function () {
+            equal(Math.ceil(1.2), 2);
+            equal(Math.ceil(1.7), 2);
+        });
+        test('precisions', function () {
+            equal(Math.round(31.44444444444444), 31);
+            equal(Math.round(31.44444444444445), 32);
+            equal(Math.ceil(31.000000001), 32);
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
