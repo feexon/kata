@@ -23,18 +23,16 @@
                     return table;
                 }, {});
             };
-            this.encode=function(string){
-                var table = this.compile('ABCDEFGHIJKLMNOPQRSTUVWXYZ', 5);
-                return string.replace(/./g,function(letter){
-                  return table[letter];
-                });
-            };
-            this.decode=function(string){
-                var table = this.compile('ABCDEFGHIJKLMNOPQRSTUVWXYZ', -5);
-                return string.replace(/./g,function(letter){
-                  return table[letter];
-                });
-            };
+            function translate(shift) {
+                var table = this.compile('ABCDEFGHIJKLMNOPQRSTUVWXYZ', shift);
+                return function (string) {
+                    return string.replace(/./g, function (letter) {
+                        return table[letter];
+                    });
+                }
+            }
+            this.encode = translate.call(this, shift);
+            this.decode = translate.call(this, -shift);
         }
     </script>
     <script type="text/javascript">
