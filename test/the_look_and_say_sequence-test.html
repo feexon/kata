@@ -20,7 +20,7 @@
             return '1';
         }
         function getLines(line) {
-            if(line<=0){
+            if(line<=0||isNaN(line)){
                 return -1;
             }
             var result = [];
@@ -62,6 +62,9 @@
         });
         test('zero', function () {
             equal(getLines(0), -1);
+        });
+        test('NaN', function () {
+            equal(getLines(NaN), -1);
         });
 
     </script>
