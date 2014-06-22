@@ -13,8 +13,8 @@
          */
         function lookAndSay(number) {
             if (number) {
-                return number.replace(/./g, function (digit) {
-                    return '1' + digit;
+                return number.replace(/(.)\1*/g, function (sequence,digit) {
+                    return sequence.length + digit;
                 });
             }
             return '1';
@@ -29,6 +29,10 @@
         test('lookAndSay once', function () {
             equal(lookAndSay('1'), '11');
             equal(lookAndSay('2'), '12');
+        });
+        test('lookAndSay multi times', function () {
+            equal(lookAndSay('11'), '21');
+            equal(lookAndSay('222'), '32');
         });
         test('simple', function () {
             equal(lookAndSay('12'), '1112');
