@@ -16,12 +16,21 @@
                 return sum + number;
             }, 0) / numbers.length;
         }
+        function variance(numbers) {
+            return numbers.reduce(function (sum, number) {
+                return sum + Math.pow(number - mean(numbers), 2);
+            }, 0) / numbers.length;
+        }
     </script>
     <script type="text/javascript">
         module('Calculate Variance');
         test('mean', function () {
             equal(mean([5]), 5);
             equal(mean([1, 2, 2, 3]), 2);
+        });
+        test('variance', function () {
+            equal(variance([5]), 0);
+            equal(variance([1, 2, 2, 3]), 0.5);
         });
     </script>
 </head>
