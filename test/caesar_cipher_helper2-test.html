@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function CaesarCipher(shift) {
+            var first = 'A'.charCodeAt();
+            var count = 'Z'.charCodeAt() - first + 1;
+
+            function translate(offset) {
+                return function (string) {
+                    return string.toUpperCase().replace(/[A-Z]/g, function (letter) {
+                        return String.fromCharCode(first + (count + letter.charCodeAt() - first + offset) % count);
+                    })
+                };
+            }
+
+            return {
+                encode: translate(shift),
+                decode: translate(-shift)
+            };
+        }
+    </script>
+    <script type="text/javascript">
+        module('Caesar Cipher Helper');
+        var cipher = new CaesarCipher(5);
+        test('encode', function () {
+            equal(cipher.encode('C'), 'H');
+            equal(cipher.encode('D'), 'I');
+            equal(cipher.encode('CD'), 'HI');
+        });
+        test('encode in cycle', function () {
+            equal(cipher.encode('Z'), 'E');
+        });
+
+        test('decode', function () {
+            equal(cipher.decode('H'), 'C');
+            equal(cipher.decode('I'), 'D');
+            equal(cipher.decode('HI'), 'CD');
+        });
+        test('encode in cycle', function () {
+            equal(cipher.decode('E'), 'Z');
+        });
+        test('translate lowercase into uppercase', function () {
+            equal(cipher.decode('e'), 'Z');
+            equal(cipher.encode('z'), 'E');
+        });
+        test('output others', function () {
+            equal(cipher.decode('1~_@'), '1~_@');
+            equal(cipher.encode('1~_@'), '1~_@');
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
