@@ -13,10 +13,13 @@
          */
         Math.floor = function (number) {
             return parseInt(number);
-        }
+        };
         Math.round = function (number) {
             return Math.floor(number + 0.5);
-        }
+        };
+        Math.ceil = function (number) {
+            return Math.floor(number + 0.9);
+        };
     </script>
     <script type="text/javascript">
         module('Math Issues');
@@ -27,6 +30,10 @@
         test('round', function () {
             equal(Math.round(1.2), 1);
             equal(Math.round(1.7), 2);
+        });
+        test('ceil', function () {
+            equal(Math.ceil(1.2), 2);
+            equal(Math.ceil(1.7), 2);
         });
     </script>
 </head>
