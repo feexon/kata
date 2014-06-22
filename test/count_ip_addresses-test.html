@@ -12,8 +12,7 @@
          *
          */
         function capacity(address) {
-            var parts = address.split('.');
-            return parts.reduce(function (total, part) {
+            return address.split('.').reduce(function (total, part) {
                 return +part + total * 256;
             }, 0);
         }
