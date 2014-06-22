@@ -12,19 +12,20 @@
          *
          */
         function CaesarCipher(shift) {
+            var first = 'A'.charCodeAt(0);
+            var count = 26;
+
+            function translate(offset) {
+                return function (string) {
+                    return string.replace(/./g, function (letter) {
+                        return String.fromCharCode(first + (count + letter.charCodeAt(0) - first + offset) % count);
+                    })
+                };
+            }
+
             return {
-                encode: function (string) {
-                    return string.replace(/./g, function (letter) {
-                        var first = 'A'.charCodeAt(0);
-                        return String.fromCharCode(first + (letter.charCodeAt(0) - first + shift) % 26);
-                    });
-                },
-                decode: function (string) {
-                    return string.replace(/./g, function (letter) {
-                        var first = 'A'.charCodeAt(0);
-                        return String.fromCharCode(first + (26 + letter.charCodeAt(0) - first - shift) % 26);
-                    });
-                }
+                encode: translate(shift),
+                decode: translate(-shift)
             };
         }
     </script>
