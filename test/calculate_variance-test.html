@@ -12,20 +12,20 @@
         /**
          *
          */
-        function sum(total, number) {
-            return total + number;
-        }
+
         function avg(numbers, sumer) {
             return numbers.reduce(sumer, 0) / numbers.length;
         }
         function mean(numbers) {
-            return avg(numbers, sum);
+            return avg(numbers, function (total, number) {
+                return total + number;
+            });
         }
         function variance(numbers) {
             var m = mean(numbers);
-            return avg(numbers.map(function (number) {
+            return mean(numbers.map(function (number) {
                 return Math.pow(number - m, 2);
-            }), sum);
+            }));
         }
     </script>
     <script type="text/javascript">
