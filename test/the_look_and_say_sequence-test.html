@@ -19,8 +19,12 @@
             }
             return '1';
         }
-        function getLines(line){
-            return lookAndSay(undefined);
+        function getLines(line) {
+            var result = [];
+            for (var i = 0; i < line; i++) {
+                result.push(lookAndSay(result[i - 1]));
+            }
+            return result.join(',');
         }
     </script>
     <script type="text/javascript">
@@ -42,7 +46,12 @@
             equal(lookAndSay('112'), '2112');
         });
         test('get first line', function () {
-            equal(getLines(1),'1');
+            equal(getLines(1), '1');
+        });
+        test('get lines', function () {
+            equal(getLines(2), '1,11');
+            equal(getLines(3), '1,11,21');
+            equal(getLines(5), '1,11,21,1211,111221');
         });
 
     </script>
