@@ -13,7 +13,7 @@
          */
         function lookAndSay(number) {
             if (number) {
-                return number.replace(/(.)\1*/g, function (sequence,digit) {
+                return number.replace(/(.)\1*/g, function (sequence, digit) {
                     return sequence.length + digit;
                 });
             }
@@ -34,9 +34,12 @@
             equal(lookAndSay('11'), '21');
             equal(lookAndSay('222'), '32');
         });
-        test('simple', function () {
+        test('lookAndSay', function () {
             equal(lookAndSay('12'), '1112');
+            equal(lookAndSay('112'), '2112');
         });
+
+
     </script>
 </head>
 <body>
