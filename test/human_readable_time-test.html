@@ -15,7 +15,7 @@
             return (number < 10 ? '0' : '') + number;
         }
         function humanReadable(seconds) {
-            return '00:00:' + pad(seconds % 60);
+            return '00:' + pad(Math.floor(seconds / 60) % 60) + ':' + pad(seconds % 60);
         }
     </script>
     <script type="text/javascript">
@@ -36,6 +36,11 @@
             match(humanReadable(0), '00:00:00');
             match(humanReadable(59), '00:00:59');
             match(humanReadable(60), /:00$/);
+        });
+        test('minutes', function () {
+            match(humanReadable(0 * 60), '00:00:00');
+            match(humanReadable(59 * 60), '00:59:00');
+            match(humanReadable(60 * 60), /:00:00$/);
         });
     </script>
 </head>
