@@ -12,7 +12,7 @@
          *
          */
         function pad(number){
-            return '0'+number;
+            return number<10?'0'+number:''+number;
         }
     </script>
     <script type="text/javascript">
@@ -20,6 +20,10 @@
         test('pad one digit', function () {
             equal(pad(0),"00");
             equal(pad(1),"01");
+        });
+        test('pad digits', function () {
+            strictEqual(pad(10),"10");
+            strictEqual(pad(11),"11");
         });
     </script>
 </head>
