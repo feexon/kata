@@ -26,11 +26,12 @@
             function translate(shift) {
                 var table = this.compile('ABCDEFGHIJKLMNOPQRSTUVWXYZ', shift);
                 return function (string) {
-                    return string.toUpperCase().replace(/./g, function (letter) {
+                    return string.toUpperCase().replace(/[A-Z]/g, function (letter) {
                         return table[letter];
                     });
                 }
             }
+
             this.encode = translate.call(this, shift);
             this.decode = translate.call(this, -shift);
         }
@@ -65,6 +66,10 @@
             deepEqual(cipher.decode('h'), 'C');
             deepEqual(cipher.encode('z'), 'E');
 
+        });
+        test('output others', function () {
+            deepEqual(cipher.decode('!~@'), '!~@');
+            deepEqual(cipher.encode('!~@'), '!~@');
         });
 
     </script>
