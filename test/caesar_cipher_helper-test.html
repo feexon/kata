@@ -71,6 +71,9 @@
             deepEqual(cipher.decode('!~@'), '!~@');
             deepEqual(cipher.encode('!~@'), '!~@');
         });
+        test('shift', function () {
+            equal(new CaesarCipher(2).encode('A'),'C');
+        });
 
     </script>
 </head>
