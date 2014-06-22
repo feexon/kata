@@ -11,6 +11,12 @@
         /**
          *
          */
+        function capacity(address) {
+            var parts = address.split('.');
+            return parts.reduce(function (total, part) {
+                return +part + total * 256;
+            }, 0);
+        }
         function ipsBetween(start, end) {
             var from = start.split('.');
             var result = end.split('.').map(function (end, i) {
@@ -24,6 +30,12 @@
     </script>
     <script type="text/javascript">
         module('Count IP Addresses');
+        test('capacity', function () {
+            equal(capacity('0.0.0.1'), 1);
+            equal(capacity('0.0.1.0'), 256);
+            equal(capacity('0.10.0.0'), 10 * 256 * 256);
+            equal(capacity('1.2.3.4'), 1 * 256 * 256 * 256 + 2 * 256 * 256 + 3 * 256 + 4);
+        });
         test('low part', function () {
             equal(ipsBetween("10.0.0.0", "10.0.0.50"), 50);
             equal(ipsBetween("10.0.0.1", "10.0.0.22"), 21);
