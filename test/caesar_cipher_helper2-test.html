@@ -15,7 +15,8 @@
             return {
                 encode: function (string) {
                     return string.replace(/./g, function (letter) {
-                        return String.fromCharCode(letter.charCodeAt(0) + shift);
+                        var first = 'A'.charCodeAt(0);
+                        return String.fromCharCode(first + (letter.charCodeAt(0) - first + shift) % 26);
                     });
                 }
             };
@@ -28,6 +29,10 @@
             equal(cipher.encode('C'), 'H');
             equal(cipher.encode('D'), 'I');
             equal(cipher.encode('CD'), 'HI');
+        });
+        test('encode in cycle', function () {
+            var cipher = new CaesarCipher(5);
+            equal(cipher.encode('Z'), 'E');
         });
     </script>
 </head>
