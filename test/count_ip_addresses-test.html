@@ -14,12 +14,13 @@
         function ipsBetween(start, end) {
             var to = end.split('.');
             var from = start.split('.');
-            for (var i = 0; i<to.length; i++) {
-                if (from[i] != to[i]) {
-                    return (to[i] - from[i]) * Math.pow(256, 3 - i);
-                }
+            var result=[];
+            for (var i = 0; i < to.length; i++) {
+                result.push((to[i] - from[i]) * Math.pow(256, 3 - i));
             }
-            return 0;
+            return result.reduce(function(total,value){
+                return total+value;
+            },0);
         }
     </script>
     <script type="text/javascript">
@@ -34,6 +35,9 @@
         });
         test('start equal end', function () {
             equal(ipsBetween("10.0.0.0", "10.0.0.0"), 0);
+        });
+        test('mixed', function () {
+            equal(ipsBetween("10.0.0.0", "10.0.1.50"), 306);
         });
     </script>
 </head>
