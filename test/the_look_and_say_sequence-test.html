@@ -13,7 +13,9 @@
          */
         function lookAndSay(number) {
             if (number) {
-                return '1'+number;
+                return number.replace(/./g, function (digit) {
+                    return '1' + digit;
+                });
             }
             return '1';
         }
@@ -22,11 +24,14 @@
         module('The Look and Say sequence');
 
         test('lookAndSay(undefined)', function () {
-            equal(lookAndSay(undefined), '1')
+            equal(lookAndSay(undefined), '1');
         });
         test('lookAndSay once', function () {
-            equal(lookAndSay('1'), '11')
-            equal(lookAndSay('2'), '12')
+            equal(lookAndSay('1'), '11');
+            equal(lookAndSay('2'), '12');
+        });
+        test('simple', function () {
+            equal(lookAndSay('12'), '1112');
         });
     </script>
 </head>
