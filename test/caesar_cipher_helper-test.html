@@ -11,9 +11,10 @@
         /**
          *
          */
-        function CaesarCipher(shift){
-            this.shift=function(letters,shift){
-                return letters.substring(shift)+letters.substring(0,shift);
+        function CaesarCipher(shift) {
+            this.shift = function (letters, shift) {
+                var offset = shift < 0 ? letters.length : 0;
+                return letters.substring(offset + shift) + letters.substring(0, offset + shift);
             }
         }
     </script>
@@ -21,8 +22,13 @@
         module('Caesar Cipher Helper');
         test('shift forward', function () {
             var cipher = new CaesarCipher(5);
-            deepEqual(cipher.shift('ABCDEFGHIJKLMNOPQRSTUVWXYZ',5),'FGHIJKLMNOPQRSTUVWXYZABCDE');
-            deepEqual(cipher.shift('ABCDEFGHIJKLMNOPQRSTUVWXYZ',2),'CDEFGHIJKLMNOPQRSTUVWXYZAB');
+            deepEqual(cipher.shift('ABCDEFGHIJKLMNOPQRSTUVWXYZ', 5), 'FGHIJKLMNOPQRSTUVWXYZABCDE');
+            deepEqual(cipher.shift('ABCDEFGHIJKLMNOPQRSTUVWXYZ', 2), 'CDEFGHIJKLMNOPQRSTUVWXYZAB');
+        });
+        test('shift backward', function () {
+            var cipher = new CaesarCipher(5);
+            deepEqual(cipher.shift('FGHIJKLMNOPQRSTUVWXYZABCDE', -5), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ');
+            deepEqual(cipher.shift('CDEFGHIJKLMNOPQRSTUVWXYZAB', -2), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ');
         });
     </script>
 </head>
