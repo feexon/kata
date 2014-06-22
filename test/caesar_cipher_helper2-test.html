@@ -17,7 +17,7 @@
 
             function translate(offset) {
                 return function (string) {
-                    return string.replace(/./g, function (letter) {
+                    return string.toUpperCase().replace(/./g, function (letter) {
                         return String.fromCharCode(first + (count + letter.charCodeAt(0) - first + offset) % count);
                     })
                 };
@@ -48,6 +48,10 @@
         });
         test('encode in cycle', function () {
             equal(cipher.decode('E'), 'Z');
+        });
+        test('translate lowercase into uppercase', function () {
+            equal(cipher.decode('e'), 'Z');
+            equal(cipher.encode('z'), 'E');
         });
     </script>
 </head>
