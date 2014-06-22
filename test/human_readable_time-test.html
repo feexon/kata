@@ -15,7 +15,7 @@
             return (number < 10 ? '0' : '') + number;
         }
         function humanReadable(seconds) {
-            return [100, 60, 60].map(function (bounds, i) {
+            return [Number.MAX_VALUE, 60, 60].map(function (bounds, i) {
                 return pad(Math.floor(seconds / Math.pow(60, 3 - i - 1)) % bounds);
             }).join(':');
         }
@@ -48,6 +48,9 @@
             match(humanReadable(0 * 60 * 60), '00:00:00');
             match(humanReadable(59 * 60 * 60), '59:00:00');
             match(humanReadable(99 * 60 * 60), '99:00:00');
+        });
+        test('hours unlimited', function () {
+            match(humanReadable(9999 * 60 * 60), '9999:00:00');
         });
     </script>
 </head>
