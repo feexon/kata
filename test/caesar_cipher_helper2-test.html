@@ -12,13 +12,13 @@
          *
          */
         function CaesarCipher(shift) {
-            var first = 'A'.charCodeAt(0);
-            var count = 26;
+            var first = 'A'.charCodeAt();
+            var count = 'Z'.charCodeAt() - first + 1;
 
             function translate(offset) {
                 return function (string) {
                     return string.toUpperCase().replace(/[A-Z]/g, function (letter) {
-                        return String.fromCharCode(first + (count + letter.charCodeAt(0) - first + offset) % count);
+                        return String.fromCharCode(first + (count + letter.charCodeAt() - first + offset) % count);
                     })
                 };
             }
