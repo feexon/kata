@@ -12,12 +12,15 @@
          *
          */
         function csvColumns(csv, indices) {
-            return csv.split('\n').map(function (row) {
-                var cells = row.split(',');
-                return indices.map(function (index) {
-                    return cells[index];
-                }).filter(Boolean).join(',');
-            }).filter(Boolean).join('\n');
+            function grab(string, separator, handler) {
+                return string.split(separator).map(handler).filter(Boolean).join(separator);
+            }
+
+            return grab(csv, '\n', function (row) {
+                return grab(row, ',', function (cell, index) {
+                    return indices.indexOf(index) == -1 ? undefined : cell;
+                });
+            });
         }
     </script>
     <script type="text/javascript">
