@@ -15,10 +15,10 @@
             return parseInt(number);
         };
         Math.round = function (number) {
-            return Math.floor(number + 0.5);
+            return Math.floor(number + 0.55555555555555);
         };
         Math.ceil = function (number) {
-            return Math.floor(number + 0.9);
+            return Math.floor(number + 0.99999999999999);
         };
     </script>
     <script type="text/javascript">
@@ -34,6 +34,11 @@
         test('ceil', function () {
             equal(Math.ceil(1.2), 2);
             equal(Math.ceil(1.7), 2);
+        });
+        test('precisions', function () {
+            equal(Math.round(31.44444444444444), 31);
+            equal(Math.round(31.44444444444445), 32);
+            equal(Math.ceil(31.000000001), 32);
         });
     </script>
 </head>
