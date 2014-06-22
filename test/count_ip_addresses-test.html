@@ -12,9 +12,8 @@
          *
          */
         function ipsBetween(start, end) {
-            var to = end.split('.');
             var from = start.split('.');
-            var result=to.map(function(end,i){
+            var result=end.split('.').map(function(end,i){
                 return (end - from[i]) * Math.pow(256, 3 - i);
             });
 
