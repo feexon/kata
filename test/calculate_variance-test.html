@@ -9,17 +9,10 @@
     <script type="text/javascript" src="../libs/qunit-extras.js"></script>
     <script type="text/javascript">
 
-        /**
-         *
-         */
-
-        function avg(numbers, sumer) {
-            return numbers.reduce(sumer, 0) / numbers.length;
-        }
         function mean(numbers) {
-            return avg(numbers, function (total, number) {
+            return numbers.reduce(function (total, number) {
                 return total + number;
-            });
+            }, 0) / numbers.length;
         }
         function variance(numbers) {
             var m = mean(numbers);
