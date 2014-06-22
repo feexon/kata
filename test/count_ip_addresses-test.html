@@ -11,9 +11,16 @@
         /**
          *
          */
+        function ipsBetween(start,end){
+            return end.split('.')[3]-start.split('.')[3];
+        }
     </script>
     <script type="text/javascript">
-
+        module('Count IP Addresses');
+        test('low part',function(){
+           equal(ipsBetween("10.0.0.0", "10.0.0.50"),50);
+           equal(ipsBetween("10.0.0.1", "10.0.0.22"),21);
+        });
     </script>
 </head>
 <body>
