@@ -12,19 +12,20 @@
          *
          */
         function CaesarCipher(shift) {
-            this.shift = function (letters, shift) {
+            var letters='ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            this.shift = function (shift) {
                 var offset = shift < 0 ? letters.length : 0;
                 return letters.substring(offset + shift) + letters.substring(0, offset + shift);
             };
-            this.compile = function (letters, shift) {
-                var result = this.shift(letters, shift);
+            this.compile = function (shift) {
+                var result = this.shift(shift);
                 return letters.split('').reduce(function (table, letter, pos) {
                     table[letter] = result[pos];
                     return table;
                 }, {});
             };
             function translate(shift) {
-                var table = this.compile('ABCDEFGHIJKLMNOPQRSTUVWXYZ', shift);
+                var table = this.compile(shift);
                 return function (string) {
                     return string.toUpperCase().replace(/[A-Z]/g, function (letter) {
                         return table[letter];
@@ -38,19 +39,18 @@
     </script>
     <script type="text/javascript">
         module('Caesar Cipher Helper');
-        var letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         var cipher = new CaesarCipher(5);
         test('shift forward', function () {
-            deepEqual(cipher.shift(letters, 5), 'FGHIJKLMNOPQRSTUVWXYZABCDE');
-            deepEqual(cipher.shift(letters, 2), 'CDEFGHIJKLMNOPQRSTUVWXYZAB');
+            deepEqual(cipher.shift(5), 'FGHIJKLMNOPQRSTUVWXYZABCDE');
+            deepEqual(cipher.shift(2), 'CDEFGHIJKLMNOPQRSTUVWXYZAB');
         });
         test('shift backward', function () {
-            deepEqual(cipher.shift('FGHIJKLMNOPQRSTUVWXYZABCDE', -5), letters);
-            deepEqual(cipher.shift('CDEFGHIJKLMNOPQRSTUVWXYZAB', -2), letters);
+            deepEqual(cipher.shift(-5), 'VWXYZABCDEFGHIJKLMNOPQRSTU');
+            deepEqual(cipher.shift(-2), 'YZABCDEFGHIJKLMNOPQRSTUVWX');
         });
         test('compile', function () {
-            deepEqual(cipher.compile('FGHIJKLMNOPQRSTUVWXYZABCDE', 5)['C'], 'H');
-            deepEqual(cipher.compile('FGHIJKLMNOPQRSTUVWXYZABCDE', 2)['C'], 'E');
+            deepEqual(cipher.compile(5)['C'], 'H');
+            deepEqual(cipher.compile(2)['C'], 'E');
         });
         test('encode', function () {
             deepEqual(cipher.encode('C'), 'H');
