@@ -8,18 +8,23 @@
     <script type="text/javascript" src="../libs/qunit.js"></script>
     <script type="text/javascript" src="../libs/qunit-extras.js"></script>
     <script type="text/javascript">
+
         /**
          *
          */
+        function avg(numbers, sum) {
+            return numbers.reduce(sum, 0) / numbers.length;
+        }
         function mean(numbers) {
-            return numbers.reduce(function (sum, number) {
+            return avg(numbers, function (sum, number) {
                 return sum + number;
-            }, 0) / numbers.length;
+            });
         }
         function variance(numbers) {
-            return numbers.reduce(function (sum, number) {
-                return sum + Math.pow(number - mean(numbers), 2);
-            }, 0) / numbers.length;
+            var m = mean(numbers);
+            return avg(numbers, function (sum, number) {
+                return sum + Math.pow(number - m, 2);
+            });
         }
     </script>
     <script type="text/javascript">
