@@ -14,12 +14,12 @@
         function ipsBetween(start, end) {
             var to = end.split('.');
             var from = start.split('.');
-            var result=[];
-            for (var i = 0; i < to.length; i++) {
-                result.push((to[i] - from[i]) * Math.pow(256, 3 - i));
-            }
-            return result.reduce(function(total,value){
-                return total+value;
+            var result=to.map(function(end,i){
+                return (end - from[i]) * Math.pow(256, 3 - i);
+            });
+
+            return result.reduce(function(total,part){
+                return total+part;
             },0);
         }
     </script>
