@@ -11,15 +11,25 @@
         /**
          *
          */
-        function ipsBetween(start,end){
-            return end.split('.')[3]-start.split('.')[3];
+        function ipsBetween(start, end) {
+            var to = end.split('.');
+            var from = start.split('.');
+            for (var i = 0; to.length; i++) {
+                if (from[i] != to[i]) {
+                    return (to[i] - from[i]) * Math.pow(256, 3 - i);
+                }
+            }
         }
     </script>
     <script type="text/javascript">
         module('Count IP Addresses');
-        test('low part',function(){
-           equal(ipsBetween("10.0.0.0", "10.0.0.50"),50);
-           equal(ipsBetween("10.0.0.1", "10.0.0.22"),21);
+        test('low part', function () {
+            equal(ipsBetween("10.0.0.0", "10.0.0.50"), 50);
+            equal(ipsBetween("10.0.0.1", "10.0.0.22"), 21);
+        });
+        test('high part', function () {
+            equal(ipsBetween("10.0.0.0", "10.0.1.0"), 256);
+            equal(ipsBetween("10.0.0.0", "10.1.0.0"), 256 * 256);
         });
     </script>
 </head>
