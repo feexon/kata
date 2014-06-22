@@ -14,11 +14,12 @@
         function ipsBetween(start, end) {
             var to = end.split('.');
             var from = start.split('.');
-            for (var i = 0; to.length; i++) {
+            for (var i = 0; i<to.length; i++) {
                 if (from[i] != to[i]) {
                     return (to[i] - from[i]) * Math.pow(256, 3 - i);
                 }
             }
+            return 0;
         }
     </script>
     <script type="text/javascript">
@@ -30,6 +31,9 @@
         test('high part', function () {
             equal(ipsBetween("10.0.0.0", "10.0.1.0"), 256);
             equal(ipsBetween("10.0.0.0", "10.1.0.0"), 256 * 256);
+        });
+        test('start equal end', function () {
+            equal(ipsBetween("10.0.0.0", "10.0.0.0"), 0);
         });
     </script>
 </head>
