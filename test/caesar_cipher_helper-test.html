@@ -23,6 +23,12 @@
                     return table;
                 }, {});
             };
+            this.encode=function(string){
+                var table = this.compile('ABCDEFGHIJKLMNOPQRSTUVWXYZ', 5);
+                return string.replace(/./g,function(letter){
+                  return table[letter];
+                });
+            }
         }
     </script>
     <script type="text/javascript">
@@ -40,6 +46,11 @@
         test('compile', function () {
             deepEqual(cipher.compile('FGHIJKLMNOPQRSTUVWXYZABCDE', 5)['C'], 'H');
             deepEqual(cipher.compile('FGHIJKLMNOPQRSTUVWXYZABCDE', 2)['C'], 'E');
+        });
+        test('encode', function () {
+            deepEqual(cipher.encode('C'), 'H');
+            deepEqual(cipher.encode('Z'), 'E');
+            deepEqual(cipher.encode('CZ'), 'HE');
         });
 
     </script>
