@@ -52,6 +52,9 @@
         test('hours unlimited', function () {
             match(humanReadable(9999 * 60 * 60), '9999:00:00');
         });
+        test('mixed', function () {
+            match(humanReadable(99 * 60 * 60 + 59 * 60 + 59), '99:59:59');
+        });
     </script>
 </head>
 <body>
