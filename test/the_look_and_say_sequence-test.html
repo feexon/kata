@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function lookAndSay(number) {
+            if (number) {
+                return number.replace(/(.)\1*/g, function (sequence, digit) {
+                    return sequence.length + digit;
+                });
+            }
+            return '1';
+        }
+        function getLines(line) {
+            if(line<=0||isNaN(line)){
+                return -1;
+            }
+            var result = [];
+            for (var i = 0; i < line; i++) {
+                result.push(lookAndSay(result[i - 1]));
+            }
+            return result.join(',');
+        }
+    </script>
+    <script type="text/javascript">
+        module('The Look and Say sequence');
+
+        test('lookAndSay(undefined)', function () {
+            equal(lookAndSay(undefined), '1');
+        });
+        test('lookAndSay once', function () {
+            equal(lookAndSay('1'), '11');
+            equal(lookAndSay('2'), '12');
+        });
+        test('lookAndSay multi times', function () {
+            equal(lookAndSay('11'), '21');
+            equal(lookAndSay('222'), '32');
+        });
+        test('lookAndSay', function () {
+            equal(lookAndSay('12'), '1112');
+            equal(lookAndSay('112'), '2112');
+        });
+        test('get first line', function () {
+            equal(getLines(1), '1');
+        });
+        test('get lines', function () {
+            equal(getLines(2), '1,11');
+            equal(getLines(3), '1,11,21');
+            equal(getLines(5), '1,11,21,1211,111221');
+        });
+        test('negative number', function () {
+            equal(getLines(-1), -1);
+            equal(getLines(-2), -1);
+        });
+        test('zero', function () {
+            equal(getLines(0), -1);
+        });
+        test('NaN', function () {
+            equal(getLines(NaN), -1);
+        });
+
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
