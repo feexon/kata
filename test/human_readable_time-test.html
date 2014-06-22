@@ -15,14 +15,9 @@
             return (number < 10 ? '0' : '') + number;
         }
         function humanReadable(seconds) {
-            var second = 1;
-            var minute = 60*second;
-            var hour = minute * minute;
-            return [
-                pad(Math.floor(seconds / hour) % 100) ,
-                pad(Math.floor(seconds / minute) % minute) ,
-                pad(Math.floor(seconds / second) % minute)
-            ].join(':');
+            return [100, 60, 60].map(function (bounds, i) {
+                return pad(Math.floor(seconds / Math.pow(60, 3 - i - 1)) % bounds);
+            }).join(':');
         }
     </script>
     <script type="text/javascript">
