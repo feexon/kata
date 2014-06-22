@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+
+        function mean(numbers) {
+            return numbers.reduce(function (total, number) {
+                return total + number;
+            }, 0) / numbers.length;
+        }
+        function variance(numbers) {
+            var m = mean(numbers);
+            return mean(numbers.map(function (number) {
+                return Math.pow(number - m, 2);
+            }));
+        }
+    </script>
+    <script type="text/javascript">
+        module('Calculate Variance');
+        test('mean', function () {
+            equal(mean([5]), 5);
+            equal(mean([1, 2, 2, 3]), 2);
+        });
+        test('variance', function () {
+            equal(variance([5]), 0);
+            equal(variance([1, 2, 2, 3]), 0.5);
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
