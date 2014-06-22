@@ -11,9 +11,15 @@
         /**
          *
          */
+        function score(dice){
+            return 0;
+        }
     </script>
     <script type="text/javascript">
-
+        module('Greed is Good');
+        test('empty dice',function(){
+           equal(score([]),0);
+        });
     </script>
 </head>
 <body>
