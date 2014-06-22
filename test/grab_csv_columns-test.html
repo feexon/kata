@@ -16,9 +16,13 @@
                 return string.split(separator).map(handler).filter(Boolean).join(separator);
             }
 
+            var flags = indices.reduce(function (flags, column) {
+                flags[column] = 1;
+                return flags;
+            }, {});
             return grab(csv, '\n', function (row) {
-                return grab(row, ',', function (cell, index) {
-                    return indices.indexOf(index) == -1 ? undefined : cell;
+                return grab(row, ',', function (cell, column) {
+                    return flags[column] ? cell : null;
                 });
             });
         }
