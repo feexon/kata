@@ -21,11 +21,6 @@
     </script>
     <script type="text/javascript">
         module('Rational Arithmetic');
-        test('simple', function () {
-            var retional = new Retional(3, 5);
-            equal(retional.numerator, 3);
-            equal(retional.denominator, 5);
-        });
         test('equality', function () {
             ok(new Retional(3, 5).equals(new Retional(3, 5)));
             ok(!new Retional(1, 5).equals(new Retional(3, 5)));
