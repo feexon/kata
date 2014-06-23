@@ -117,6 +117,10 @@
             ok(retional(3, 5).sub(retional(2, 5)).equals(retional(1, 5)));
             ok(retional(2, 5).sub(retional(3, 5)).equals(retional(-1, 5)));
         });
+        test('reduce before sub', function () {
+            ok(retional(1, 2).sub(retional(1, 4)).equals(retional(1, 4)));
+            ok(retional(1, 4).sub(retional(1, 2)).equals(retional(-1, 4)));
+        });
 
     </script>
 </head>
