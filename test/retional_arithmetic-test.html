@@ -52,9 +52,8 @@
 
             function as(op) {
                 return function (other) {
-                    var left = this.reduce(other);
-                    var right = other.reduce(this);
-                    return eval('retional(left ' + op + ' right, lcm(this.denominator,other.denominator))');
+                    var numerator = spec(op).call(this, other);
+                    return eval('retional(numerator, lcm(this.denominator,other.denominator))');
                 };
             };
             this.add = as('+');
