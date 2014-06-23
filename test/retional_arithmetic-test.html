@@ -50,27 +50,17 @@
                 var m = other.denominator / gcd(this.denominator, other.denominator);
                 return retional(this.numerator * m, this.denominator * m, true);
             };
-
-            this.add = function (other) {
-                var left = this.reduce2(other);
-                var right = other.reduce2(this);
-                return retional(left.numerator + right.numerator, left.denominator);
+            function as(op) {
+                return function (other) {
+                    var left = this.reduce2(other);
+                    var right = other.reduce2(this);
+                    return eval('retional(left.numerator ' + op + ' right.numerator, left.denominator)');
+                };
             };
-            this.sub = function (other) {
-                var left = this.reduce2(other);
-                var right = other.reduce2(this);
-                return retional(left.numerator - right.numerator, left.denominator);
-            };
-            this.mul = function (other) {
-                var left = this.reduce2(other);
-                var right = other.reduce2(this);
-                return retional(left.numerator * right.numerator, left.denominator);
-            };
-            this.div = function (other) {
-                var left = this.reduce2(other);
-                var right = other.reduce2(this);
-                return retional(left.numerator / right.numerator, other.denominator);
-            };
+            this.add = as('+');
+            this.sub = as('-');
+            this.mul = as('*');
+            this.div = as('/');
             this.toString = function () {
                 return [this.numerator, this.denominator].join('/');
             };
