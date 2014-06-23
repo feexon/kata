@@ -33,23 +33,23 @@
                 return [this.numerator, this.denominator].join('/');
             };
 
-            function spec(comparator) {
+            this.reduce = function (other) {
+                return this.numerator * other.denominator / gcd(this.denominator, other.denominator);
+            };
+
+            function context(comparator) {
                 return function (other) {
                     return eval('this.reduce(other) ' + comparator + ' other.reduce(this)');
                 }
             }
+            this.equals = context('==');
+            this.lessThan = context('<');
+            this.lessThanOrEquals = context('<=');
+            this.greaterThanOrEquals = context('>=');
 
-            this.reduce = function (other) {
-                return this.numerator * other.denominator / gcd(this.denominator, other.denominator);
-            };
-            this.equals = spec('==');
-            this.lessThan = spec('<');
-            this.lessThanOrEquals = spec('<=');
-
-            this.greaterThanOrEquals = spec('>=');
             function as(op) {
                 return function (other) {
-                    var compute = spec(op).bind(this);
+                    var compute = context(op).bind(this);
                     return eval('retional(compute(other), lcm(this.denominator,other.denominator))');
                 };
             };
