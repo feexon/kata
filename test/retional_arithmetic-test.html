@@ -11,9 +11,19 @@
         /**
          *
          */
+        function Retional(numerator, denominator) {
+            this.numerator = numerator;
+            this.denominator = denominator;
+
+        }
     </script>
     <script type="text/javascript">
-
+        module('Rational Arithmetic');
+        test('simple', function () {
+            var retional = new Retional(3, 5);
+            equal(retional.numerator, 3);
+            equal(retional.denominator, 5);
+        });
     </script>
 </head>
 <body>
