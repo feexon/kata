@@ -29,22 +29,19 @@
                 this.numerator /= m;
                 this.denominator /= m;
             };
-            this.equals = function (other) {
-                return this.reduce(other) == other.reduce(this);
-            };
+            function spec(comparator) {
+                return function (other) {
+                    return eval('this.reduce(other) ' + comparator + ' other.reduce(this)');
+                }
+            }
+
             this.reduce = function (other) {
                 return this.numerator * other.denominator / gcd(this.denominator, other.denominator);
             };
-
-            this.lessThan = function (other) {
-                return this.reduce(other) < other.reduce(this);
-            };
-            this.lessThanOrEquals = function (other) {
-                return this.reduce(other) <= other.reduce(this);
-            };
-            this.greaterThanOrEquals = function (other) {
-                return this.reduce(other) >= other.reduce(this);
-            };
+            this.equals = spec('==');
+            this.lessThan = spec('<');
+            this.lessThanOrEquals = spec('<=');
+            this.greaterThanOrEquals = spec('>=');
             this.toString = function () {
                 return [this.numerator, this.denominator].join('/');
             };
