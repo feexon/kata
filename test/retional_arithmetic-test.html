@@ -35,10 +35,17 @@
             this.reduce = function (other) {
                 return this.numerator * other.denominator / gcd(this.denominator, other.denominator);
             };
-            this.equals = spec('==');
-            this.lessThan = spec('<');
-            this.lessThanOrEquals = spec('<=');
-            this.greaterThanOrEquals = spec('>=');
+            var operations = [
+                ['equals', '=='],
+                ['lessThan', '<'],
+                ['lessThanOrEquals', '<='],
+                ['greaterThanOrEquals', '>=']
+            ];
+            var self = this;
+
+            operations.forEach(function (operation, pos) {
+                self[operation[0]] = spec(operation[1]);
+            });
             this.toString = function () {
                 return [this.numerator, this.denominator].join('/');
             };
