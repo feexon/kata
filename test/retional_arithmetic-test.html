@@ -46,6 +46,9 @@
             operations.forEach(function (operation, pos) {
                 self[operation[0]] = spec(operation[1]);
             });
+            this.add = function (other) {
+                return retional(this.numerator + other.numerator, other.denominator);
+            };
             this.toString = function () {
                 return [this.numerator, this.denominator].join('/');
             };
@@ -96,6 +99,11 @@
             ok(!retional(1, 3).greaterThanOrEquals(retional(2, 3)));
             ok(retional(1, 3).greaterThanOrEquals(retional(1, 3)));
             ok(retional(3, 5).greaterThanOrEquals(retional(1, 5)));
+        });
+
+        test('add', function () {
+            ok(retional(1, 5).add(retional(2, 5)).equals(retional(3, 5)));
+            ok(retional(1, 5).add(retional(4, 5)).equals(retional(1, 1)));
         });
 
     </script>
