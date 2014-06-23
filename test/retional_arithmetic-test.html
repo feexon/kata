@@ -14,7 +14,9 @@
         function Retional(numerator, denominator) {
             this.numerator = numerator;
             this.denominator = denominator;
-
+            this.equals = function (other) {
+                return this.numerator==other.numerator&&this.denominator==other.denominator;
+            }
         }
     </script>
     <script type="text/javascript">
@@ -23,6 +25,11 @@
             var retional = new Retional(3, 5);
             equal(retional.numerator, 3);
             equal(retional.denominator, 5);
+        });
+        test('equality', function () {
+            ok(new Retional(3, 5).equals(new Retional(3, 5)));
+            ok(!new Retional(1, 5).equals(new Retional(3, 5)));
+            ok(!new Retional(3, 7).equals(new Retional(3, 5)));
         });
     </script>
 </head>
