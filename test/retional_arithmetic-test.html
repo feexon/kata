@@ -30,7 +30,7 @@
                 this.denominator /= m;
             };
             this.equals = function (other) {
-                return this.numerator == other.numerator && this.denominator == other.denominator;
+                return this.reduce(other) == other.reduce(this);
             };
             this.reduce = function (other) {
                 return this.numerator * other.denominator / gcd(this.denominator, other.denominator);
