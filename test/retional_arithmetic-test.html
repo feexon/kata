@@ -48,17 +48,17 @@
             this.lessThanOrEquals = context('<=');
             this.greaterThanOrEquals = context('>=');
 
-            function as(op) {
+            function calcAs(op) {
                 return function (other) {
                     var compute = context(op).bind(this);
                     return eval('new Retional(compute(other), lcm(this.denominator,other.denominator))');
                 };
             }
 
-            this.add = as('+');
-            this.sub = as('-');
-            this.mul = as('*');
-            this.div = as('/');
+            this.add = calcAs('+');
+            this.sub = calcAs('-');
+            this.mul = calcAs('*');
+            this.div = calcAs('/');
             this.simplify();
         }
 
@@ -94,6 +94,7 @@
         test('toString', function () {
             equal(retional(1, 3).toString(), '1/3');
             equal(retional(-2, 5).toString(), '-2/5');
+            equal(retional(0, 5).toString(), '0/1');
         });
         test('lessThan', function () {
             ok(retional(1, 3).lessThan(retional(2, 3)));
