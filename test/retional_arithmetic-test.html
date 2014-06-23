@@ -50,17 +50,22 @@
             this.lessThanOrEquals = as('<=');
             this.greaterThanOrEquals = as('>=');
 
-            function calcAs(op) {
+            function calcAs(op, times) {
                 return function (other) {
                     var compute = as(op).bind(this);
-                    return eval('new Rational(compute(other), lcm(this.denominator,other.denominator))');
+                    var denominator = lcm(this.denominator, other.denominator);
+                    return eval('new Rational(compute(other), Math.pow(denominator,times))');
                 };
             }
 
-            this.add = calcAs('+');
-            this.sub = calcAs('-');
-            this.mul = calcAs('*');
-            this.div = calcAs('/');
+            this.add = calcAs('+', 1);
+            this.sub = calcAs('-', 1);
+            this.mul = calcAs('*', 2);
+            this.div = function (other) {
+                var left = this.reduce(other);
+                var right = other.reduce(this);
+                return new Rational(left, right);
+            };
             this.simplify();
         }
 
@@ -143,12 +148,13 @@
         });
 
         test('mul', function () {
-            ok(rational(3, 10).mul(rational(2, 10)).equals(rational(3, 5)));
-            ok(rational(3, 10).mul(rational(-2, 10)).equals(rational(-3, 5)));
-            ok(rational(-3, 10).mul(rational(2, 10)).equals(rational(-3, 5)));
+            ok(rational(3, 10).mul(rational(2, 10)).equals(rational(3, 50)));
+            ok(rational(3, 10).mul(rational(-2, 10)).equals(rational(-3, 50)));
+            ok(rational(-3, 10).mul(rational(2, 10)).equals(rational(-3, 50)));
         });
         test('div', function () {
-            ok(rational(4, 10).div(rational(2, 10)).equals(rational(2, 5)), rational(4, 10).div(rational(2, 10)));
+            ok(rational(4, 10).div(rational(2, 10)).equals(rational(2, 1)));
+            equal(rational(1, 6).div(rational(3, 10)).toString(), '5/9');
         });
 
 
