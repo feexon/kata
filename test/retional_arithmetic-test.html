@@ -49,8 +49,8 @@
             this.greaterThanOrEquals = spec('>=');
             function as(op) {
                 return function (other) {
-                    var numerator = spec(op).call(this, other);
-                    return eval('retional(numerator, lcm(this.denominator,other.denominator))');
+                    var compute = spec(op).bind(this);
+                    return eval('retional(compute(other), lcm(this.denominator,other.denominator))');
                 };
             };
             this.add = as('+');
