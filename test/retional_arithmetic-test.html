@@ -42,6 +42,7 @@
                     return eval('this.reduce(other) ' + comparator + ' other.reduce(this)');
                 }
             }
+
             this.equals = context('==');
             this.lessThan = context('<');
             this.lessThanOrEquals = context('<=');
@@ -52,7 +53,7 @@
                     var compute = context(op).bind(this);
                     return eval('retional(compute(other), lcm(this.denominator,other.denominator))');
                 };
-            };
+            }
             this.add = as('+');
             this.sub = as('-');
             this.mul = as('*');
@@ -70,6 +71,10 @@
             equal(gcd(0, 5), 5);
             equal(gcd(1, 5), 1);
             equal(gcd(4, 6), 2);
+        });
+        test('lcm', function () {
+            equal(lcm(5, 2), 10);
+            equal(lcm(6, 4), 12);
         });
         test('equality', function () {
             ok(retional(3, 5).equals(retional(3, 5)));
