@@ -61,6 +61,16 @@
                 var right = other.reduce2(this);
                 return retional(left.numerator - right.numerator, left.denominator);
             };
+            this.mul = function (other) {
+                var left = this.reduce2(other);
+                var right = other.reduce2(this);
+                return retional(left.numerator * right.numerator, left.denominator);
+            };
+            this.div = function (other) {
+                var left = this.reduce2(other);
+                var right = other.reduce2(this);
+                return retional(left.numerator / right.numerator, other.denominator);
+            };
             this.toString = function () {
                 return [this.numerator, this.denominator].join('/');
             };
@@ -130,6 +140,16 @@
             ok(retional(1, 2).sub(retional(1, 4)).equals(retional(1, 4)));
             ok(retional(1, 4).sub(retional(1, 2)).equals(retional(-1, 4)));
         });
+
+        test('mul', function () {
+            ok(retional(3, 10).mul(retional(2, 10)).equals(retional(3, 5)));
+            ok(retional(3, 10).mul(retional(-2, 10)).equals(retional(-3, 5)));
+            ok(retional(-3, 10).mul(retional(2, 10)).equals(retional(-3, 5)));
+        });
+        test('div', function () {
+            ok(retional(4, 10).div(retional(2, 10)).equals(retional(2, 5)), retional(4, 10).div(retional(2, 10)));
+        });
+
 
     </script>
 </head>
