@@ -48,6 +48,10 @@
             ok(new Retional(1, 3).equals(new Retional(1, 3)));
             ok(new Retional(5, 10).equals(new Retional(1, 2)));
         });
+        test('negative', function () {
+            ok(new Retional(-1, 3).equals(new Retional(-1, 3)));
+            ok(new Retional(1, -3).equals(new Retional(-1, 3)));
+        });
     </script>
 </head>
 <body>
