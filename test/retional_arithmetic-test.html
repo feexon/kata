@@ -21,7 +21,7 @@
         function lcm(m, n) {
             return m * n / gcd(m, n);
         }
-        function Retional(numerator, denominator, keep) {
+        function Retional(numerator, denominator) {
             this.numerator = numerator;
             this.denominator = denominator;
             this.simplify = function () {
@@ -29,6 +29,10 @@
                 this.numerator /= m;
                 this.denominator /= m;
             };
+            this.toString = function () {
+                return [this.numerator, this.denominator].join('/');
+            };
+
             function spec(comparator) {
                 return function (other) {
                     return eval('this.reduce(other) ' + comparator + ' other.reduce(this)');
@@ -38,18 +42,11 @@
             this.reduce = function (other) {
                 return this.numerator * other.denominator / gcd(this.denominator, other.denominator);
             };
-            var operations = [
-                ['equals', '=='],
-                ['lessThan', '<'],
-                ['lessThanOrEquals', '<='],
-                ['greaterThanOrEquals', '>=']
-            ];
-            var self = this;
+            this.equals = spec('==');
+            this.lessThan = spec('<');
+            this.lessThanOrEquals = spec('<=');
 
-            operations.forEach(function (operation, pos) {
-                self[operation[0]] = spec(operation[1]);
-            });
-
+            this.greaterThanOrEquals = spec('>=');
             function as(op) {
                 return function (other) {
                     var numerator = spec(op).call(this, other);
@@ -60,13 +57,10 @@
             this.sub = as('-');
             this.mul = as('*');
             this.div = as('/');
-            this.toString = function () {
-                return [this.numerator, this.denominator].join('/');
-            };
-            !keep && this.simplify();
+            this.simplify();
         }
-        function retional(numerator, denominator, keep) {
-            return new Retional(numerator, denominator, keep);
+        function retional(numerator, denominator) {
+            return new Retional(numerator, denominator);
         }
     </script>
     <script type="text/javascript">
