@@ -39,6 +39,9 @@
             this.lessThan = function (other) {
                 return this.reduce(other) < other.reduce(this);
             };
+            this.lessThanOrEquals = function (other) {
+                return this.reduce(other) <= other.reduce(this);
+            };
             this.toString = function () {
                 return [this.numerator, this.denominator].join('/');
             };
@@ -84,6 +87,12 @@
             ok(retional(3, 10).lessThan(retional(1, 2)));
             ok(!retional(1, 2).lessThan(retional(3, 10)));
         });
+        test('lessThanOrEquals', function () {
+            ok(retional(1, 3).lessThanOrEquals(retional(2, 3)));
+            ok(retional(1, 3).lessThanOrEquals(retional(1, 3)));
+            ok(!retional(3, 5).lessThanOrEquals(retional(1, 5)));
+        });
+
     </script>
 </head>
 <body>
