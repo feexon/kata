@@ -11,20 +11,42 @@
         /**
          *
          */
+        function gcd(m, n) {
+            if (n == 0) {
+                return m;
+            }
+            return gcd(n, m % n);
+        }
         function Retional(numerator, denominator) {
             this.numerator = numerator;
             this.denominator = denominator;
+            this.simplify = function () {
+                var m = gcd(this.numerator, this.denominator);
+                this.numerator /= m;
+                this.denominator /= m;
+            };
             this.equals = function (other) {
-                return this.numerator==other.numerator&&this.denominator==other.denominator;
-            }
+                return this.numerator == other.numerator && this.denominator == other.denominator;
+            };
+            this.simplify();
         }
     </script>
     <script type="text/javascript">
         module('Rational Arithmetic');
+        test('gcd', function () {
+            equal(gcd(5, 0), 5);
+            equal(gcd(0, 5), 5);
+            equal(gcd(1, 5), 1);
+            equal(gcd(4, 6), 2);
+        });
         test('equality', function () {
             ok(new Retional(3, 5).equals(new Retional(3, 5)));
             ok(!new Retional(1, 5).equals(new Retional(3, 5)));
             ok(!new Retional(3, 7).equals(new Retional(3, 5)));
+        });
+        test('simplify', function () {
+            ok(new Retional(1, 3).equals(new Retional(1, 3)));
+            ok(new Retional(5, 10).equals(new Retional(1, 2)));
         });
     </script>
 </head>
