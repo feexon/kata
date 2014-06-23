@@ -51,21 +51,23 @@
             function as(op) {
                 return function (other) {
                     var compute = context(op).bind(this);
-                    return eval('retional(compute(other), lcm(this.denominator,other.denominator))');
+                    return eval('new Retional(compute(other), lcm(this.denominator,other.denominator))');
                 };
             }
+
             this.add = as('+');
             this.sub = as('-');
             this.mul = as('*');
             this.div = as('/');
             this.simplify();
         }
-        function retional(numerator, denominator) {
-            return new Retional(numerator, denominator);
-        }
+
     </script>
     <script type="text/javascript">
         module('Rational Arithmetic');
+        function retional(numerator, denominator) {
+            return new Retional(numerator, denominator);
+        }
         test('gcd', function () {
             equal(gcd(5, 0), 5);
             equal(gcd(0, 5), 5);
