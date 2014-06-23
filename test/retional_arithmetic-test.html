@@ -18,7 +18,7 @@
             }
             return gcd(n, m % n);
         }
-        function Retional(numerator, denominator) {
+        function Retional(numerator, denominator, keep) {
             this.numerator = numerator;
             this.denominator = denominator;
             this.simplify = function () {
@@ -46,19 +46,28 @@
             operations.forEach(function (operation, pos) {
                 self[operation[0]] = spec(operation[1]);
             });
+            this.reduce2 = function (other) {
+                var m = other.denominator / gcd(this.denominator, other.denominator);
+                return retional(this.numerator * m, this.denominator * m, true);
+            };
+
             this.add = function (other) {
-                return retional(this.reduce(other) + other.reduce(this), this.denominator * this.reduce(other) / this.numerator);
+                var left = this.reduce2(other);
+                var right = other.reduce2(this);
+                return retional(left.numerator + right.numerator, left.denominator);
             };
             this.sub = function (other) {
-                return retional(this.reduce(other) - other.reduce(this), this.denominator * this.reduce(other) / this.numerator);
+                var left = this.reduce2(other);
+                var right = other.reduce2(this);
+                return retional(left.numerator - right.numerator, left.denominator);
             };
             this.toString = function () {
                 return [this.numerator, this.denominator].join('/');
             };
-            this.simplify();
+            !keep && this.simplify();
         }
-        function retional(numerator, denominator) {
-            return new Retional(numerator, denominator);
+        function retional(numerator, denominator, keep) {
+            return new Retional(numerator, denominator, keep);
         }
     </script>
     <script type="text/javascript">
