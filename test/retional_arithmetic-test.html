@@ -25,9 +25,10 @@
             this.numerator = numerator;
             this.denominator = denominator;
             this.simplify = function () {
-                var m = gcd(this.numerator, this.denominator);
-                this.numerator /= m;
-                this.denominator /= m;
+                var m = Math.abs(gcd(this.numerator, this.denominator));
+                var sign = this.denominator < 0 ? -1 : 1;
+                this.numerator /= m*sign;
+                this.denominator /= m*sign;
             };
             this.toString = function () {
                 return [this.numerator, this.denominator].join('/');
@@ -88,8 +89,9 @@
             ok(rational(5, 10).equals(rational(1, 2)));
         });
         test('negative', function () {
-            ok(rational(-1, 3).equals(rational(-1, 3)));
-            ok(rational(1, -3).equals(rational(-1, 3)));
+            equal(rational(-1, 3).toString(), '-1/3');
+            equal(rational(1, -3).toString(), '-1/3');
+
         });
         test('toString', function () {
             equal(rational(1, 3).toString(), '1/3');
