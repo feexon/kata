@@ -62,9 +62,7 @@
             this.sub = calcAs('-', 1);
             this.mul = calcAs('*', 2);
             this.div = function (other) {
-                var left = this.reduce(other);
-                var right = other.reduce(this);
-                return new Rational(left, right);
+                return new Rational(this.reduce(other), other.reduce(this));
             };
             this.simplify();
         }
