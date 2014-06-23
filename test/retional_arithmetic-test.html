@@ -32,10 +32,12 @@
             this.equals = function (other) {
                 return this.numerator == other.numerator && this.denominator == other.denominator;
             };
-            this.lessThan = function (other) {
+            this.reduce = function (other) {
+                return this.numerator * other.denominator / gcd(this.denominator, other.denominator);
+            };
 
-                return this.numerator * lcm(this.denominator, other.denominator) / this.denominator <
-                        other.numerator * lcm(this.denominator, other.denominator) / other.denominator;
+            this.lessThan = function (other) {
+                return this.reduce(other) < other.reduce(this);
             };
             this.toString = function () {
                 return [this.numerator, this.denominator].join('/');
