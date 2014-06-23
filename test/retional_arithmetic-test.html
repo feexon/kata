@@ -18,9 +18,6 @@
             }
             return gcd(n, m % n);
         }
-        function lcm(m, n) {
-            return m * n / gcd(m, n);
-        }
         function Retional(numerator, denominator) {
             this.numerator = numerator;
             this.denominator = denominator;
@@ -58,10 +55,6 @@
             equal(gcd(0, 5), 5);
             equal(gcd(1, 5), 1);
             equal(gcd(4, 6), 2);
-        });
-        test('lcm', function () {
-            equal(lcm(5, 2), 10);
-            equal(lcm(6, 4), 12);
         });
         test('equality', function () {
             ok(retional(3, 5).equals(retional(3, 5)));
