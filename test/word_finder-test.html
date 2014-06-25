@@ -14,7 +14,7 @@
         function Dictionary(words) {
             this.getMatchingWords = function (pattern) {
                 return words.filter(function (word) {
-                    return new RegExp(pattern.replace(/\?/g, '.')).test(word);
+                    return new RegExp("^" + pattern.replace(/\?/g, '.') + "$").test(word);
                 });
             }
         }
@@ -28,11 +28,15 @@
         });
         test('wildcard', function () {
             deepEqual(fruits.getMatchingWords('appl?'), ['apple']);
+            deepEqual(fruits.getMatchingWords('?a?a?a'), ['banana', 'papaya']);
         });
         test('more', function () {
             deepEqual(fruits.getMatchingWords('apple?'), []);
             deepEqual(fruits.getMatchingWords('appl??'), []);
         });
+        test('matching length', function () {
+            deepEqual(fruits.getMatchingWords('?????'), ['apple']);
+        })
 
     </script>
 </head>
