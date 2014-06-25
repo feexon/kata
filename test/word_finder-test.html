@@ -13,12 +13,9 @@
          */
         function Dictionary(words) {
             this.getMatchingWords = function (pattern) {
-                for(var i=0;i<words.length;i++){
-                    if(words[i]==pattern){
-                        return words.slice(i,i+1);
-                    }
-                }
-                return [];
+                return words.filter(function(word){
+                   return word==pattern;
+                });
             }
         }
     </script>
