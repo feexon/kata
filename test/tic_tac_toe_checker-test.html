@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function isSolved(board) {
+            var draw = true;
+            for (var i = 0; i < board.length; i++) {
+                for (var j = 0; j < board[i].length; j++) {
+                    var col = board[i][j];
+                    if (!col) {
+                        draw = false;
+                        continue;
+                    }
+                    if (col == board[i][j - 1] && col == board[i][j + 1]) {
+                        return col;
+                    }
+                    if (board[i - 1] && board[i + 1]) {
+                        if (col == board[i - 1][j] && col == board[i + 1][j]) {
+                            return col;
+                        }
+                        if (col == board[i - 1][j - 1] && col == board[i + 1][j + 1] || col == board[i + 1][j - 1] && col == board[i - 1][j + 1]) {
+                            return col;
+                        }
+                    }
+                }
+            }
+
+            return draw ? 0 : -1;
+        }
+    </script>
+    <script type="text/javascript">
+        module('Tic-Tac-Toe Checker');
+        test('blank', function () {
+            equal(isSolved([
+                [0, 0, 0],
+                [0, 0, 0],
+                [0, 0, 0]
+            ]), -1);
+        });
+        test('win horizontal row', function () {
+            equal(isSolved([
+                [1, 1, 1],
+                [0, 2, 2],
+                [0, 0, 0]
+            ]), 1);
+            equal(isSolved([
+                [0, 2, 2],
+                [1, 1, 1],
+                [0, 0, 0]
+            ]), 1);
+        });
+        test('win vertical row', function () {
+            equal(isSolved([
+                [1, 0, 0],
+                [1, 2, 2],
+                [1, 0, 0]
+            ]), 1);
+            equal(isSolved([
+                [0, 1, 2],
+                [0, 1, 2],
+                [0, 1, 0]
+            ]), 1);
+        });
+        test('win diagonal row', function () {
+            equal(isSolved([
+                [1, 0, 0],
+                [0, 1, 0],
+                [0, 0, 1]
+            ]), 1);
+            equal(isSolved([
+                [0, 0, 1],
+                [0, 1, 0],
+                [1, 0, 0]
+            ]), 1);
+        });
+        test('winner', function () {
+            equal(isSolved([
+                [1, 0, 0],
+                [0, 1, 0],
+                [0, 0, 1]
+            ]), 1);
+            equal(isSolved([
+                [0, 0, 2],
+                [0, 2, 0],
+                [2, 0, 0]
+            ]), 2);
+        });
+        test('draw', function () {
+            equal(isSolved([
+                [1, 1, 2],
+                [2, 1, 1],
+                [1, 2, 2]
+            ]), 0);
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
