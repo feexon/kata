@@ -12,6 +12,15 @@
          *
          */
         function isSolved(board) {
+            for (var i = 0; i < board.length; i++) {
+                var row = board[i];
+                var first = row[0];
+                if (first && row.slice(1).every(function (cell) {
+                    return cell == first;
+                })) {
+                    return 1;
+                }
+            }
             return -1;
         }
     </script>
@@ -23,6 +32,18 @@
                 [0, 0, 0],
                 [0, 0, 0]
             ]), -1);
+        });
+        test('win horizontal row', function () {
+            equal(isSolved([
+                [1, 1, 1],
+                [0, 2, 2],
+                [0, 0, 0]
+            ]), 1);
+            equal(isSolved([
+                [0, 2, 2],
+                [1, 1, 1],
+                [0, 0, 0]
+            ]), 1);
         });
     </script>
 </head>
