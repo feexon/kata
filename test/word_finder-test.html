@@ -13,8 +13,8 @@
          */
         function Dictionary(words) {
             this.getMatchingWords = function (pattern) {
-                return words.filter(function(word){
-                   return word==pattern;
+                return words.filter(function (word) {
+                    return new RegExp(pattern).test(word);
                 });
             }
         }
@@ -25,6 +25,10 @@
             var fruits = new Dictionary(['banana', 'apple', 'papaya', 'cherry']);
             deepEqual(fruits.getMatchingWords('apple'), ['apple']);
             deepEqual(fruits.getMatchingWords('orange'), []);
+        });
+        test('wildcard', function () {
+            var fruits = new Dictionary(['banana', 'apple', 'papaya', 'cherry']);
+            deepEqual(fruits.getMatchingWords('appl?'), ['apple']);
         });
     </script>
 </head>
