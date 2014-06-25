@@ -12,11 +12,12 @@
          *
          */
         function isSolved(board) {
-
+            var draw = true;
             for (var i = 0; i < board.length; i++) {
                 for (var j = 0; j < board[i].length; j++) {
                     var col = board[i][j];
                     if (!col) {
+                        draw = false;
                         continue;
                     }
                     if (col == board[i][j - 1] && col == board[i][j + 1]) {
@@ -35,7 +36,7 @@
                 }
             }
 
-            return -1;
+            return draw ? 0 : -1;
         }
     </script>
     <script type="text/javascript">
@@ -94,6 +95,13 @@
                 [0, 2, 0],
                 [2, 0, 0]
             ]), 2);
+        });
+        test('draw', function () {
+            equal(isSolved([
+                [1, 1, 2],
+                [2, 1, 1],
+                [1, 2, 2]
+            ]), 0);
         });
     </script>
 </head>
