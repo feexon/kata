@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function Dictionary(words) {
+            this.getMatchingWords = function (pattern) {
+                for(var i=0;i<words.length;i++){
+                    if(words[i]==pattern){
+                        return words.slice(i,i+1);
+                    }
+                }
+                return [];
+            }
+        }
+    </script>
+    <script type="text/javascript">
+        module('Word Finder');
+        test('full matching', function () {
+            var fruits = new Dictionary(['banana', 'apple', 'papaya', 'cherry']);
+            deepEqual(fruits.getMatchingWords('apple'), ['apple']);
+            deepEqual(fruits.getMatchingWords('orange'), []);
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
