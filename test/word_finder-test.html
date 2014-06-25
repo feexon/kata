@@ -14,7 +14,7 @@
         function Dictionary(words) {
             this.getMatchingWords = function (pattern) {
                 return words.filter(function (word) {
-                    return new RegExp(pattern).test(word);
+                    return new RegExp(pattern.replace(/\?/g, '.')).test(word);
                 });
             }
         }
@@ -29,6 +29,11 @@
         test('wildcard', function () {
             deepEqual(fruits.getMatchingWords('appl?'), ['apple']);
         });
+        test('more', function () {
+            deepEqual(fruits.getMatchingWords('apple?'), []);
+            deepEqual(fruits.getMatchingWords('appl??'), []);
+        });
+
     </script>
 </head>
 <body>
