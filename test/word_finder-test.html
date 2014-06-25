@@ -38,6 +38,9 @@
         test('fully word matching', function () {
             deepEqual(fruits.getMatchingWords('apple'), ['apple']);
         });
+        test('matching length', function () {
+            deepEqual(fruits.getMatchingWords('?????'), ['apple','melon','lemon']);
+        });
     </script>
 </head>
 <body>
