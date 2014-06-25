@@ -13,8 +13,8 @@
          */
         function Dictionary(words) {
             this.getMatchingWords = function (pattern) {
-                var regex=new RegExp(pattern.replace(/\?/g,'.'));
-                return words.filter(function(word){
+                var regex = new RegExp("^" + pattern.replace(/\?/g, '.'));
+                return words.filter(function (word) {
                     return regex.test(word);
                 });
             }
@@ -30,6 +30,9 @@
             deepEqual(fruits.getMatchingWords('?herry'), ['cherry']);
             deepEqual(fruits.getMatchingWords('?banana'), []);
             deepEqual(fruits.getMatchingWords('?????berry'), ['strawberry', 'blackberry']);
+        });
+        test('heading', function () {
+            deepEqual(fruits.getMatchingWords('?pple'), ['apple']);
         });
     </script>
 </head>
