@@ -21,6 +21,14 @@
                     return 1;
                 }
             }
+            for (var i = 0; i < 1; i++) {
+                for (var j = 0; j < 3; j++) {
+                    var col = board[i][j];
+                    if (col && col == board[i + 1][j] && col == board[i + 2][j]) {
+                        return 1;
+                    }
+                }
+            }
             return -1;
         }
     </script>
@@ -43,6 +51,18 @@
                 [0, 2, 2],
                 [1, 1, 1],
                 [0, 0, 0]
+            ]), 1);
+        });
+        test('win vertical row', function () {
+            equal(isSolved([
+                [1, 0, 0],
+                [1, 2, 2],
+                [1, 0, 0]
+            ]), 1);
+            equal(isSolved([
+                [0, 1, 2],
+                [0, 1, 2],
+                [0, 1, 0]
             ]), 1);
         });
     </script>
