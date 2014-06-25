@@ -14,9 +14,7 @@
         function Dictionary(words) {
             this.getMatchingWords = function (pattern) {
                 var regex = new RegExp("^" + pattern.replace(/\?/g, '.') + "$");
-                return words.filter(function (word) {
-                    return regex.test(word);
-                });
+                return words.filter(regex.test.bind(regex));
             }
         }
     </script>
