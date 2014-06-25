@@ -37,6 +37,9 @@
         test('tailing', function () {
             deepEqual(fruits.getMatchingWords('p?????'), ['papaya']);
         });
+        test('fully word matching', function () {
+            deepEqual(fruits.getMatchingWords('apple'), ['apple']);
+        });
     </script>
 </head>
 <body>
