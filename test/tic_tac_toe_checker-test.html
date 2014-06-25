@@ -11,9 +11,19 @@
         /**
          *
          */
+        function isSolved(board) {
+            return -1;
+        }
     </script>
     <script type="text/javascript">
-
+        module('Tic-Tac-Toe Checker');
+        test('blank', function () {
+            equal(isSolved([
+                [0, 0, 0],
+                [0, 0, 0],
+                [0, 0, 0]
+            ]), -1);
+        });
     </script>
 </head>
 <body>
