@@ -11,27 +11,21 @@
         /**
          *
          */
-        function rotate(array, direction) {
-            var rotations = {
-                'clockwise': function (row, j, n, matrix) {
-                    Array.prototype.push.apply(row, matrix[j]);
-                    return j;
-                },
-                'counter-clockwise': function (row, j, n, matrix) {
-                    var pos = n - j - 1;
-                    Array.prototype.unshift.apply(row, matrix[pos]);
-                    return pos;
-                }
-            };
-
-            var matrix = [ [] ];
-            for (var i = 0; i < array.length; i++) {
-                for (var j = 0; j < array[i].length; j++) {
-                    var row = [array[i][j]];
-                    matrix[rotations[direction].call(null, row, j, array[i].length, matrix)] = row;
-                }
+        function rotate(matrix, direction) {
+            if(!matrix[0].length){
+                return [[]];
             }
-            return matrix;
+            var transposed = matrix[0].map(function(col, i) {
+                return matrix.map(function(row) {
+                    return row[i];
+                })
+            });
+            if (direction === 'counter-clockwise') {
+                return transposed.reverse();
+            }
+            return transposed.map(function(row) {
+                return row.reverse();
+            });
         }
     </script>
     <script type="text/javascript">
