@@ -12,7 +12,16 @@
          *
          */
         function rotate(array,direction){
-            return array;
+            if(!array.length||!array[0].length){
+                return [[]];
+            }
+            var result=[];
+            for(var i=0;i<array.length;i++){
+                for(var j=0;j<array[i].length;j++){
+                    result.push([array[i][j]]);
+                }
+            }
+            return result;
         }
     </script>
     <script type="text/javascript">
@@ -20,6 +29,10 @@
         test('rotate simple array', function () {
             deepEqual(rotate([[]],'clockwise'),[[]]);
             deepEqual(rotate([[1]],'clockwise'),[[1]]);
+        });
+        test('1 row', function () {
+            deepEqual(rotate([[1,2]],'clockwise'),[[1],[2]]);
+            deepEqual(rotate([[1,2,3]],'clockwise'),[[1],[2],[3]]);
         });
 
     </script>
