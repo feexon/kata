@@ -11,8 +11,16 @@
         /**
          *
          */
+        function rotate(array,direction){
+            return array;
+        }
     </script>
     <script type="text/javascript">
+        module('rotate an array matrix');
+        test('rotate simple array', function () {
+            deepEqual(rotate([[]],'clockwise'),[[]]);
+            deepEqual(rotate([[1]],'clockwise'),[[1]]);
+        });
 
     </script>
 </head>
