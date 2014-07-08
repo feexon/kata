@@ -12,28 +12,26 @@
          *
          */
         function rotate(array, direction) {
-            if(direction=='counter-clockwise'){
-                var result = [[]];
-                for (var i = 0; i < array.length; i++) {
-                    for (var j = 0; j < array[i].length; j++) {
-                        var index = array[i].length - j - 1;
-                        var current = [array[i][j]];
-                        Array.prototype.unshift.apply(current,result[index]||[]);
-                        result[index] = current;
-                    }
+            var rotations = {
+                'clockwise': function (row, j, n, matrix) {
+                    Array.prototype.push.apply(row, matrix[j]);
+                    return j;
+                },
+                'counter-clockwise': function (row, j, n, matrix) {
+                    var pos = n - j - 1;
+                    Array.prototype.unshift.apply(row, matrix[pos]);
+                    return pos;
                 }
-                return result;
-            }
-            var result = [[]];
+            };
+
+            var matrix = [ [] ];
             for (var i = 0; i < array.length; i++) {
                 for (var j = 0; j < array[i].length; j++) {
-                    index=j;
-                    var current = [array[i][j]];
-                    Array.prototype.push.apply(current,result[index]||[]);
-                    result[index] = current;
+                    var row = [array[i][j]];
+                    matrix[rotations[direction].call(null, row, j, array[i].length, matrix)] = row;
                 }
             }
-            return result;
+            return matrix;
         }
     </script>
     <script type="text/javascript">
