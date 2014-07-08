@@ -11,14 +11,11 @@
         /**
          *
          */
-        function rotate(array,direction){
-            if(!array.length||!array[0].length){
-                return [[]];
-            }
-            var result=[];
-            for(var i=0;i<array.length;i++){
-                for(var j=0;j<array[i].length;j++){
-                    result.push([array[i][j]]);
+        function rotate(array, direction) {
+            var result = [[]];
+            for (var i = 0; i < array.length; i++) {
+                for (var j = 0; j < array[i].length; j++) {
+                    result[j] = [array[i][j]].concat(result[j]||[]);
                 }
             }
             return result;
@@ -33,6 +30,10 @@
         test('1 row', function () {
             deepEqual(rotate([[1,2]],'clockwise'),[[1],[2]]);
             deepEqual(rotate([[1,2,3]],'clockwise'),[[1],[2],[3]]);
+        });
+        test('1 col', function () {
+            deepEqual(rotate([[1],[2]],'clockwise'),[[2,1]]);
+            deepEqual(rotate([[1],[2],[3]],'clockwise'),[[3,2,1]]);
         });
 
     </script>
