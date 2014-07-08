@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function rotate(matrix, direction) {
+            if(!matrix[0].length){
+                return [[]];
+            }
+            var transposed = matrix[0].map(function(col, i) {
+                return matrix.map(function(row) {
+                    return row[i];
+                })
+            });
+            if (direction === 'counter-clockwise') {
+                return transposed.reverse();
+            }
+            return transposed.map(function(row) {
+                return row.reverse();
+            });
+        }
+    </script>
+    <script type="text/javascript">
+        module('simple');
+        test('rotate simple array', function () {
+            deepEqual(rotate([[]],'clockwise'),[[]]);
+            deepEqual(rotate([[1]],'clockwise'),[[1]]);
+        });
+
+        module('clockwise');
+        test('1 row', function () {
+            deepEqual(rotate([[1,2]],'clockwise'),[[1],[2]]);
+            deepEqual(rotate([[1,2,3]],'clockwise'),[[1],[2],[3]]);
+        });
+        test('1 col', function () {
+            deepEqual(rotate([[1],[2]],'clockwise'),[[2,1]]);
+            deepEqual(rotate([[1],[2],[3]],'clockwise'),[[3,2,1]]);
+        });
+        test('2 rows and 2 cols', function () {
+            deepEqual(rotate([[1,2],[3,4]],'clockwise'),[[3,1],[4,2]]);
+        });
+        test('complex', function () {
+            var matrix = [
+                [1, 2, 3],
+                [4, 5, 6],
+                [7, 8, 9]
+            ];
+            var expected = [
+                [7, 4, 1],
+                [8, 5, 2],
+                [9, 6, 3]
+            ];
+            deepEqual(rotate(matrix, "clockwise"), expected);
+        });
+
+        module('counter-clockwise');
+        test('1 row', function () {
+            deepEqual(rotate([[1,2]],'counter-clockwise'),[[2],[1]]);
+            deepEqual(rotate([[1,2,3]],'counter-clockwise'),[[3],[2],[1]]);
+        });
+        test('1 col', function () {
+            deepEqual(rotate([[1],[2]],'counter-clockwise'),[[1,2]]);
+            deepEqual(rotate([[1],[2],[3]],'counter-clockwise'),[[1,2,3]]);
+        });
+        test('complex', function () {
+            var matrix = [
+                [1, 2, 3],
+                [4, 5, 6],
+                [7, 8, 9]
+            ];
+            var expected = [
+                [3, 6, 9],
+                [2, 5, 8],
+                [1, 4, 7]
+            ];
+            deepEqual(rotate(matrix, "counter-clockwise"), expected);
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
