@@ -26,6 +26,12 @@
             equal(pos,0);
             deepEqual(items,[]);
         });
+        test('all satisfied',function(){
+            var items = [1,2,3,4];
+            var pos = partitionOn(all, items);
+            equal(pos,0);
+            deepEqual(items,[1,2,3,4]);
+        });
     </script>
 </head>
 <body>
