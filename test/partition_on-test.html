@@ -11,40 +11,51 @@
         /**
          *
          */
-        function partitionOn(pred,items){
-           for(var i=0;i<items.length;i++){
-               if(pred(items[i])){
-                   return i;
-               }
-           }
-           return items.length;
+        function partitionOn(pred, items) {
+            var satisfied = [];
+            var push = Array.prototype.push;
+            for (var i = 0; i < items.length; i++) {
+                if (pred(items[i])) {
+                    push.apply(satisfied, items.splice(i--, 1));
+                }
+            }
+            push.apply(items, satisfied);
+            return i;
         }
     </script>
     <script type="text/javascript">
         module('Partition On');
-        function all(){
+        function all() {
             return true;
         }
-        function never(){
+        function never() {
             return false;
         }
-        test('empty array',function(){
+        test('empty array', function () {
             var items = [];
             var pos = partitionOn(all, items);
-            equal(pos,0);
-            deepEqual(items,[]);
+            equal(pos, 0);
+            deepEqual(items, []);
         });
-        test('all satisfied',function(){
-            var items = [1,2,3,4];
+        test('all satisfied', function () {
+            var items = [1, 2, 3, 4];
             var pos = partitionOn(all, items);
-            equal(pos,0);
-            deepEqual(items,[1,2,3,4]);
+            equal(pos, 0);
+            deepEqual(items, [1, 2, 3, 4]);
         });
-        test('all denied',function(){
-            var items = [1,2,3,4];
+        test('all denied', function () {
+            var items = [1, 2, 3, 4];
             var pos = partitionOn(never, items);
-            equal(pos,4);
-            deepEqual(items,[1,2,3,4]);
+            equal(pos, 4);
+            deepEqual(items, [1, 2, 3, 4]);
+        });
+        test('one satisfied', function () {
+            var items = [1, 2, 3, 4];
+            var pos = partitionOn(function (item) {
+                return item == 3;
+            }, items);
+            equal(pos, 3);
+            deepEqual(items, [1, 2, 4, 3]);
         });
     </script>
 </head>
