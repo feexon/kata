@@ -11,9 +11,21 @@
         /**
          *
          */
+        function partitionOn(pred,items){
+           return 0;
+        }
     </script>
     <script type="text/javascript">
-
+        module('Partition On');
+        function all(){
+            return true;
+        }
+        test('empty array',function(){
+            var items = [];
+            var pos = partitionOn(all, items);
+            equal(pos,0);
+            deepEqual(items,[]);
+        });
     </script>
 </head>
 <body>
