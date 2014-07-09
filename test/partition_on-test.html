@@ -12,13 +12,21 @@
          *
          */
         function partitionOn(pred,items){
-           return 0;
+           for(var i=0;i<items.length;i++){
+               if(pred(items[i])){
+                   return i;
+               }
+           }
+           return items.length;
         }
     </script>
     <script type="text/javascript">
         module('Partition On');
         function all(){
             return true;
+        }
+        function never(){
+            return false;
         }
         test('empty array',function(){
             var items = [];
@@ -30,6 +38,12 @@
             var items = [1,2,3,4];
             var pos = partitionOn(all, items);
             equal(pos,0);
+            deepEqual(items,[1,2,3,4]);
+        });
+        test('all denied',function(){
+            var items = [1,2,3,4];
+            var pos = partitionOn(never, items);
+            equal(pos,4);
             deepEqual(items,[1,2,3,4]);
         });
     </script>
