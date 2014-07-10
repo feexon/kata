@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function moveZeros(items) {
+            function zeros(item) { return item === 0; }
+            function others(item) { return !zeros(item); }
+
+            return items.filter(others).concat(items.filter(zeros));
+        }
+    </script>
+    <script type="text/javascript">
+        module('Moving Zeros To The End');
+        test('no zeros', function () {
+            deepEqual(moveZeros([1, 2, 3]), [1, 2, 3]);
+        });
+        test('one zero', function () {
+            deepEqual(moveZeros([1, 2, 0, 3]), [1, 2, 3, 0]);
+        });
+        test('zeros', function () {
+            deepEqual(moveZeros([0, 1, 0, 2, 0, 3]), [1, 2, 3, 0, 0, 0]);
+        });
+        test('preserve others', function () {
+            deepEqual(moveZeros([false, null, 0, 1, 0, 2, 0, 3]), [false, null, 1, 2, 3, 0, 0, 0]);
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
