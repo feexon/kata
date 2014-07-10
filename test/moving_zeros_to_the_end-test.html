@@ -13,8 +13,9 @@
          */
         function moveZeros(items) {
             var filtered = items.filter(Boolean);
-            var zeros = filtered.length - items.length;
-            return !zeros?filtered:filtered.concat(0);
+            return  filtered.concat(Array.apply(null, Array(items.length - filtered.length)).map(function () {
+                return 0;
+            }));
         }
     </script>
     <script type="text/javascript">
@@ -24,6 +25,9 @@
         });
         test('one zero', function () {
             deepEqual(moveZeros([1, 2, 0, 3]), [1, 2, 3, 0]);
+        });
+        test('zeros', function () {
+            deepEqual(moveZeros([0, 1, 0, 2, 0, 3]), [1, 2, 3, 0, 0, 0]);
         });
     </script>
 </head>
