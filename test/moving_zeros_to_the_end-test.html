@@ -12,12 +12,10 @@
          *
          */
         function moveZeros(items) {
-            var filtered = items.filter(function(item){
-                return item!==0;
-            });
-            return  filtered.concat(Array.apply(null, Array(items.length - filtered.length)).map(function () {
-                return 0;
-            }));
+            function zeros(item) { return item === 0; }
+            function others(item) { return !zeros(item); }
+
+            return items.filter(others).concat(items.filter(zeros));
         }
     </script>
     <script type="text/javascript">
@@ -32,7 +30,7 @@
             deepEqual(moveZeros([0, 1, 0, 2, 0, 3]), [1, 2, 3, 0, 0, 0]);
         });
         test('preserve others', function () {
-            deepEqual(moveZeros([false,null,0, 1, 0, 2, 0, 3]), [false,null,1, 2, 3, 0, 0, 0]);
+            deepEqual(moveZeros([false, null, 0, 1, 0, 2, 0, 3]), [false, null, 1, 2, 3, 0, 0, 0]);
         });
     </script>
 </head>
