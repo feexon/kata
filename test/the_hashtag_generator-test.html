@@ -12,7 +12,9 @@
          *
          */
         function generateHashtag(str){
-            return str?'#'+str:false;
+            return str?'#'+str.replace(/\w+/,function(word){
+                return word[0].toUpperCase()+word.substring(1);
+            }):false;
         }
     </script>
     <script type="text/javascript">
@@ -22,6 +24,9 @@
         });
         test('start with #',function(){
             equal(generateHashtag('Hello'),'#Hello');
+        });
+        test('capitalize',function(){
+            equal(generateHashtag('hello'),'#Hello');
         });
     </script>
 </head>
