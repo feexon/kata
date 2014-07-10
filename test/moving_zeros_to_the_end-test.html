@@ -11,9 +11,15 @@
         /**
          *
          */
+        function moveZeros(items){
+            return items;
+        }
     </script>
     <script type="text/javascript">
-
+        module('Moving Zeros To The End');
+        test('no zeros', function () {
+            deepEqual(moveZeros([1, 2, 3]), [1, 2, 3]);
+        });
     </script>
 </head>
 <body>
