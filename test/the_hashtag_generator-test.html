@@ -11,9 +11,15 @@
         /**
          *
          */
+        function generateHashtag(str){
+            return false;
+        }
     </script>
     <script type="text/javascript">
-
+        module('The Hashtag Generator')
+        test('empty string',function(){
+            equal(generateHashtag(''),false);
+        });
     </script>
 </head>
 <body>
