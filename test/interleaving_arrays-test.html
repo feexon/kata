@@ -11,9 +11,16 @@
         /**
          *
          */
+        function interleave(/*arrays*/) {
+            return arguments[0];
+        }
     </script>
     <script type="text/javascript">
-
+        module('Interleaving Arrays');
+        test('an array', function () {
+            deepEqual(interleave([]), []);
+            deepEqual(interleave([1, 2, 3]), [1, 2, 3]);
+        });
     </script>
 </head>
 <body>
