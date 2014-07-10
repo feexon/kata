@@ -12,13 +12,16 @@
          *
          */
         function generateHashtag(str){
-            return false;
+            return str?'#'+str:false;
         }
     </script>
     <script type="text/javascript">
         module('The Hashtag Generator')
         test('empty string',function(){
             equal(generateHashtag(''),false);
+        });
+        test('start with #',function(){
+            equal(generateHashtag('Hello'),'#Hello');
         });
     </script>
 </head>
