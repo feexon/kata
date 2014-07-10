@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function interleave(/*arrays*/) {
+            var head = arguments[0]||[];
+            var rest = [].slice.call(arguments, 1);
+            return head.reduce(function (result, item, i) {
+                return result.concat(item, rest.map(function (array) {
+                    return array[i] == undefined ? null : array[i]
+                }));
+            }, []);
+        }
+    </script>
+    <script type="text/javascript">
+        module('Interleaving Arrays');
+        test('an array', function () {
+            deepEqual(interleave([]), []);
+            deepEqual(interleave([1, 2, 3]), [1, 2, 3]);
+        });
+        test('same size arrays', function () {
+            deepEqual(interleave([1, 2, 3], ['a', 'b', 'c']), [1, 'a', 2, 'b', 3, 'c']);
+            deepEqual(interleave([1, 2, 3], ['a', 'b', 'c'], [true, false, NaN]), [1, 'a', true, 2, 'b', false, 3, 'c', NaN]);
+        });
+        test('different size arrays', function () {
+            deepEqual(interleave([1, 2, 3], [4, 5]), [1, 4, 2, 5, 3, null]);
+        });
+        test('interleave null', function () {
+            deepEqual(interleave(null), []);
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
