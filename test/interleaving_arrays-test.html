@@ -13,12 +13,12 @@
          */
         function interleave(/*arrays*/) {
             var head = arguments[0];
-            var rest=[].slice.call(arguments,1);
+            var rest = [].slice.call(arguments, 1);
             var result = [];
             for (var i = 0; i < head.length; i++) {
                 result.push(head[i]);
-                for(var j=0;j<rest.length;j++){
-                    result.push(rest[j][i]);
+                for (var j = 0; j < rest.length; j++) {
+                    result.push(rest[j][i]==undefined?null:rest[j][i]);
                 }
             }
             return result;
@@ -33,6 +33,9 @@
         test('same size arrays', function () {
             deepEqual(interleave([1, 2, 3], ['a', 'b', 'c']), [1, 'a', 2, 'b', 3, 'c']);
             deepEqual(interleave([1, 2, 3], ['a', 'b', 'c'], [true, false, NaN]), [1, 'a', true, 2, 'b', false, 3, 'c', NaN]);
+        });
+        test('different size arrays', function () {
+            deepEqual(interleave([1, 2, 3], [4, 5]), [1, 4, 2, 5, 3, null]);
         });
     </script>
 </head>
