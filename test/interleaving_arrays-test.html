@@ -12,16 +12,13 @@
          *
          */
         function interleave(/*arrays*/) {
-            var head = arguments[0];
+            var head = arguments[0]||[];
             var rest = [].slice.call(arguments, 1);
-            var result = [];
-            for (var i = 0; i < head.length; i++) {
-                result.push(head[i]);
-                for (var j = 0; j < rest.length; j++) {
-                    result.push(rest[j][i]==undefined?null:rest[j][i]);
-                }
-            }
-            return result;
+            return head.reduce(function (result, item, i) {
+                return result.concat(item, rest.map(function (array) {
+                    return array[i] == undefined ? null : array[i]
+                }));
+            }, []);
         }
     </script>
     <script type="text/javascript">
@@ -36,6 +33,9 @@
         });
         test('different size arrays', function () {
             deepEqual(interleave([1, 2, 3], [4, 5]), [1, 4, 2, 5, 3, null]);
+        });
+        test('interleave null', function () {
+            deepEqual(interleave(null), []);
         });
     </script>
 </head>
