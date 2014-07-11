@@ -8,11 +8,17 @@
     <script type="text/javascript" src="../libs/qunit.js"></script>
     <script type="text/javascript" src="../libs/qunit-extras.js"></script>
     <script type="text/javascript">
+
         /**
          *
          */
-        function rot13(str){
-            return String.fromCharCode(str.charCodeAt(0)+13)
+        function rot13(str) {
+            function head(char) {
+                return (/[a-z]/.test(char) ? 'a' : 'A').charCodeAt(0);
+            }
+
+            var first = head(str[0]);
+            return String.fromCharCode(first + (str.charCodeAt(0) - first + 13) % 26);
         }
     </script>
     <script type="text/javascript">
@@ -20,6 +26,10 @@
         test('single', function () {
             equal(rot13('E'), 'R');
             equal(rot13('e'), 'r');
+        });
+        test('symmetric', function () {
+            equal(rot13('R'), 'E');
+            equal(rot13('r'), 'e');
         });
     </script>
 </head>
