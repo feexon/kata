@@ -17,7 +17,7 @@
                 return (/[a-z]/.test(char) ? 'a' : 'A').charCodeAt(0);
             }
 
-            return str.replace(/./g, function (current) {
+            return str.replace(/[a-zA-Z]/g, function (current) {
                 var first = head(current);
                 return String.fromCharCode(first + (current.charCodeAt(0) - first + 13) % 26);
             });
@@ -35,6 +35,9 @@
         });
         test('rot all letters', function () {
             equal(rot13('EBG'), 'ROT');
+        });
+        test('preserve others', function () {
+            equal(rot13('! 123_'), '! 123_');
         });
     </script>
 </head>
