@@ -17,8 +17,10 @@
                 return (/[a-z]/.test(char) ? 'a' : 'A').charCodeAt(0);
             }
 
-            var first = head(str[0]);
-            return String.fromCharCode(first + (str.charCodeAt(0) - first + 13) % 26);
+            return str.replace(/./g, function (current) {
+                var first = head(current);
+                return String.fromCharCode(first + (current.charCodeAt(0) - first + 13) % 26);
+            });
         }
     </script>
     <script type="text/javascript">
@@ -30,6 +32,9 @@
         test('symmetric', function () {
             equal(rot13('R'), 'E');
             equal(rot13('r'), 'e');
+        });
+        test('rot all letters', function () {
+            equal(rot13('EBG'), 'ROT');
         });
     </script>
 </head>
