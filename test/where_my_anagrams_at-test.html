@@ -12,24 +12,30 @@
         /**
          *
          */
-        function anagrams(word, another) {
+        function anagrams(word, words) {
             function sort(word) {
                 return word.split('').sort().join();
             }
 
-            return sort(word) == sort(another) ? [another] : [];
+            var ordered = sort(word);
+            return words.filter(function (candidate) {
+                return ordered == sort(candidate)
+            });
         }
     </script>
     <script type="text/javascript">
         module('Where my anagrams at?');
         test('none', function () {
-            deepEqual(anagrams('laser', 'lazing'), []);
+            deepEqual(anagrams('laser', ['lazing']), []);
         });
         test('same', function () {
-            deepEqual(anagrams('laser', 'laser'), ['laser']);
+            deepEqual(anagrams('laser', ['laser']), ['laser']);
         });
         test('same letters', function () {
-            deepEqual(anagrams('laser', 'lrsea'), ['lrsea']);
+            deepEqual(anagrams('laser', ['lrsea']), ['lrsea']);
+        });
+        test('anagrams', function () {
+            deepEqual(anagrams('abba', ['aabb', 'abcd', 'bbaa', 'dada']), ['aabb', 'bbaa']);
         });
     </script>
 </head>
