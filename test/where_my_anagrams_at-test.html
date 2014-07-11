@@ -12,13 +12,16 @@
          *
          */
         function anagrams(word,another){
-            return [];
+            return word==another?[word]:[];
         }
     </script>
     <script type="text/javascript">
         module('Where my anagrams at?');
         test('none', function () {
             deepEqual(anagrams('laser', 'lazing'), []);
+        });
+        test('same', function () {
+            deepEqual(anagrams('laser', 'laser'), ['laser']);
         });
     </script>
 </head>
