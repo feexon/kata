@@ -8,11 +8,16 @@
     <script type="text/javascript" src="../libs/qunit.js"></script>
     <script type="text/javascript" src="../libs/qunit-extras.js"></script>
     <script type="text/javascript">
+
         /**
          *
          */
-        function anagrams(word,another){
-            return word==another?[word]:[];
+        function anagrams(word, another) {
+            function sort(word) {
+                return word.split('').sort().join();
+            }
+
+            return sort(word) == sort(another) ? [another] : [];
         }
     </script>
     <script type="text/javascript">
@@ -22,6 +27,9 @@
         });
         test('same', function () {
             deepEqual(anagrams('laser', 'laser'), ['laser']);
+        });
+        test('same letters', function () {
+            deepEqual(anagrams('laser', 'lrsea'), ['lrsea']);
         });
     </script>
 </head>
