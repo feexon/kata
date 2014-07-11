@@ -13,13 +13,8 @@
          *
          */
         function rot13(str) {
-            function head(char) {
-                return (/[a-z]/.test(char) ? 'a' : 'A').charCodeAt(0);
-            }
-
-            return str.replace(/[a-zA-Z]/g, function (current) {
-                var first = head(current);
-                return String.fromCharCode(first + (current.charCodeAt(0) - first + 13) % 26);
+            return str.replace(/([a-m])|[n-z]/gi, function (m, p) {
+                return String.fromCharCode(m.charCodeAt(0) + (p ? 13 : -13));
             });
         }
     </script>
