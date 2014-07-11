@@ -11,9 +11,15 @@
         /**
          *
          */
+        function anagrams(word,another){
+            return [];
+        }
     </script>
     <script type="text/javascript">
-
+        module('Where my anagrams at?');
+        test('none', function () {
+            deepEqual(anagrams('laser', 'lazing'), []);
+        });
     </script>
 </head>
 <body>
