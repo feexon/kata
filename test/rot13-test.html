@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+
+        /**
+         *
+         */
+        function rot13(str) {
+            return str.replace(/([a-m])|[n-z]/gi, function (m, p) {
+                return String.fromCharCode(m.charCodeAt(0) + (p ? 13 : -13));
+            });
+        }
+    </script>
+    <script type="text/javascript">
+        module('ROT13');
+        test('single', function () {
+            equal(rot13('E'), 'R');
+            equal(rot13('e'), 'r');
+        });
+        test('symmetric', function () {
+            equal(rot13('R'), 'E');
+            equal(rot13('r'), 'e');
+        });
+        test('rot all letters', function () {
+            equal(rot13('EBG'), 'ROT');
+        });
+        test('preserve others', function () {
+            equal(rot13('! 123_'), '! 123_');
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
