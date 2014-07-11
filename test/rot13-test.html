@@ -11,9 +11,16 @@
         /**
          *
          */
+        function rot13(str){
+            return String.fromCharCode(str.charCodeAt(0)+13)
+        }
     </script>
     <script type="text/javascript">
-
+        module('ROT13');
+        test('single', function () {
+            equal(rot13('E'), 'R');
+            equal(rot13('e'), 'r');
+        });
     </script>
 </head>
 <body>
