@@ -12,16 +12,13 @@
          *
          */
         function flattenTwoLevels(array) {
-            function flatten(array, secondary) {
-                var result = array.map(function (item) {
-                    return Array.isArray(item) ? flatten(item, true) : item;
-                });
-                return !secondary ? result : result.reduce(function (result, item) {
-                    return result.concat(item);
+            function flatten(item) {
+                return !Array.isArray(item) ? item : item.reduce(function (result, item) {
+                    return result.concat(flatten(item));
                 }, []);
             }
 
-            return flatten(array);
+            return array.map(flatten);
         }
     </script>
     <script type="text/javascript">
