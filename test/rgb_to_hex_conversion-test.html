@@ -13,7 +13,7 @@
          */
         function rgb(r, g, b) {
             return [r, g, b].map(function (value) {
-                return value.toString(16);
+                return Math.min(0xFF, value).toString(16);
             }).join('').toUpperCase();
         }
     </script>
@@ -21,6 +21,9 @@
         module('RGB To Hex Conversion');
         test('mixture has low and high bit', function () {
             equal(rgb(255, 255, 255), 'FFFFFF');
+        });
+        test('value more than 255', function () {
+            equal(rgb(255, 255, 300), 'FFFFFF');
         });
     </script>
 </head>
