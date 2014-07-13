@@ -21,13 +21,8 @@
                     result.push(b[j++]);
                 }
             }
-            function append(array) {
-                Array.prototype.push.apply(result, array);
-            }
 
-            append(a.slice(i, a.length));
-            append(b.slice(j, b.length));
-            return result;
+            return result.concat(a.slice(i, a.length)).concat(b.slice(j, b.length));
         }
     </script>
     <script type="text/javascript">
