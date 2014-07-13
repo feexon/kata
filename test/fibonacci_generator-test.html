@@ -11,17 +11,27 @@
         /**
          *
          */
-        function genfib(){
-            return function fib(){
-
+        function genfib() {
+            var f2 = 0, f1 = 0;
+            return function fib() {
+                var ret = f1;
+                f1 = f2 + f1 || 1;
+                f2 = ret;
+                return  ret;
             }
         }
     </script>
     <script type="text/javascript">
         module('Fibonacci Generator');
-        test('genfib return a function',function(){
-            equal(typeof genfib(),'function');
-        })
+        test('genfib return a function', function () {
+            equal(typeof genfib(), 'function');
+        });
+        test('fib', function () {
+            var fib = genfib();
+            [0, 1, 1, 2, 3, 5].forEach(function (expected) {
+                equal(fib(), expected);
+            });
+        });
     </script>
 </head>
 <body>
