@@ -11,9 +11,17 @@
         /**
          *
          */
+        function genfib(){
+            return function fib(){
+
+            }
+        }
     </script>
     <script type="text/javascript">
-
+        module('Fibonacci Generator');
+        test('genfib return a function',function(){
+            equal(typeof genfib(),'function');
+        })
     </script>
 </head>
 <body>
