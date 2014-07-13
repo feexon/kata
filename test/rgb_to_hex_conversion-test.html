@@ -11,9 +11,17 @@
         /**
          *
          */
+        function rgb(r, g, b) {
+            return [r, g, b].map(function (value) {
+                return value.toString(16);
+            }).join('').toUpperCase();
+        }
     </script>
     <script type="text/javascript">
-
+        module('RGB To Hex Conversion');
+        test('mixture has low and high bit', function () {
+            equal(rgb(255, 255, 255), 'FFFFFF');
+        });
     </script>
 </head>
 <body>
