@@ -11,9 +11,15 @@
         /**
          *
          */
+        function flattenTwoLevels(array){
+            return array;
+        }
     </script>
     <script type="text/javascript">
-
+        module('Two levels arrays');
+        test('less than 2 level arrays', function () {
+            deepEqual(flattenTwoLevels([1, [2, 3]]), [1, [2, 3]]);
+        });
     </script>
 </head>
 <body>
