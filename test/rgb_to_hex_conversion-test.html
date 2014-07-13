@@ -14,13 +14,13 @@
         function rgb(r, g, b) {
             function format(value) {
                 return [value >>> 4, value & 0x0F].map(function (number) {
-                    return number.toString(16);
+                    return number.toString(16).toUpperCase();
                 }).join('');
             }
 
             return [r, g, b].map(function (value) {
                 return format(Math.min(0xFF, value));
-            }).join('').toUpperCase();
+            }).join('');
         }
     </script>
     <script type="text/javascript">
