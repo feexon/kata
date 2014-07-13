@@ -12,21 +12,16 @@
          *
          */
         function flattenTwoLevels(array) {
-            function flatten(array) {
-                var result = [];
-                for (var i = 0; i < array.length; i++) {
-                    if (Array.isArray(array[i])) {
-                        result = result.concat(flatten(array[i]));
-                    } else {
-                        result.push(array[i]);
-                    }
-                }
-                return result;
+            function flatten(array, secondary) {
+                var result = array.map(function (item) {
+                    return Array.isArray(item) ? flatten(item, true) : item;
+                });
+                return !secondary ? result : result.reduce(function (result, item) {
+                    return result.concat(item);
+                }, []);
             }
 
-            return array.map(function (item) {
-                return Array.isArray(item) ? flatten(item) : item;
-            });
+            return flatten(array);
         }
     </script>
     <script type="text/javascript">
