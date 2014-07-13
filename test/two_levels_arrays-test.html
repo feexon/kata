@@ -35,6 +35,9 @@
         test('more than 2 level arrays', function () {
             deepEqual(flattenTwoLevels([1, [2, 3, [4, [5, [6]]]]]), [1, [2, 3, 4, 5, 6]]);
         });
+        test('empty array ignored', function () {
+            deepEqual(flattenTwoLevels([1, [2, 3, [4, []], []]]), [1, [2, 3, 4]]);
+        });
     </script>
 </head>
 <body>
