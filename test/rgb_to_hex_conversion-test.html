@@ -12,8 +12,14 @@
          *
          */
         function rgb(r, g, b) {
+            function format(value) {
+                return [value >>> 4, value & 0x0F].map(function (number) {
+                    return number.toString(16);
+                }).join('');
+            }
+
             return [r, g, b].map(function (value) {
-                return Math.min(0xFF, value).toString(16);
+                return format(Math.min(0xFF, value));
             }).join('').toUpperCase();
         }
     </script>
@@ -24,6 +30,9 @@
         });
         test('value more than 255', function () {
             equal(rgb(255, 255, 300), 'FFFFFF');
+        });
+        test('value has low bit only', function () {
+            equal(rgb(0, 0, 0), '000000');
         });
     </script>
 </head>
