@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function genfib() {
+            var f2 = 0, f1 = 0;
+            return function fib() {
+                var ret = f1;
+                f1 = f2 + f1 || 1;
+                f2 = ret;
+                return  ret;
+            }
+        }
+    </script>
+    <script type="text/javascript">
+        module('Fibonacci Generator');
+        test('genfib return a function', function () {
+            equal(typeof genfib(), 'function');
+        });
+        test('fib', function () {
+            var fib = genfib();
+            [0, 1, 1, 2, 3, 5].forEach(function (expected) {
+                equal(fib(), expected);
+            });
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
