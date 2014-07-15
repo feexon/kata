@@ -11,9 +11,18 @@
         /**
          *
          */
+        Function.prototype.wrap=function(origin){
+
+        }
     </script>
     <script type="text/javascript">
-
+        module('Wrapped Function');
+        function speak(name) {
+            return "Hello " + name;
+        }
+        test('declaration',function(){
+            equal(typeof speak.wrap,'function');
+        })
     </script>
 </head>
 <body>
