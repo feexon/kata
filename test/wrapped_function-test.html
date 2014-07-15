@@ -13,7 +13,7 @@
          */
         Function.prototype.wrap = function (wrapper) {
             return function () {
-                return wrapper(this);
+                return wrapper.apply(this,Array.prototype.concat.apply(this,arguments));
             }.bind(this);
         }
     </script>
@@ -30,6 +30,13 @@
                 return origin("guest");
             });
             equal(greeting(), 'Hello guest');
+        });
+        test('with arguments', function () {
+            var say = speak.wrap(function (original, yourName, myName) {
+                return  original(yourName) + ", my name is " + myName;
+            });
+
+            equal(say("Mary", "Kate"), "Hello Mary, my name is Kate")
         });
     </script>
 </head>
