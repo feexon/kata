@@ -11,8 +11,10 @@
         /**
          *
          */
-        Function.prototype.wrap=function(origin){
-
+        Function.prototype.wrap = function (wrapper) {
+            return function () {
+                return wrapper(this);
+            }.bind(this);
         }
     </script>
     <script type="text/javascript">
@@ -20,9 +22,15 @@
         function speak(name) {
             return "Hello " + name;
         }
-        test('declaration',function(){
-            equal(typeof speak.wrap,'function');
-        })
+        test('declaration', function () {
+            equal(typeof speak.wrap, 'function');
+        });
+        test('no arguments', function () {
+            var greeting = speak.wrap(function (origin) {
+                return origin("guest");
+            });
+            equal(greeting(), 'Hello guest');
+        });
     </script>
 </head>
 <body>
