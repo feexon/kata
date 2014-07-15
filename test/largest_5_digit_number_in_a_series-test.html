@@ -12,9 +12,10 @@
          *
          */
         function solution(digits) {
-            return Math.max.apply(null, Array.apply(null, Array(digits.length - 5+1)).map(function (_, i) {
-                return +digits.substring(i, i + 5);
-            }));
+            if (digits.length <= 5) {
+                return +digits;
+            }
+            return Math.max(+digits.substr(0, 5), solution(digits.substr(1)));
         }
     </script>
     <script type="text/javascript">
