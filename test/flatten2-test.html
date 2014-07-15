@@ -11,9 +11,16 @@
         /**
          *
          */
+        function flatten() {
+            return [];
+        }
     </script>
     <script type="text/javascript">
+        module("flatten");
 
+        test('no args',function(){
+            deepEqual(flatten(),[]);
+        });
     </script>
 </head>
 <body>
