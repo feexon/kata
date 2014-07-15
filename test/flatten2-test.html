@@ -11,15 +11,19 @@
         /**
          *
          */
-        function flatten() {
-            return [];
+        function flatten(/*items*/) {
+            return Array.prototype.slice.call(arguments);
         }
     </script>
     <script type="text/javascript">
         module("flatten");
 
-        test('no args',function(){
-            deepEqual(flatten(),[]);
+        test('no args', function () {
+            deepEqual(flatten(), []);
+        });
+        test('simple', function () {
+            deepEqual(flatten(1), [1]);
+            deepEqual(flatten(1, 2, 3), [1, 2, 3]);
         });
     </script>
 </head>
