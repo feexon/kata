@@ -12,8 +12,7 @@
          *
          */
         function flatten(/*items*/) {
-            var items = Array.prototype.slice.call(arguments);
-            return  items.reduce(function (result, item) {
+            return  Array.prototype.slice.call(arguments).reduce(function (result, item) {
                 return result.concat(Array.isArray(item) ? flatten.apply(null, item) : item);
             }, []);
         }
