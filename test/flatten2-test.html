@@ -12,7 +12,10 @@
          *
          */
         function flatten(/*items*/) {
-            return Array.prototype.slice.call(arguments);
+            var items = Array.prototype.slice.call(arguments);
+            return  items.reduce(function (result, item) {
+                return result.concat(Array.isArray(item)?flatten.apply(null,item):item);
+            }, []);
         }
     </script>
     <script type="text/javascript">
@@ -24,6 +27,10 @@
         test('simple', function () {
             deepEqual(flatten(1), [1]);
             deepEqual(flatten(1, 2, 3), [1, 2, 3]);
+        });
+        test('array', function () {
+            deepEqual(flatten([1]), [1]);
+            deepEqual(flatten([1, 2, [3]]), [1, 2, 3]);
         });
     </script>
 </head>
