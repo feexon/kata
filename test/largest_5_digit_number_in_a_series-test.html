@@ -11,9 +11,16 @@
         /**
          *
          */
+        function solution(digits){
+            return +digits;
+        }
     </script>
     <script type="text/javascript">
-
+        module('Largest 5 digit number in a series');
+        test('5 digits', function () {
+            deepEqual(solution('12345'), 12345);
+            deepEqual(solution('00123'), 123);
+        });
     </script>
 </head>
 <body>
