@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function solution(digits) {
+            if (digits.length <= 5) {
+                return +digits;
+            }
+            return Math.max(+digits.substr(0, 5), solution(digits.substr(1)));
+        }
+    </script>
+    <script type="text/javascript">
+        module('Largest 5 digit number in a series');
+        test('5 digits', function () {
+            deepEqual(solution('12345'), 12345);
+            deepEqual(solution('00123'), 123);
+        });
+        test('largest', function () {
+            deepEqual(solution('132345'), 32345);
+            deepEqual(solution('132345830291'), 83029);
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
