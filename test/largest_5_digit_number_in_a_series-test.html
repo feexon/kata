@@ -11,8 +11,10 @@
         /**
          *
          */
-        function solution(digits){
-            return +digits;
+        function solution(digits) {
+            return Math.max.apply(null, Array.apply(null, Array(digits.length - 5+1)).map(function (_, i) {
+                return +digits.substring(i, i + 5);
+            }));
         }
     </script>
     <script type="text/javascript">
@@ -20,6 +22,10 @@
         test('5 digits', function () {
             deepEqual(solution('12345'), 12345);
             deepEqual(solution('00123'), 123);
+        });
+        test('largest', function () {
+            deepEqual(solution('132345'), 32345);
+            deepEqual(solution('132345830291'), 83029);
         });
     </script>
 </head>
