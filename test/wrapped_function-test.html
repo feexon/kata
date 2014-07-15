@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        Function.prototype.wrap = function (wrapper) {
+            return function () {
+                return wrapper.apply(this,Array.prototype.concat.apply(this,arguments));
+            }.bind(this);
+        }
+    </script>
+    <script type="text/javascript">
+        module('Wrapped Function');
+        function speak(name) {
+            return "Hello " + name;
+        }
+        test('declaration', function () {
+            equal(typeof speak.wrap, 'function');
+        });
+        test('no arguments', function () {
+            var greeting = speak.wrap(function (origin) {
+                return origin("guest");
+            });
+            equal(greeting(), 'Hello guest');
+        });
+        test('with arguments', function () {
+            var say = speak.wrap(function (original, yourName, myName) {
+                return  original(yourName) + ", my name is " + myName;
+            });
+
+            equal(say("Mary", "Kate"), "Hello Mary, my name is Kate")
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
