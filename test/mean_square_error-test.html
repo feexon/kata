@@ -11,9 +11,15 @@
         /**
          *
          */
+        function solution(first, second) {
+            return (first - second) * (first - second);
+        }
     </script>
     <script type="text/javascript">
-
+        module('Mean Square Error');
+        test('one item', function () {
+            equal(solution([3], [5]), 4);
+        });
     </script>
 </head>
 <body>
