@@ -11,9 +11,16 @@
         /**
          *
          */
+        function solution(str){
+            return str;
+        }
     </script>
     <script type="text/javascript">
-
+        module('Break camelCase');
+        test('word', function () {
+            equal(solution('a'), 'a');
+            equal(solution('the'), 'the');
+        });
     </script>
 </head>
 <body>
