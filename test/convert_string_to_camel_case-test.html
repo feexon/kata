@@ -12,8 +12,8 @@
          *
          */
         function toCamelCase(str){
-            return str.replace(/(\w)(?=\w*)/,function(_,first){
-                return first.toUpperCase();
+            return str.replace(/[-_]+|(\w)(\w*)/g,function(_,first,rest){
+                return first?first.toUpperCase()+rest:'';
             });
 
         }
@@ -23,6 +23,11 @@
         test('word',function(){
             equal(toCamelCase('a'),'A');
             equal(toCamelCase('the'),'The');
+        });
+        test('dash/underscore ',function(){
+            equal(toCamelCase('-'),'');
+            equal(toCamelCase('--'),'');
+            equal(toCamelCase('__'),'');
         });
     </script>
 </head>
