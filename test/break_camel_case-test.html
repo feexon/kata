@@ -12,7 +12,7 @@
          *
          */
         function solution(str){
-            return str;
+            return str.replace(/([A-Z])/g," $1");
         }
     </script>
     <script type="text/javascript">
@@ -20,6 +20,10 @@
         test('word', function () {
             equal(solution('a'), 'a');
             equal(solution('the'), 'the');
+        });
+        test('break words', function () {
+            equal(solution('camelCasing'), 'camel Casing');
+            equal(solution('breakCamelCasing'), 'break Camel Casing');
         });
     </script>
 </head>
