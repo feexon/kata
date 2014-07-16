@@ -11,23 +11,26 @@
         /**
          *
          */
-        function toCamelCase(str){
-            return str.replace(/[-_]+|(\w)(\w*)/g,function(_,first,rest){
-                return first?first.toUpperCase()+rest:'';
+        function toCamelCase(str) {
+            return str.replace(/[-_]([a-zA-Z])?/g, function (_, first) {
+                return first ? first.toUpperCase() : '';
             });
 
         }
     </script>
     <script type="text/javascript">
         module('Convert string to camel case');
-        test('word',function(){
-            equal(toCamelCase('a'),'A');
-            equal(toCamelCase('the'),'The');
+        test('word', function () {
+            equal(toCamelCase('a'), 'a');
+            equal(toCamelCase('the'), 'the');
         });
-        test('dash/underscore ',function(){
-            equal(toCamelCase('-'),'');
-            equal(toCamelCase('--'),'');
-            equal(toCamelCase('__'),'');
+        test('dash/underscore', function () {
+            equal(toCamelCase('-'), '');
+            equal(toCamelCase('--'), '');
+            equal(toCamelCase('__'), '');
+        });
+        test('camel case', function () {
+            equal(toCamelCase('the-stealth-warrior'), 'theStealthWarrior');
         });
     </script>
 </head>
