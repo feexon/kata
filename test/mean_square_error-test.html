@@ -12,13 +12,21 @@
          *
          */
         function solution(first, second) {
-            return (first - second) * (first - second);
+            var results = first.map(function (number, i) {
+                return Math.pow(number - second[i], 2);
+            });
+            return  results.reduce(function (sum, number) {
+                return sum + number;
+            }, 0) / results.length;
         }
     </script>
     <script type="text/javascript">
         module('Mean Square Error');
         test('one item', function () {
             equal(solution([3], [5]), 4);
+        });
+        test('averge', function () {
+            equal(solution([3, 5], [5, 9]), 10);
         });
     </script>
 </head>
