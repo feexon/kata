@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function beeramid(bonus, price) {
+            var max = Math.max(0,Math.floor(bonus / price));
+            for (var n = 0; n <= max; n++) {
+                if ((n * n + n) * (2 * n + 1) / 6 > max) {
+                    return n - 1;
+                }
+            }
+            return max;
+        }
+    </script>
+    <script type="text/javascript">
+        module("Beeramid");
+        test("levels", function () {
+            equal(beeramid(1500, 2), 12);
+            equal(beeramid(5000, 3), 16);
+        });
+        test("bonus not enough", function () {
+            equal(beeramid(1, 2), 0);
+        });
+        test("one level", function () {
+            equal(beeramid(4, 4), 1);
+        });
+        test("bonus < 0", function () {
+            equal(beeramid(-1, 4), 0);
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
