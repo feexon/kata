@@ -12,7 +12,7 @@
          *
          */
         function beeramid(bonus, price) {
-            var max = Math.floor(bonus / price);
+            var max = Math.max(0,Math.floor(bonus / price));
             for (var n = 0; n <= max; n++) {
                 if ((n * n + n) * (2 * n + 1) / 6 > max) {
                     return n - 1;
@@ -32,6 +32,9 @@
         });
         test("one level", function () {
             equal(beeramid(4, 4), 1);
+        });
+        test("bonus < 0", function () {
+            equal(beeramid(-1, 4), 0);
         });
     </script>
 </head>
