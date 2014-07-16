@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function solution(str){
+            return str.replace(/([A-Z])/g," $1");
+        }
+    </script>
+    <script type="text/javascript">
+        module('Break camelCase');
+        test('word', function () {
+            equal(solution('a'), 'a');
+            equal(solution('the'), 'the');
+        });
+        test('break words', function () {
+            equal(solution('camelCasing'), 'camel Casing');
+            equal(solution('breakCamelCasing'), 'break Camel Casing');
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
