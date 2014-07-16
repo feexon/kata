@@ -11,9 +11,19 @@
         /**
          *
          */
+        function toCamelCase(str){
+            return str.replace(/(\w)(?=\w*)/,function(_,first){
+                return first.toUpperCase();
+            });
+
+        }
     </script>
     <script type="text/javascript">
-
+        module('Convert string to camel case');
+        test('word',function(){
+            equal(toCamelCase('a'),'A');
+            equal(toCamelCase('the'),'The');
+        });
     </script>
 </head>
 <body>
