@@ -11,9 +11,21 @@
         /**
          *
          */
+        function beeramid(bonus, price) {
+            var max = Math.floor(bonus / price);
+            for (var n = 0; n <= max; n++) {
+                if ((n * n + n) * (2 * n + 1) / 6 > max) {
+                    return n - 1;
+                }
+            }
+        }
     </script>
     <script type="text/javascript">
-
+        module("Beeramid");
+        test("levels", function () {
+            equal(beeramid(1500, 2), 12);
+            equal(beeramid(5000, 3), 16);
+        });
     </script>
 </head>
 <body>
