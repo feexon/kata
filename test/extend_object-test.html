@@ -11,9 +11,21 @@
         /**
          *
          */
+        function extend(source) {
+            return Object.keys(source).reduce(function (target, name) {
+                target[name] = source[name];
+                return target;
+            }, {});
+        }
     </script>
     <script type="text/javascript">
-
+        module('Object extend');
+        test('return new object', function () {
+            var source = {foo: 'bar'};
+            var target = extend(source);
+            deepEqual(target, source);
+            notEqual(target, source);
+        });
     </script>
 </head>
 <body>
