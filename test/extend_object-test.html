@@ -11,12 +11,13 @@
         /**
          *
          */
+        function isObject(target) {
+            return typeof target == 'object';
+        }
         function extend(/*objects*/) {
-            return Array.prototype.reduce.call(arguments, function (result, source) {
-                return typeof source != 'object' ? result : Object.keys(source).reduce(function (target, name) {
-                    if (!target.hasOwnProperty(name)) {
-                        target[name] = source[name];
-                    }
+            return Array.prototype.slice.call(arguments).filter(isObject).reduceRight(function (result, source) {
+                return  Object.keys(source).reduce(function (target, name) {
+                    target[name] = source[name];
                     return target;
                 }, result);
             }, {});
@@ -42,8 +43,8 @@
         test('extend all passed objects', function () {
             deepEqual(extend({foo: 'bar'}, {key: 'value'}, {src: 'dest'}), {foo: 'bar', key: 'value', src: 'dest'});
         });
-        test('extend non-object',function(){
-            deepEqual(extend(1),{});
+        test('extend non-object', function () {
+            deepEqual(extend(1), {});
         });
     </script>
 </head>
