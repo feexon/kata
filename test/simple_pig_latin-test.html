@@ -12,13 +12,18 @@
          *
          */
         function pigIt(str) {
-            return str + 'ay';
+            return str.replace(/\w/, function (str) {
+                return str + 'ay';
+            });
         }
     </script>
     <script type="text/javascript">
         module('Simple Pig Latin');
         test('letter', function () {
             equal(pigIt('t'), 'tay');
+        });
+        test('empty', function () {
+            equal(pigIt(''), '');
         });
     </script>
 </head>
