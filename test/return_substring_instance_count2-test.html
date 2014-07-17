@@ -15,13 +15,13 @@
             if (!searchText) {
                 return 0;
             }
-            var count = 0;
-            var skips = allowOverlap === false ? searchText.length : 1;
-            var pos = -skips;
-            while ((pos = fullText.indexOf(searchText, pos + skips)) != -1) {
-                count++;
+            var occurrences = 0;
+            var spans = allowOverlap === false ? searchText.length : 1;
+            var pos = -spans;
+            while ((pos = fullText.indexOf(searchText, pos + spans)) != -1) {
+                occurrences++;
             }
-            return count;
+            return occurrences;
         }
     </script>
     <script type="text/javascript">
