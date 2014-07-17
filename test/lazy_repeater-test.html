@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function makeLooper(str){
+            var i=0;
+            return function(){
+                return str[i++%str.length];
+            }
+        }
+    </script>
+    <script type="text/javascript">
+        module('Lazy Repeater');
+        test('letter',function(){
+            var itr=makeLooper('a');
+            equal(itr(),'a');
+            equal(itr(),'a');
+        });
+        test('iterate',function(){
+            var itr=makeLooper('abc');
+            equal(itr(),'a');
+            equal(itr(),'b');
+            equal(itr(),'c');
+        });
+        test('independent',function(){
+            equal(makeLooper('abc')(),'a');
+            equal(makeLooper('abc')(),'a');
+        });
+        test('loop',function(){
+            var next = makeLooper('ab');
+            equal(next(),'a');
+            equal(next(),'b');
+            equal(next(),'a');
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
