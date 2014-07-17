@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function compose(init/*fns*/){
+            return Array.prototype.slice.call(arguments,1).reduce(function(result,fn){
+                return fn(result);
+            },init);
+        }
+    </script>
+    <script type="text/javascript">
+        module('Compose functions (T Combinator)');
+        var doubleTheValue = function(val) { return val * 2; };
+        var addOneToTheValue = function(val) { return val + 1; };
+        test('simple',function(){
+            equal(compose(5, doubleTheValue),10);
+            equal(compose(5, addOneToTheValue),6);
+        });
+        test('composite',function(){
+            equal(compose(5, doubleTheValue,addOneToTheValue),11);
+        });
+        test('no functions',function(){
+            equal(compose(5),5);
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
