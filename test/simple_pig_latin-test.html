@@ -12,7 +12,7 @@
          *
          */
         function pigIt(str) {
-            return str.replace(/(\w)(\w*)/, "$2$1ay");
+            return str.replace(/(\w)(\w*)/g, "$2$1ay");
         }
     </script>
     <script type="text/javascript">
@@ -25,6 +25,9 @@
         });
         test('word', function () {
             equal(pigIt('is'), 'siay');
+        });
+        test('sentence', function () {
+            equal(pigIt('Pig latin is cool'), 'igPay atinlay siay oolcay');
         });
     </script>
 </head>
