@@ -15,10 +15,12 @@
             if (!searchText) {
                 return 0;
             }
-            if (fullText.indexOf(searchText) != -1) {
-                return 1;
+            var count = 0;
+            var pos = -1;
+            while ((pos = fullText.indexOf(searchText, pos+1)) != -1) {
+                count++;
             }
-            return 0;
+            return count;
         }
     </script>
     <script type="text/javascript">
@@ -31,6 +33,9 @@
         });
         test('not found', function () {
             equal(searchSubstr('ab', 'ba'), 0);
+        });
+        test('multi times', function () {
+            equal(searchSubstr('abaab', 'ab'), 2);
         });
     </script>
 </head>
