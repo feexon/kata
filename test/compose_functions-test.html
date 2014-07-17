@@ -11,9 +11,18 @@
         /**
          *
          */
+        function compose(init,fns){
+            return fns(init);
+        }
     </script>
     <script type="text/javascript">
-
+        module('Compose functions (T Combinator)');
+        var doubleTheValue = function(val) { return val * 2; };
+        var addOneToTheValue = function(val) { return val + 1; };
+        test('simple',function(){
+            equal(compose(5, doubleTheValue),10);
+            equal(compose(5, addOneToTheValue),6);
+        });
     </script>
 </head>
 <body>
