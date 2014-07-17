@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function searchSubstr(fullText, searchText, allowOverlap) {
+            if (!searchText) {
+                return 0;
+            }
+            var occurrences = 0;
+            var spans = allowOverlap === false ? searchText.length : 1;
+            var pos = -spans;
+            while ((pos = fullText.indexOf(searchText, pos + spans)) != -1) {
+                occurrences++;
+            }
+            return occurrences;
+        }
+    </script>
+    <script type="text/javascript">
+        module('Return substring instance count - 2');
+        test('empty substr', function () {
+            equal(searchSubstr('aa', ''), 0);
+        });
+        test('once', function () {
+            equal(searchSubstr('ab', 'ab'), 1);
+        });
+        test('not found', function () {
+            equal(searchSubstr('ab', 'ba'), 0);
+        });
+        test('multi times', function () {
+            equal(searchSubstr('abaab', 'ab'), 2);
+        });
+        test('overlap', function () {
+            equal(searchSubstr('aaa', 'aa'), 2);
+        });
+        test('deny overlap', function () {
+            equal(searchSubstr('aaa', 'aa', false), 1);
+        });
+        test('fix bug: deny overlap', function () {
+            equal(searchSubstr('abc', 'abc', false), 1);
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
