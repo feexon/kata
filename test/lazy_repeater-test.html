@@ -14,7 +14,7 @@
         function makeLooper(str){
             var i=0;
             return function(){
-                return str[Math.min(i++,str.length-1)];
+                return str[i++%str.length];
             }
         }
     </script>
@@ -34,6 +34,12 @@
         test('independent',function(){
             equal(makeLooper('abc')(),'a');
             equal(makeLooper('abc')(),'a');
+        });
+        test('loop',function(){
+            var next = makeLooper('ab');
+            equal(next(),'a');
+            equal(next(),'b');
+            equal(next(),'a');
         });
     </script>
 </head>
