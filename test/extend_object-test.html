@@ -36,6 +36,9 @@
         test('ignore existing properties', function () {
             deepEqual(extend({foo: 'bar'}, {key: 'value', foo: 'BAR'}), {foo: 'bar', key: 'value'});
         });
+        test('ignore existing properties even if is null', function () {
+            deepEqual(extend({foo: null}, {key: 'value', foo: 'BAR'}), {foo: null, key: 'value'});
+        });
     </script>
 </head>
 <body>
