@@ -12,7 +12,11 @@
          *
          */
         function sortme(courses) {
-            return courses.sort();
+            return courses.sort(function (a, b) {
+                var parts1 = a.split('-');
+                var parts2 = b.split('-');
+                return parts1[1].localeCompare(parts2[1]) || parts1[0].localeCompare(parts2[0]);
+            });
         }
     </script>
     <script type="text/javascript">
@@ -20,6 +24,9 @@
         test('different 1', function () {
             deepEqual(sortme(['lisi-abcd', 'lisi-abcc', 'lisi-bacc']), ['lisi-abcc', 'lisi-abcd', 'lisi-bacc']);
             deepEqual(sortme(['wangwu-yymm', 'lisi-yymm', 'zhangsan-yymm']), ['lisi-yymm', 'wangwu-yymm', 'zhangsan-yymm']);
+        });
+        test('distinct', function () {
+            deepEqual(sortme(['lisi-yymm', 'zhangsan-abcc']), ['zhangsan-abcc', 'lisi-yymm']);
         });
     </script>
 </head>
