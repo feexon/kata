@@ -16,8 +16,8 @@
                 return 0;
             }
             var count = 0;
-            var pos = -1;
-            var skips=allowOverlap===false?searchText.length:1;
+            var skips = allowOverlap === false ? searchText.length : 1;
+            var pos = -skips;
             while ((pos = fullText.indexOf(searchText, pos + skips)) != -1) {
                 count++;
             }
@@ -43,6 +43,9 @@
         });
         test('deny overlap', function () {
             equal(searchSubstr('aaa', 'aa', false), 1);
+        });
+        test('fix bug: deny overlap', function () {
+            equal(searchSubstr('abc', 'abc', false), 1);
         });
     </script>
 </head>
