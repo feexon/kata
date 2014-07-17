@@ -13,7 +13,7 @@
          */
         function extend(/*objects*/) {
             return Array.prototype.reduce.call(arguments, function (result, source) {
-                return Object.keys(source).reduce(function (target, name) {
+                return typeof source != 'object' ? result : Object.keys(source).reduce(function (target, name) {
                     if (!target.hasOwnProperty(name)) {
                         target[name] = source[name];
                     }
@@ -41,6 +41,9 @@
         });
         test('extend all passed objects', function () {
             deepEqual(extend({foo: 'bar'}, {key: 'value'}, {src: 'dest'}), {foo: 'bar', key: 'value', src: 'dest'});
+        });
+        test('extend non-object',function(){
+            deepEqual(extend(1),{});
         });
     </script>
 </head>
