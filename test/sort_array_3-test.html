@@ -13,16 +13,12 @@
          *
          */
         function sortme(courses) {
-            function yymm(source) {
-                return source.replace(/.*-/);
-            }
-
-            function name(source) {
-                return source.replace(/-.*/);
+            function swap(source) {
+                return source.replace(/(.*)-(.*)/, '$2-$1');
             }
 
             return courses.sort(function (a, b) {
-                return yymm(a).localeCompare(yymm(b)) || name(a).localeCompare(name(b));
+                return swap(a).localeCompare(swap(b));
             });
         }
     </script>
