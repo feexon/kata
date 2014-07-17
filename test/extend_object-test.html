@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function isObject(target) {
+            return typeof target == 'object';
+        }
+        function extend(/*objects*/) {
+            return Array.prototype.slice.call(arguments).filter(isObject).reduceRight(function (target, source) {
+                Object.keys(source).forEach(function (name) {
+                    target[name] = source[name];
+                    return target;
+                });
+                return target;
+            }, {});
+        }
+    </script>
+    <script type="text/javascript">
+        module('Object extend');
+        test('return new object', function () {
+            var source = {foo: 'bar'};
+            var target = extend(source);
+            deepEqual(target, source);
+            notEqual(target, source);
+        });
+        test('extend objects', function () {
+            deepEqual(extend({foo: 'bar'}, {key: 'value'}), {foo: 'bar', key: 'value'});
+        });
+        test('ignore existing properties', function () {
+            deepEqual(extend({foo: 'bar'}, {key: 'value', foo: 'BAR'}), {foo: 'bar', key: 'value'});
+        });
+        test('ignore existing properties even if is null', function () {
+            deepEqual(extend({foo: null}, {key: 'value', foo: 'BAR'}), {foo: null, key: 'value'});
+        });
+        test('extend all passed objects', function () {
+            deepEqual(extend({foo: 'bar'}, {key: 'value'}, {src: 'dest'}), {foo: 'bar', key: 'value', src: 'dest'});
+        });
+        test('extend non-object', function () {
+            deepEqual(extend(1), {});
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
