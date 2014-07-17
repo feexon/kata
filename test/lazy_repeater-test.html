@@ -12,8 +12,9 @@
          *
          */
         function makeLooper(str){
+            var i=0;
             return function(){
-                return str;
+                return str[Math.min(i++,str.length-1)];
             }
         }
     </script>
@@ -23,6 +24,12 @@
             var itr=makeLooper('a');
             equal(itr(),'a');
             equal(itr(),'a');
+        });
+        test('iterate',function(){
+            var itr=makeLooper('abc');
+            equal(itr(),'a');
+            equal(itr(),'b');
+            equal(itr(),'c');
         });
     </script>
 </head>
