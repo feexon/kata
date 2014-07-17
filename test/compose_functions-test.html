@@ -11,8 +11,10 @@
         /**
          *
          */
-        function compose(init,fns){
-            return fns(init);
+        function compose(init/*fns*/){
+            return Array.prototype.slice.call(arguments,1).reduce(function(result,fn){
+                return fn(result);
+            },init);
         }
     </script>
     <script type="text/javascript">
@@ -22,6 +24,9 @@
         test('simple',function(){
             equal(compose(5, doubleTheValue),10);
             equal(compose(5, addOneToTheValue),6);
+        });
+        test('composite',function(){
+            equal(compose(5, doubleTheValue,addOneToTheValue),11);
         });
     </script>
 </head>
