@@ -31,6 +31,10 @@
             equal(itr(),'b');
             equal(itr(),'c');
         });
+        test('independent',function(){
+            equal(makeLooper('abc')(),'a');
+            equal(makeLooper('abc')(),'a');
+        });
     </script>
 </head>
 <body>
