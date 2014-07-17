@@ -8,14 +8,21 @@
     <script type="text/javascript" src="../libs/qunit.js"></script>
     <script type="text/javascript" src="../libs/qunit-extras.js"></script>
     <script type="text/javascript">
+
         /**
          *
          */
         function sortme(courses) {
+            function yymm(source) {
+                return source.replace(/.*-/);
+            }
+
+            function name(source) {
+                return source.replace(/-.*/);
+            }
+
             return courses.sort(function (a, b) {
-                var parts1 = a.split('-');
-                var parts2 = b.split('-');
-                return parts1[1].localeCompare(parts2[1]) || parts1[0].localeCompare(parts2[0]);
+                return yymm(a).localeCompare(yymm(b)) || name(a).localeCompare(name(b));
             });
         }
     </script>
