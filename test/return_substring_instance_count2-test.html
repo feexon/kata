@@ -37,6 +37,9 @@
         test('multi times', function () {
             equal(searchSubstr('abaab', 'ab'), 2);
         });
+        test('overlap', function () {
+            equal(searchSubstr('aaa', 'aa'), 2);
+        });
     </script>
 </head>
 <body>
