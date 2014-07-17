@@ -11,9 +11,16 @@
         /**
          *
          */
+        function sortme(courses) {
+            return courses.sort();
+        }
     </script>
     <script type="text/javascript">
-
+        module('Sort arrays - 3');
+        test('different 1', function () {
+            deepEqual(sortme(['lisi-abcd', 'lisi-abcc', 'lisi-bacc']), ['lisi-abcc', 'lisi-abcd', 'lisi-bacc']);
+            deepEqual(sortme(['wangwu-yymm', 'lisi-yymm', 'zhangsan-yymm']), ['lisi-yymm', 'wangwu-yymm', 'zhangsan-yymm']);
+        });
     </script>
 </head>
 <body>
