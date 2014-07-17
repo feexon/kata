@@ -11,9 +11,15 @@
         /**
          *
          */
+        function pigIt(str) {
+            return str + 'ay';
+        }
     </script>
     <script type="text/javascript">
-
+        module('Simple Pig Latin');
+        test('letter', function () {
+            equal(pigIt('t'), 'tay');
+        });
     </script>
 </head>
 <body>
