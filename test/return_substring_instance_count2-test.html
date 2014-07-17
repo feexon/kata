@@ -12,7 +12,10 @@
          *
          */
         function searchSubstr(fullText, searchText, allowOverlap) {
-            if(searchText){
+            if (!searchText) {
+                return 0;
+            }
+            if (fullText.indexOf(searchText) != -1) {
                 return 1;
             }
             return 0;
@@ -25,6 +28,9 @@
         });
         test('once', function () {
             equal(searchSubstr('ab', 'ab'), 1);
+        });
+        test('not found', function () {
+            equal(searchSubstr('ab', 'ba'), 0);
         });
     </script>
 </head>
