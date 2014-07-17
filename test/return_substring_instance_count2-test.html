@@ -11,9 +11,15 @@
         /**
          *
          */
+        function searchSubstr(fullText, searchText, allowOverlap) {
+            return 0;
+        }
     </script>
     <script type="text/javascript">
-
+        module('Return substring instance count - 2');
+        test('empty substr', function () {
+            equal(searchSubstr('aa', ''), 0);
+        });
     </script>
 </head>
 <body>
