@@ -28,6 +28,9 @@
         test('composite',function(){
             equal(compose(5, doubleTheValue,addOneToTheValue),11);
         });
+        test('no functions',function(){
+            equal(compose(5),5);
+        });
     </script>
 </head>
 <body>
