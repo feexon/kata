@@ -15,11 +15,12 @@
             return typeof target == 'object';
         }
         function extend(/*objects*/) {
-            return Array.prototype.slice.call(arguments).filter(isObject).reduceRight(function (result, source) {
-                return  Object.keys(source).reduce(function (target, name) {
+            return Array.prototype.slice.call(arguments).filter(isObject).reduceRight(function (target, source) {
+                Object.keys(source).forEach(function (name) {
                     target[name] = source[name];
                     return target;
-                }, result);
+                });
+                return target;
             }, {});
         }
     </script>
