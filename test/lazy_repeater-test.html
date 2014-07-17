@@ -11,9 +11,19 @@
         /**
          *
          */
+        function makeLooper(str){
+            return function(){
+                return str;
+            }
+        }
     </script>
     <script type="text/javascript">
-
+        module('Lazy Repeater');
+        test('letter',function(){
+            var itr=makeLooper('a');
+            equal(itr(),'a');
+            equal(itr(),'a');
+        });
     </script>
 </head>
 <body>
