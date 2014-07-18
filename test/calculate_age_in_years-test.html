@@ -13,18 +13,12 @@
          */
         function getAge(born, now) {
             now = now || new Date();
-            var diff = now.getFullYear() - born.getFullYear();
-            if (born.getMonth() > now.getMonth()) {
-                return diff - 1;
-            }
-            if (born.getMonth() < now.getMonth()) {
-                return diff;
-            }
-            if (born.getDate() > now.getDate()) {
-                return diff - 1;
+            function diff(field) {
+                var property = eval('Date.prototype.get' + field);
+                return property.call(now) - property.call(born);
             }
 
-            return diff;
+            return diff('Month') > 0 || diff('Date') >= 0 ? diff('Year') : diff('Year') - 1;
         }
     </script>
     <script type="text/javascript">
