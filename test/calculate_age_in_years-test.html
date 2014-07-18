@@ -23,6 +23,9 @@
         test('different centuries', function () {
             equal(getAge(new Date('1913/01/01'), new Date('2013/01/01')), 100)
         });
+        test('born date less than now date', function () {
+            equal(getAge(new Date('2008/01/01'), new Date('2000/01/01')), -8);
+        });
     </script>
 </head>
 <body>
