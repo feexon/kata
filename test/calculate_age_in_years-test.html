@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+    <script type="text/javascript">
+        /**
+         *
+         */
+        function getAge(born, now) {
+            now = now || new Date();
+            function diff(field) {
+                var property = eval('Date.prototype.get' + field);
+                return property.call(now) - property.call(born);
+            }
+
+            return diff('Month') > 0 || diff('Date') >= 0 ? diff('Year') : diff('Year') - 1;
+        }
+    </script>
+    <script type="text/javascript">
+        module('Calculate age in years');
+        test('same century', function () {
+            equal(getAge(new Date('2008/02/29'), new Date('2032/02/29')), 24)
+        });
+        test('different centuries', function () {
+            equal(getAge(new Date('1913/01/01'), new Date('2013/01/01')), 100)
+        });
+        test('born date less than now date', function () {
+            equal(getAge(new Date('2008/01/01'), new Date('2000/01/01')), -8);
+        });
+        test('today for default', function () {
+            var today = new Date();
+            equal(getAge(new Date(today.getFullYear() - 33, today.getMonth(), today.getDate())), 33);
+        });
+        test('diff date', function () {
+            equal(getAge(new Date('1976/11/19'), new Date('2013/01/01')), 36);
+            equal(getAge(new Date('1976/11/19'), new Date('2013/11/01')), 36);
+            equal(getAge(new Date('2008/02/29'), new Date('2032/03/01')), 24);
+        });
+    </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
