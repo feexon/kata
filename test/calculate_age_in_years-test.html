@@ -11,9 +11,15 @@
         /**
          *
          */
+        function getAge(born,now){
+            return now.getYear()-born.getYear();
+        }
     </script>
     <script type="text/javascript">
-
+        module('Calculate age in years');
+        test('same century',function(){
+            equal(getAge(new Date('2008/02/29'), new Date('2032/02/29')),24)
+        });
     </script>
 </head>
 <body>
