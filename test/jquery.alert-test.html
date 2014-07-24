@@ -17,7 +17,6 @@
          */
         (function () {
             var tpl = {
-
                 format: function (variables) {
                     return "<div class=\"alert-dialog\"><div class=\"dialog-mask\"></div><div class=\"dialog-panel\"><div class=\"content-view\"><div><div class=\"" +
                             variables.type +
@@ -30,7 +29,8 @@
 
             var last = $('div');
             var defaults = { type: 'info', duration: 2000, sticky: false, cancellable: true};
-            $.alert = function (msg, options) {
+
+            function Alert(msg, options) {
                 if (!arguments.length) {
                     return last;
                 }
@@ -45,12 +45,17 @@
                     $(this).empty().remove();
                 }
 
-                return options.sticky ? dialog.one('click', dispose) : dialog.delay(options.duration).queue(dispose);
-            };
-            $.alert.messages = {loading: '正在加载...'};
-            $.alert.load = function (msg, options) {
-                return $.alert(msg || $.alert.messages.loading, $.extend({type: 'loading', cancellable: false}, options));
-            };
+                dialog.one('click', dispose);
+                return options.sticky ? dialog : dialog.delay(options.duration).queue(dispose);
+            }
+
+            $.alert = $.extend(Alert, {
+                messages: {loading: '正在加载...'},
+                load: function (msg, options) {
+                    return $.alert(msg || $.alert.messages.loading, $.extend({type: 'loading', cancellable: false}, options));
+                }
+            });
+
         })();
     </script>
     <script type="text/javascript">
@@ -81,7 +86,7 @@
 
         test('retrieve the last dialog', function (assert) {
             $.alert('message');
-            assert.dialog.message('message');
+            equal($('.info', $.alert()).length, 1);
         });
 
         test('return dialog instance', function (assert) {
@@ -95,7 +100,7 @@
             assert.dialog.message('ok');
         });
 
-        test('must one dialog shown at the same time', function (assert) {
+        test('must show one dialog at the same time', function (assert) {
             $.alert('message');
             $.alert('message');
             assert.dialog.size(1);
@@ -121,7 +126,7 @@
             }, 100);
         });
 
-        asyncTest('disable close automatically by sticky option', function (assert) {
+        asyncTest("can't closing sticky dialog automatically", function (assert) {
             expect(1);
             $.alert('message', {duration: 100, sticky: true});
             setTimeout(function () {
@@ -130,23 +135,17 @@
             }, 100);
         });
 
-        test('closing sticky dialog after it clicked!', function (assert) {
-            expect(2);
-            $.alert('message', {sticky: true});
-            assert.dialog.size(1);
-            $.alert().click();
+        test('closing dialog after it was clicked!', function (assert) {
+            $.alert('message', {sticky: true}).click();
             assert.dialog.size(0);
         });
 
-        test('can not close sticky dialog after it clicked if dialog is not cancellable!', function (assert) {
-            expect(2);
-            $.alert('message', {sticky: true, cancellable: false});
-            assert.dialog.size(1);
-            $.alert().click();
+        test("can't closing modal dialog even if it was clicked!", function (assert) {
+            $.alert('message', {sticky: true, cancellable: false}).click();
             assert.dialog.size(1);
         });
 
-        asyncTest('can not close automatically if dialog not cancellable', function (assert) {
+        asyncTest("can't closing modal dialog automatically", function (assert) {
             expect(1);
             $.alert('message', {duration: 100, cancellable: false});
             setTimeout(function () {
@@ -155,7 +154,7 @@
             }, 200);
         });
 
-        asyncTest('fast alert a loading dialog', function (assert) {
+        asyncTest('alert a loading dialog fast', function (assert) {
             expect(2);
             var dialog = $.alert.load('msg', {duration: 100});
             equal($('.loading', dialog).length, 1);
@@ -165,10 +164,11 @@
             }, 200);
         });
 
-        test('fast loading dialog default message', function (assert) {
+        test('alert fast loading dialog by default message', function (assert) {
             $.alert.load();
-            assert.dialog.message('正在加载...');
+            assert.dialog.message($.alert.messages.loading);
         });
+
 
     </script>
 
