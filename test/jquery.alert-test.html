@@ -47,8 +47,9 @@
 
                 return options.sticky ? dialog.one('click', dispose) : dialog.delay(options.duration).queue(dispose);
             };
+            $.alert.messages = {loading: '正在加载...'};
             $.alert.load = function (msg, options) {
-                return $.alert(msg, $.extend({type: 'loading', cancellable: false}, options));
+                return $.alert(msg || $.alert.messages.loading, $.extend({type: 'loading', cancellable: false}, options));
             };
         })();
     </script>
@@ -163,6 +164,12 @@
                 start();
             }, 200);
         });
+
+        test('fast loading dialog default message', function (assert) {
+            $.alert.load();
+            assert.dialog.message('正在加载...');
+        });
+
     </script>
 
 </head>
