@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+    <link type="text/css" rel="stylesheet" href="../libs/qunit.css"/>
+    <link type="text/css" rel="stylesheet" href="../css/jquery.alert.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../libs/qunit.js"></script>
+    <script type="text/javascript" src="../libs/qunit-extras.js"></script>
+
+    <script type="text/javascript">
+        /**
+         *
+         */
+        var tpl = {
+
+            format: function (variables) {
+                return "<div class=\"alert-dialog\"><div class=\"dialog-mask\"></div><div class=\"dialog-panel\"><div class=\"content-view\"><div><div class=\"" +
+                        variables.type +
+                        "\"></div></div><div class=\"msg\">" +
+                        variables.message +
+                        "</div><div class=\"bg-mask\"></div></div></div></div>";
+            }
+
+        };
+
+        var last = $('div');
+
+        $.alert = function (msg, options) {
+            if (!arguments.length) {
+                return last;
+            }
+            var options = $.extend({message: msg, type: 'info', delay: 2000}, typeof options == 'string' ? {type: options} : options);
+            last.remove();
+            last = $(tpl.format(options)).appendTo("body").delay(options.delay).queue(function () {
+                $(this).empty().remove();
+            });
+        }
+    </script>
+    <script type="text/javascript">
+        module("jquery alert dialog");
+        function dialog() {
+            return $("body>.alert-dialog");
+        }
+        test('dialog should append to body', function () {
+            $.alert('');
+            equal(dialog().length, 1);
+        });
+        test('alert message', function () {
+            $.alert('message');
+            ok(dialog().text().indexOf('message') != -1);
+        });
+        test('must one dialog shown at the same time', function () {
+            $.alert('message');
+            $.alert('message');
+            equal(dialog().length, 1);
+        });
+        test('alert info message as default', function () {
+            $.alert('message');
+            equal($('.info', dialog()).length, 1);
+        });
+
+        test('alert loading message', function () {
+            $.alert('加载中', 'loading');
+            equal($('.loading', dialog()).length, 1);
+            ok(dialog().text().indexOf('加载中') != -1);
+        });
+        test('retrieve the last dialog', function () {
+            $.alert('message');
+            ok($.alert().text().indexOf('message') != -1);
+        });
+        asyncTest('close automatically after delay seconds', function () {
+            expect(1);
+            $.alert('message', {delay: 100});
+            setTimeout(function () {
+                equal($('.info', $.alert()).length, 0);
+                start();
+            }, 100);
+        });
+    </script>
+
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
