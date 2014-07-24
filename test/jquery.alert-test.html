@@ -29,7 +29,7 @@
             };
 
             var last = $('div');
-            var defaults = { type: 'info', duration: 2000, sticky: false};
+            var defaults = { type: 'info', duration: 2000, sticky: false, cancellable: true};
             $.alert = function (msg, options) {
                 if (!arguments.length) {
                     return last;
@@ -37,20 +37,23 @@
                 var options = $.extend({message: msg}, defaults, typeof options == 'string' ? {type: options} : options);
                 last.remove();
                 var dialog = last = $(tpl.format(options)).appendTo("body");
-                if (options.sticky) {
-                    dialog.one('click', function () {
-                        $(this).empty().remove();
-                    });
-                    return;
+                if (!options.cancellable) {
+                    return dialog;
                 }
-                dialog.delay(options.duration).queue(function () {
+
+                function dispose() {
                     $(this).empty().remove();
-                });
+                }
+                return options.sticky ? dialog.one('click', dispose) : dialog.delay(options.duration).queue(dispose);
             }
         })();
     </script>
     <script type="text/javascript">
-        module("jquery alert dialog");
+        module("jquery alert dialog", {
+            teardown: function () {
+                $.alert().remove();
+            }
+        });
         function dialog() {
             return $("body>.alert-dialog");
         }
@@ -60,7 +63,7 @@
                     ok(dialog().text().indexOf(msg) != -1, "expected message: \"" + msg + "\"\nbut was: \"" + dialog().text() + "\"");
                 },
                 size: function (expectedSize) {
-                    equal(dialog().length,expectedSize,"dialog size");
+                    equal(dialog().length, expectedSize, "dialog size");
                 }
             }
 
@@ -68,6 +71,15 @@
         test('dialog should append to body', function (assert) {
             $.alert('');
             assert.dialog.size(1);
+        });
+        test('retrieve the last dialog', function (assert) {
+            $.alert('message');
+            assert.dialog.message('message');
+        });
+        test('return dialog instance', function (assert) {
+            equal($.alert('message'), $.alert());
+            equal($.alert('message', {sticky: true}), $.alert());
+            equal($.alert('message', {cancellable: false}), $.alert());
         });
         test('alert message', function (assert) {
             $.alert('ok');
@@ -78,21 +90,17 @@
             $.alert('message');
             assert.dialog.size(1);
         });
+
         test('alert info message as default', function () {
             $.alert('message');
             equal($('.info', dialog()).length, 1);
         });
-
         test('alert loading message', function (assert) {
             $.alert('加载中', 'loading');
             equal($('.loading', dialog()).length, 1);
             assert.dialog.message('加载中');
         });
-        test('retrieve the last dialog', function (assert) {
-            $.alert('message');
-            assert.dialog.message('message');
-        });
-        asyncTest('close automatically after delay seconds', function (assert) {
+        asyncTest('close automatically after duration seconds', function (assert) {
             expect(1);
             $.alert('message', {duration: 100});
             setTimeout(function () {
@@ -114,6 +122,21 @@
             assert.dialog.size(1);
             $.alert().click();
             assert.dialog.size(0);
+        });
+        test('can not close sticky dialog after it clicked if dialog is not cancellable!', function (assert) {
+            expect(2);
+            $.alert('message', {sticky: true, cancellable: false});
+            assert.dialog.size(1);
+            $.alert().click();
+            assert.dialog.size(1);
+        });
+        asyncTest('can not close automatically if dialog not cancellable', function (assert) {
+            expect(1);
+            $.alert('message', {duration: 100, cancellable: false});
+            setTimeout(function () {
+                assert.dialog.size(1);
+                start();
+            }, 200);
         });
     </script>
 
