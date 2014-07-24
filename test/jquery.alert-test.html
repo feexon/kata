@@ -15,30 +15,32 @@
         /**
          *
          */
-        var tpl = {
+        (function () {
+            var tpl = {
 
-            format: function (variables) {
-                return "<div class=\"alert-dialog\"><div class=\"dialog-mask\"></div><div class=\"dialog-panel\"><div class=\"content-view\"><div><div class=\"" +
-                        variables.type +
-                        "\"></div></div><div class=\"msg\">" +
-                        variables.message +
-                        "</div><div class=\"bg-mask\"></div></div></div></div>";
+                format: function (variables) {
+                    return "<div class=\"alert-dialog\"><div class=\"dialog-mask\"></div><div class=\"dialog-panel\"><div class=\"content-view\"><div><div class=\"" +
+                            variables.type +
+                            "\"></div></div><div class=\"msg\">" +
+                            variables.message +
+                            "</div><div class=\"bg-mask\"></div></div></div></div>";
+                }
+
+            };
+
+            var last = $('div');
+
+            $.alert = function (msg, options) {
+                if (!arguments.length) {
+                    return last;
+                }
+                var options = $.extend({message: msg, type: 'info', delay: 2000}, typeof options == 'string' ? {type: options} : options);
+                last.remove();
+                last = $(tpl.format(options)).appendTo("body").delay(options.delay).queue(function () {
+                    $(this).empty().remove();
+                });
             }
-
-        };
-
-        var last = $('div');
-
-        $.alert = function (msg, options) {
-            if (!arguments.length) {
-                return last;
-            }
-            var options = $.extend({message: msg, type: 'info', delay: 2000}, typeof options == 'string' ? {type: options} : options);
-            last.remove();
-            last = $(tpl.format(options)).appendTo("body").delay(options.delay).queue(function () {
-                $(this).empty().remove();
-            });
-        }
+        })();
     </script>
     <script type="text/javascript">
         module("jquery alert dialog");
