@@ -44,8 +44,12 @@
                 function dispose() {
                     $(this).empty().remove();
                 }
+
                 return options.sticky ? dialog.one('click', dispose) : dialog.delay(options.duration).queue(dispose);
-            }
+            };
+            $.alert.load = function (msg, options) {
+                return $.alert(msg, $.extend({type: 'loading', cancellable: false}, options));
+            };
         })();
     </script>
     <script type="text/javascript">
@@ -68,23 +72,28 @@
             }
 
         });
+
         test('dialog should append to body', function (assert) {
             $.alert('');
             assert.dialog.size(1);
         });
+
         test('retrieve the last dialog', function (assert) {
             $.alert('message');
             assert.dialog.message('message');
         });
+
         test('return dialog instance', function (assert) {
             equal($.alert('message'), $.alert());
             equal($.alert('message', {sticky: true}), $.alert());
             equal($.alert('message', {cancellable: false}), $.alert());
         });
+
         test('alert message', function (assert) {
             $.alert('ok');
             assert.dialog.message('ok');
         });
+
         test('must one dialog shown at the same time', function (assert) {
             $.alert('message');
             $.alert('message');
@@ -95,11 +104,13 @@
             $.alert('message');
             equal($('.info', dialog()).length, 1);
         });
+
         test('alert loading message', function (assert) {
             $.alert('加载中', 'loading');
             equal($('.loading', dialog()).length, 1);
             assert.dialog.message('加载中');
         });
+
         asyncTest('close automatically after duration seconds', function (assert) {
             expect(1);
             $.alert('message', {duration: 100});
@@ -108,6 +119,7 @@
                 start();
             }, 100);
         });
+
         asyncTest('disable close automatically by sticky option', function (assert) {
             expect(1);
             $.alert('message', {duration: 100, sticky: true});
@@ -116,6 +128,7 @@
                 start();
             }, 100);
         });
+
         test('closing sticky dialog after it clicked!', function (assert) {
             expect(2);
             $.alert('message', {sticky: true});
@@ -123,6 +136,7 @@
             $.alert().click();
             assert.dialog.size(0);
         });
+
         test('can not close sticky dialog after it clicked if dialog is not cancellable!', function (assert) {
             expect(2);
             $.alert('message', {sticky: true, cancellable: false});
@@ -130,9 +144,20 @@
             $.alert().click();
             assert.dialog.size(1);
         });
+
         asyncTest('can not close automatically if dialog not cancellable', function (assert) {
             expect(1);
             $.alert('message', {duration: 100, cancellable: false});
+            setTimeout(function () {
+                assert.dialog.size(1);
+                start();
+            }, 200);
+        });
+
+        asyncTest('fast alert a loading dialog', function (assert) {
+            expect(2);
+            var dialog = $.alert.load('msg', {duration: 100});
+            equal($('.loading', dialog).length, 1);
             setTimeout(function () {
                 assert.dialog.size(1);
                 start();
